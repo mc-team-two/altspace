@@ -1,6 +1,6 @@
 # 1. Server Config
 server:
-  port: 1212
+  port: 8080
   servlet:
     encoding:
       charset: UTF-8
@@ -16,16 +16,16 @@ spring:
       matching-strategy: ant_path_matcher # Spring Boot 2.6 이상에서는 ant_path_matcher 또는 경로 패턴 매칭 전략을 명시적으로 설정해야 합니다.
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/mcdb?characterEncoding=utf8
-    username: ENC(tflb+WDeXH++6lNNLDKmOA==)
-    password: ENC(Z3hh8Mdzuse1dxq271vdyg==)
+    url: jdbc:mysql://127.0.0.1:3306/spacedb?characterEncoding=utf8
+    username: userdev #ENC(tflb+WDeXH++6lNNLDKmOA==)
+    password: 111111  #ENC(Z3hh8Mdzuse1dxq271vdyg==)
 
 # 3. MyBatis
 mybatis:
   type-aliases-package: com.mc.app.dto
   mapper-locations: classpath:/mapper/*.xml
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true  # dto 변수 이름과 db 칼럼 이름 매칭용
 
 # 4. Log Level
 logging:
@@ -38,32 +38,5 @@ app:
     algo: PBEWithMD5AndDES
     skey: mykey
   dir:
-    imgdir: file:///C:/Users/yejin/Documents/github/space/imgRepo/  # 화면 출력 용
-    uploadimgdir: C:/Users/yejin/Documents/github/space/imgRepo/    # 파일 Write 용
-
-
-# Springdoc OpenAPI 3 설정
-# Swagger url: http://localhost:1212/swagger-ui/index.html
-springdoc:
-  packages-to-scan:
-    - #다음의 경로에서 스캔하게 유도.
-      #이걸 안잡아주면 인식을 못함.
-    - com.mc.controller
-    - com.mc.app.dto
-    - com.mc.config
-  default-consumes-media-type: application/json;charset=UTF-8
-  default-produces-media-type: application/json;charset=UTF-8
-
-  swagger-ui:
-    path: /swagger-ui.html # Swagger UI 페이지 경로
-    groups-order: DESC
-    tags-sorter: alpha
-    operations-sorter: method
-    enabled: true
-
-  paths-to-match:
-    - /** # API 엔드포인트 경로 패턴
-
-  api-docs:
-    path: /v3/api-docs # OpenAPI 3.0 문서 경로
-    enabled: true
+    imgdir: file:///C:/Users/yejin/Documents/github/altspace/imgs/  # 화면 출력 용
+    uploadimgdir: C:/Users/yejin/Documents/github/altspace/imgs/    # 파일 Write 용
