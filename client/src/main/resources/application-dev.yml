@@ -25,7 +25,7 @@ mybatis:
   type-aliases-package: com.mc.app.dto
   mapper-locations: classpath:/mapper/*.xml
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true  # dto 변수 이름과 db 칼럼 이름 매칭용
 
 # 4. Log Level
 logging:
