@@ -12,6 +12,9 @@ spring:
     view:
       prefix: /views/
       suffix: .jsp
+    pathmatch:
+      matching-strategy: ant_path_matcher # Spring Boot 2.6 이상에서는 ant_path_matcher 또는 경로 패턴 매칭 전략을 명시적으로 설정해야 합니다.
+
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/spacedb?characterEncoding=utf8
     username: userdev #ENC(tflb+WDeXH++6lNNLDKmOA==)
@@ -23,7 +26,6 @@ mybatis:
   mapper-locations: classpath:/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true  # dto 변수 이름과 db 칼럼 이름 매칭용
-
 
 # 4. Log Level
 logging:
