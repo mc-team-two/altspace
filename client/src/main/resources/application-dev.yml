@@ -1,0 +1,40 @@
+# 1. Server Config
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+# 2. Spring Config
+spring:
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/spacedb?characterEncoding=utf8
+    username: userdev #ENC(tflb+WDeXH++6lNNLDKmOA==)
+    password: 111111  #ENC(Z3hh8Mdzuse1dxq271vdyg==)
+
+# 3. MyBatis
+mybatis:
+  type-aliases-package: com.mc.app.dto
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true  # dto 변수 이름과 db 칼럼 이름 매칭용
+
+
+# 4. Log Level
+logging:
+  level:
+    root: info   #  error < info < debug
+
+# 5. App
+app:
+  key:
+    algo: PBEWithMD5AndDES
+    skey: mykey
+  dir:
+    imgdir: file:///C:/Users/yejin/Documents/github/altspace/imgs/  # 화면 출력 용
+    uploadimgdir: C:/Users/yejin/Documents/github/altspace/imgs/    # 파일 Write 용

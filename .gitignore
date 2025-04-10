@@ -1,0 +1,47 @@
+﻿# ========= 빌드 결과물 =========
+/target/
+/build/
+*.class
+*.jar
+*.war
+*.ear
+
+# ========= IntelliJ IDEA 관련 =========
+.idea/
+*.iml
+/out/
+
+# admin 모듈의 IntelliJ 설정 제외
+admin/.idea/
+admin/*.iml
+admin/out/
+
+# client 모듈의 IntelliJ 설정 제외
+client/.idea/
+client/*.iml
+client/out/
+
+# ========= VS Code 관련 (혹시 몰라서) =========
+.vscode/
+
+# ========= OS 관련 파일 =========
+.DS_Store
+Thumbs.db
+*.lnk        # Windows 바로가기 파일
+ehthumbs.db  # Windows 썸네일 캐시 파일
+Desktop.ini  # Windows 폴더 설정 파일
+
+# ========= 로그 및 임시 파일 =========
+*.log
+*.tmp
+/test-output/
+
+# ========= Gradle 관련 =========
+/.gradle/
+admin/.gradle/
+client/.gradle/
+
+# ========= 환경 설정 파일 (보류 중) =========
+# application.yml이나 gradlew는 일단 제외 보류
+# application.yml
+# gradlew
