@@ -311,8 +311,9 @@
 
         <!-- Layout container -->
         <div class="layout-page">
-            <!-- Navbar -->
 
+
+            <!-- Navbar -->
             <nav
                     class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                     id="layout-navbar"
@@ -340,8 +341,28 @@
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
 
+                        <c:choose>
+                            <c:when test="${sessionScope.cust.custId == null}">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<c:url value="/login"/> ">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<c:url value="/register"/> ">Register</a>
+                                </li>
+                            </c:when>
+
+                            <c:otherwise>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<c:url value="/logout"/> ">Logout</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+
                         <!-- User -->
-                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+<%--                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
                                     <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
@@ -397,12 +418,11 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>--%>
                         <!--/ User -->
                     </ul>
                 </div>
             </nav>
-
             <!-- / Navbar -->
 
             <!-- Content wrapper -->
