@@ -9,24 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<div>
-<head>
-    <title>Travelix</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/responsive.css">
-</head>
-
-<div class="super_container">
-
 <!-- Header -->
 
 <header class="header">
@@ -48,10 +30,17 @@
                             <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                         </ul>
                     </div>
-                    <div class="user_box ml-auto">
-                        <div class="user_box_login user_box_link"><a href="#">login</a></div>
-                        <div class="user_box_register user_box_link"><a href="#">register</a></div>
-                    </div>
+                    <%--                            <c:choose>--%>
+                    <%--                                <c:when test="${sessionScope.cust.custId == null}">--%>
+                                            <div class="user_box ml-auto">
+                                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a></div>
+                                            </div>
+                    <%--                                </c:when>--%>
+                    <%--                                <c:otherwise>--%>
+                    <%--                                로그인창 집어넣을 때 추가 --%>
+                    <%--                                <div class="user_box_login user_box_link"><a href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a></div>--%>
+                    <%--                                <div class="user_box_register user_box_link"><a href="<c:url value="/cart?id=${sessionScope.cust.custId}"/> ">Cart</a></div>--%>
                 </div>
             </div>
         </div>
@@ -63,16 +52,18 @@
         <div class="container">
             <div class="row">
                 <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
-                    <div class="logo"><a href="/"><img src="../images/Altspace_darkmode_logo_small.png" alt="AltSpace Logo">AltSpace</a></div>
-                        <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                    <div class="logo_container">
+                        <div class="logo"><a href="<c:url value="/"/> "><img src="../images/Altspace_darkmode_logo_small.png" alt="AltSpace Logo">AltSpace</a></div>
                     </div>
                     <div class="main_nav_container ml-auto">
                         <ul class="main_nav_list">
-                            <li class="main_nav_item"><a href="<c:url value="/"/> ">home</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/about"/> ">about us</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/offers"/> ">offers</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">RoomInfo</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/elements"/> ">Elements</a></li>
+                            <li class="munu_item"><a href="<c:url value="/"/> ">Home</a></li>
+                            <li class="munu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+                            <li class="munu_item"><a href="<c:url value="/offers"/> ">예약</a></li>
+<%--                            <li class="menu_item"><a href="<c:url value="/roominfo"/> ">객실정보</a></li>--%>
+                            <li class="menu_item"><a href="<c:url value="#"/> ">고객센터</a></li>
+                            <li class="menu_item"><a href="<c:url value="#"/> ">마이페이지</a></li>
+<%--                            <li class="menu_item"><a href="<c:url value="elements"/> ">elements</a></li>--%>
                         </ul>
                     </div>
                     <div class="content_search ml-lg-0 ml-auto">
@@ -110,30 +101,4 @@
             </div>
         </div>
     </nav>
-
 </header>
-
-<div class="menu trans_500">
-    <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-        <div class="menu_close_container"><div class="menu_close"></div></div>
-        <div class="logo menu_logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
-        <ul>
-            <li class="menu_item"><a href="#">home</a></li>
-            <li class="menu_item"><a href="about.html">about us</a></li>
-            <li class="menu_item"><a href="offers.html">offers</a></li>
-            <li class="menu_item"><a href="blog.html">news</a></li>
-            <li class="menu_item"><a href="contact.html">contact</a></li>
-        </ul>
-    </div>
-</div>
-
-</div>
-
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="js/custom.js"></script>
-
-</div>

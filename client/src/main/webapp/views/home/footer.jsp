@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Travelix</title>
+    <title>AltSpace</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Travelix Project">
@@ -27,22 +27,24 @@
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 </head>
 
+
 <body>
 
-<!-- Footer -->
+<!-- 푸터 -->
 
 <footer class="footer">
     <div class="container">
         <div class="row">
 
-            <!-- Footer Column -->
+            <!-- 회사 정보 -->
             <div class="col-lg-3 footer_column">
                 <div class="footer_col">
                     <div class="footer_content footer_about">
                         <div class="logo_container footer_logo">
-                            <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                            <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
                         </div>
-                        <p class="footer_about_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vu lputate eros, iaculis consequat nisl. Nunc et suscipit urna. Integer eleme ntum orci eu vehicula pretium.</p>
+                        <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
+                            관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹</p>
                         <ul class="footer_social_list">
                             <li class="footer_social_item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
                             <li class="footer_social_item"><a href="#"><i class="fa fa-facebook-f"></i></a></li>
@@ -54,10 +56,10 @@
                 </div>
             </div>
 
-            <!-- Footer Column -->
+            <!-- 기존 템플릿 내용 삭제 후 정렬을 위한 빈 칸으로 활용 -->
             <div class="col-lg-3 footer_column">
                 <div class="footer_col">
-                    <div class="footer_title">blog posts</div>
+                    <%--<div class="footer_title">blog posts</div>
                     <div class="footer_content footer_blog">
 
                         <!-- Footer blog item -->
@@ -87,50 +89,51 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div>--%>
                 </div>
             </div>
 
-            <!-- Footer Column -->
+
+            <!-- 태그 -->
             <div class="col-lg-3 footer_column">
                 <div class="footer_col">
-                    <div class="footer_title">tags</div>
+                    <div class="footer_title">태그</div>
                     <div class="footer_content footer_tags">
                         <ul class="tags_list clearfix">
-                            <li class="tag_item"><a href="#">design</a></li>
-                            <li class="tag_item"><a href="#">fashion</a></li>
-                            <li class="tag_item"><a href="#">music</a></li>
-                            <li class="tag_item"><a href="#">video</a></li>
-                            <li class="tag_item"><a href="#">party</a></li>
-                            <li class="tag_item"><a href="#">photography</a></li>
-                            <li class="tag_item"><a href="#">adventure</a></li>
-                            <li class="tag_item"><a href="#">travel</a></li>
+                            <li class="tag_item"><a href="#">바캉스</a></li>
+                            <li class="tag_item"><a href="#">호캉스</a></li>
+                            <li class="tag_item"><a href="#">페스티벌</a></li>
+                            <li class="tag_item"><a href="#">파티</a></li>
+                            <li class="tag_item"><a href="#">프라이빗</a></li>
+                            <li class="tag_item"><a href="#">마운틴뷰</a></li>
+                            <li class="tag_item"><a href="#">시티뷰</a></li>
+                            <li class="tag_item"><a href="#">오션뷰</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Footer Column -->
+            <!-- 연락처 -->
             <div class="col-lg-3 footer_column">
                 <div class="footer_col">
-                    <div class="footer_title">contact info</div>
+                    <div class="footer_title">연락처</div>
                     <div class="footer_content footer_contact">
                         <ul class="contact_info_list">
                             <li class="contact_info_item d-flex flex-row">
                                 <div><div class="contact_info_icon"><img src="images/placeholder.svg" alt=""></div></div>
-                                <div class="contact_info_text">4127 Raoul Wallenber 45b-c Gibraltar</div>
+                                <div class="contact_info_text">서울 영등포구 여의동로 330 (여의도동, 알트타워)</div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
                                 <div><div class="contact_info_icon"><img src="images/phone-call.svg" alt=""></div></div>
-                                <div class="contact_info_text">2556-808-8613</div>
+                                <div class="contact_info_text">02-1234-5678 / 1588-1588</div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
                                 <div><div class="contact_info_icon"><img src="images/message.svg" alt=""></div></div>
-                                <div class="contact_info_text"><a href="mailto:contactme@gmail.com?Subject=Hello" target="_top">contactme@gmail.com</a></div>
+                                <div class="contact_info_text"><a href="mailto:help.alt@altspace.com?Subject=Hello" target="_top">help.alt@altspace.com</a></div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
                                 <div><div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div></div>
-                                <div class="contact_info_text"><a href="https://colorlib.com">www.colorlib.com</a></div>
+                                <div class="contact_info_text"><a href="https://altspace.com/help">www.altspace.com/help</a></div>
                             </li>
                         </ul>
                     </div>
