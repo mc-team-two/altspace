@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Travelix</title>
+    <title>AltSpace</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Travelix Project">
@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 </head>
 
+
 <body>
 
 
@@ -35,15 +36,20 @@
         <div class="menu_close_container"><div class="menu_close"></div></div>
         <div class="logo menu_logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
         <ul>
-            <li class="munu_item"><a href="<c:url value="/home"/> ">Home</a></li>
-            <li class="munu_item"><a href="<c:url value="/about"/> ">About us</a></li>
-            <li class="munu_item"><a href="<c:url value="/offers"/> ">Offers</a></li>
-            <li class="menu_item"><a href="<c:url value="/roominfo"/> ">RoomInfo</a></li>
+            <li class="munu_item"><a href="<c:url value="/"/> ">Home</a></li>
+            <li class="munu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+            <li class="munu_item"><a href="<c:url value="/offers"/> ">예약</a></li>
+            <li class="menu_item"><a href="<c:url value="/roominfo"/> ">객실정보</a></li>
+            <li class="menu_item"><a href="<c:url value="#"/> ">고객센터</a></li>
+            <li class="menu_item"><a href="<c:url value="#"/> ">마이페이지</a></li>
+            <li class="menu_item"><a href="<c:url value="elements"/> ">elements</a></li>
         </ul>
     </div>
 </div>
 
-<!-- Home -->
+
+
+<!-- 홈 메인 배너 -->
 
 <div class="home">
 
@@ -56,39 +62,39 @@
             <!-- Slider Item -->
             <div class="owl-item home_slider_item">
                 <!-- Image by https://unsplash.com/@anikindimitry -->
-                <div class="home_slider_background" style="background-image:url(images/home_slider.jpg)"></div>
+                <div class="home_slider_background" style="background-image:url(images/home_slider_1.jpg)"></div>
 
                 <div class="home_slider_content text-center">
                     <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
-                        <h1>Discover</h1>
-                        <h1>Your Best Vacation!</h1>
-                        <div class="button home_slider_button"><div class="button_bcg"></div><a href="<c:url value="/offers"/>">Explore now<span></span><span></span><span></span></a></div>
+                        <h1>Enjoy</h1>
+                        <h1>your rest!</h1>
+                        <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">호텔/리조트 검색<span></span><span></span><span></span></a></div>
                     </div>
                 </div>
             </div>
 
             <!-- Slider Item -->
             <div class="owl-item home_slider_item">
-                <div class="home_slider_background" style="background-image:url(images/home_slider.jpg)"></div>
+                <div class="home_slider_background" style="background-image:url(images/home_slider_2.jpg)"></div>
 
                 <div class="home_slider_content text-center">
                     <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
                         <h1>Discover</h1>
-                        <h1>Your Best Vacation!</h1>
-                        <div class="button home_slider_button"><div class="button_bcg"></div><a href="<c:url value="/offers"/>">Explore now<span></span><span></span><span></span></a></div>
+                        <h1>a new destination!</h1>
+                        <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">펜션/게하 검색<span></span><span></span><span></span></a></div>
                     </div>
                 </div>
             </div>
 
             <!-- Slider Item -->
             <div class="owl-item home_slider_item">
-                <div class="home_slider_background" style="background-image:url(images/home_slider.jpg)"></div>
+                <div class="home_slider_background" style="background-image:url(images/home_slider_3.jpg)"></div>
 
                 <div class="home_slider_content text-center">
                     <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
-                        <h1>discover</h1>
-                        <h1>Your Best Vacation!</h1>
-                        <div class="button home_slider_button"><div class="button_bcg"></div><a href="<c:url value="/offers"/>">Explore now<span></span><span></span><span></span></a></div>
+                        <h1>Go on</h1>
+                        <h1>your own space!</h1>
+                        <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">파티룸 검색<span></span><span></span><span></span></a></div>
                     </div>
                 </div>
             </div>
@@ -145,12 +151,12 @@
 
 </div>
 
-<!-- Search -->
+<!-- 검색 -->
 
 <div class="search">
 
 
-    <!-- Search Contents -->
+    <!-- 검색 바 상세 -->
 
     <div class="container fill_height">
         <div class="row fill_height">
@@ -160,228 +166,126 @@
 
                 <div class="search_tabs_container">
                     <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                        <div class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/suitcase.png" alt=""><span>hotels</span></div>
-                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/bus.png" alt="">car rentals</div>
-                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/departure.png" alt="">flights</div>
-                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/island.png" alt="">trips</div>
-                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/cruise.png" alt="">cruises</div>
-                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/diving.png" alt="">activities</div>
+                        <div class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/suitcase.png" alt=""><span>호텔/리조트 예약</span></div>
+                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/island.png" alt="">펜션/게하 예약</div>
+                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/diving.png" alt="">파티룸 예약</div>
+                        <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/bus.png" alt="">렌터카 예약</div>
                     </div>
                 </div>
 
-                <!-- Search Panel -->
+                <!-- Search Panel 1 -->
 
                 <div class="search_panel active">
                     <form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                         <div class="search_item">
-                            <div>destination</div>
-                            <input type="text" class="destination search_input" required="required">
+                            <div>목적지</div>
+                            <input type="text" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
                         </div>
                         <div class="search_item">
-                            <div>check in</div>
+                            <div>체크인</div>
                             <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="search_item">
-                            <div>check out</div>
+                            <div>체크아웃</div>
                             <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="search_item">
-                            <div>adults</div>
+                            <div>인원</div>
                             <select name="adults" id="adults_1" class="dropdown_item_select search_input">
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
+                                <option>1명</option>
+                                <option>2명</option>
+                                <option>3~5명</option>
+                                <option>5명 이상</option>
                             </select>
                         </div>
-                        <div class="search_item">
-                            <div>children</div>
-                            <select name="children" id="children_1" class="dropdown_item_select search_input">
-                                <option>0</option>
-                                <option>02</option>
-                                <option>03</option>
-                            </select>
-                        </div>
-                        <button class="button search_button">search<span></span><span></span><span></span></button>
+                        <button class="button search_button">검색<span></span><span></span><span></span></button>
                     </form>
                 </div>
 
-                <!-- Search Panel -->
+                <!-- Search Panel 2 -->
 
                 <div class="search_panel">
                     <form action="#" id="search_form_2" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                         <div class="search_item">
-                            <div>destination</div>
-                            <input type="text" class="destination search_input" required="required">
+                            <div>목적지</div>
+                            <input type="text" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
                         </div>
                         <div class="search_item">
-                            <div>check in</div>
+                            <div>체크인</div>
                             <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="search_item">
-                            <div>check out</div>
+                            <div>체크아웃</div>
                             <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="search_item">
-                            <div>adults</div>
+                            <div>인원</div>
                             <select name="adults" id="adults_2" class="dropdown_item_select search_input">
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
+                                <option>1명</option>
+                                <option>2명</option>
+                                <option>3~5명</option>
+                                <option>5명 이상</option>
                             </select>
                         </div>
-                        <div class="search_item">
-                            <div>children</div>
-                            <select name="children" id="children_2" class="dropdown_item_select search_input">
-                                <option>0</option>
-                                <option>02</option>
-                                <option>03</option>
-                            </select>
-                        </div>
-                        <button class="button search_button">search<span></span><span></span><span></span></button>
+                        <button class="button search_button">검색<span></span><span></span><span></span></button>
                     </form>
                 </div>
 
-                <!-- Search Panel -->
+                <!-- Search Panel 3 -->
 
                 <div class="search_panel">
                     <form action="#" id="search_form_3" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                         <div class="search_item">
-                            <div>destination</div>
-                            <input type="text" class="destination search_input" required="required">
+                            <div>목적지</div>
+                            <input type="text" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
                         </div>
                         <div class="search_item">
-                            <div>check in</div>
+                            <div>체크인</div>
                             <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="search_item">
-                            <div>check out</div>
+                            <div>체크아웃</div>
                             <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="search_item">
-                            <div>adults</div>
+                            <div>인원</div>
                             <select name="adults" id="adults_3" class="dropdown_item_select search_input">
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
+                                <option>1명</option>
+                                <option>2명</option>
+                                <option>3~5명</option>
+                                <option>5명 이상</option>
                             </select>
                         </div>
-                        <div class="search_item">
-                            <div>children</div>
-                            <select name="children" id="children_3" class="dropdown_item_select search_input">
-                                <option>0</option>
-                                <option>02</option>
-                                <option>03</option>
-                            </select>
-                        </div>
-                        <button class="button search_button">search<span></span><span></span><span></span></button>
+                        <button class="button search_button">검색<span></span><span></span><span></span></button>
                     </form>
                 </div>
 
-                <!-- Search Panel -->
+                <!-- Search Panel 4 -->
 
                 <div class="search_panel">
                     <form action="#" id="search_form_4" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                         <div class="search_item">
-                            <div>destination</div>
-                            <input type="text" class="destination search_input" required="required">
+                            <div>목적지</div>
+                            <input type="text" class="destination search_input" placeholder="대여할 장소를 입력해보세요." required="required">
                         </div>
                         <div class="search_item">
-                            <div>check in</div>
+                            <div>체크인</div>
                             <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="search_item">
-                            <div>check out</div>
+                            <div>체크아웃</div>
                             <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
                         </div>
                         <div class="search_item">
-                            <div>adults</div>
+                            <div>인원</div>
                             <select name="adults" id="adults_4" class="dropdown_item_select search_input">
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
+                                <option>1명</option>
+                                <option>2명</option>
+                                <option>3~5명</option>
+                                <option>5명 이상</option>
                             </select>
                         </div>
-                        <div class="search_item">
-                            <div>children</div>
-                            <select name="children" id="children_4" class="dropdown_item_select search_input">
-                                <option>0</option>
-                                <option>02</option>
-                                <option>03</option>
-                            </select>
-                        </div>
-                        <button class="button search_button">search<span></span><span></span><span></span></button>
-                    </form>
-                </div>
-
-                <!-- Search Panel -->
-
-                <div class="search_panel">
-                    <form action="#" id="search_form_5" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                        <div class="search_item">
-                            <div>destination</div>
-                            <input type="text" class="destination search_input" required="required">
-                        </div>
-                        <div class="search_item">
-                            <div>check in</div>
-                            <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-                        </div>
-                        <div class="search_item">
-                            <div>check out</div>
-                            <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-                        </div>
-                        <div class="search_item">
-                            <div>adults</div>
-                            <select name="adults" id="adults_5" class="dropdown_item_select search_input">
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
-                            </select>
-                        </div>
-                        <div class="search_item">
-                            <div>children</div>
-                            <select name="children" id="children_5" class="dropdown_item_select search_input">
-                                <option>0</option>
-                                <option>02</option>
-                                <option>03</option>
-                            </select>
-                        </div>
-                        <button class="button search_button">search<span></span><span></span><span></span></button>
-                    </form>
-                </div>
-
-                <!-- Search Panel -->
-
-                <div class="search_panel">
-                    <form action="#" id="search_form_6" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                        <div class="search_item">
-                            <div>destination</div>
-                            <input type="text" class="destination search_input" required="required">
-                        </div>
-                        <div class="search_item">
-                            <div>check in</div>
-                            <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-                        </div>
-                        <div class="search_item">
-                            <div>check out</div>
-                            <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-                        </div>
-                        <div class="search_item">
-                            <div>adults</div>
-                            <select name="adults" id="adults_6" class="dropdown_item_select search_input">
-                                <option>01</option>
-                                <option>02</option>
-                                <option>03</option>
-                            </select>
-                        </div>
-                        <div class="search_item">
-                            <div>children</div>
-                            <select name="children" id="children_6" class="dropdown_item_select search_input">
-                                <option>0</option>
-                                <option>02</option>
-                                <option>03</option>
-                            </select>
-                        </div>
-                        <button class="button search_button">search<span></span><span></span><span></span></button>
+                        <button class="button search_button">검색<span></span><span></span><span></span></button>
                     </form>
                 </div>
             </div>
@@ -389,25 +293,25 @@
     </div>
 </div>
 
-<!-- Intro -->
+<!-- Altspace 인기 여행지 -->
 
 <div class="intro">
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2 class="intro_title text-center">We have the best tours</h2>
+                <h2 class="intro_title text-center">Altspace 인기 여행지</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <div class="intro_text text-center">
-                    <p>준비할 것은 배낭 뿐! 아래와 같은 장소들은 어떠신가요? </p>
+                    <p>황금연휴 한정 최대 30% 할인 혜택 받고 봄캉스 떠나보세요!</p>
                 </div>
             </div>
         </div>
         <div class="row intro_items">
 
-            <!-- Intro Item -->
+            <!-- 서울 -->
 
             <div class="col-lg-4 intro_col">
                 <div class="intro_item">
@@ -415,11 +319,12 @@
                     <!-- Image by https://unsplash.com/@dnevozhai -->
                     <div class="intro_item_background" style="background-image:url(images/intro_1.jpg)"></div>
                     <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                        <div class="intro_date">May 25th - June 01st</div>
-                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
+                        <div class="intro_date">~5월 1일까지</div>
+                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">더 찾아보기<span></span><span></span><span></span></a></div>
                         <div class="intro_center text-center">
-                            <h1>Mauritius</h1>
-                            <div class="intro_price">From $1450</div>
+                            <h1>서울</h1>
+                            <h3>Seoul</h3>
+                            <div class="intro_price">150,000원~</div>
                             <div class="rating rating_4">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -432,7 +337,7 @@
                 </div>
             </div>
 
-            <!-- Intro Item -->
+            <!-- 부산 -->
 
             <div class="col-lg-4 intro_col">
                 <div class="intro_item">
@@ -440,11 +345,12 @@
                     <!-- Image by https://unsplash.com/@hellolightbulb -->
                     <div class="intro_item_background" style="background-image:url(images/intro_2.jpg)"></div>
                     <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                        <div class="intro_date">May 25th - June 01st</div>
-                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
+                        <div class="intro_date">~5월 1일까지</div>
+                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">더 찾아보기<span></span><span></span><span></span></a></div>
                         <div class="intro_center text-center">
-                            <h1>Greece</h1>
-                            <div class="intro_price">From $1450</div>
+                            <h1>부산</h1>
+                            <h3>Busan</h3>
+                            <div class="intro_price">130,000원~</div>
                             <div class="rating rating_4">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -457,7 +363,7 @@
                 </div>
             </div>
 
-            <!-- Intro Item -->
+            <!-- 제주 -->
 
             <div class="col-lg-4 intro_col">
                 <div class="intro_item">
@@ -465,11 +371,12 @@
                     <!-- Image by https://unsplash.com/@willianjusten -->
                     <div class="intro_item_background" style="background-image:url(images/intro_3.jpg)"></div>
                     <div class="intro_item_content d-flex flex-column align-items-center justify-content-center">
-                        <div class="intro_date">May 25th - June 01st</div>
-                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">see more<span></span><span></span><span></span></a></div>
+                        <div class="intro_date">~5월 1일까지</div>
+                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">더 찾아보기<span></span><span></span><span></span></a></div>
                         <div class="intro_center text-center">
-                            <h1>Scotland</h1>
-                            <div class="intro_price">From $1450</div>
+                            <h1>제주</h1>
+                            <h3>Jeju</h3>
+                            <div class="intro_price">170,000원~</div>
                             <div class="rating rating_4">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -486,7 +393,7 @@
     </div>
 </div>
 
-<!-- CTA -->
+<!-- 이벤트 모음 -->
 
 <div class="cta">
     <!-- Image by https://unsplash.com/@thanni -->
@@ -496,56 +403,38 @@
         <div class="row">
             <div class="col">
 
-                <!-- CTA Slider -->
+                <!-- 이벤트 슬라이더 -->
 
                 <div class="cta_slider_container">
                     <div class="owl-carousel owl-theme cta_slider">
 
-                        <!-- CTA Slider Item -->
+                        <!-- 이벤트 1 -->
                         <div class="owl-item cta_item text-center">
-                            <div class="cta_title">몰디브 디럭스 패키지</div>
-                            <div class="rating_r rating_r_4">
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                            </div>
-                            <p class="cta_text">신혼여행으로 갔는데 합리적인 가격에 여러 체험을 즐길 수 있었어요. 남쪽나라의 여유를 만끽했답니다!</p>
-                            <div class="button cta_button"><div class="button_bcg"></div><a href="#">book now<span></span><span></span><span></span></a></div>
+                            <div class="cta_title">레이트 체크아웃 모음</div>
+
+                            <p class="cta_text">넉넉한 퇴실 시간으로 마음까지 여유롭게! 추가비용 없는 레이트 체크아웃을 확인해보세요.</p>
+                            <div class="button cta_button"><div class="button_bcg"></div><a href="#">지금 예약하기<span></span><span></span><span></span></a></div>
                         </div>
 
-                        <!-- CTA Slider Item -->
+                        <!-- 이벤트 2 -->
                         <div class="owl-item cta_item text-center">
-                            <div class="cta_title">maldives deluxe package</div>
-                            <div class="rating_r rating_r_4">
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                            </div>
-                            <p class="cta_text">완전히 지쳐서 떠났었는데 정말 혼자만의 시간을 만끽했어요. 연락에 지치셨다면 꼭 가보세요!</p>
-                            <div class="button cta_button"><div class="button_bcg"></div><a href="#">book now<span></span><span></span><span></span></a></div>
+                            <div class="cta_title">봄 특집 4월 인기 펜션 기획전</div>
+
+                            <p class="cta_text">설렘 가득한 벚꽃 여행! 할인 혜택 가득한 봄 여행 펜캉스 기획전을 확인해보세요.</p>
+                            <div class="button cta_button"><div class="button_bcg"></div><a href="#">지금 검색하기<span></span><span></span><span></span></a></div>
                         </div>
 
-                        <!-- CTA Slider Item -->
+                        <!-- 이벤트 3 -->
                         <div class="owl-item cta_item text-center">
-                            <div class="cta_title">maldives deluxe package</div>
-                            <div class="rating_r rating_r_4">
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                            </div>
-                            <p class="cta_text">요트나 다이빙하기에도 좋았어요. 바다 밑이 정말 마음을 뻥 뚫어주는 느낌이었답니다.</p>
-                            <div class="button cta_button"><div class="button_bcg"></div><a href="#">book now<span></span><span></span><span></span></a></div>
+                            <div class="cta_title">믿기지 않는 가성비! 10만원 이하 숙소 모음</div>
+
+                            <p class="cta_text">이 가격에 이 퀄리티가 가능한가요? 10만원 이하로 가성비 있게 여행을 떠나보세요.</p>
+                            <div class="button cta_button"><div class="button_bcg"></div><a href="#">지금 검색하기<span></span><span></span><span></span></a></div>
                         </div>
 
                     </div>
 
-                    <!-- CTA Slider Nav - Prev -->
+                    <!-- 이벤트 슬라이더 내비게이터 - 이전 -->
                     <div class="cta_slider_nav cta_slider_prev">
                         <svg version="1.1" id="Layer_4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                              width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
@@ -563,7 +452,7 @@
 							</svg>
                     </div>
 
-                    <!-- CTA Slider Nav - Next -->
+                    <!-- 이벤트 슬라이더 내비게이터 - 다음 -->
                     <div class="cta_slider_nav cta_slider_next">
                         <svg version="1.1" id="Layer_5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                              width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
@@ -589,13 +478,13 @@
 
 </div>
 
-<!-- Offers -->
+<!-- Altspace HOT 숙소 모음 -->
 
 <div class="offers">
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h2 class="section_title">가성비 최고의 여행지들이 지금 당신을 기다립니다!</h2>
+                <h2 class="section_title">Altspace 이용객들이 가장 많이 찾은 HOT 숙소 모음</h2>
             </div>
         </div>
         <div class="row offers_items">
@@ -608,20 +497,20 @@
                             <div class="offers_image_container">
                                 <!-- Image by https://unsplash.com/@kensuarez -->
                                 <div class="offers_image_background" style="background-image:url(images/offer_1.jpg)"></div>
-                                <div class="offer_name"><a href="#">grand castle</a></div>
+                                <div class="offer_name"><a href="#">신라호텔 서울</a></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="offers_content">
-                                <div class="offers_price">$70<span>per night</span></div>
-                                <div class="rating_r rating_r_4 offers_rating">
+                                <div class="offers_price">250,000원~</div>
+                                <div class="rating_r rating_r_5 offers_rating">
                                     <i></i>
                                     <i></i>
                                     <i></i>
                                     <i></i>
                                     <i></i>
                                 </div>
-                                <p class="offers_text">Suspendisse potenti. In faucibus massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu convallis tortor.</p>
+                                <p class="offers_text">공간의 교통편과 간략한 소개글</p>
                                 <div class="offers_icons">
                                     <ul class="offers_icons_list">
                                         <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
@@ -630,7 +519,7 @@
                                         <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
                                     </ul>
                                 </div>
-                                <div class="offers_link"><a href="offers.html">read more</a></div>
+                                <div class="offers_link"><a href="offers.html">상세 정보</a></div>
                             </div>
                         </div>
                     </div>
@@ -645,12 +534,12 @@
                             <div class="offers_image_container">
                                 <!-- Image by Egzon Bytyqi -->
                                 <div class="offers_image_background" style="background-image:url(images/offer_2.jpg)"></div>
-                                <div class="offer_name"><a href="#">turkey hills</a></div>
+                                <div class="offer_name"><a href="#">노보텔 엠배서더 용산</a></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="offers_content">
-                                <div class="offers_price">$50<span>per night</span></div>
+                                <div class="offers_price">200,000원~</div>
                                 <div class="rating_r rating_r_4 offers_rating">
                                     <i></i>
                                     <i></i>
@@ -658,7 +547,7 @@
                                     <i></i>
                                     <i></i>
                                 </div>
-                                <p class="offers_text">Suspendisse potenti. In faucibus massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu convallis tortor.</p>
+                                <p class="offers_text">공간의 교통편과 간략한 소개글</p>
                                 <div class="offers_icons">
                                     <ul class="offers_icons_list">
                                         <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
@@ -667,7 +556,7 @@
                                         <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
                                     </ul>
                                 </div>
-                                <div class="offers_link"><a href="offers.html">read more</a></div>
+                                <div class="offers_link"><a href="offers.html">상세 정보</a></div>
                             </div>
                         </div>
                     </div>
@@ -682,20 +571,20 @@
                             <div class="offers_image_container">
                                 <!-- Image by https://unsplash.com/@nevenkrcmarek -->
                                 <div class="offers_image_background" style="background-image:url(images/offer_3.jpg)"></div>
-                                <div class="offer_name"><a href="#">island dream</a></div>
+                                <div class="offer_name"><a href="#">체스터톤스 속초</a></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="offers_content">
-                                <div class="offers_price">$90<span>per night</span></div>
-                                <div class="rating_r rating_r_4 offers_rating">
+                                <div class="offers_price">75,000원~</div>
+                                <div class="rating_r rating_r_5 offers_rating">
                                     <i></i>
                                     <i></i>
                                     <i></i>
                                     <i></i>
                                     <i></i>
                                 </div>
-                                <p class="offers_text">Suspendisse potenti. In faucibus massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu convallis tortor.</p>
+                                <p class="offers_text">공간의 교통편과 간략한 소개글</p>
                                 <div class="offers_icons">
                                     <ul class="offers_icons_list">
                                         <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
@@ -704,7 +593,7 @@
                                         <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
                                     </ul>
                                 </div>
-                                <div class="offers_link"><a href="offers.html">read more</a></div>
+                                <div class="offers_link"><a href="offers.html">상세 정보</a></div>
                             </div>
                         </div>
                     </div>
@@ -719,12 +608,12 @@
                             <div class="offers_image_container">
                                 <!-- Image by https://unsplash.com/@mantashesthaven -->
                                 <div class="offers_image_background" style="background-image:url(images/offer_4.jpg)"></div>
-                                <div class="offer_name"><a href="#">travel light</a></div>
+                                <div class="offer_name"><a href="#">해운대 팔레드시즈</a></div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="offers_content">
-                                <div class="offers_price">$30<span>per night</span></div>
+                                <div class="offers_price">120,000원~</div>
                                 <div class="rating_r rating_r_4 offers_rating">
                                     <i></i>
                                     <i></i>
@@ -732,7 +621,7 @@
                                     <i></i>
                                     <i></i>
                                 </div>
-                                <p class="offers_text">Suspendisse potenti. In faucibus massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu convallis tortor.</p>
+                                <p class="offers_text">공간의 교통편과 간략한 소개글</p>
                                 <div class="offers_icons">
                                     <ul class="offers_icons_list">
                                         <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
@@ -741,7 +630,7 @@
                                         <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
                                     </ul>
                                 </div>
-                                <div class="offers_link"><a href="offers.html">read more</a></div>
+                                <div class="offers_link"><a href="offers.html">상세 정보</a></div>
                             </div>
                         </div>
                     </div>
@@ -752,127 +641,169 @@
     </div>
 </div>
 
-<!-- Testimonials -->
+<!-- 이용객 리뷰 -->
 
 <div class="testimonials">
     <div class="test_border"></div>
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h2 class="section_title">어떤 고객님들은 이미 최고의 경험을 체험했습니다!</h2>
+                <h2 class="section_title">이용객 리뷰</h2>
             </div>
         </div>
         <div class="row">
             <div class="col">
 
-                <!-- Testimonials Slider -->
+                <!-- 리뷰 슬라이더 -->
 
                 <div class="test_slider_container">
                     <div class="owl-carousel owl-theme test_slider">
 
-                        <!-- Testimonial Item -->
+                        <!-- 리뷰 1 -->
                         <div class="owl-item">
                             <div class="test_item">
-                                <div class="test_image"><img src="images/test_1.jpg" alt="https://unsplash.com/@anniegray"></div>
+                                <div class="test_image"><img src="images/test_1.jpg" width="200" height="520"></div>
                                 <div class="test_icon"><img src="images/backpack.png" alt=""></div>
                                 <div class="test_content_container">
                                     <div class="test_content">
                                         <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
+                                            <div class="test_name">이황수</div>
+                                            <div class="test_date">2025년 2월 15일</div>
                                         </div>
-                                        <div class="test_quote_title">"정말 최고였어요"</div>
-                                        <p class="test_quote_text">칸쿤 같은 곳이 다 뻔하지 뭐 하고 갔는데 왠걸요, 리조트 내에 모든 설비가 다있는 거에요! 정말 최고였어요.</p>
+                                        <div class="test_quote_title">"오션뷰에 바베큐까지 환상적이네요"</div>
+                                        <div class="rating_r rating_r_5">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                        <p class="test_quote_text">리뷰 내용</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Testimonial Item -->
+                        <!-- 리뷰 2 -->
                         <div class="owl-item">
                             <div class="test_item">
-                                <div class="test_image"><img src="images/test_2.jpg" alt="https://unsplash.com/@tschax"></div>
+                                <div class="test_image"><img src="images/test_2.jpg" width="200" height="520"></div>
                                 <div class="test_icon"><img src="images/island_t.png" alt=""></div>
                                 <div class="test_content_container">
                                     <div class="test_content">
                                         <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
+                                            <div class="test_name">임유경</div>
+                                            <div class="test_date">2024년 12월 24일</div>
                                         </div>
-                                        <div class="test_quote_title">"날씨가 좀 흐렸네요"</div>
-                                        <p class="test_quote_text">우기였어서 날씨가 흐렸어요. 그 점만 빼면 즐거웠답니다.</p>
+                                        <div class="test_quote_title">"매년 찾게 되는 만족스러운 호텔입니다"</div>
+                                        <div class="rating_r rating_r_4">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                        <p class="test_quote_text">리뷰 내용</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Testimonial Item -->
+                        <!-- 리뷰 3 -->
                         <div class="owl-item">
                             <div class="test_item">
-                                <div class="test_image"><img src="images/test_3.jpg" alt="https://unsplash.com/@seefromthesky"></div>
+                                <div class="test_image"><img src="images/test_3.jpg" width="200" height="520"></div>
                                 <div class="test_icon"><img src="images/kayak.png" alt=""></div>
                                 <div class="test_content_container">
                                     <div class="test_content">
                                         <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
+                                            <div class="test_name">김부건</div>
+                                            <div class="test_date">2024년 11월 4일</div>
                                         </div>
-                                        <div class="test_quote_title">"카약과 요트!"</div>
-                                        <p class="test_quote_text">그리고 바다 한가운데에서 즐기는 칵테일 한잔의 여유까지. 즐거운 기억들을 많이 만들고 왔어요.</p>
+                                        <div class="test_quote_title">"외관은 예쁜데 실내가 생각보다 별로였어요"</div>
+                                        <div class="rating_r rating_r_3">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                        <p class="test_quote_text">리뷰 내용</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Testimonial Item -->
+                        <!-- 리뷰 4 -->
                         <div class="owl-item">
                             <div class="test_item">
-                                <div class="test_image"><img src="images/test_2.jpg" alt=""></div>
+                                <div class="test_image"><img src="images/test_4.jpg" width="200" height="520"></div>
                                 <div class="test_icon"><img src="images/island_t.png" alt=""></div>
                                 <div class="test_content_container">
                                     <div class="test_content">
                                         <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
+                                            <div class="test_name">이예진</div>
+                                            <div class="test_date">2024년 10월 15일</div>
                                         </div>
-                                        <div class="test_quote_title">"날씨가 좀 흐렸네요"</div>
-                                        <p class="test_quote_text">기였어서 날씨가 흐렸어요. 그 점만 빼면 즐거웠답니다.</p>
+                                        <div class="test_quote_title">"펜션도 여행지도 모두 만족스러웠어요"</div>
+                                        <div class="rating_r rating_r_5">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                        <p class="test_quote_text">리뷰 내용</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Testimonial Item -->
+                        <!-- 리뷰 5 -->
                         <div class="owl-item">
                             <div class="test_item">
-                                <div class="test_image"><img src="images/test_1.jpg" alt=""></div>
+                                <div class="test_image"><img src="images/test_5.jpg" width="200" height="520"></div>
                                 <div class="test_icon"><img src="images/backpack.png" alt=""></div>
                                 <div class="test_content_container">
                                     <div class="test_content">
                                         <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
+                                            <div class="test_name">박정우</div>
+                                            <div class="test_date">2024년 4월 10일</div>
                                         </div>
-                                        <div class="test_quote_title">" Best holliday ever "</div>
-                                        <p class="test_quote_text">Nullam eu convallis tortor. Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec.</p>
+                                        <div class="test_quote_title">"앞으로 스키 타러 여기만 와야겠어요"</div>
+                                        <div class="rating_r rating_r_4">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                        <p class="test_quote_text">리뷰 내용</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Testimonial Item -->
+                        <!-- 리뷰 6 -->
                         <div class="owl-item">
                             <div class="test_item">
-                                <div class="test_image"><img src="images/test_3.jpg" alt=""></div>
+                                <div class="test_image"><img src="images/test_6.jpg" width="200" height="520"></div>
                                 <div class="test_icon"><img src="images/kayak.png" alt=""></div>
                                 <div class="test_content_container">
                                     <div class="test_content">
                                         <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
+                                            <div class="test_name">이진만</div>
+                                            <div class="test_date">2024년 1월 6일</div>
                                         </div>
-                                        <div class="test_quote_title">" Best holliday ever "</div>
-                                        <p class="test_quote_text">Nullam eu convallis tortor. Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec.</p>
+                                        <div class="test_quote_title">"친구들과 즐거운 시간을 보내고 왔어요"</div>
+                                        <div class="rating_r rating_r_3">
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                            <i></i>
+                                        </div>
+                                        <p class="test_quote_text">리뷰 내용</p>
                                     </div>
                                 </div>
                             </div>
@@ -924,107 +855,109 @@
     </div>
 </div>
 
+<!-- 이번 주 특가 모음 -->
+
 <div class="trending">
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <h2 class="section_title">trending now</h2>
+                <h2 class="section_title">이번 주 특가 모음</h2>
             </div>
         </div>
         <div class="row trending_container">
 
-            <!-- Trending Item -->
+            <!-- 특가 1 -->
             <div class="col-lg-3 col-sm-6">
                 <div class="trending_item clearfix">
                     <div class="trending_image"><img src="images/trend_1.png" alt="https://unsplash.com/@fransaraco"></div>
                     <div class="trending_content">
-                        <div class="trending_title"><a href="#">grand hotel</a></div>
-                        <div class="trending_price">From $182</div>
-                        <div class="trending_location">madrid, spain</div>
+                        <div class="trending_title"><a href="#">신라스테이 역삼</a></div>
+                        <div class="trending_price">30%</div><h4>80,000원~</h4>
+                        <div class="trending_location">서울 강남구 역삼동</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Trending Item -->
+            <!-- 특가 2 -->
             <div class="col-lg-3 col-sm-6">
                 <div class="trending_item clearfix">
                     <div class="trending_image"><img src="images/trend_2.png" alt="https://unsplash.com/@grovemade"></div>
                     <div class="trending_content">
-                        <div class="trending_title"><a href="#">mars hotel</a></div>
-                        <div class="trending_price">From $182</div>
-                        <div class="trending_location">madrid, spain</div>
+                        <div class="trending_title"><a href="#">신라스테이 구로</a></div>
+                        <div class="trending_price">30%</div><h4>80,000원~</h4>
+                        <div class="trending_location">서울 구로구 구로동</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Trending Item -->
+            <!-- 특가 3 -->
             <div class="col-lg-3 col-sm-6">
                 <div class="trending_item clearfix">
                     <div class="trending_image"><img src="images/trend_3.png" alt="https://unsplash.com/@jbriscoe"></div>
                     <div class="trending_content">
-                        <div class="trending_title"><a href="#">queen hotel</a></div>
-                        <div class="trending_price">From $182</div>
-                        <div class="trending_location">madrid, spain</div>
+                        <div class="trending_title"><a href="#">신라스테이 목동</a></div>
+                        <div class="trending_price">30%</div><h4>80,000원~</h4>
+                        <div class="trending_location">서울 양천구 목동</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Trending Item -->
+            <!-- 특가 4 -->
             <div class="col-lg-3 col-sm-6">
                 <div class="trending_item clearfix">
                     <div class="trending_image"><img src="images/trend_4.png" alt="https://unsplash.com/@oowgnuj"></div>
                     <div class="trending_content">
-                        <div class="trending_title"><a href="#">mars hotel</a></div>
-                        <div class="trending_price">From $182</div>
-                        <div class="trending_location">madrid, spain</div>
+                        <div class="trending_title"><a href="#">신라스테이 동탄</a></div>
+                        <div class="trending_price">30%</div><h4>80,000원~</h4>
+                        <div class="trending_location">경기 화성 청계동</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Trending Item -->
+            <!-- 특가 5 -->
             <div class="col-lg-3 col-sm-6">
                 <div class="trending_item clearfix">
                     <div class="trending_image"><img src="images/trend_5.png" alt="https://unsplash.com/@mindaugas"></div>
                     <div class="trending_content">
-                        <div class="trending_title"><a href="#">grand hotel</a></div>
-                        <div class="trending_price">From $182</div>
-                        <div class="trending_location">madrid, spain</div>
+                        <div class="trending_title"><a href="#">신라스테이 대전</a></div>
+                        <div class="trending_price">30%</div><h4>80,000원~</h4>
+                        <div class="trending_location">대전 서구 갈마동</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Trending Item -->
+            <!-- 특가 6 -->
             <div class="col-lg-3 col-sm-6">
                 <div class="trending_item clearfix">
                     <div class="trending_image"><img src="images/trend_6.png" alt="https://unsplash.com/@itsnwa"></div>
                     <div class="trending_content">
-                        <div class="trending_title"><a href="#">mars hotel</a></div>
-                        <div class="trending_price">From $182</div>
-                        <div class="trending_location">madrid, spain</div>
+                        <div class="trending_title"><a href="#">신라스테이 춘천</a></div>
+                        <div class="trending_price">30%</div><h4>80,000원~</h4>
+                        <div class="trending_location">강원 춘천 소양동</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Trending Item -->
+            <!-- 특가 7 -->
             <div class="col-lg-3 col-sm-6">
                 <div class="trending_item clearfix">
                     <div class="trending_image"><img src="images/trend_7.png" alt="https://unsplash.com/@rktkn"></div>
                     <div class="trending_content">
-                        <div class="trending_title"><a href="#">queen hotel</a></div>
-                        <div class="trending_price">From $182</div>
-                        <div class="trending_location">madrid, spain</div>
+                        <div class="trending_title"><a href="#">신라스테이 수성못</a></div>
+                        <div class="trending_price">30%</div><h4>80,000원~</h4>
+                        <div class="trending_location">대구 수성구 황금동</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Trending Item -->
+            <!-- 특가 8 -->
             <div class="col-lg-3 col-sm-6">
                 <div class="trending_item clearfix">
                     <div class="trending_image"><img src="images/trend_8.png" alt="https://unsplash.com/@thoughtcatalog"></div>
                     <div class="trending_content">
-                        <div class="trending_title"><a href="#">mars hotel</a></div>
-                        <div class="trending_price">From $182</div>
-                        <div class="trending_location">madrid, spain</div>
+                        <div class="trending_title"><a href="#">신라스테이 동성로</a></div>
+                        <div class="trending_price">30%</div><h4>80,000원~</h4>
+                        <div class="trending_location">대구 수성구 성내동</div>
                     </div>
                 </div>
             </div>
@@ -1032,6 +965,8 @@
         </div>
     </div>
 </div>
+
+<!-- 고객센터 상담 -->
 
 <div class="contact">
     <div class="contact_background" style="background-image:url(images/contact.png)"></div>
@@ -1045,13 +980,13 @@
             </div>
             <div class="col-lg-7">
                 <div class="contact_form_container">
-                    <div class="contact_title">get in touch</div>
+                    <div class="contact_title">고객센터 상담</div>
                     <form action="#" id="contact_form" class="contact_form">
-                        <input type="text" id="contact_form_name" class="contact_form_name input_field" placeholder="Name" required="required" data-error="Name is required.">
-                        <input type="text" id="contact_form_email" class="contact_form_email input_field" placeholder="E-mail" required="required" data-error="Email is required.">
-                        <input type="text" id="contact_form_subject" class="contact_form_subject input_field" placeholder="Subject" required="required" data-error="Subject is required.">
-                        <textarea id="contact_form_message" class="text_field contact_form_message" name="message" rows="4" placeholder="Message" required="required" data-error="Please, write us a message."></textarea>
-                        <button type="submit" id="form_submit_button" class="form_submit_button button">send message<span></span><span></span><span></span></button>
+                        <input type="text" id="contact_form_name" class="contact_form_name input_field" placeholder="이름" required="required" data-error="이름을 입력해주세요.">
+                        <input type="text" id="contact_form_email" class="contact_form_email input_field" placeholder="전화번호 또는 이메일" required="required" data-error="전화번호 또는 이메일을 입력해주세요.">
+                        <input type="text" id="contact_form_subject" class="contact_form_subject input_field" placeholder="제목" required="required" data-error="제목을 입력해주세요.">
+                        <textarea id="contact_form_message" class="text_field contact_form_message" name="message" rows="4" placeholder="내용" required="required" data-error="내용을 입력해주세요."></textarea>
+                        <button type="submit" id="form_submit_button" class="form_submit_button button">문의하기<span></span><span></span><span></span></button>
                     </form>
                 </div>
             </div>

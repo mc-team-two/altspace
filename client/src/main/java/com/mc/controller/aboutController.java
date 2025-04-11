@@ -12,7 +12,7 @@ public class aboutController {
 
     @RequestMapping("")
     public String about(Model model) {
-        model.addAttribute("header", dir + "header");
+        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
         model.addAttribute("footer", dir + "footer");
         return "index";
