@@ -33,8 +33,15 @@ logging:
 # 5. App
 app:
   key:
+    kakaoApiKey: d9815fe45ece611b664e99901e3a45b0
+    googleApiKey: 179241731828-8p6vci91eru8c1c9l9n7d67kmpmba7ls.apps.googleusercontent.com
+    googleApiSecretKey: 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
+    naverApiKey: GTwwnLrG6H_Hrx4QozHX
+    naverApiSecretKey: 8ASwbGFGVj
     algo: PBEWithMD5AndDES
     skey: mykey
   dir:
     imgdir: file:///C:/Users/yejin/Documents/github/altspace/imgs/  # 화면 출력 용
     uploadimgdir: C:/Users/yejin/Documents/github/altspace/imgs/    # 파일 Write 용
+  url:
+    serverUrl : http://127.0.0.1:9090
