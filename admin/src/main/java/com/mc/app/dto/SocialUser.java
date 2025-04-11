@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Builder
 public class SocialUser {
     private Long id;
-    private String user_id;
+    private String userId;
     private String provider;
     private String providerUserId;
-    private LocalDateTime createdAt;
+    private LocalDateTime connectedAt;
 }

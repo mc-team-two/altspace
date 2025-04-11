@@ -1,4 +1,4 @@
-package com.mc.controller;
+package com.mc.controller.auth;
 
 import com.mc.app.dto.User;
 import com.mc.app.service.UserService;
