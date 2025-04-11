@@ -1,9 +1,18 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: ishot
+  Date: 25. 4. 7.
+  Time: 오후 2:31
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-    <title>About Us</title>
+    <title>Altspace | Altspace란</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Travelix Project">
@@ -21,16 +30,102 @@
 
 <div class="super_container">
 
+    <!-- Header -->
+
+    <header class="header">
+
+        <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
+
+        <div class="top_bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col d-flex flex-row">
+                        <div class="phone">02-1234-5678</div>
+                        <div class="social">
+                            <ul class="social_list">
+                                <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="user_box ml-auto">
+                            <div class="user_box_login user_box_link"><a href="#">로그인</a></div>
+                            <div class="user_box_register user_box_link"><a href="#">회원가입</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
+
+        <nav class="main_nav">
+            <div class="container">
+                <div class="row">
+                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
+                        <div class="logo_container">
+                            <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
+                        </div>
+                        <div class="main_nav_container ml-auto">
+                            <ul class="main_nav_list">
+                                <li class="main_nav_item"><a href="/">홈</a></li>
+                                <li class="main_nav_item"><a href="/about">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="/offers">예약</a></li>
+                                <li class="main_nav_item"><a href="/contact">고객센터</a></li>
+                                <li class="main_nav_item"><a href="/mypage">마이페이지</a></li>
+                            </ul>
+                        </div>
+                        <div class="content_search ml-lg-0 ml-auto">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+								<g>
+                                    <g>
+                                        <g>
+                                            <path class="mag_glass" fill="#FFFFFF" d="M78.438,216.78c0,57.906,22.55,112.343,63.493,153.287c40.945,40.944,95.383,63.494,153.287,63.494
+											s112.344-22.55,153.287-63.494C489.451,329.123,512,274.686,512,216.78c0-57.904-22.549-112.342-63.494-153.286
+											C407.563,22.549,353.124,0,295.219,0c-57.904,0-112.342,22.549-153.287,63.494C100.988,104.438,78.439,158.876,78.438,216.78z
+											M119.804,216.78c0-96.725,78.69-175.416,175.415-175.416s175.418,78.691,175.418,175.416
+											c0,96.725-78.691,175.416-175.416,175.416C198.495,392.195,119.804,313.505,119.804,216.78z"/>
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path class="mag_glass" fill="#FFFFFF" d="M6.057,505.942c4.038,4.039,9.332,6.058,14.625,6.058s10.587-2.019,14.625-6.058L171.268,369.98
+											c8.076-8.076,8.076-21.172,0-29.248c-8.076-8.078-21.172-8.078-29.249,0L6.057,476.693
+											C-2.019,484.77-2.019,497.865,6.057,505.942z"/>
+                                        </g>
+                                    </g>
+                                </g>
+							</svg>
+                        </div>
+
+                        <form id="search_form" class="search_form bez_1">
+                            <input type="search" class="search_content_input bez_1">
+                        </form>
+
+                        <div class="hamburger">
+                            <i class="fa fa-bars trans_200"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
     <!-- Home -->
 
     <div class="home">
         <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/about_background.jpg"></div>
         <div class="home_content">
-            <div class="home_title">about us</div>
+            <div class="home_title">알트스페이스란</div>
         </div>
     </div>
 
-    <!-- Intro -->
+    <!-- Altspace 소개 -->
 
     <div class="intro">
         <div class="container">
@@ -40,9 +135,21 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="intro_content">
-                        <div class="intro_title">we have the best tours</div>
-                        <p class="intro_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate eros, iaculis consequat nisl. Nunc et suscipit urna. Integer elementum orci eu vehicula pretium. Donec bibendum tristique condimentum. Aenean in lacus ligula. Phasellus euismod gravida eros. Aenean nec ipsum aliquet, pharetra magna id, interdum sapien. Etiam id lorem eu nisl pellentesque semper. Nullam tincidunt metus placerat, suscipit leo ut, tempus nulla. Fusce at eleifend tellus. Ut eleifend dui nunc, non fermentum quam placerat non. Etiam venenatis nibh augue, sed eleifend justo tristique eu</p>
-                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>
+                        <div class="intro_title">Altspace에 오신 것을 환영합니다!</div>
+                        <p class="intro_text">
+                            Altspace™는 메뉴를 빠르게 여는 Alt + Space 단축키에 간결하게 정리된 레이아웃을 가진 웹사이트를 통해 빠르고 편리한 공간 예약 서비스를 제공하고 있습니다.
+                            <p></p>
+                            Altspace에서 다양한 호텔 및 리조트는 물론 게스트하우스, 모텔, 파티룸 등 프라이빗한 공간을 안심하고 예약하실 수 있으며 이용 요금, 편의 시설과 서비스,
+                            예약 가능 객실, 반려동물 동반 여부 등 등 모든 정보를 한 눈에 확인하실 수 있습니다.
+                            <p></p>
+                            본 웹사이트는 멀티캠퍼스 2조 운영진이 (이예진, 이황수, 임유경, 박정우, 김부건) 공동 운영합니다. 자세한 문의사항 또는 분쟁의 경우 아래 연락처로 연락 바랍니다.
+                            <p></p>
+                            02-1234-5678 / 1588-1588 / help.alt@altspace.com
+                            <p></p>
+                            (주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
+                            관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹
+                        </p>
+                        <div class="button intro_button"><div class="button_bcg"></div><a href="/offers">예약하러 가기<span></span><span></span><span></span></a></div>
                     </div>
                 </div>
             </div>
@@ -276,3 +383,7 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/about_custom.js"></script>
+
+</body>
+
+</html>

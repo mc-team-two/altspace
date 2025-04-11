@@ -15,6 +15,6 @@ public class aboutController {
         model.addAttribute("header", dir + "header");
         model.addAttribute("center", dir + "center");
         model.addAttribute("footer", dir + "footer");
-        return "index";
+        return "about";
     }
 }

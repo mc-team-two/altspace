@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Altspace</title>
+    <title>Altspace | 가장 빠른 공간대여 알트스페이스</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Altspace Project">
@@ -53,22 +53,22 @@
             </div>
         </div>
 
-        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터, 마이페이지) -->
+        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
 
         <nav class="main_nav">
             <div class="container">
                 <div class="row">
-                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
                         <div class="logo_container">
                             <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
                                 <li class="main_nav_item"><a href="#">홈</a></li>
-                                <li class="main_nav_item"><a href="about.html">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="offers.html">예약</a></li>
-                                <li class="main_nav_item"><a href="contact.html">고객센터</a></li>
-                                <li class="main_nav_item"><a href="mypage.html">마이페이지</a></li>
+                                <li class="main_nav_item"><a href="/about">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="/offers">예약</a></li>
+                                <li class="main_nav_item"><a href="/contact">고객센터</a></li>
+                                <li class="main_nav_item"><a href="/mypage">마이페이지</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
@@ -127,9 +127,8 @@
 
                     <div class="home_slider_content text-center">
                         <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
-                            <h1>Enjoy</h1>
-                            <h1>your rest!</h1>
-                            <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">호텔/리조트 검색<span></span><span></span><span></span></a></div>
+                            <h1>호텔/리조트</h1>
+                            <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">바로 검색하기<span></span><span></span><span></span></a></div>
                         </div>
                     </div>
                 </div>
@@ -140,9 +139,8 @@
 
                     <div class="home_slider_content text-center">
                         <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
-                            <h1>Discover</h1>
-                            <h1>a new destination!</h1>
-                            <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">펜션/게하 검색<span></span><span></span><span></span></a></div>
+                            <h1>펜션/게하</h1>
+                            <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">바로 검색하기<span></span><span></span><span></span></a></div>
                         </div>
                     </div>
                 </div>
@@ -153,9 +151,8 @@
 
                     <div class="home_slider_content text-center">
                         <div class="home_slider_content_inner" data-animation-in="flipInX" data-animation-out="animate-out fadeOut">
-                            <h1>Go on</h1>
-                            <h1>your own space!</h1>
-                            <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">파티룸 검색<span></span><span></span><span></span></a></div>
+                            <h1>파티룸</h1>
+                            <div class="button home_slider_button"><div class="button_bcg"></div><a href="#">바로 검색하기<span></span><span></span><span></span></a></div>
                         </div>
                     </div>
                 </div>
@@ -227,10 +224,9 @@
 
                     <div class="search_tabs_container">
                         <div class="search_tabs d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                            <div class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/suitcase.png" alt=""><span>호텔/리조트 예약</span></div>
-                            <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/island.png" alt="">펜션/게하 예약</div>
-                            <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/diving.png" alt="">파티룸 예약</div>
-                            <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/bus.png" alt="">렌터카 예약</div>
+                            <div class="search_tab active d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/suitcase.png" alt=""><span>호텔/리조트</span></div>
+                            <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/island.png" alt="">펜션/게하</div>
+                            <div class="search_tab d-flex flex-row align-items-center justify-content-lg-center justify-content-start"><img src="images/diving.png" alt="">파티룸</div>
                         </div>
                     </div>
 
@@ -297,8 +293,8 @@
                     <div class="search_panel">
                         <form action="#" id="search_form_3" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                         <div class="search_item">
-                            <div>목적지</div>
-                            <input type="text" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
+                            <div>위치</div>
+                            <input type="text" class="destination search_input" placeholder="위치나 파티룸을 검색해보세요." required="required">
                         </div>
                         <div class="search_item">
                             <div>체크인</div>
@@ -317,35 +313,6 @@
                                 <option>5명 이상</option>
                             </select>
                         </div>
-                            <button class="button search_button">검색<span></span><span></span><span></span></button>
-                        </form>
-                    </div>
-
-                    <!-- Search Panel 4 -->
-
-                    <div class="search_panel">
-                        <form action="#" id="search_form_4" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                            <div class="search_item">
-                                <div>목적지</div>
-                                <input type="text" class="destination search_input" placeholder="대여할 장소를 입력해보세요." required="required">
-                            </div>
-                            <div class="search_item">
-                                <div>체크인</div>
-                                <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-                            </div>
-                            <div class="search_item">
-                                <div>체크아웃</div>
-                                <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-                            </div>
-                            <div class="search_item">
-                                <div>인원</div>
-                                <select name="adults" id="adults_4" class="dropdown_item_select search_input">
-                                    <option>1명</option>
-                                    <option>2명</option>
-                                    <option>3~5명</option>
-                                    <option>5명 이상</option>
-                                </select>
-                            </div>
                             <button class="button search_button">검색<span></span><span></span><span></span></button>
                         </form>
                     </div>
@@ -1041,7 +1008,7 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="contact_form_container">
-                        <div class="contact_title">고객센터 상담</div>
+                        <div class="contact_title">고객센터 상담 요청</div>
                         <form action="#" id="contact_form" class="contact_form">
                             <input type="text" id="contact_form_name" class="contact_form_name input_field" placeholder="이름" required="required" data-error="이름을 입력해주세요.">
                             <input type="text" id="contact_form_email" class="contact_form_email input_field" placeholder="전화번호 또는 이메일" required="required" data-error="전화번호 또는 이메일을 입력해주세요.">

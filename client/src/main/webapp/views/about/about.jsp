@@ -1,7 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: ishot
+  Date: 25. 4. 7.
+  Time: 오후 2:31
+  To change this template use File | Settings | File Templates.
+--%>
 
+<!DOCTYPE html>
+<html lang="ko">
 <head>
     <title>About Us</title>
     <meta charset="utf-8">
@@ -276,3 +282,7 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/about_custom.js"></script>
+
+</body>
+
+</html>

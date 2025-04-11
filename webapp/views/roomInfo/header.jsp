@@ -2,25 +2,24 @@
   Created by IntelliJ IDEA.
   User: ishot
   Date: 25. 4. 7.
-  Time: 오후 3:08
+  Time: 오후 2:15
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <title>Single Listing</title>
-    <meta charset="utf-8">
+    <title>Altspace</title>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
+    <meta name="description" content="Altspace Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 </head>
 
 <body>
@@ -31,13 +30,13 @@
 
     <header class="header">
 
-        <!-- Top Bar -->
+        <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
 
         <div class="top_bar">
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        <div class="phone">+45 345 3324 56789</div>
+                        <div class="phone">02-1234-5678</div>
                         <div class="social">
                             <ul class="social_list">
                                 <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
@@ -49,30 +48,29 @@
                             </ul>
                         </div>
                         <div class="user_box ml-auto">
-                            <div class="user_box_login user_box_link"><a href="#">login</a></div>
-                            <div class="user_box_register user_box_link"><a href="#">register</a></div>
+                            <div class="user_box_login user_box_link"><a href="#">로그인</a></div>
+                            <div class="user_box_register user_box_link"><a href="#">회원가입</a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Navigation -->
+        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
 
         <nav class="main_nav">
             <div class="container">
                 <div class="row">
                     <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                         <div class="logo_container">
-                            <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+                            <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
-                                <li class="main_nav_item"><a href="<c:url value="/"/> ">home</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/about"/> ">about us</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/offers"/> ">offers</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">RoomInfo</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/elements"/> ">Elements</a></li>
+                                <li class="main_nav_item"><a href="home.html">홈</a></li>
+                                <li class="main_nav_item"><a href="about.html">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="offers.html">예약</a></li>
+                                <li class="main_nav_item"><a href="contact.html">고객센터</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
@@ -112,42 +110,4 @@
         </nav>
 
     </header>
-
-    <div class="menu trans_500">
-        <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-            <div class="menu_close_container"><div class="menu_close"></div></div>
-            <div class="logo menu_logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
-            <ul>
-                <li class="menu_item"><a href="index.html">home</a></li>
-                <li class="menu_item"><a href="about.html">about us</a></li>
-                <li class="menu_item"><a href="offers.html">offers</a></li>
-                <li class="menu_item"><a href="blog.html">news</a></li>
-                <li class="menu_item"><a href="contact.html">contact</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Home -->
-
-    <div class="home">
-        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/single_background.jpg"></div>
-        <div class="home_content">
-            <div class="home_title">the offers</div>
-        </div>
-    </div>
-
 </div>
-
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="plugins/colorbox/jquery.colorbox-min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
-<script src="js/single_listing_custom.js"></script>
-
-</body>
-
-</html>
