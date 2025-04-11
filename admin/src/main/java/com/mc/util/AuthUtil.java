@@ -1,4 +1,4 @@
-package com.mc.app.util;
+package com.mc.util;
 
 import java.util.UUID;
 
