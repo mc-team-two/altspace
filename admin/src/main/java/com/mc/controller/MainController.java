@@ -13,15 +13,4 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-
-    @RequestMapping("/register")
-    public String register() {
-        return "register";
-    }
-
 }
