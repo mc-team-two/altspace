@@ -1,4 +1,4 @@
-package com.mc.controller.auth;
+package com.mc.controller.oauth2;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
