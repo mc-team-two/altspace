@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class SocialUser {
-    private Long id;
     private String userId;
     private String provider;
     private String providerUserId;
