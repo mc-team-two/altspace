@@ -156,7 +156,7 @@ public class AuthNaverController {
 
             SocialUser newSocialUser = SocialUser.builder()
                     .userId(newUser.getUserId())
-                    .provider("kakao")
+                    .provider("naver")
                     .providerUserId(providerUserId)
                     .connectedAt(connectedAt)
                     .build();

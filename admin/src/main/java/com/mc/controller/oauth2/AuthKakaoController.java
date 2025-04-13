@@ -141,7 +141,7 @@ public class AuthKakaoController {
                 // 일반 회원 여부
                 if (existingUser.getPassword() != null) {
                     model.addAttribute("msg", "이메일 계정으로 가입한 회원입니다. 로그인 해주세요.");
-                    return "demo/login";
+                    return "auth/login";
                 }
 
                 // 소셜 회원 여부
@@ -150,7 +150,7 @@ public class AuthKakaoController {
                     String msg = existingSocialUser.getProvider() + "로 가입한 회원입니다.\n";
                     msg += "연동일자: " + existingSocialUser.getConnectedAt();
                     model.addAttribute("msg", msg);
-                    return "demo/login";
+                    return "auth/login";
                 }
             }
 
