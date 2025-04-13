@@ -3,8 +3,18 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mc.app.repository.SocialUserRepository">
-    <select id="selectOne" resultType="socialUser" parameterType="String">
-        SELECT * FROM social_users WHERE provider_user_id=#{providerUserId}
+    <select id="selectUserBySocialId" parameterType="String" resultType="User">
+        select
+            u.user_id, role, email, password, name, phone, created_at, updated_at
+        from users u
+            inner join social_users s
+                on u.user_id = s.user_id
+        where s.provider_user_id = #{providerUserId};
+    </select>
+    <select id="selectOne" parameterType="String" resultType="socialUser">
+        select *
+        from social_users
+        where user_id=#{user_id}
     </select>
     <select id="select" resultType="socialUser">
         SELECT * FROM social_users
@@ -14,10 +24,10 @@
             VALUE (#{userId},#{provider},#{providerUserId}, #{connectedAt})
     </insert>
     <update id="update" parameterType="user">
-        UPDATE users SET cust_name=#{custName} WHERE cust_id=#{custId}
+
     </update>
     <delete id="delete" parameterType="String">
-        DELETE FROM users WHERE user_id=#{userId}
+
     </delete>
 
 </mapper>
