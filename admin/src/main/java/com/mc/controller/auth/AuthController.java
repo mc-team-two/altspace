@@ -71,11 +71,18 @@ public class AuthController {
                             .append(" "));
             String msg = errorMessage.toString();
             model.addAttribute("msg", msg);
-            return "register";
+            return "auth/register";
         }
 
         // 유효성 테스트 통과시 : 고유 id 부여 후 DB에 푸시
-        // TODO : email 중복 검사
+        // email -> 유니크 key
+        if (userService.getByEmail(user.getEmail()) != null) {
+            String msg = "사용중인 이메일 주소입니다.";
+            model.addAttribute("msg", msg);
+            return "auth/register";
+        }
+
+        // email 중복 아니라면
         user.setUserId(AuthUtil.generateUUID());
         try {
             userService.add(user);
@@ -83,9 +90,9 @@ public class AuthController {
         } catch (Exception e) {
             String msg = e.toString();
             model.addAttribute("msg", msg);
-            return "register";
+            return "auth/register";
         }
-        return "redirect:/login";
+        return "redirect:auth/login";
     }
 
     @PostMapping("/loginimpl")
