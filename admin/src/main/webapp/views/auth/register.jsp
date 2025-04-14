@@ -165,11 +165,11 @@
     </form>
 
     <div class="footer-links mt-3">
-      <a href="/demo/register">회원가입</a>
+      <a href="/auth/register">회원가입</a>
       <span class="divider-pipe">|</span>
-      <a href="/demo/find-id">아이디 찾기</a>
+      <a href="/auth/find-id">아이디 찾기</a>
       <span class="divider-pipe">|</span>
-      <a href="/demo/find-password">비밀번호 찾기</a>
+      <a href="/auth/find-password">비밀번호 찾기</a>
     </div>
 
   </div>

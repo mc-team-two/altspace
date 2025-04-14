@@ -33,6 +33,7 @@ public class AuthController {
     private final UserService userService;
     private final SocialUserService socialUserService;
 
+    // 페이지 연결
     @RequestMapping("/login")
     public String login(HttpSession httpSession) {
         // 로그인 세션이 존재하면 접근할 수 없음
@@ -40,12 +41,6 @@ public class AuthController {
             return "redirect:/";
         }
         return dir + "login";
-    }
-
-    @RequestMapping("/logout")
-    public String logout(HttpSession httpSession) {
-        httpSession.removeAttribute("user");
-        return "redirect:/";
     }
 
     @RequestMapping("/register")
@@ -57,6 +52,25 @@ public class AuthController {
         return dir + "register";
     }
 
+    @RequestMapping("/find-id")
+    public String findid(HttpSession httpSession) {
+        // 로그인 세션이 존재하면 접근할 수 없음 (잘못된 접근)
+        if (httpSession.getAttribute("user") != null) {
+            return "redirect:/";
+        }
+        return dir + "find-id";
+    }
+
+    @RequestMapping("/find-password")
+    public String findpassword(HttpSession httpSession) {
+        // 로그인 세션이 존재하면 접근할 수 없음 (잘못된 접근)
+        if (httpSession.getAttribute("user") != null) {
+            return "redirect:/";
+        }
+        return dir + "find-password";
+    }
+
+    // 실행
     @PostMapping("/registerimpl")
     public String registerimpl(@Valid User user, Model model, BindingResult bindingResult) {
         // 파라미터의 @Valid -> User DTO 유효성 검사
@@ -133,6 +147,12 @@ public class AuthController {
         }
 
         return "auth/login";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.removeAttribute("user");
+        return "redirect:/";
     }
 
 }
