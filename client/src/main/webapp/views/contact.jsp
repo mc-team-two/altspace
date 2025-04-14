@@ -5,10 +5,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <title>Altspace | 고객센터</title>
+  <title>Altspace | 고객센터 | 가장 빠른 공간대여 알트스페이스</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Travelix Project">
+  <meta name="description" content="Altspace Project">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
   <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -63,7 +63,6 @@
               <ul class="main_nav_list">
                 <li class="main_nav_item"><a href="/">홈</a></li>
                 <li class="main_nav_item"><a href="/about">Altspace란</a></li>
-                <li class="main_nav_item"><a href="/offers">예약</a></li>
                 <li class="main_nav_item"><a href="/contact">고객센터</a></li>
                 <li class="main_nav_item"><a href="/mypage">마이페이지</a></li>
               </ul>

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ishot
-  Date: 25. 4. 7.
-  Time: 오후 2:31
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
@@ -12,10 +5,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Altspace | Altspace란</title>
+    <title>Altspace | Altspace란 | 가장 빠른 공간대여 알트스페이스</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
+    <meta name="description" content="Altspace Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -30,7 +23,7 @@
 
 <div class="super_container">
 
-    <!-- Header -->
+    <!-- 헤더 -->
 
     <header class="header">
 
@@ -73,7 +66,6 @@
                             <ul class="main_nav_list">
                                 <li class="main_nav_item"><a href="/">홈</a></li>
                                 <li class="main_nav_item"><a href="/about">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="/offers">예약</a></li>
                                 <li class="main_nav_item"><a href="/contact">고객센터</a></li>
                                 <li class="main_nav_item"><a href="/mypage">마이페이지</a></li>
                             </ul>
@@ -116,7 +108,7 @@
 
     </header>
 
-    <!-- Home -->
+    <!-- 홈 -->
 
     <div class="home">
         <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/about_background.jpg"></div>
@@ -149,222 +141,139 @@
                             (주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
                             관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹
                         </p>
-                        <div class="button intro_button"><div class="button_bcg"></div><a href="/offers">예약하러 가기<span></span><span></span><span></span></a></div>
+                        <div class="button intro_button"><div class="button_bcg"></div><a href="/">예약하러 가기<span></span><span></span><span></span></a></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Stats -->
+    <!-- 푸터 -->
 
-    <div class="stats">
+    <footer class="footer">
         <div class="container">
             <div class="row">
-                <div class="col text-center">
-                    <div class="section_title">years statistics</div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1 text-center">
-                    <p class="stats_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate eros, iaculis consequat nisl. Nunc et suscipit urna. Integer elementum orci eu vehicula pretium. Donec bibendum tristique condimentum. Aenean in lacus ligula. </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="stats_years">
-                        <div class="stats_years_last">2016</div>
-                        <div class="stats_years_new float-right">2017</div>
+
+                <!-- 회사 정보 -->
+                <div class="col-lg-3 footer_column">
+                    <div class="footer_col">
+                        <div class="footer_content footer_about">
+                            <div class="logo_container footer_logo">
+                                <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
+                            </div>
+                            <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
+                                관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹</p>
+                            <ul class="footer_social_list">
+                                <li class="footer_social_item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li class="footer_social_item"><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                                <li class="footer_social_item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li class="footer_social_item"><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li class="footer_social_item"><a href="#"><i class="fa fa-behance"></i></a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="stats_contents">
 
-                        <!-- Stats Item -->
-                        <div class="stats_item d-flex flex-md-row flex-column clearfix">
-                            <div class="stats_last order-md-1 order-3">
-                                <div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_1.png" alt="">
-                                </div>
-                                <div class="stats_last_content">
-                                    <div class="stats_number">1642</div>
-                                    <div class="stats_type">Clients</div>
-                                </div>
-                            </div>
-                            <div class="stats_bar order-md-2 order-2" data-x="1642" data-y="3527" data-color="#31124b">
-                                <div class="stats_bar_perc">
-                                    <div>
-                                        <div class="stats_bar_value"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats_new order-md-3 order-1 text-right">
-                                <div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_1.png" alt="">
-                                </div>
-                                <div class="stats_new_content">
-                                    <div class="stats_number">3527</div>
-                                    <div class="stats_type">Clients</div>
-                                </div>
-                            </div>
-                        </div>
+                <!-- 기존 템플릿 내용 삭제 후 정렬을 위한 빈 칸으로 활용 -->
+                <div class="col-lg-3 footer_column">
+                    <div class="footer_col">
+                        <%--<div class="footer_title">blog posts</div>
+                        <div class="footer_content footer_blog">
 
-                        <!-- Stats Item -->
-                        <div class="stats_item d-flex flex-md-row flex-column clearfix">
-                            <div class="stats_last order-md-1 order-3">
-                                <div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_2.png" alt="">
-                                </div>
-                                <div class="stats_last_content">
-                                    <div class="stats_number">768</div>
-                                    <div class="stats_type">Returning Clients</div>
+                            <!-- Footer blog item -->
+                            <div class="footer_blog_item clearfix">
+                                <div class="footer_blog_image"><img src="images/footer_blog_1.jpg" alt="https://unsplash.com/@avidenov"></div>
+                                <div class="footer_blog_content">
+                                    <div class="footer_blog_title"><a href="blog.html">Travel with us this year</a></div>
+                                    <div class="footer_blog_date">Nov 29, 2017</div>
                                 </div>
                             </div>
-                            <div class="stats_bar order-md-2 order-2" data-x="768" data-y="145" data-color="#a95ce4">
-                                <div class="stats_bar_perc">
-                                    <div>
-                                        <div class="stats_bar_value"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats_new order-md-3 order-1 text-right">
-                                <div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_2.png" alt="">
-                                </div>
-                                <div class="stats_new_content">
-                                    <div class="stats_number">145</div>
-                                    <div class="stats_type">Returning Clients</div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Stats Item -->
-                        <div class="stats_item d-flex flex-md-row flex-column clearfix">
-                            <div class="stats_last order-md-1 order-3">
-                                <div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_3.png" alt="">
-                                </div>
-                                <div class="stats_last_content">
-                                    <div class="stats_number">11546</div>
-                                    <div class="stats_type">Reach</div>
+                            <!-- Footer blog item -->
+                            <div class="footer_blog_item clearfix">
+                                <div class="footer_blog_image"><img src="images/footer_blog_2.jpg" alt="https://unsplash.com/@deannaritchie"></div>
+                                <div class="footer_blog_content">
+                                    <div class="footer_blog_title"><a href="blog.html">New destinations for you</a></div>
+                                    <div class="footer_blog_date">Nov 29, 2017</div>
                                 </div>
                             </div>
-                            <div class="stats_bar order-md-2 order-2" data-x="11546" data-y="9321" data-color="#fa6f1b">
-                                <div class="stats_bar_perc">
-                                    <div>
-                                        <div class="stats_bar_value"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats_new order-md-3 order-1 text-right">
-                                <div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_3.png" alt="">
-                                </div>
-                                <div class="stats_new_content">
-                                    <div class="stats_number">9321</div>
-                                    <div class="stats_type">Reach</div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Stats Item -->
-                        <div class="stats_item d-flex flex-md-row flex-column clearfix">
-                            <div class="stats_last order-md-1 order-3">
-                                <div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_4.png" alt="">
-                                </div>
-                                <div class="stats_last_content">
-                                    <div class="stats_number">3729</div>
-                                    <div class="stats_type">Items</div>
+                            <!-- Footer blog item -->
+                            <div class="footer_blog_item clearfix">
+                                <div class="footer_blog_image"><img src="images/footer_blog_3.jpg" alt="https://unsplash.com/@bergeryap87"></div>
+                                <div class="footer_blog_content">
+                                    <div class="footer_blog_title"><a href="blog.html">Travel with us this year</a></div>
+                                    <div class="footer_blog_date">Nov 29, 2017</div>
                                 </div>
                             </div>
-                            <div class="stats_bar order-md-2 order-2" data-x="3729" data-y="17429" data-color="#fa9e1b">
-                                <div class="stats_bar_perc">
-                                    <div>
-                                        <div class="stats_bar_value"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats_new order-md-3 order-1 text-right">
-                                <div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_4.png" alt="">
-                                </div>
-                                <div class="stats_new_content">
-                                    <div class="stats_number">17429</div>
-                                    <div class="stats_type">More Items</div>
-                                </div>
-                            </div>
-                        </div>
 
+                        </div>--%>
                     </div>
                 </div>
+
+
+                <!-- 태그 -->
+                <div class="col-lg-3 footer_column">
+                    <div class="footer_col">
+                        <div class="footer_title">태그</div>
+                        <div class="footer_content footer_tags">
+                            <ul class="tags_list clearfix">
+                                <li class="tag_item"><a href="#">바캉스</a></li>
+                                <li class="tag_item"><a href="#">호캉스</a></li>
+                                <li class="tag_item"><a href="#">페스티벌</a></li>
+                                <li class="tag_item"><a href="#">파티</a></li>
+                                <li class="tag_item"><a href="#">프라이빗</a></li>
+                                <li class="tag_item"><a href="#">마운틴뷰</a></li>
+                                <li class="tag_item"><a href="#">시티뷰</a></li>
+                                <li class="tag_item"><a href="#">오션뷰</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 연락처 -->
+                <div class="col-lg-3 footer_column">
+                    <div class="footer_col">
+                        <div class="footer_title">연락처</div>
+                        <div class="footer_content footer_contact">
+                            <ul class="contact_info_list">
+                                <li class="contact_info_item d-flex flex-row">
+                                    <div><div class="contact_info_icon"><img src="images/placeholder.svg" alt=""></div></div>
+                                    <div class="contact_info_text">서울 영등포구 여의동로 330 (여의도동, 알트타워)</div>
+                                </li>
+                                <li class="contact_info_item d-flex flex-row">
+                                    <div><div class="contact_info_icon"><img src="images/phone-call.svg" alt=""></div></div>
+                                    <div class="contact_info_text">02-1234-5678 / 1588-1588</div>
+                                </li>
+                                <li class="contact_info_item d-flex flex-row">
+                                    <div><div class="contact_info_icon"><img src="images/message.svg" alt=""></div></div>
+                                    <div class="contact_info_text"><a href="mailto:help.alt@altspace.com?Subject=Hello" target="_top">help.alt@altspace.com</a></div>
+                                </li>
+                                <li class="contact_info_item d-flex flex-row">
+                                    <div><div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div></div>
+                                    <div class="contact_info_text"><a href="https://altspace.com/help">www.altspace.com/help</a></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
+    </footer>
 
-    <!-- Add -->
+    <!-- Copyright -->
 
-    <div class="add">
+    <div class="copyright">
         <div class="container">
             <div class="row">
-                <div class="col">
-                    <div class="add_container">
-                        <div class="add_background" style="background-image:url(images/add.jpg)"></div>
-                        <div class="add_content">
-                            <h1 class="add_title">thailand</h1>
-                            <div class="add_subtitle">From <span>$999</span></div>
-                            <div class="button add_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>
-                        </div>
+                <div class="col-lg-3 order-lg-1 order-2  ">
+                    <div class="copyright_content d-flex flex-row align-items-center">
+                        <div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Milestones -->
-
-    <div class="milestones">
-        <div class="container">
-            <div class="row">
-
-                <!-- Milestone -->
-                <div class="col-lg-3 milestone_col">
-                    <div class="milestone text-center">
-                        <div class="milestone_icon"><img src="images/milestone_1.png" alt=""></div>
-                        <div class="milestone_counter" data-end-value="255">0</div>
-                        <div class="milestone_text">Clients</div>
-                    </div>
-                </div>
-
-                <!-- Milestone -->
-                <div class="col-lg-3 milestone_col">
-                    <div class="milestone text-center">
-                        <div class="milestone_icon"><img src="images/milestone_2.png" alt=""></div>
-                        <div class="milestone_counter" data-end-value="1176">0</div>
-                        <div class="milestone_text">Projects</div>
-                    </div>
-                </div>
-
-                <!-- Milestone -->
-                <div class="col-lg-3 milestone_col">
-                    <div class="milestone text-center">
-                        <div class="milestone_icon"><img src="images/milestone_3.png" alt=""></div>
-                        <div class="milestone_counter" data-end-value="39">0</div>
-                        <div class="milestone_text">Countries</div>
-                    </div>
-                </div>
-
-                <!-- Milestone -->
-                <div class="col-lg-3 milestone_col">
-                    <div class="milestone text-center">
-                        <div class="milestone_icon"><img src="images/milestone_4.png" alt=""></div>
-                        <div class="milestone_counter" data-end-value="127">0</div>
-                        <div class="milestone_text">Coffees</div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

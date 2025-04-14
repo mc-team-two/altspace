@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
-<html lang="ko">
+
 <head>
     <title>마이페이지</title>
     <meta charset="utf-8">
@@ -18,8 +18,6 @@
     <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
 </head>
-
-<body>
 
 <!-- Home -->
 
@@ -667,6 +665,3 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/offers_custom.js"></script>
-</body>
-
-</html>

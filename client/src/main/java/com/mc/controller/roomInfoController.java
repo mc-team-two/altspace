@@ -13,6 +13,6 @@ public class roomInfoController {
     @RequestMapping("")
     public String roomInfo(Model model) {
         model.addAttribute("center", dir + "center");
-        return "index";
+        return "roominfo";
     }
 }

@@ -14,11 +14,22 @@ public class MainController {
 
     @RequestMapping("/")
     public String main(Model model){
-        model.addAttribute("center", dir + "center");
+        model.addAttribute("headers", dir + "headers"); // 변경
+        model.addAttribute("center", dir + "center");   // 변경
+        model.addAttribute("footer", dir + "footer");   // 변경
         return "index";
     }
 
+    @RequestMapping("/contacts")
+    public String contacts(){
+        return "contacts";
+    }
 
+
+    @RequestMapping("/mypage")
+    public String mypage() {
+        return "mypage";
+    }
 
     @RequestMapping("/elements")
     public String elements(){
