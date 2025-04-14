@@ -15,7 +15,8 @@
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
     <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
-</head>
+
+<div class="super_container">
 
     <!-- Header -->
 
@@ -30,32 +31,27 @@
                         <div class="phone">02-1234-5678</div>
                         <div class="social">
                             <ul class="social_list">
-                                <li class="social_list_item"><a href="#"><i class="fa fa-pinterest"
-                                                                            aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-facebook"
-                                                                            aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-twitter"
-                                                                            aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-dribbble"
-                                                                            aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-behance"
-                                                                            aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-linkedin"
-                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
+
+                        <%--                            <c:choose>--%>
+                        <%--                                <c:when test="${sessionScope.cust.custId == null}">--%>
                         <div class="user_box ml-auto">
-                            <%--                            <c:choose>--%>
-                            <%--                                <c:when test="${sessionScope.cust.custId == null}">--%>
-                            <div class="user_box_login user_box_link"><a href="<c:url value="/login" /> ">로그인</a></div>
-                            <div class="user_box_register user_box_link"><a href="<c:url value="/login/register" /> ">회원가입</a>
-                            </div>
-                            <%--                                </c:when>--%>
-                            <%--                                <c:otherwise>--%>
-                            <%--                                로그인창 집어넣을 때 추가 --%>
-                            <%--                                <div class="user_box_login user_box_link"><a href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a></div>--%>
-                            <%--                                <div class="user_box_register user_box_link"><a href="<c:url value="/cart?id=${sessionScope.cust.custId}"/> ">Cart</a></div>--%>
+                            <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                            <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a></div>
                         </div>
+                        <%--                                </c:when>--%>
+                        <%--                                <c:otherwise>--%>
+                        <%--                                로그인창 집어넣을 때 추가 --%>
+                        <%--                                <div class="user_box_login user_box_link"><a href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a></div>--%>
+                        <%--                                <div class="user_box_register user_box_link"><a href="<c:url value="/cart?id=${sessionScope.cust.custId}"/> ">Cart</a></div>--%>
+
                     </div>
                 </div>
             </div>
@@ -68,8 +64,7 @@
                 <div class="row">
                     <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                         <div class="logo_container">
-                            <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png"
-                                                                                 alt="AltSpace Logo"></a></div>
+                            <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
@@ -81,9 +76,8 @@
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                 width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
-                                 xml:space="preserve">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 								<g>
                                     <g>
                                         <g>
@@ -116,11 +110,6 @@
                 </div>
             </div>
         </nav>
-    </header>
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="js/custom.js"></script>
+    </header>
+</div>
