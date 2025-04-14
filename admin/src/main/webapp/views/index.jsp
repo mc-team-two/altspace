@@ -59,6 +59,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -166,23 +167,13 @@
 
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href='<c:url value="/space/space1"/>' class="menu-link">
-                                <div data-i18n="Without menu">내 공간 목록</div>
+                            <a href='<c:url value="/space/add"/>' class="menu-link">
+                                <div data-i18n="Without navbar">공간 추가</div>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href='<c:url value="/space/space2"/>' class="menu-link">
-                                <div data-i18n="Without navbar">공간 추가/수정/삭제</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/space/space3"/>' class="menu-link">
-                                <div data-i18n="Container">공간 상세 정보</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/space/space4"/>' class="menu-link">
-                                <div data-i18n="Fluid">공간 일정 관리</div>
+                            <a href='<c:url value="/space/get"/>' class="menu-link">
+                                <div data-i18n="Without menu">내 공간 관리</div>
                             </a>
                         </li>
                     </ul>
