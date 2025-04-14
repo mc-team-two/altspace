@@ -10,30 +10,16 @@ public class SpaceController {
 
     String dir = "space/";
 
-    @RequestMapping("/space1")
-    public String space1(Model model){
-        model.addAttribute("center", dir+"space1");
+    @RequestMapping("/add")
+    public String add(Model model){
+        model.addAttribute("center", dir+"add");
         model.addAttribute("index", dir+"index");
         return "index";
     }
 
-    @RequestMapping("/space2")
-    public String space2(Model model){
-        model.addAttribute("center", dir+"space2");
-        model.addAttribute("index", dir+"index");
-        return "index";
-    }
-
-    @RequestMapping("/space3")
-    public String space3(Model model){
-        model.addAttribute("center", dir+"space3");
-        model.addAttribute("index", dir+"index");
-        return "index";
-    }
-
-    @RequestMapping("/space4")
-    public String space4(Model model){
-        model.addAttribute("center", dir+"space4");
+    @RequestMapping("/get")
+    public String get(Model model){
+        model.addAttribute("center", dir+"get");
         model.addAttribute("index", dir+"index");
         return "index";
     }
