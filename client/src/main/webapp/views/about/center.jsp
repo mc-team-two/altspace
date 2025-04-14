@@ -17,25 +17,6 @@
     <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
 </head>
 
-<body>
-
-<div class="super_container">
-
-
-    <div class="menu trans_500">
-        <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-            <div class="menu_close_container"><div class="menu_close"></div></div>
-            <div class="logo menu_logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
-            <ul>
-                <li class="menu_item"><a href="#">home</a></li>
-                <li class="menu_item"><a href="about.html">about us</a></li>
-                <li class="menu_item"><a href="offers.html">offers</a></li>
-                <li class="menu_item"><a href="blog.html">news</a></li>
-                <li class="menu_item"><a href="contact.html">contact</a></li>
-            </ul>
-        </div>
-    </div>
-
     <!-- Home -->
 
     <div class="home">
@@ -219,7 +200,7 @@
             <div class="row">
                 <div class="col">
                     <div class="add_container">
-                        <div class="add_background" style="background-image:url(./static/images/add.jpg)"></div>
+                        <div class="add_background" style="background-image:url(images/add.jpg)"></div>
                         <div class="add_content">
                             <h1 class="add_title">thailand</h1>
                             <div class="add_subtitle">From <span>$999</span></div>
@@ -276,8 +257,6 @@
             </div>
         </div>
     </div>
-
-</div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
