@@ -75,15 +75,14 @@
       <label for="role">가입 유형</label>
       <input type="text" class="form-control" id="role" value="${user.role}" readonly>
     </div>
-
-    <br>
-    <div class="d-flex justify-content-end mb-4">
-      <button id="mod-btn" type="submit" class="btn btn-secondary">변경하기</button>
-    </div>
   </form>
+  <br>
+  <div class="d-flex justify-content-end mb-4">
+    <button id="mod-btn" type="button" class="btn btn-secondary">변경하기</button>
+  </div>
 
   <div class="d-flex justify-content-center">
-    <button id="delete-btn" class="btn btn-link text-dark mr-2">회원 탈퇴</button>
-    <button id="logout-btn" class="btn btn-dark">로그아웃</button>
+    <button id="delete-btn" type="button" class="btn btn-link text-dark mr-2">회원 탈퇴</button>
+    <button id="logout-btn" type="button" class="btn btn-dark">로그아웃</button>
   </div>
 </div>

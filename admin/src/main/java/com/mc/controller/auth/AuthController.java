@@ -152,6 +152,21 @@ public class AuthController {
     @RequestMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.removeAttribute("user");
+        // 메인으로 이동
+        return "redirect:/";
+    }
+
+    @RequestMapping("/mod")
+    public String mod(HttpSession httpSession) {
+        // TODO: user 세션에 다시 저장
+        // 마이페이지로 재접속
+        return "redirect:/mypage";
+    }
+
+    @RequestMapping("/del")
+    public String del(HttpSession httpSession) {
+        // TODO : user 세션 다시 저장
+        // 메인으로 이동
         return "redirect:/";
     }
 
