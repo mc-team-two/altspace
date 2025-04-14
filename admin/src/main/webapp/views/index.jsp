@@ -66,7 +66,7 @@
         <!-- Menu -->
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
-                <a href="index.html" class="app-brand-link">
+                <a href="/" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                         width="25"
@@ -314,10 +314,9 @@
 
 
             <!-- Navbar -->
-            <nav
-                    class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-                    id="layout-navbar"
-            >
+            <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                 id="layout-navbar">
+
                 <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                     <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                         <i class="bx bx-menu bx-sm"></i>
@@ -340,85 +339,44 @@
                     <!-- /Search -->
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-                        <c:choose>
-                            <c:when test="${sessionScope.user == null}">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/auth/login"/> ">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/auth/register"/> ">Register</a>
-                                </li>
-                            </c:when>
-
-                            <c:otherwise>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/mypage"/> ">마이페이지</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/auth/logout"/> ">Logout</a>
-                                </li>
-                            </c:otherwise>
-                        </c:choose>
-
                         <!-- User -->
-<%--                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                <div class="avatar avatar-online">
-                                    <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                <div class="avatar"> <%--avatar-online 클래스 제거--%>
+                                    <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
+                                        <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
+                                        <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
+                                    </svg>
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar avatar-online">
-                                                    <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">이진만</span>
-                                                <small class="text-muted">관리자</small>
-                                            </div>
-                                        </div>
+                                    <a class="dropdown-item" href="<c:url value="/mypage"/>">
+                                        <i class="bx bx-user me-2"></i>
+                                        <span class="align-middle">마이페이지</span>
                                     </a>
                                 </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">내 프로필</span>
-                                    </a>
-                                </li>
-                                <li>
+                                    <%--TODO: 시스템 테마 변경 href --%>
                                     <a class="dropdown-item" href="#">
                                         <i class="bx bx-cog me-2"></i>
-                                        <span class="align-middle">설정</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">청구서</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span>
-                        </span>
+                                        <span class="align-middle">테마 설정</span>
                                     </a>
                                 </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="auth-login-basic.html">
+                                    <a class="dropdown-item" href="<c:url value="/auth/logout"/>">
                                         <i class="bx bx-power-off me-2"></i>
-                                        <span class="align-middle">로그아웃</span>
+                                        <span class="align-middle"><strong>로그아웃</strong></span>
                                     </a>
                                 </li>
                             </ul>
-                        </li>--%>
+                        </li>
                         <!--/ User -->
                     </ul>
                 </div>
