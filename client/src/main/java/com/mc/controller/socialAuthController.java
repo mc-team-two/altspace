@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 
 @Controller
 @Slf4j
-public class AuthController {
+public class socialAuthController {
 
     private final String REST_API_KEY = "0236ec56bbb03df025a455a202697ffb";
     private final String REDIRECT_URI = "http://localhost:1212/auth/kakao/token";
