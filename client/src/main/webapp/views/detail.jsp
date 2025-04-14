@@ -89,7 +89,7 @@
             }, function(rsp) {
                 if (rsp.success) {
                     $('#imp_hidden').val(rsp.imp_uid);
-                    // 실제 결제 정보 검증 (선택)
+                    // 실제 결제 정보 검증
                     $.ajax({
                         type: 'POST',
                         url: '/payment/verify/' + rsp.imp_uid,

@@ -40,3 +40,9 @@ app:
   dir:
     imgdir: file:///C:/Users/yejin/Documents/github/altspace/imgs/  # 화면 출력 용
     uploadimgdir: C:/Users/yejin/Documents/github/altspace/imgs/    # 파일 Write 용
+
+# 6. iamport (유츌되면 안된대요 ㅠㅠ)
+imp:
+  api:
+    key: 0627011552872547
+    secretkey: GDyeTp4vo1P5FKiy67lENk5IK52saDFpLW5vPyu2VioRkqVVvxYXpj8atqMsKc8nwywKJLM8g69cPe24
