@@ -39,7 +39,7 @@
   }
   .form-control {
     height: 50px; /* 높이 약간 증가 */
-    margin-bottom: 20px; /* 입력 필드 간 간격 증가 */
+    margin-bottom: 15px; /* 오류 메시지 공간 확보 (원래 값으로 복원) */
     padding: 18px 16px; /* 내부 padding 약간 조정 */
     border-radius: 10px; /* 좀 더 둥글게 */
     border: 1px solid #ccc; /* 테두리 색상 변경 */
@@ -81,6 +81,11 @@
   .footer-links a:hover {
     text-decoration: underline;
     color: #696cff; /* hover 시 강조 색상 */
+  }
+  .error-message {
+    color: red; /* 에러 메시지 색상만 빨간색으로 유지 */
+    font-size: 0.9rem;
+    margin-top: 5px;
   }
   /* 로고 스타일 (선택 사항) */
   .logo-img {
