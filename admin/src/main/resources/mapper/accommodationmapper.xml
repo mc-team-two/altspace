@@ -1,0 +1,42 @@
+<mapper namespace="com.mc.app.repository.AccomRepository">
+    <!--  전체 숙소 조회  -->
+    <select id="select" resultType="Accommodations"> SELECT * FROM accommodations ORDER BY create_day DESC </select>
+    <!--  하나의 숙소 조회  -->
+    <select id="selectOne" parameterType="Integer" resultType="Accommodations"> SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId} </select>
+    <!--  숙소 추가  -->
+    <insert id="insertAccommodation" parameterType="Accommodations">
+        INSERT INTO Accommodations ( host_id, name, location, price_night, person_max, description, status, category, room_type, breakfast, pool, barbecue, pet, create_day, update_day ) VALUES ( #{hostId}, #{name}, #{location}, #{priceNight}, #{personMax}, #{description}, #{status}, #{category}, #{roomType}, #{breakfast}, #{pool}, #{barbecue}, #{pet}, NOW(), NOW() )
+        <selectKey resultType="int" keyProperty="accommodationId" order="AFTER"> SELECT LAST_INSERT_ID() </selectKey>
+    </insert>
+    <!--     숙소 번호로 찾기 -->
+    <select id="selectAccommodationById" parameterType="int" resultType="Accommodations"> SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations WHERE accommodation_id = #{accommodationId} </select>
+    <!--     모든 숙소 찾기 -->
+    <select id="selectAllAccommodations" resultType="Accommodations"> SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations </select>
+    <!--     숙소 수정 -->
+    <update id="updateAccommodation" parameterType="Accommodations"> UPDATE Accommodations SET name = #{name}, location = #{location}, price_night = #{priceNight}, person_max = #{personMax}, description = #{description}, status = #{status}, category = #{category}, room_type = #{roomType}, breakfast = #{breakfast}, pool = #{pool}, barbecue = #{barbecue}, pet = #{pet}, update_day = NOW() WHERE accommodation_id = #{accommodationId} </update>
+    <!--     숙소 삭제 -->
+    <delete id="deleteAccommodation" parameterType="int"> DELETE FROM Accommodations WHERE accommodation_id = #{accommodationId} </delete>
+    <!--     호스트 아이디로 숙소 찾기 -->
+    <select id="selectAccommodationsByHostId" parameterType="string" resultType="Accommodations"> SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations WHERE host_id = #{hostId} </select>
+    <!--    이름이나 지역으로 숙소 찾기  -->
+    <select id="searchAccommodations" parameterType="java.util.Map" resultType="Accommodations">
+        SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations
+        <where>
+            <if test="name != null and name != ''"> name LIKE CONCAT('%', #{name}, '%') </if>
+            <if test="location != null and location != ''"> OR location LIKE CONCAT('%', #{location}, '%') </if>
+        </where>
+    </select>
+    <!--     숙소 상태 업데이트 -->
+    <update id="updateAccommodationStatus" parameterType="java.util.Map"> UPDATE Accommodations SET status = #{status}, update_day = NOW() WHERE accommodation_id = #{accommodationId} </update>
+    <!--     카테고리로 숙소 찾기  -->
+    <select id="selectAccommodationsByCategory" parameterType="string" resultType="com.mc.app.dto.Accommodations"> SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations WHERE category = #{category} </select>
+    <!--     숙소 태그 업데이트  -->
+    <update id="updateAccommodationAmenities" parameterType="com.mc.app.dto.Accommodations">
+        UPDATE Accommodations SET
+        <if test="breakfast != null">breakfast = #{breakfast},</if>
+        <if test="pool != null">pool = #{pool},</if>
+        <if test="barbecue != null">barbecue = #{barbecue},</if>
+        <if test="pet != null">pet = #{pet},</if>
+        update_day = NOW() WHERE accommodation_id = #{accommodationId}
+    </update>
+</mapper>
