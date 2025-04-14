@@ -10,45 +10,108 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     body {
-      background-color: #fff;
+      background-color: #f5f5f9; /* 배경색을 로그인 페이지와 동일하게 */
     }
     .find-container {
       max-width: 400px;
       margin: 50px auto;
+      padding: 30px 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       text-align: center;
     }
+    /* 제목 강조 */
+    .find-title {
+      font-size: 2.2rem; /* 더 크게 */
+      font-weight: bold;
+      color: #333; /* 좀 더 진한 색상 */
+      margin-bottom: 15px; /* 간격 조정 */
+    }
+    /* 안내 문구 스타일 변경 */
+    .find-subtitle {
+      color: #777;
+      margin-bottom: 25px; /* 간격 조정 */
+      font-size: 1.1rem; /* 약간 크게 */
+    }
+    .form-group {
+      text-align: left; /* 라벨 왼쪽 정렬 유지 */
+    }
     .form-control {
-      height: 48px;
-      font-size: 14px;
+      height: 50px; /* 높이 약간 증가 */
+      margin-bottom: 20px; /* 입력 필드 간 간격 증가 */
+      padding: 18px 16px; /* 내부 padding 약간 조정 */
+      border-radius: 10px; /* 좀 더 둥글게 */
+      border: 1px solid #ccc; /* 테두리 색상 변경 */
+      font-size: 15px; /* 폰트 크기 약간 증가 */
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus {
+      border-color: #696cff; /* 포커스 시 강조 색상 */
+      box-shadow: 0 0 0 0.2rem rgba(105, 108, 255, 0.25); /* 포커스 시 그림자 */
     }
     .btn-find {
-      height: 48px;
-      background-color: #aaa;
+      height: 50px; /* 버튼 높이 약간 증가 */
+      background-color: #696cff; /* 활성화 색상 기본 적용 */
+      border-color: #696cff;
       color: #fff;
       font-weight: bold;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
+      font-size: 16px; /* 폰트 크기 약간 증가 */
+      cursor: pointer; /* 마우스 오버 시 커서 변경 */
+      transition: background-color 0.2s; /* hover 효과 부드럽게 */
+    }
+    .btn-find:hover {
+      background-color: #5658d4; /* hover 시 약간 어둡게 */
     }
     .footer-links {
       display: flex;
-      justify-content: center;
       flex-wrap: nowrap;
-      font-size: 13px;
-      margin-top: 20px;
+      justify-content: center;
+      font-size: 14px; /* 폰트 크기 약간 증가 */
+      margin-top: 25px; /* 간격 조정 */
     }
     .footer-links a {
-      margin: 0 6px;
+      margin: 0 10px; /* 링크 간 간격 증가 */
       white-space: nowrap;
-      color: #666;
+      color: #555; /* 링크 색상 변경 */
+      text-decoration: none;
+    }
+    .footer-links a:hover {
+      text-decoration: underline;
+      color: #696cff; /* hover 시 강조 색상 */
+    }
+    /* 로고 스타일 (선택 사항) */
+    .logo-img {
+      height: 45px; /* 로고 높이 약간 증가 */
+      margin-bottom: 20px; /* 간격 조정 */
+    }
+    /* 하단 정책 링크 스타일 */
+    .policy-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 13px;
+      margin-top: 30px; /* 간격 증가 */
+    }
+    .policy-links a {
+      margin: 0 8px;
+      color: #777;
+      text-decoration: none;
+    }
+    .policy-links a:hover {
+      text-decoration: underline;
+      color: #696cff;
     }
   </style>
 </head>
 <body>
 <div class="find-container">
-  <img src="<c:url value='/imgs/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
+  <img src="<c:url value='/images/Altspace_lightmode_Horizontal.png'/>" alt="logo" class="mb-4 logo-img">
 
-  <h4 class="font-weight-bold">아이디 찾기</h4>
-  <p class="text-muted">이메일을 입력하여 가입여부를 확인해보세요</p>
+  <h4 class="font-weight-bold find-title">아이디 찾기</h4>
+  <p class="text-muted find-subtitle">이메일을 입력하여 가입여부를 확인해보세요</p>
 
   <form method="post" action="/auth/find-password">
     <div class="form-group text-left">
@@ -58,12 +121,13 @@
     <button type="submit" class="btn btn-find btn-block">아이디 찾기</button>
   </form>
 
-  <div class="mt-4">
-    <a href="/auth/login" class="d-block text-muted">다른 계정으로 로그인</a>
-    <a href="/auth/find-password" class="d-block text-muted">비밀번호 찾기</a>
+  <div class="mt-4 footer-links">
+    <a href="<c:url value="/login"/>">다른 계정으로 로그인</a>
+    <span>|</span>
+    <a href="<c:url value="/login/find-password"/>">비밀번호 찾기</a>
   </div>
 
-  <div class="footer-links mt-5">
+  <div class="policy-links mt-5">
     <a href="/privacy">개인정보처리방침</a>
     <a href="/terms">이용약관</a>
     <a href="/youth-policy">청소년 보호정책</a>

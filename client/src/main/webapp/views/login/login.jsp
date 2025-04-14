@@ -137,7 +137,7 @@
     <div class="login-container text-center">
 
         <a href="/">
-            <img src="<c:url value='/imgs/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
+            <img src="<c:url value='/images/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
         </a>
 
         <c:if test="${msg != null}">
@@ -147,13 +147,13 @@
         </c:if>
 
         <a href="/auth/kakao/authorize" class="btn btn-social btn-kakao">
-            <img src="<c:url value='/imgs/social_kakao_icon.svg'/>" width="24">카카오 계정으로 로그인
+            <img src="<c:url value='/images/social_kakao_icon.svg'/>" width="24">카카오 계정으로 로그인
         </a>
         <a href="/auth/naver/authorize" class="btn btn-social btn-naver">
-            <img src="<c:url value='/imgs/social_naver_icon.svg'/>" width="24">네이버 계정으로 로그인
+            <img src="<c:url value='/images/social_naver_icon.svg'/>" width="24">네이버 계정으로 로그인
         </a>
         <a href="/auth/google/authorize" class="btn btn-social btn-google">
-            <img src="<c:url value='/imgs/social_google_icon.svg'/>" width="24">구글 계정으로 로그인
+            <img src="<c:url value='/images/social_google_icon.svg'/>" width="24">구글 계정으로 로그인
         </a>
 
         <div class="divider">또는</div>
@@ -171,11 +171,11 @@
         </form>
 
         <div class="footer-links mt-3">
-            <a href="/login/register">회원가입</a>
+            <a href="<c:url value="/login/register"/>">회원가입</a>
             <span class="divider-pipe">|</span>
-            <a href="/login/find-id">아이디 찾기</a>
+            <a href="<c:url value="/login/find-id"/>">아이디 찾기</a>
             <span class="divider-pipe">|</span>
-            <a href="/login/find-password">비밀번호 찾기</a>
+            <a href="<c:url value="/login/find-password"/>">비밀번호 찾기</a>
         </div>
 
     </div>

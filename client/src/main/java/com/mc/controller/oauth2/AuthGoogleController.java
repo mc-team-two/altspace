@@ -199,7 +199,7 @@ public class AuthGoogleController {
 
         } catch (Exception e) {
             model.addAttribute("msg", "오류 발생: " + e.getMessage());
-            return "auth/login";
+            return "login/login";
         }
     }
 

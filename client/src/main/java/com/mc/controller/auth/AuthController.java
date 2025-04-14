@@ -36,7 +36,7 @@ public class AuthController {
         // 1. 유저가 존재하지 않음
         if (dbUser == null) {
             model.addAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다");
-            return "auth/login";
+            return "redirect:/login";
         }
 
         // 2. 일반 이메일 회원 (비밀번호 필드가 있어야 함)
@@ -44,10 +44,10 @@ public class AuthController {
             // 패스워드 비교
             if (dbUser.getPassword().equals(password)) {
                 httpSession.setAttribute("user", dbUser);
-                return "redirect:/";
+                return "redirect:/login";
             } else {
                 model.addAttribute("msg", "비밀번호가 틀렸습니다");
-                return "auth/login";
+                return "login/login";
             }
         }
 
@@ -62,7 +62,7 @@ public class AuthController {
             log.error("소셜 로그인 사용자 조회 실패", e);
         }
 
-        return "auth/login";
+        return "login/login";
     }
 
     @RequestMapping("/logout")
