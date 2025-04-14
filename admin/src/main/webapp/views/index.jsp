@@ -342,7 +342,7 @@
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
 
                         <c:choose>
-                            <c:when test="${sessionScope.user.userId == null}">
+                            <c:when test="${sessionScope.user == null}">
                                 <li class="nav-item">
                                     <a class="nav-link" href="<c:url value="/auth/login"/> ">Login</a>
                                 </li>
@@ -353,7 +353,7 @@
 
                             <c:otherwise>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/userinfo?id=${sessionScope.user.userId}"/> ">마이페이지</a>
+                                    <a class="nav-link" href="<c:url value="/mypage"/> ">마이페이지</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<c:url value="/auth/logout"/> ">Logout</a>
