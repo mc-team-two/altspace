@@ -342,21 +342,21 @@
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
 
                         <c:choose>
-                            <c:when test="${sessionScope.cust.custId == null}">
+                            <c:when test="${sessionScope.user.userId == null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/login"/> ">Login</a>
+                                    <a class="nav-link" href="<c:url value="/auth/login"/> ">Login</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/register"/> ">Register</a>
+                                    <a class="nav-link" href="<c:url value="/auth/register"/> ">Register</a>
                                 </li>
                             </c:when>
 
                             <c:otherwise>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a>
+                                    <a class="nav-link" href="<c:url value="/userinfo?id=${sessionScope.user.userId}"/> ">마이페이지</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/logout"/> ">Logout</a>
+                                    <a class="nav-link" href="<c:url value="/auth/logout"/> ">Logout</a>
                                 </li>
                             </c:otherwise>
                         </c:choose>

@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface SocialUserRepository extends MCRepository<SocialUser, String> {
+    User selectUserBySocialId(String socialId);
 }

@@ -1,6 +1,12 @@
-package com.mc.controller.auth;
+package com.mc.controller.oauth2;
 
+import com.mc.app.dto.SocialUser;
+import com.mc.app.dto.User;
+import com.mc.app.service.SocialUserService;
+import com.mc.app.service.UserService;
+import com.mc.util.AuthUtil;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,18 +18,24 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class AuthGoogleController {
+
+    private final SocialUserService socialUserService;
+    private final UserService userService;
 
     @Value("${app.key.googleApiKey}")
     String GOOGLE_CLIENT_ID;
@@ -31,9 +43,8 @@ public class AuthGoogleController {
     @Value("${app.key.googleApiSecretKey}")
     String GOOGLE_CLIENT_SECRET;
 
-    @Value("${app.url.serverUrl}")
-    String REDIRECT_URL;
-    String GOOGLE_REDIRECT_URI = REDIRECT_URL + "/auth/google/token";
+    @Value("${app.url.serverUrl}/auth/google/token")
+    String GOOGLE_REDIRECT_URI;
 
     @RequestMapping("/auth/google/authorize")
     public String googleAuthorize(HttpSession httpSession) {
@@ -58,7 +69,7 @@ public class AuthGoogleController {
     }
 
     @RequestMapping("/auth/google/token")
-    public String googleCallback(@RequestParam("code") String code, HttpSession httpSession) throws ParseException {
+    public String googleCallback(@RequestParam("code") String code) throws ParseException {
         String targetUrl = "https://oauth2.googleapis.com/token";
 
         // 헤더
@@ -87,26 +98,18 @@ public class AuthGoogleController {
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(responseBody);
 
-        // 로그 확인용
-        //log.info(String.valueOf(jsonObject));
-
         // 토큰 추출
         String accessToken = (String) jsonObject.get("access_token");
 
-        // 로그 확인용
-        //log.info("google accessToken:" + accessToken);
-
-        // Session에 토큰을 저장 (로직 바뀔 수도 있음)
-        httpSession.setAttribute("accessToken", accessToken);
-
-        return "redirect:/auth/google/info?access_token=" + httpSession.getAttribute("accessToken");
+        return "redirect:/auth/google/info?access_token=" + accessToken;
     }
 
     @RequestMapping("/auth/google/info")
-    public String googleInfo(@RequestParam("access_token") String token) throws Exception {
+    public String googleInfo(@RequestParam("access_token") String token,
+                             HttpSession httpSession,
+                             Model model) throws Exception {
 
         // 1. 프로필 기본 정보 요청
-        
         // RestTemplate
         RestTemplate restTemplate = new RestTemplate();
 
@@ -125,10 +128,7 @@ public class AuthGoogleController {
         JSONParser jsonParser = new JSONParser();
         JSONObject profileJson = (JSONObject) jsonParser.parse(profileResponse.getBody());
 
-        // 로그 확인용
-        log.info(String.valueOf(profileJson));
-
-        String id = "google" + profileJson.get("sub");
+        String providerUserId = "google" + profileJson.get("sub");
         String name = (String) profileJson.get("name");
         String email = (String) profileJson.get("email");
 
@@ -137,9 +137,6 @@ public class AuthGoogleController {
         ResponseEntity<String> phoneResponse = restTemplate.exchange(phoneUrl, HttpMethod.GET, requestEntity, String.class);
         JSONObject phoneJson = (JSONObject) jsonParser.parse(phoneResponse.getBody());
 
-        // 로그 확인용
-        // log.info(String.valueOf(phoneJson));
-
         String phone = "";
         JSONArray phones = (JSONArray) phoneJson.get("phoneNumbers");
         if (phones != null && !phones.isEmpty()) {
@@ -147,13 +144,63 @@ public class AuthGoogleController {
             phone = (String) phoneObject.get("value");
         }
 
-        // 로그 확인용
-        log.info("id : " + id);
-        log.info("name : " + name);
-        log.info("email : " + email);
-        log.info("phone : " + phone);
+        LocalDateTime connectedAt = LocalDateTime.now();
 
-        return "redirect:/";
+        // 분기점
+        // DB 접근 및 처리
+        try {
+            // 기존 소셜 사용자 여부 확인
+            User dbUser = socialUserService.getBySocialId(providerUserId);
+            if (dbUser != null) {
+                httpSession.setAttribute("user", dbUser);
+                return "redirect:/";
+            }
+
+            // 이메일 중복 확인
+            // 이메일로 가입한 회원이거나 다른 소셜 계정의 이메일로 가입한 회원
+            User existingUser = userService.getByEmail(email);
+            if (existingUser != null) {
+                // 일반 회원 여부
+                if (existingUser.getPassword() != null) {
+                    model.addAttribute("msg", "이메일 계정으로 가입한 회원입니다. 로그인 해주세요.");
+                    return "auth/login";
+                }
+
+                // 소셜 회원 여부
+                SocialUser existingSocialUser = socialUserService.get(existingUser.getUserId());
+                if (existingSocialUser != null) {
+                    String msg = existingSocialUser.getProvider() + "로 가입한 회원입니다.\n";
+                    msg += "연동일자: " + existingSocialUser.getConnectedAt();
+                    model.addAttribute("msg", msg);
+                    return "auth/login";
+                }
+            }
+
+            // 신규 회원가입 처리
+            User newUser = User.builder()
+                    .userId(AuthUtil.generateUUID())
+                    .role("호스트")
+                    .email(email)
+                    .name(name)
+                    .phone(phone)
+                    .build();
+            userService.add(newUser);
+
+            SocialUser newSocialUser = SocialUser.builder()
+                    .userId(newUser.getUserId())
+                    .provider("google")
+                    .providerUserId(providerUserId)
+                    .connectedAt(connectedAt)
+                    .build();
+            socialUserService.add(newSocialUser);
+
+            httpSession.setAttribute("user", newUser);
+            return "redirect:/";
+
+        } catch (Exception e) {
+            model.addAttribute("msg", "오류 발생: " + e.getMessage());
+            return "auth/login";
+        }
     }
 
 }
