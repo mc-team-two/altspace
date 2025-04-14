@@ -24,6 +24,9 @@
 
     <meta name="description" content="" />
 
+    <%--jQuery CDN--%>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon1.ico" />
 
@@ -341,36 +344,49 @@
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
                         <!-- User -->
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                <div class="avatar"> <%--avatar-online 클래스 제거--%>
-                                    <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
-                                        <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
-                                        <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
-                                    </svg>
-                                </div>
-                            </a>
+
+                            <!-- 로그인 상태일 경우 -->
+                            <c:if test="${not empty sessionScope.user}">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
+                                            <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
+                                            <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </c:if>
+
+                            <!-- 로그인 안 된 상태일 경우 -->
+                            <c:if test="${empty sessionScope.user}">
+                                <a class="nav-link hide-arrow" href="<c:url value='/auth/login'/>">
+                                    <div class="avatar">
+                                        <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
+                                            <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
+                                            <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </c:if>
+
+                            <!-- 드롭다운 메뉴 (로그인한 경우만 의미 있음) -->
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="<c:url value="/mypage"/>">
+                                    <a class="dropdown-item" href="<c:url value='/mypage'/>">
                                         <i class="bx bx-user me-2"></i>
                                         <span class="align-middle">마이페이지</span>
                                     </a>
                                 </li>
+                                <li><div class="dropdown-divider"></div></li>
                                 <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <%--TODO: 시스템 테마 변경 href --%>
                                     <a class="dropdown-item" href="#">
                                         <i class="bx bx-cog me-2"></i>
                                         <span class="align-middle">테마 설정</span>
                                     </a>
                                 </li>
+                                <li><div class="dropdown-divider"></div></li>
                                 <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="<c:url value="/auth/logout"/>">
+                                    <a class="dropdown-item" href="<c:url value='/auth/logout'/>">
                                         <i class="bx bx-power-off me-2"></i>
                                         <span class="align-middle"><strong>로그아웃</strong></span>
                                     </a>
