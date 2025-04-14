@@ -62,13 +62,12 @@
                 <div class="row">
                     <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                         <div class="logo_container">
-                            <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
+                            <div class="logo"><a href="<c:url value="/"/> "><img src="images/logo.png" alt=""></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
                                 <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/offers"/> ">예약</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/mypage"/> ">마이페이지</a></li>
                             </ul>
