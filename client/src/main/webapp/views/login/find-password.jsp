@@ -142,7 +142,7 @@
         // 이메일 및 패스워드로 회원가입하려 할 시 현재 DTO 구조에서는 나머지 회원정보 사항도 다 입력하라고 강제함.
         // TODO: 가입할 때 모든 정보를 다 받을지, 아니면 구조 변경이 있을지에 대해 논의 필요
         // 논의 끝나면 바로 코드 적용 해서 가입 테스트 해볼 예정.
-        
+
         const form = document.getElementById('findPasswordForm');
         const emailInput = document.getElementById('email');
         const emailError = document.getElementById('emailError');
