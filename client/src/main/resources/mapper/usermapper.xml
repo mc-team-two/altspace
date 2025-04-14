@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mc.app.repository.UserRepository">
+    <select id="selectByPhone" parameterType="String" resultType="user">
+        SELECT * FROM users WHERE phone=#{phone}
+    </select>
+    <select id="selectByEmail" parameterType="String" resultType="user">
+        SELECT * FROM users WHERE email=#{email}
+    </select>
+    <select id="selectOne" parameterType="String" resultType="user">
+        SELECT * FROM users WHERE user_id=#{user_id}
+    </select>
+    <select id="select" resultType="user">
+        SELECT * FROM users
+    </select>
+    <insert id="insert" parameterType="user">
+        INSERT INTO users (user_id, role, email, password, name, phone, created_at)
+            VALUE (#{userId},#{role},#{email}, #{password}, #{name}, #{phone}, now())
+    </insert>
+    <update id="update" parameterType="user">
+        UPDATE users SET phone=#{phone} WHERE user_id=#{userId}
+    </update>
+    <delete id="delete" parameterType="String">
+        DELETE FROM users WHERE user_id=#{userId}
+    </delete>
+
+</mapper>

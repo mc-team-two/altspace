@@ -11,9 +11,9 @@
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="styles/offers_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/offers_responsive.css">
 </head>
-
 <!-- Header -->
 <header class="header">
 
@@ -25,12 +25,18 @@
                     <div class="phone">02-1234-5678</div>
                     <div class="social">
                         <ul class="social_list">
-                            <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-pinterest"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-facebook"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-twitter"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-dribbble"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-behance"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-linkedin"
+                                                                        aria-hidden="true"></i></a></li>
                         </ul>
                     </div>
 
@@ -38,14 +44,15 @@
                     <%--                                <c:when test="${sessionScope.cust.custId == null}">--%>
                     <div class="user_box ml-auto">
                         <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
-                        <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a></div>
+                        <div class="user_box_register user_box_link"><a
+                                href="<c:url value="/login/register"/> ">회원가입</a>
+                        </div>
                     </div>
                     <%--                                </c:when>--%>
                     <%--                                <c:otherwise>--%>
                     <%--                                로그인창 집어넣을 때 추가 --%>
                     <%--                                <div class="user_box_login user_box_link"><a href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a></div>--%>
                     <%--                                <div class="user_box_register user_box_link"><a href="<c:url value="/cart?id=${sessionScope.cust.custId}"/> ">Cart</a></div>--%>
-                </div>
                 </div>
             </div>
         </div>
@@ -64,14 +71,15 @@
                         <ul class="main_nav_list">
                             <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/offers"/> ">예약</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/mypage"/> ">마이페이지</a></li>
                         </ul>
                     </div>
                     <div class="content_search ml-lg-0 ml-auto">
-                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                             width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                             x="0px" y="0px"
+                             width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+                             xml:space="preserve">
 								<g>
                                     <g>
                                         <g>
