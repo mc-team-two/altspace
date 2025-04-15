@@ -15,8 +15,8 @@ public class AccomService implements MCService<Accommodations,Integer> {
     final AccomRepository accomRepository;
 
     @Override
-    public void add(Accommodations accommodations) throws Exception {
-
+    public void add(Accommodations acc) throws Exception {
+        accomRepository.insertAccommodation(acc);
     }
 
     @Override
