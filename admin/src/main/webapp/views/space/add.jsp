@@ -136,8 +136,8 @@
                             let coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
                             // input 창에 display
-                            $('#lat').val(result[0].x);
-                            $('#lng').val(result[0].y);
+                            $('#lat').val(result[0].y);
+                            $('#lng').val(result[0].x);
 
                             // 결과값으로 받은 위치를 마커로 표시합니다
                             marker = new kakao.maps.Marker({
