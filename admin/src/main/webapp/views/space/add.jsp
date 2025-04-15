@@ -71,7 +71,6 @@
         geocoder: null,
         marker: null,
         init: function () {
-            this.initMap();
             $('#plus-btn').click(() => {
                 let val = Number($('#personMax').val());
                 $('#personMax').val(val + 1);
@@ -93,10 +92,16 @@
             })
         },
         initMap: function(){
+            $('#map').css({
+                width: '100%',
+                height: '300px'
+            });
+            $('#map').show();
+
             let container = $('#map').get(0);   // DOM
             let option = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                level: 7 // 지도의 확대 레벨
+                center: new kakao.maps.LatLng(37.518276, 126.957746), // 지도의 중심좌표
+                level: 5 // 지도의 확대 레벨
             }
 
             // 지도를 미리 생성
@@ -105,11 +110,13 @@
             this.geocoder = new kakao.maps.services.Geocoder();
             //마커를 미리 생성
             this.marker = new kakao.maps.Marker({
-                position: new kakao.maps.LatLng(33.450701, 126.570667),
+                position: new kakao.maps.LatLng(37.518276, 126.957746),
                 map: this.map
             });
         },
         displayMap: function () {
+            this.initMap();
+
             let map = this.map;
             let geocoder = this.geocoder;
             let marker = this.marker;
