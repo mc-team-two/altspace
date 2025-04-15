@@ -4,9 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mc.app.repository.AccomRepository">
     <!--  전체 숙소 조회  -->
-    <select id="select" resultType="Accommodations"> SELECT * FROM accommodations ORDER BY create_day DESC </select>
+    <select id="select" resultType="Accommodations">
+        SELECT * FROM accommodations ORDER BY create_day DESC
+    </select>
     <!--  하나의 숙소 조회  -->
-    <select id="selectOne" parameterType="Integer" resultType="Accommodations"> SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId} </select>
+    <select id="selectOne" parameterType="Integer" resultType="Accommodations">
+        SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId}
+    </select>
+    <!--  개별 유저가 등록한 모든 숙소 조회 -->
+    <select id="selectByUserId" parameterType="String" resultType="Accommodations">
+        SELECT * FROM accommodations WHERE host_id=#{host_id}
+    </select>
     <!--  숙소 추가  -->
     <insert id="insertAccommodation" parameterType="Accommodations">
         INSERT INTO Accommodations (
