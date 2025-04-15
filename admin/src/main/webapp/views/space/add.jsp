@@ -176,10 +176,11 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <form id="space_add_form">
+                <form id="space_add_form" style="overflow-x:hidden">
                     <h1 class="h3 mb-2 text-gray-800">기본 정보</h1>
+                    <div class="row">
                     <%--category--%>
-                    <div class="form-group">
+                    <div class="form-group col-sm-4">
                         <label for="category">
                             <h6 class="m-0 font-weight-bold text-primary">건물 유형</h6>
                         </label>
@@ -191,7 +192,7 @@
                         </select>
                     </div>
                     <%--roomType--%>
-                    <div class="form-group">
+                    <div class="form-group col-sm-4">
                         <label for="roomType">
                             <h6 class="m-0 font-weight-bold text-primary">공간 유형</h6>
                         </label>
@@ -201,30 +202,9 @@
                             <option value="호스텔 내 다인실">호스텔 내 다인실: 게스트는 연중무휴 직원이 상주하는 전문 숙박시설인 호스텔 내부 다인실에서 머무릅니다.</option>
                         </select>
                     </div>
-                    <%--location--%>
-                    <div class="form-group">
-                        <label for="location">
-                            <h6 class="m-0 font-weight-bold text-primary">위치</h6>
-                        </label>
-                        <div class="input-group" style="border: 1px solid #ccc; border-radius: 5px; padding: 0;">
-                            <div style="margin-left:10px; background-color: transparent; display: flex; align-items: center; justify-content: center;">
-                              <svg fill="#222222" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 413.099 413.099">
-                                <path d="M206.549,0c-82.6,0-149.3,66.7-149.3,149.3c0,28.8,9.2,56.3,22,78.899l97.3,168.399c6.1,11,18.4,16.5,30,16.5 c11.601,0,23.3-5.5,30-16.5l97.3-168.299c12.9-22.601,22-49.601,22-78.901C355.849,66.8,289.149,0,206.549,0z M206.549,193.4 c-30,0-54.5-24.5-54.5-54.5s24.5-54.5,54.5-54.5s54.5,24.5,54.5,54.5C261.049,169,236.549,193.4,206.549,193.4z"></path>
-                              </svg>
-                            </div>
-                            <input type="text" class="form-control" id="location" placeholder="공간 주소를 입력하세요" name="location" style="border: none; background-color: #fff" readonly>
-                            <div class="input-group-append" style="border: none;">
-                                <button id="search-btn" class="btn btn-primary" type="button" style="border: none; border-radius: 0 5px 5px 0;">검색</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <input id="lat" name="latitude" type="number" step="any" readonly>
-                        <input id="lng" name="longitude" type="number" step="any" readonly>
-                    </div>
-                    <div id="map" style="width:auto;height:300px;margin-top:10px;border:2px solid red;"></div>
+
                     <%--personMax--%>
-                    <div class="form-group">
+                    <div class="form-group col-sm-4">
                         <label for="personMax">
                             <h6 class="m-0 font-weight-bold text-primary">최대 수용 인원 (최소 2인)</h6>
                         </label>
@@ -237,7 +217,7 @@
                                         <path d="M532,1117 C524.268,1117 518,1110.73 518,1103 C518,1095.27 524.268,1089 532,1089 C539.732,1089 546,1095.27 546,1103 C546,1110.73 539.732,1117 532,1117 Z
                                             M532,1087 C523.163,1087 516,1094.16 516,1103 C516,1111.84 523.163,1119 532,1119 C540.837,1119 548,1111.84 548,1103 C548,1094.16 540.837,1087 532,1087 Z
                                             M538,1102 L526,1102 C525.447,1102 525,1102.45 525,1103 C525,1103.55 525.447,1104 526,1104 L538,1104 C538.553,1104 539,1103.55 539,1103 C539,1102.45 538.553,1102 538,1102 Z"
-                                            transform="translate(-516 -1087)"></path>
+                                              transform="translate(-516 -1087)"></path>
                                     </svg>
                                 </div>
                             </div>
@@ -255,6 +235,32 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                    <%--location--%>
+                    <div class="form-group">
+                        <label for="location">
+                            <h6 class="m-0 font-weight-bold text-primary">위치</h6>
+                        </label>
+                        <div class="input-group" style="border: 1px solid #ccc; border-radius: 5px; padding: 0;">
+                            <div style="margin-left:10px; background-color: transparent; display: flex; align-items: center; justify-content: center;">
+                              <svg fill="#222222" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 413.099 413.099">
+                                <path d="M206.549,0c-82.6,0-149.3,66.7-149.3,149.3c0,28.8,9.2,56.3,22,78.899l97.3,168.399c6.1,11,18.4,16.5,30,16.5 c11.601,0,23.3-5.5,30-16.5l97.3-168.299c12.9-22.601,22-49.601,22-78.901C355.849,66.8,289.149,0,206.549,0z M206.549,193.4 c-30,0-54.5-24.5-54.5-54.5s24.5-54.5,54.5-54.5s54.5,24.5,54.5,54.5C261.049,169,236.549,193.4,206.549,193.4z"></path>
+                              </svg>
+                            </div>
+                            <input type="text" class="form-control" id="location" placeholder="공간 주소를 입력하세요" name="location" style="border: none; background-color: #fff" readonly>
+                            <div class="input-group-append" style="border: none;">
+                                <button id="search-btn" class="btn btn-primary" type="button" style="border: none; border-radius: 0 5px 5px 0;">검색</button>
+                            </div>
+                        </div>
+                        <div id="map" style="display:none;margin-top:10px;border-radius:5px;"></div>
+                    </div>
+
+                    <%--lat, lng (hidden)--%>
+                    <div>
+                        <input id="lat" name="latitude" type="hidden" step="any">
+                        <input id="lng" name="longitude" type="hidden" step="any">
+                    </div>
+
 
                     <hr>
                     <h1 class="h3 mb-2 text-gray-800">상세 정보</h1>
@@ -268,14 +274,14 @@
                         <label for="name">
                             <h6 class="m-0 font-weight-bold text-primary">스페이스 명칭</h6>
                         </label>
-                        <input type="text" class="form-control" id="name" placeholder="스페이스 이름은 필수입니다." value="연신내 타오호텔" name="name">
+                        <input type="text" class="form-control" id="name" placeholder="스페이스 이름은 필수입니다." value="진만이네 별장" name="name">
                     </div>
                     <%--description--%>
                     <div class="form-group">
                         <label for="description">
                             <h6 class="m-0 font-weight-bold text-primary">스페이스 소개</h6>
                         </label>
-                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">#연신내역도보5분 #접근성최고</textarea>
+                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">해변 근처의 Chill한 별장</textarea>
                     </div>
 
                     <hr>
