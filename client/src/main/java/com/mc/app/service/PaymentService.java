@@ -21,7 +21,7 @@ public class PaymentService implements MCService<Payments,Integer> {
 
     @Override
     public void mod(Payments payments) throws Exception {
-        paymentRepository.insert(payments);
+        paymentRepository.update(payments);
     }
 
     @Override

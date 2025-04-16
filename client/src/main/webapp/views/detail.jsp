@@ -9,7 +9,6 @@
     <meta charset="UTF-8">
     <title>숙박 시설 목록</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <!-- iamport.payment.js -->
@@ -139,9 +138,21 @@
         review:function(){
             $('#data_add').attr({
                 'method':'post',
-                'action':'<c:url value="/review?id=${accomm.accommodationId}"/>'
+                'action':'<c:url value="/offers/review?id=${accomm.accommodationId}"/>'
             });
             $('#data_add').submit();
+        },
+        updateRv: function(id) {
+            $('#reviewForm').attr({
+                method: 'post',
+                action: '/review/upimpl?id=' + id
+            }).submit();
+        },
+        deleteRv: function(id) {
+            $('#reviewForm').attr({
+                method: 'post',
+                action: '/review/delimpl?id=' + id
+            }).submit();
         }
     }
     $(document).ready(function () {
@@ -190,6 +201,28 @@
         <button id="cancel_btn" class="btn btn-danger">결제 취소</button>
         <button id="review_btn" class="btn btn-primary">리뷰 작성</button>
     </div>
+    <div class="card mt-4 shadow-sm">
+        <!-- 공통 폼 (id는 유일하게 하나만!) -->
+        <form id="reviewForm">
+            <%--<input type="hidden" name="reviewId" value="${review.reviewId}">--%>
+        </form>
+
+        <div class="card-body">
+            <h5 class="card-title">리뷰 목록</h5>
+            <c:forEach var="rv" items="${review}">
+                <div class="border-bottom mb-3 pb-2">
+                    <p><strong>작성자:</strong> ${rv.guestId}</p>
+                    <p><strong>평점:</strong> ${rv.grade}점</p>
+                    <p><strong>내용:</strong> ${rv.comment}</p>
+
+                    <!-- 리뷰 ID를 넘겨서 JS 함수에서 동적으로 처리 -->
+                    <button type="button" class="btn btn-primary" onclick="change.updateRv('${rv.reviewId}')">리뷰 수정</button>
+                    <button type="button" class="btn btn-danger" onclick="change.deleteRv('${rv.reviewId}')">리뷰 삭제</button>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

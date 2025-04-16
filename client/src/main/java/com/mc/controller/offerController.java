@@ -1,7 +1,9 @@
 package com.mc.controller;
 
 import com.mc.app.dto.Accommodations;
+import com.mc.app.dto.Reviews;
 import com.mc.app.service.AccomService;
+import com.mc.app.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import java.util.List;
 public class offerController {
 
     final AccomService accomService;
+    final ReviewService reviewService;
 
     @RequestMapping("")
     public String main(Model model) throws Exception {
@@ -33,9 +36,20 @@ public class offerController {
     public String detail(Model model, @RequestParam("id") int id) throws Exception {
 
         Accommodations accomm = accomService.get(id);
+        List<Reviews> review = reviewService.selectReviewsAll(id);
+
+        model.addAttribute("accomm", accomm);
+        model.addAttribute("review", review);
+        return "detail";
+    }
+
+    @RequestMapping("/review")
+    public String review(Model model, @RequestParam("id") int id) throws Exception {
+
+        Accommodations accomm = accomService.get(id);
         log.info("accomm: " + accomm);
 
         model.addAttribute("accomm", accomm);
-        return "detail";
+        return "review";
     }
 }
