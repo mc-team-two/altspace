@@ -75,12 +75,10 @@
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
-                                <li class="munu_item"><a href="<c:url value="/"/> ">Home</a></li>
+                                <li class="munu_item"><a href="<c:url value="/"/> ">홈</a></li>
                                 <li class="munu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                                <li class="munu_item"><a href="<c:url value="/offers"/> ">예약</a></li>
-                                <li class="menu_item"><a href="<c:url value="/roominfo"/> ">객실정보</a></li>
-                                <li class="menu_item"><a href="<c:url value="#"/> ">고객센터</a></li>
-                                <li class="menu_item"><a href="<c:url value="#"/> ">마이페이지</a></li>
+                                <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                                <li class="menu_item"><a href="<c:url value="/mypage"/> ">마이페이지</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
