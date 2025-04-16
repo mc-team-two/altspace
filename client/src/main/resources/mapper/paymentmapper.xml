@@ -39,7 +39,7 @@
         LIMIT 1
     </select>
 
-    <update id="updateStatus" parameterType="payments">
+    <update id="update" parameterType="payments">
         UPDATE payments
         SET pay_status = #{payStatus}
         WHERE guest_id = #{guestId}
