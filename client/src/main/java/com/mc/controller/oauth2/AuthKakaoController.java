@@ -157,7 +157,7 @@ public class AuthKakaoController {
             // 신규 회원가입 처리
             User newUser = User.builder()
                     .userId(AuthUtil.generateUUID())
-                    .role("호스트")
+                    .role("게스트")
                     .email(email)
                     .name(name)
                     .phone(phone)

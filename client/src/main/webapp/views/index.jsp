@@ -48,10 +48,29 @@
                                 <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
+
+                        <c:choose>
+                        <c:when test="${sessionScope.user.userId == null}">
+                            <div class="user_box ml-auto">
+                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
                         <div class="user_box ml-auto">
-                            <div class="user_box_login user_box_link"><a href="#">로그인</a></div>
-                            <div class="user_box_register user_box_link"><a href="#">회원가입</a></div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/mypage?id=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
+                            </div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/cart?id=${sessionScope.user.name}"/> ">Cart</a>
+                            </div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/auth/logout"/> ">logout</a></div>
                         </div>
+                    </div>
+                    </c:otherwise>
+                    </c:choose>
                     </div>
                 </div>
             </div>
