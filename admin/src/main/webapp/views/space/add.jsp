@@ -81,15 +81,40 @@
                     $('#personMax').val(val - 1);
                 }
             });
-            $('#space_add_form > #btn_add').click(() => {
-                let c = confirm('저장하시겠습니까?');
-                if (c === true) {
-                    this.send();
+            $('#btn_add').click(() => {
+                if (this.validateForm()) {
+                    let c = confirm('저장하시겠습니까?');
+                    if (c === true) {
+                        this.send();
+                    }
                 }
             });
             $('#search-btn').click(()=>{
                 this.displayMap();
             })
+        },
+        validateForm: function () {
+            let isValid = true;
+
+            // 공간 명칭 체크
+            if ($('#location').val() === '') {
+                alert("위치를 입력해주세요.");
+                isValid = false;
+            }
+
+            // 이미지 체크 (대표 사진)
+            if ($('#image1').val() === '') {
+                alert("대표 사진을 업로드해주세요.");
+                isValid = false;
+            }
+
+            // 스페이스 명칭 체크
+            if ($('#name').val().trim() === '') {
+                alert("스페이스 이름을 입력해주세요.");
+                isValid = false;
+            }
+
+            return isValid;
         },
         initMap: function(){
             $('#map').css({
@@ -138,6 +163,9 @@
                             // input 창에 display
                             $('#lat').val(result[0].y);
                             $('#lng').val(result[0].x);
+
+                            // 기존 마커 제거
+                            marker.setMap(null);
 
                             // 결과값으로 받은 위치를 마커로 표시합니다
                             marker = new kakao.maps.Marker({
@@ -199,7 +227,7 @@
                         <select class="form-control" id="roomType" name="roomType">
                             <option value="공간 전체">공간 전체: 게스트가 숙소 전체 단독으로 사용</option>
                             <option value="방">방: 단독으로 사용하는 개인실과 공용 공간이 있는 형태</option>
-                            <option value="호스텔 내 다인실">호스텔 내 다인실: 게스트는 연중무휴 직원이 상주하는 전문 숙박시설인 호스텔 내부 다인실에서 머무릅니다.</option>
+                            <option value="호스텔 내 다인실">호스텔 내 다인실: 직원이 상주하는 전문 숙박시설</option>
                         </select>
                     </div>
 
@@ -269,10 +297,20 @@
                         <label for="image1"><h6 class="m-0 font-weight-bold text-primary">대표 사진</h6></label>
                         <input type="file" class="form-control" id="image1" placeholder="Enter name" name="image1">
                     </div>
+
+                    <%--detail image--%>
+                    <div class="form-group">
+                        <label for="image2"><h6 class="m-0 font-weight-bold text-primary">상세 사진</h6></label>
+                        <input type="file" class="form-control mb-2" id="image2" name="image2">
+                        <input type="file" class="form-control mb-2" id="image3" name="image3">
+                        <input type="file" class="form-control mb-2" id="image4" name="image4">
+                        <input type="file" class="form-control" id="image5" name="image5">
+                    </div>
+
                     <%--name--%>
                     <div class="form-group">
                         <label for="name">
-                            <h6 class="m-0 font-weight-bold text-primary">스페이스 명칭</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">스페이스 이름</h6>
                         </label>
                         <input type="text" class="form-control" id="name" placeholder="스페이스 이름은 필수입니다." value="진만이네 별장" name="name">
                     </div>
@@ -326,13 +364,38 @@
                         <label for="priceNight">
                             <h6 class="m-0 font-weight-bold text-primary">1박당 가격</h6>
                         </label>
-                        <input type="number" class="form-control" id="priceNight" name="priceNight" min="0" placeholder="가격을 입력하세요." value="15000">
-                    </div>
 
-                    <button id="btn_add" type="button" class="btn btn-primary mt-3">
-                        스페이스 등록하기
-                    </button>
+                        <div class="d-flex align-items-center">
+                            <input
+                                    type="number"
+                                    id="priceValue"
+                                    class="form-control mr-3"
+                                    min="0"
+                                    max="500000"
+                                    step="1000"
+                                    value="15000"
+                                    oninput="document.getElementById('priceNight').value = this.value"
+                                    style="max-width: 120px;"
+                            >
+
+                            <input
+                                    type="range"
+                                    class="custom-range flex-grow-1"
+                                    id="priceNight"
+                                    name="priceNight"
+                                    min="0"
+                                    max="500000"
+                                    step="1000"
+                                    value="15000"
+                                    oninput="document.getElementById('priceValue').value = this.value"
+                            >
+                        </div>
+                    </div>
                 </form>
+
+                <button id="btn_add" type="button" class="btn btn-primary mt-3">
+                    스페이스 등록하기
+                </button>
             </div>
         </div>
 
