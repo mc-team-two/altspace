@@ -7,10 +7,16 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @RequestMapping("/space")
 @Controller
@@ -57,8 +63,47 @@ public class SpaceController {
 
 
     @RequestMapping("/get")
-    public String get(Model model){
+    public String get(Model model, HttpSession httpSession){
+        User user = (User) httpSession.getAttribute("user");
+        List<Accommodations> data = null;
+        try {
+            data = accomService.getByHostId(user.getUserId());
+            // log.info(data.toString());
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+        model.addAttribute("data", data);
         model.addAttribute("center", dir+"get");
         return "index";
     }
+
+    @PostMapping("/del")
+    @ResponseBody
+    public ResponseEntity<String> del(@RequestParam("id") Integer id) {
+        try {
+            accomService.del(id);
+            return ResponseEntity.ok("삭제 성공!");
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 실패!");
+        }
+    }
+
+    @RequestMapping("/detail")
+    public String detail(@RequestParam("id") Integer id,
+                         Model model){
+        try {
+            Accommodations data = accomService.get(id);
+            log.info(data.toString());
+            model.addAttribute("data", data);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+
+        model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
+        model.addAttribute("center", dir+"detail");
+
+        return "index";
+    }
+
 }

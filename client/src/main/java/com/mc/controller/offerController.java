@@ -1,14 +1,55 @@
 package com.mc.controller;
 
+import com.mc.app.dto.Accommodations;
+import com.mc.app.dto.Reviews;
+import com.mc.app.service.AccomService;
+import com.mc.app.service.ReviewService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
+@Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/offers")
 public class offerController {
+
+    final AccomService accomService;
+    final ReviewService reviewService;
+
     @RequestMapping("")
-    public String main() {
+    public String main(Model model) throws Exception {
+
+        List<Accommodations> accomm = null;
+        accomm = accomService.get();
+        model.addAttribute("accomm", accomm);
+
         return "offers";
     }
-    // 페이지가 사라져서 컨트롤러 날리려다 숙소 관련 기능으로 사용될 거 같아서 일단 살려둠
+
+    @RequestMapping("/detail")
+    public String detail(Model model, @RequestParam("id") int id) throws Exception {
+
+        Accommodations accomm = accomService.get(id);
+        List<Reviews> review = reviewService.selectReviewsAll(id);
+
+        model.addAttribute("accomm", accomm);
+        model.addAttribute("review", review);
+        return "detail";
+    }
+
+    @RequestMapping("/review")
+    public String review(Model model, @RequestParam("id") int id) throws Exception {
+
+        Accommodations accomm = accomService.get(id);
+        log.info("accomm: " + accomm);
+
+        model.addAttribute("accomm", accomm);
+        return "review";
+    }
 }
