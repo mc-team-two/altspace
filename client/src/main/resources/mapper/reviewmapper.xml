@@ -97,7 +97,4 @@
         WHERE r.review_id = #{reviewId}
     </select>
 
-
-
-
 </mapper>
