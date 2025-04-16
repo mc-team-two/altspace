@@ -5,16 +5,18 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Altspace | 나의 리뷰 | 가장 빠른 공간대여 알트스페이스</title>
+    <title>Altspace | Altspace란 | 가장 빠른 공간대여 알트스페이스</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
+    <meta name="description" content="Altspace Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="styles/about_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
 </head>
 
 <body>
@@ -109,104 +111,37 @@
     <!-- 홈 -->
 
     <div class="home">
-        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/about_background.jpg"></div>
         <div class="home_content">
-            <div class="home_title">나의 리뷰</div>
+            <div class="home_title">알트스페이스란</div>
         </div>
     </div>
 
-    <!-- 센터 -->
+    <!-- Altspace 소개 -->
 
-    <div class="blog">
+    <div class="intro">
         <div class="container">
             <div class="row">
-
-                <!-- 예약 내역 -->
-
-                <div class="col-lg-8">
-
-                    <div class="blog_post_container">
-
-                        <!-- 내역 1 -->
-
-                        <div class="blog_post">
-                            <div class="blog_post_image">
-                                <img src="images/blog_1.jpg">
-                                <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                                    <div class="blog_post_day">예약</div>
-                                    <div class="blog_post_month">2025-07-11</div>
-                                </div>
-                            </div>
-                            <div class="blog_post_meta">
-                                <ul>
-                                    <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                                    <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-                                </ul>
-                            </div>
-                            <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-                        </div>
-
-                        <!-- 내역 2 -->
-
-                        <div class="blog_post">
-                            <div class="blog_post_image">
-                                <img src="images/blog_2.jpg">
-                                <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                                    <div class="blog_post_day">완료</div>
-                                    <div class="blog_post_month">2025-01-11</div>
-                                </div>
-                            </div>
-                            <div class="blog_post_meta">
-                                <ul>
-                                    <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                                    <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-                                </ul>
-                            </div>
-                            <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-                        </div>
-
-                        <!-- 내역 3 -->
-
-                        <div class="blog_post">
-                            <div class="blog_post_image">
-                                <img src="images/blog_3.jpg">
-                                <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                                    <div class="blog_post_day">완료</div>
-                                    <div class="blog_post_month">2024-12-11</div>
-                                </div>
-                            </div>
-                            <div class="blog_post_meta">
-                                <ul>
-                                    <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                                    <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-                                </ul>
-                            </div>
-                            <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-                        </div>
-
-                    </div>
-
-                    <div class="blog_navigation">
-                        <ul>
-                            <li class="blog_dot active"><div></div>01</li>
-                            <li class="blog_dot"><div></div>02</li>
-                        </ul>
-                    </div>
+                <div class="col-lg-7">
+                    <div class="intro_image"><img src="images/intro.png" alt=""></div>
                 </div>
-
-                <!-- 사이드바 -->
-
-                <div class="col-lg-4 sidebar_col">
-
-                    <!-- 사이드바 메뉴 -->
-                    <div class="sidebar_archives">
-                        <div class="sidebar_title">MENU</div>
-                        <div class="sidebar_list">
-                            <ul>
-                                <li><a href="/details">나의 예약</a></li>
-                                <li><a href="/review">나의 리뷰</a></li>
-                            </ul>
-                        </div>
+                <div class="col-lg-5">
+                    <div class="intro_content">
+                        <div class="intro_title">Altspace에 오신 것을 환영합니다!</div>
+                        <p class="intro_text">
+                            Altspace™는 메뉴를 빠르게 여는 Alt + Space 단축키에 간결하게 정리된 레이아웃을 가진 웹사이트를 통해 빠르고 편리한 공간 예약 서비스를 제공하고 있습니다.
+                            <p></p>
+                            Altspace에서 다양한 호텔 및 리조트는 물론 게스트하우스, 모텔, 파티룸 등 프라이빗한 공간을 안심하고 예약하실 수 있으며 이용 요금, 편의 시설과 서비스,
+                            예약 가능 객실, 반려동물 동반 여부 등 등 모든 정보를 한 눈에 확인하실 수 있습니다.
+                            <p></p>
+                            본 웹사이트는 멀티캠퍼스 2조 운영진이 (이예진, 이황수, 임유경, 박정우, 김부건) 공동 운영합니다. 자세한 문의사항 또는 분쟁의 경우 아래 연락처로 연락 바랍니다.
+                            <p></p>
+                            02-1234-5678 / 1588-1588 / help.alt@altspace.com
+                            <p></p>
+                            (주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
+                            관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹
+                        </p>
+                        <div class="button intro_button"><div class="button_bcg"></div><a href="/">예약하러 가기<span></span><span></span><span></span></a></div>
                     </div>
                 </div>
             </div>
@@ -348,9 +283,15 @@
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/colorbox/jquery.colorbox-min.js"></script>
+<script src="plugins/greensock/TweenMax.min.js"></script>
+<script src="plugins/greensock/TimelineMax.min.js"></script>
+<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="plugins/greensock/animation.gsap.min.js"></script>
+<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/blog_custom.js"></script>
+<script src="js/about_custom.js"></script>
 
 </body>
 
