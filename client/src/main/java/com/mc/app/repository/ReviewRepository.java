@@ -1,12 +1,15 @@
 package com.mc.app.repository;
 
-import com.mc.app.dto.Accommodations;
+import com.mc.app.dto.Reviews;
 import com.mc.app.frame.MCRepository;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
-public interface AccomRepository extends MCRepository<Accommodations,Integer> {
+public interface ReviewRepository extends MCRepository<Reviews,Integer> {
+    List<Reviews> selectReviewsAll(Integer integer);
 
 }
