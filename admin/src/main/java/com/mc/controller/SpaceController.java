@@ -89,4 +89,21 @@ public class SpaceController {
         }
     }
 
+    @RequestMapping("/detail")
+    public String detail(@RequestParam("id") Integer id,
+                         Model model){
+        try {
+            Accommodations data = accomService.get(id);
+            log.info(data.toString());
+            model.addAttribute("data", data);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+
+        model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
+        model.addAttribute("center", dir+"detail");
+
+        return "index";
+    }
+
 }
