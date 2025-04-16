@@ -11,5 +11,6 @@ import java.util.List;
 @Mapper
 public interface ReviewRepository extends MCRepository<Reviews,Integer> {
     List<Reviews> selectReviewsAll(Integer integer);
+    Reviews selectReviewAccom(Integer integer);
 
 }

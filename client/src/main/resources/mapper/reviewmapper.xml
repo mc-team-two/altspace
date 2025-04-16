@@ -80,4 +80,24 @@
         WHERE accommodation_id=#{accommodationId}
     </select>
 
+    <!-- 숙소 리뷰 수정할 때 데이터 조회하는 쿼리 -->
+    <select id="selectReviewAccom" parameterType="int" resultType="Reviews">
+        SELECT
+            r.review_id,
+            r.guest_id,
+            r.accommodation_id,
+            r.grade,
+            r.comment,
+            r.create_day,
+            r.update_day,
+            a.name,
+            a.location
+        FROM reviews r JOIN accommodations a
+            ON r.accommodation_id = a.accommodation_id
+        WHERE r.review_id = #{reviewId}
+    </select>
+
+
+
+
 </mapper>

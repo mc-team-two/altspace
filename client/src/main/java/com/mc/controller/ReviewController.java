@@ -28,4 +28,33 @@ public class ReviewController {
         reviewService.add(reviews);
         return "redirect:/offers/detail?id=" + id;
     }
+
+    @RequestMapping("/upimpl")
+    public String upimpl(Model model,
+                       @RequestParam("id") int id) throws Exception {
+
+        Reviews review = reviewService.selectReviewAccom(id);
+        log.info("review: " + review);
+
+        model.addAttribute("review", review);
+        return "reviewImpl";
+    }
+
+    @RequestMapping("/update")
+    public String update(Model model,
+                         @RequestParam("id") int id,
+                         Reviews reviews) throws Exception {
+
+        reviewService.mod(reviews);
+        return "redirect:/offers/detail?id=" + id;
+    }
+
+    @RequestMapping("/delete")
+    public String delete(Model model,
+                         @RequestParam("rvId") int rvid,
+                         @RequestParam("acId") int acid) throws Exception {
+
+        reviewService.del(rvid);
+        return "redirect:/offers/detail?id=" + acid;
+    }
 }
