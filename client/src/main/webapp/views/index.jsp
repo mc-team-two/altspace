@@ -394,12 +394,12 @@
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
                                         <div class="offers_image_background" style="background-image:url(images/offer_1.jpg)"></div>
-                                        <div class="offer_name"><a href="/roominfo">grand castle</a></div>
+                                        <div class="offer_name"><a href="/roominfo">제주 감귤 레지던스</a></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="offers_content">
-                                        <div class="offers_price">$70<span>per night</span></div>
+                                        <div class="offers_price">110,000원<span>~1박</span></div>
                                         <div class="rating_r rating_r_4 offers_rating" data-rating="4">
                                             <i></i>
                                             <i></i>
@@ -407,7 +407,7 @@
                                             <i></i>
                                             <i></i>
                                         </div>
-                                        <p class="offers_text">Suspendisse potenti. In faucibus massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu convallis tortor. Lorem ipsum dolor sit amet.</p>
+                                        <p class="offers_text">제주 감귤 레지던스에 대한 간략한 소개글</p>
                                         <div class="offers_icons">
                                             <ul class="offers_icons_list">
                                                 <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
@@ -416,13 +416,13 @@
                                                 <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
                                             </ul>
                                         </div>
-                                        <div class="button book_button"><a href="#">book<span></span><span></span><span></span></a></div>
+                                        <div class="button book_button"><a href="#">예약하기<span></span><span></span><span></span></a></div>
                                         <div class="offer_reviews">
                                             <div class="offer_reviews_content">
-                                                <div class="offer_reviews_title">very good</div>
-                                                <div class="offer_reviews_subtitle">100 reviews</div>
+                                                <div class="offer_reviews_title">매우 만족</div>
+                                                <div class="offer_reviews_subtitle">100개의 리뷰</div>
                                             </div>
-                                            <div class="offer_reviews_rating text-center">8.1</div>
+                                            <div class="offer_reviews_rating text-center">4.5</div>
                                         </div>
                                     </div>
                                 </div>
