@@ -1,22 +1,25 @@
 package com.mc.controller;
 
+import com.mc.app.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.mc.app.dto.User;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("")
 public class MainController {
 
+    private final UserService userService;
     String dir = "home/";
 
     @RequestMapping("/")
     public String main(Model model){
-        model.addAttribute("headers", dir + "headers"); // 변경
-        model.addAttribute("center", dir + "center");   // 변경
-        model.addAttribute("footer", dir + "footer");   // 변경
+        model.addAttribute("headers", dir + "headers");
+        model.addAttribute("center", dir + "center");
+        model.addAttribute("footer", dir + "footer");
         return "index";
     }
 
@@ -24,12 +27,6 @@ public class MainController {
     public String contacts(){
         return "contacts";
     }
-
-
-    @RequestMapping("/mypage")
-    public String mypage() {
-        return "mypage";
-}
 
     @RequestMapping("/elements")
     public String elements(){
