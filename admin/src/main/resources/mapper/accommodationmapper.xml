@@ -22,12 +22,14 @@
             person_max, description, status,
             category, room_type,
             breakfast, pool, barbecue, pet,
+            image1, image2, image3, image4, image5,
             latitude, longitude,
             create_day, update_day )
         VALUES ( #{hostId}, #{name}, #{location}, #{priceNight},
                 #{personMax}, #{description}, #{status},
                 #{category}, #{roomType},
                 #{breakfast}, #{pool}, #{barbecue}, #{pet},
+                #{image1}, #{image2}, #{image3}, #{image4}, #{image5},
                 #{latitude}, #{longitude},
                 NOW(), NOW() )
         <selectKey resultType="int" keyProperty="accommodationId" order="AFTER"> SELECT LAST_INSERT_ID() </selectKey>

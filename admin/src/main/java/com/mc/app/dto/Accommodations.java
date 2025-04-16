@@ -26,6 +26,11 @@ public class Accommodations {
     private boolean pool;                // BIT(1)
     private boolean barbecue;            // BIT(1)
     private boolean pet;                 // BIT(1)
+    private String image1;
+    private String image2;
+    private String image3;
+    private String image4;
+    private String image5;
     private BigDecimal latitude;         // 위도
     private BigDecimal longitude;        // 경도
     private Timestamp createDay;         // 등록일
