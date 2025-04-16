@@ -41,6 +41,35 @@
             border-color: #86b7fe;
             box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
         }
+
+        /* 소셜 로그인 버튼 영역 */
+        .btn-social {
+            width: 100%;
+            margin-bottom: 10px;
+            font-weight: bold;
+            padding: 12px 16px;         /* 버튼 padding 추가 */
+            border-radius: 10px;        /* 둥글게 만듦 */
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-social img {
+            margin-right: 8px;
+        }
+        .btn-kakao {
+            background-color: #FEE500;
+            color: #444;
+        }
+        .btn-naver {
+            background-color: #03C75A;
+            color: #333;
+        }
+        .btn-google {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            color: #444;
+        }
         .btn-register {
             background-color: #696cff;
             border-color: #696cff;
@@ -72,7 +101,21 @@
             </div>
         </c:if>
 
+
+        <a href="/auth/kakao/authorize" class="btn btn-social btn-kakao">
+            <img src="<c:url value='/images/social_kakao_icon.svg'/>" width="24">카카오 계정으로 가입하기
+        </a>
+        <a href="/auth/naver/authorize" class="btn btn-social btn-naver">
+            <img src="<c:url value='/images/social_naver_icon.svg'/>" width="24">네이버 계정으로 가입하기
+        </a>
+        <a href="/auth/google/authorize" class="btn btn-social btn-google">
+            <img src="<c:url value='/images/social_google_icon.svg'/>" width="24">구글 계정으로 가입하기
+        </a>
+
         <form id="registrationForm" method="post" action="<c:url value='/login/registerimpl'/>" class="text-left">
+            <div class="form-group">
+                <input type="hidden" id="role" name="role" class="form-control" placeholder="롤을 입력해 주세요" value="게스트" required>
+            </div>
             <div class="form-group">
                 <label for="email">이메일</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required>
@@ -83,8 +126,23 @@
                 <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력해 주세요" required>
                 <p id="passwordError" class="error-message"></p>
             </div>
+
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="이름을 입력해 주세요" required>
+                <div id="nameError" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="phone">전화번호</label>
+                <input type="text" id="phone" name="phone" class="form-control" placeholder="전화번호를 입력해 주세요 (010-xxxx-xxxx)" required>
+                <div id="phoneError" class="error-message"></div>
+            </div>
             <button type="submit" class="btn btn-block btn-register">회원가입</button>
         </form>
+
+        <c:if test="${not empty msg}">
+            <p style="color: red;">${msg}</p>
+        </c:if>
 
         <div class="mt-3">
             <a href="<c:url value="/login"/>" class="text-muted">이미 계정이 있으신가요? 로그인</a>
@@ -98,6 +156,11 @@
     const passwordInput = document.getElementById('password');
     const emailError = document.getElementById('emailError');
     const passwordError = document.getElementById('passwordError');
+    const nameInput = document.getElementById('name');
+    const phoneInput = document.getElementById('phone');
+    const nameError = document.getElementById('nameError');
+    const phoneError = document.getElementById('phoneError');
+
 
     emailInput.addEventListener('blur', function() {
         if (!this.value.trim()) {
@@ -134,6 +197,32 @@
             event.preventDefault();
         }
         // 추가적인 전체 폼 유효성 검사 로직 (선택 사항)
+
+    // 이름 유효성 검사
+    if (!nameInput.value.trim()) {
+        displayError(nameError, '이름은 필수 입력 항목입니다.');
+        isValid = false;
+    } else if (!/^[가-힣]{2,10}$/.test(nameInput.value.trim())) {
+        displayError(nameError, '이름은 2~10자의 한글로만 구성되어야 합니다.');
+        isValid = false;
+    } else {
+        clearError(nameError);
+    }
+
+    // 전화번호 유효성 검사
+    if (!phoneInput.value.trim()) {
+        displayError(phoneError, '전화번호는 필수 입력 항목입니다.');
+        isValid = false;
+    } else if (!/^01(?:0|1|[6-9])-\d{3,4}-\d{4}$/.test(phoneInput.value.trim())) {
+        displayError(phoneError, '유효한 전화번호 형식이 아닙니다.');
+        isValid = false;
+    } else {
+        clearError(phoneError);
+    }
+
+        if (!isValid) {
+            event.preventDefault(); // 유효성 검사 실패 시 폼 제출 방지
+        }
     });
 
     function displayError(element, message) {

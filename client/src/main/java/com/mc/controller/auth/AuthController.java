@@ -24,7 +24,6 @@ public class AuthController {
     private final UserService userService;
     private final SocialUserService socialUserService;
 
-
     @PostMapping("/loginimpl")
     public String loginimpl(@RequestParam("email") String email,
                             @RequestParam("password") String password,
@@ -44,7 +43,16 @@ public class AuthController {
             // 패스워드 비교
             if (dbUser.getPassword().equals(password)) {
                 httpSession.setAttribute("user", dbUser);
-                return "redirect:/login";
+
+                // 이전 요청 URL 확인 및 리다이렉트
+                String previousUrl = (String) httpSession.getAttribute("previousUrl");
+                httpSession.removeAttribute("previousUrl");
+
+                if (previousUrl != null && !previousUrl.isEmpty()) {
+                    return "redirect:" + previousUrl;
+                } else {
+                    return "redirect:/"; // 기본 리다이렉트 (로그인 성공 후 메인 페이지)
+                }
             } else {
                 model.addAttribute("msg", "비밀번호가 틀렸습니다");
                 return "login/login";
@@ -56,15 +64,25 @@ public class AuthController {
             // dbUser가 존재함 -> user_id 로 조회
             SocialUser sUser = socialUserService.get(dbUser.getUserId());
 
+            httpSession.setAttribute("user", dbUser); // 소셜 로그인 성공 시 세션 저장
             model.addAttribute("msg", sUser.getProvider() + "로 가입한 회원입니다.");
+
+            // 이전 요청 URL 확인 및 리다이렉트
+            String previousUrl = (String) httpSession.getAttribute("previousUrl");
+            httpSession.removeAttribute("previousUrl");
+
+            if (previousUrl != null && !previousUrl.isEmpty()) {
+                return "redirect:" + previousUrl;
+            } else {
+                return "redirect:/"; // 기본 리다이렉트 (로그인 성공 후 메인 페이지)
+            }
+
         } catch (Exception e) {
             model.addAttribute("msg", "소셜 로그인 정보 확인 중 오류가 발생했습니다.");
             log.error("소셜 로그인 사용자 조회 실패", e);
+            return "login/login";
         }
-
-        return "login/login";
     }
-
     @RequestMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.removeAttribute("user");
@@ -85,5 +103,4 @@ public class AuthController {
         // 메인으로 이동
         return "redirect:/";
     }
-
 }

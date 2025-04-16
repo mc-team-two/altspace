@@ -6,7 +6,6 @@ import com.mc.app.service.UserService;
 import com.mc.util.AuthUtil;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -78,7 +77,7 @@ public class loginController {
                             .append(" "));
             String msg = errorMessage.toString();
             model.addAttribute("msg", msg);
-            return "redirect:/login";
+            return dir + "register"; // 회원가입 페이지로 리다이렉트
         }
 
         // 유효성 테스트 통과시 : 고유 id 부여 후 DB에 푸시
@@ -99,6 +98,6 @@ public class loginController {
             model.addAttribute("msg", msg);
             return "redirect:/login/register";
         }
-        return "redirect:auth/login";
+        return "redirect:/login";
     }
 }

@@ -48,18 +48,28 @@
                             </ul>
                         </div>
 
-                        <%--                            <c:choose>--%>
-                        <%--                                <c:when test="${sessionScope.cust.custId == null}">--%>
+                        <c:choose>
+                        <c:when test="${sessionScope.user.userId == null}">
+                            <div class="user_box ml-auto">
+                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
                         <div class="user_box ml-auto">
-                            <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
-                            <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a></div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                            </div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                            </div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/auth/logout"/> ">logout</a></div>
                         </div>
-                        <%--                                </c:when>--%>
-                        <%--                                <c:otherwise>--%>
-                        <%--                                로그인창 집어넣을 때 추가 --%>
-                        <%--                                <div class="user_box_login user_box_link"><a href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a></div>--%>
-                        <%--                                <div class="user_box_register user_box_link"><a href="<c:url value="/cart?id=${sessionScope.cust.custId}"/> ">Cart</a></div>--%>
                     </div>
+                    </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
@@ -75,10 +85,10 @@
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
-                                <li class="munu_item"><a href="<c:url value="/"/> ">홈</a></li>
-                                <li class="munu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                                <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                                <li class="menu_item"><a href="<c:url value="/mypage"/> ">마이페이지</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
@@ -116,7 +126,6 @@
                 </div>
             </div>
         </nav>
-
     </header>
 </div>
 

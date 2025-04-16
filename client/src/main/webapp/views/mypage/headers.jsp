@@ -2,8 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<!DOCTYPE html>
-<html lang="ko">
 <head>
     <title>Altspace</title>
     <meta charset="UTF-8">
@@ -42,22 +40,32 @@
                                 <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
-                        <div class="user_box ml-auto">
-                            <%--                            <c:choose>--%>
-                            <%--                                <c:when test="${sessionScope.cust.custId == null}">--%>
-                            <div class="user_box_login user_box_link"><a href="<c:url value="/login" /> ">로그인</a></div>
-                            <div class="user_box_register user_box_link"><a href="<c:url value="/login/register" /> ">회원가입</a>
+
+                        <c:choose>
+                        <c:when test="${sessionScope.user.userId == null}">
+                            <div class="user_box ml-auto">
+                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                </div>
                             </div>
-                            <%--                                </c:when>--%>
-                            <%--                                <c:otherwise>--%>
-                            <%--                                로그인창 집어넣을 때 추가 --%>
-                            <%--                                <div class="user_box_login user_box_link"><a href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a></div>--%>
-                            <%--                                <div class="user_box_register user_box_link"><a href="<c:url value="/cart?id=${sessionScope.cust.custId}"/> ">Cart</a></div>--%>
+                        </c:when>
+                        <c:otherwise>
+                        <div class="user_box ml-auto">
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                            </div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                            </div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/auth/logout"/> ">logout</a></div>
                         </div>
+                    </div>
+                    </c:otherwise>
+                    </c:choose>
                     </div>
                 </div>
             </div>
-        </div>
 
         <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
 
@@ -73,7 +81,7 @@
                                 <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/mypage"/> ">마이페이지</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
