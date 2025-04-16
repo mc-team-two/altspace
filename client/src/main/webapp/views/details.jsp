@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Altspace | 나의 리뷰 | 가장 빠른 공간대여 알트스페이스</title>
+    <title>Altspace | 나의 예약 | 가장 빠른 공간대여 알트스페이스</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Travelix Project">
@@ -111,7 +111,7 @@
     <div class="home">
         <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
         <div class="home_content">
-            <div class="home_title">나의 리뷰</div>
+            <div class="home_title">나의 예약</div>
         </div>
     </div>
 

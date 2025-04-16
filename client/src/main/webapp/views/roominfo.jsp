@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ishot
-  Date: 25. 4. 7.
-  Time: 오후 2:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
@@ -12,15 +5,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Altspace | 가장 빠른 공간대여 알트스페이스</title>
+    <title>숙소 정보</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Altspace Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="styles/offers_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/offers_responsive.css">
+    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
 </head>
 
 <body>
@@ -117,15 +114,15 @@
     <div class="home">
         <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
         <div class="home_content">
-            <div class="home_title">빠르고 간편하게, Altspace</div>
+            <div class="home_title">숙소 정보</div>
         </div>
     </div>
 
-    <!-- 예약 -->
+    <!-- 센터 -->
 
-    <div class="offers">
+    <div class="listing">
 
-        <!-- 예약 > 검색 -->
+        <!-- 검색 -->
 
         <div class="search">
             <div class="search_inner">
@@ -340,186 +337,297 @@
             </div>
         </div>
 
-        <!-- 예약 > 목록 -->
+        <!-- 숙소 -->
 
         <div class="container">
             <div class="row">
-                <div class="col-lg-1 temp_col"></div>
-                <div class="col-lg-11">
-
-                    <!-- Offers Sorting -->
-                    <div class="offers_sorting_container">
-                        <ul class="offers_sorting">
-                            <li>
-                                <span class="sorting_text">가격</span>
-                                <i class="fa fa-chevron-down"></i>
-                                <ul>
-                                    <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }' data-parent=".price_sorting"><span>전체</span></li>
-                                    <li class="sort_btn" data-isotope-option='{ "sortBy": "price" }' data-parent=".price_sorting"><span>낮은 가격순</span></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <span class="sorting_text">숙소명</span>
-                                <i class="fa fa-chevron-down"></i>
-                                <ul>
-                                    <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>전체</span></li>
-                                    <li class="sort_btn" data-isotope-option='{ "sortBy": "name" }'><span>가나다순</span></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <span class="sorting_text">별점</span>
-                                <i class="fa fa-chevron-down"></i>
-                                <ul>
-                                    <li class="filter_btn" data-filter="*"><span>전체</span></li>
-                                    <li class="sort_btn" data-isotope-option='{ "sortBy": "stars" }'><span>낮은 별점순</span></li>
-                                    <li class="filter_btn" data-filter=".rating_3"><span>3</span></li>
-                                    <li class="filter_btn" data-filter=".rating_4"><span>4</span></li>
-                                    <li class="filter_btn" data-filter=".rating_5"><span>5</span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
                 <div class="col-lg-12">
-                    <!-- Offers Grid -->
+                    <div class="single_listing">
 
-                    <div class="offers_grid">
+                        <!-- 숙소 정보 -->
 
-                        <!-- 호텔 1 -->
+                        <div class="hotel_info">
 
-                        <div class="offers_item rating_4">
-                            <div class="row">
-                                <div class="col-lg-1 temp_col"></div>
-                                <div class="col-lg-3 col-1680-4">
-                                    <div class="offers_image_container">
-                                        <div class="offers_image_background" style="background-image:url(images/offer_1.jpg)"></div>
-                                        <div class="offer_name"><a href="/roominfo">제주 감귤 레지던스</a></div>
+                            <!-- 숙소 타이틀 -->
+                            <div class="hotel_title_container d-flex flex-lg-row flex-column">
+                                <div class="hotel_title_content">
+                                    <h1 class="hotel_title">제주 감귤 레지던스</h1>
+                                    <h2 class="hotel_price">110,000원~</h2>
+                                    <h3 class="hotel_category">아파트</h3>
+                                    <div class="hotel_location">제주 서귀포시 성산읍 성산리 1</div>
+                                </div>
+                                <div class="hotel_title_button ml-lg-auto text-lg-right">
+                                    <div class="button book_button trans_200"><a href="#">숙소 문의<span></span><span></span><span></span></a></div>
+                                </div>
+                            </div>
+
+                            <!-- 숙소 평점 -->
+
+                            <div class="hotel_image">
+                                <img src="images/listing_hotel.jpg" alt="">
+                                <div class="hotel_review_container d-flex flex-column align-items-center justify-content-center">
+                                    <div class="hotel_review">
+                                        <div class="hotel_review_content">
+                                            <div class="hotel_review_title">매우 만족</div>
+                                            <div class="hotel_review_subtitle">100 개의 리뷰</div>
+                                        </div>
+                                        <div class="hotel_review_rating text-center">4.5</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-8">
-                                    <div class="offers_content">
-                                        <div class="offers_price">110,000원<span>~1박</span></div>
-                                        <div class="rating_r rating_r_4 offers_rating" data-rating="4">
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
+                            </div>
+
+                            <!-- 숙소 사진 (사진 따로 구해야 함) -->
+
+                            <div class="hotel_gallery">
+                                <div class="hotel_slider_container">
+                                    <div class="owl-carousel owl-theme hotel_slider">
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_1.jpg">
+                                                <img src="images/listing_thumb_1.jpg" alt="https://unsplash.com/@jbriscoe">
+                                            </a>
                                         </div>
-                                        <p class="offers_text">제주 감귤 레지던스에 대한 간략한 소개글</p>
-                                        <div class="offers_icons">
-                                            <ul class="offers_icons_list">
-                                                <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/compass.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/bicycle.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
-                                            </ul>
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_2.jpg">
+                                                <img src="images/listing_thumb_2.jpg" alt="https://unsplash.com/@grovemade">
+                                            </a>
                                         </div>
-                                        <div class="button book_button"><a href="/roominfo">숙소 보기<span></span><span></span><span></span></a></div>
-                                        <div class="offer_reviews">
-                                            <div class="offer_reviews_content">
-                                                <div class="offer_reviews_title">매우 만족</div>
-                                                <div class="offer_reviews_subtitle">100개의 리뷰</div>
-                                            </div>
-                                            <div class="offer_reviews_rating text-center">4.5</div>
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_3.jpg">
+                                                <img src="images/listing_thumb_3.jpg" alt="https://unsplash.com/@fransaraco">
+                                            </a>
+                                        </div>
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_4.jpg">
+                                                <img src="images/listing_thumb_4.jpg" alt="https://unsplash.com/@workweek">
+                                            </a>
+                                        </div>
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_5.jpg">
+                                                <img src="images/listing_thumb_5.jpg" alt="https://unsplash.com/@workweek">
+                                            </a>
+                                        </div>
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_6.jpg">
+                                                <img src="images/listing_thumb_6.jpg" alt="https://unsplash.com/@avidenov">
+                                            </a>
+                                        </div>
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_7.jpg">
+                                                <img src="images/listing_thumb_7.jpg" alt="https://unsplash.com/@pietruszka">
+                                            </a>
+                                        </div>
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_8.jpg">
+                                                <img src="images/listing_thumb_8.jpg" alt="https://unsplash.com/@rktkn">
+                                            </a>
+                                        </div>
+
+                                        <!-- Hotel Gallery Slider Item -->
+                                        <div class="owl-item">
+                                            <a class="colorbox cboxElement" href="images/listing_9.jpg">
+                                                <img src="images/listing_thumb_9.jpg" alt="https://unsplash.com/@mindaugas">
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hotel Slider Nav - Prev -->
+                                    <div class="hotel_slider_nav hotel_slider_prev">
+                                        <svg version="1.1" id="Layer_6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                             width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
+											<defs>
+                                                <linearGradient id='hotel_grad_prev'>
+                                                    <stop offset='0%' stop-color='#fa9e1b'/>
+                                                    <stop offset='100%' stop-color='#8d4fff'/>
+                                                </linearGradient>
+                                            </defs>
+                                            <path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
+											M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
+											C22.545,2,26,5.541,26,9.909V23.091z"/>
+                                            <polygon class="nav_arrow" fill="#F3F6F9" points="15.044,22.222 16.377,20.888 12.374,16.885 16.377,12.882 15.044,11.55 9.708,16.885 11.04,18.219
+											11.042,18.219 "/>
+										</svg>
+                                    </div>
+
+                                    <!-- Hotel Slider Nav - Next -->
+                                    <div class="hotel_slider_nav hotel_slider_next">
+                                        <svg version="1.1" id="Layer_7" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                             width="28px" height="33px" viewBox="0 0 28 33" enable-background="new 0 0 28 33" xml:space="preserve">
+											<defs>
+                                                <linearGradient id='hotel_grad_next'>
+                                                    <stop offset='0%' stop-color='#fa9e1b'/>
+                                                    <stop offset='100%' stop-color='#8d4fff'/>
+                                                </linearGradient>
+                                            </defs>
+                                            <path class="nav_path" fill="#F3F6F9" d="M19,0H9C4.029,0,0,4.029,0,9v15c0,4.971,4.029,9,9,9h10c4.97,0,9-4.029,9-9V9C28,4.029,23.97,0,19,0z
+										M26,23.091C26,27.459,22.545,31,18.285,31H9.714C5.454,31,2,27.459,2,23.091V9.909C2,5.541,5.454,2,9.714,2h8.571
+										C22.545,2,26,5.541,26,9.909V23.091z"/>
+                                            <polygon class="nav_arrow" fill="#F3F6F9" points="13.044,11.551 11.71,12.885 15.714,16.888 11.71,20.891 13.044,22.224 18.379,16.888 17.048,15.554
+										17.046,15.554 "/>
+										</svg>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- 숙소 정보 아이콘 -->
+
+                            <div class="hotel_info_tags">
+                                <ul class="hotel_icons_list">
+                                    <li class="hotel_icons_item"><img src="images/compass.png"><h4 class="pet">반려동물 입장 가능</h4></li>
+                                    <li class="hotel_icons_item"><img src="images/bicycle.png"><h4 class="pool">수영장 이용 가능</h3></li>
+                                    <li class="hotel_icons_item"><img src="images/sailboat.png"><h4 class="barbecue">바베큐 이용 가능</h4></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                        <!-- 객실 -->
+
+                        <div class="rooms">
+
+                            <!-- 객실 -->
+                            <div class="room">
+
+                                <!-- 객실 1 -->
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <div class="room_image"><img src="images/room_1.jpg"></div>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="room_content">
+                                            <div class="room_roomType">예약 가능</div>
+                                            <div class="room_price">마운틴뷰 더블</div>
+                                            <div class="room_text">110,000원</div>
+                                            <div class="room_personMax">최대 3인까지</div>
+                                            <div class="room_breakfast">조식 미제공</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 text-lg-right">
+                                        <div class="room_button">
+                                            <div class="button book_button trans_200"><a href="#">예약하기<span></span><span></span><span></span></a></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Offers Item -->
+                            <!-- Room -->
+                            <div class="room">
 
-                        <div class="offers_item rating_5">
-                            <div class="row">
-                                <div class="col-lg-1 temp_col"></div>
-                                <div class="col-lg-3 col-1680-4">
-                                    <div class="offers_image_container">
-                                        <!-- Image by https://unsplash.com/@mindaugas -->
-                                        <div class="offers_image_background" style="background-image:url(images/offer_6.jpg)"></div>
-                                        <div class="offer_name"><a href="/roominfo">여의도 알트스페이스</a></div>
+                                <!-- Room -->
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <div class="room_image"><img src="images/room_2.jpg" alt="https://unsplash.com/@oowgnuj"></div>
                                     </div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="offers_content">
-                                        <div class="offers_price">150,000원<span>~1박</span></div>
-                                        <div class="rating_r rating_r_5 offers_rating"  data-rating="5">
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
+                                    <div class="col-lg-7">
+                                        <div class="room_content">
+                                            <div class="room_roomType">예약 가능</div>
+                                            <div class="room_price">오션뷰 더블</div>
+                                            <div class="room_text">150,000원</div>
+                                            <div class="room_personMax">최대 4인까지</div>
+                                            <div class="room_breakfast">조식 제공</div>
                                         </div>
-                                        <p class="offers_text">여의도 알트스페이스에 대한 간략한 소개글</p>
-                                        <div class="offers_icons">
-                                            <ul class="offers_icons_list">
-                                                <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/compass.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/bicycle.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
-                                            </ul>
-                                        </div>
-                                        <div class="button book_button"><a href="#">숙소 보기<span></span><span></span><span></span></a></div>
-                                        <div class="offer_reviews">
-                                            <div class="offer_reviews_content">
-                                                <div class="offer_reviews_title">매우 만족</div>
-                                                <div class="offer_reviews_subtitle">100개의 리뷰</div>
-                                            </div>
-                                            <div class="offer_reviews_rating text-center">5.0</div>
+                                    </div>
+                                    <div class="col-lg-3 text-lg-right">
+                                        <div class="room_button">
+                                            <div class="button book_button trans_200"><a href="#">예약하기<span></span><span></span><span></span></a></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
-                        <!-- Offers Item -->
+                        <!-- Reviews -->
 
-                        <div class="offers_item rating_3">
-                            <div class="row">
-                                <div class="col-lg-1 temp_col"></div>
-                                <div class="col-lg-3 col-1680-4">
-                                    <div class="offers_image_container">
-                                        <!-- Image by https://unsplash.com/@itsnwa -->
-                                        <div class="offers_image_background" style="background-image:url(images/offer_8.jpg)"></div>
-                                        <div class="offer_name"><a href="/roominfo">광안리 해담채</a></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="offers_content">
-                                        <div class="offers_price">80,000원<span>~1박</span></div>
-                                        <div class="rating_r rating_r_3 offers_rating" data-rating="3">
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
-                                            <i></i>
-                                        </div>
-                                        <p class="offers_text">광안리 해담채에 대한 간략한 소개글</p>
-                                        <div class="offers_icons">
-                                            <ul class="offers_icons_list">
-                                                <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/compass.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/bicycle.png" alt=""></li>
-                                                <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
-                                            </ul>
-                                        </div>
-                                        <div class="button book_button"><a href="#">숙소 보기<span></span><span></span><span></span></a></div>
-                                        <div class="offer_reviews">
-                                            <div class="offer_reviews_content">
-                                                <div class="offer_reviews_title">전반적으로 만족</div>
-                                                <div class="offer_reviews_subtitle">100개의 리뷰</div>
+                        <div class="reviews">
+                            <div class="reviews_title">리뷰</div>
+                            <div class="reviews_container">
+
+                                <!-- Review -->
+                                <div class="review">
+                                    <div class="row">
+                                        <div class="col-lg-1">
+                                            <div class="review_image">
+                                                <img src="images/review_1.jpg">
                                             </div>
-                                            <div class="offer_reviews_rating text-center">3.5</div>
+                                        </div>
+                                        <div class="col-lg-11">
+                                            <div class="review_content">
+                                                <div class="review_title_container">
+                                                    <div class="review_title">제주도에서 제일 맘에 드는 레지던스</div>
+                                                    <div class="review_rating">4.0</div>
+                                                </div>
+                                                <div class="review_text">
+                                                    <p>제주 감귤 레지던스에 대한 간략한 리뷰</p>
+                                                </div>
+                                                <div class="review_name">배수지</div>
+                                                <div class="review_date">2024-12-25</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- 보기 전용 리뷰 -->
+                                <div class="review">
+                                    <div class="row">
+                                        <div class="col-lg-1">
+                                            <div class="review_image">
+                                                <img src="images/review_2.jpg">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-11">
+                                            <div class="review_content">
+                                                <div class="review_title_container">
+                                                    <div class="review_title">제주도에서 제일 맘에 드는 레지던스</div>
+                                                    <div class="review_rating">5.0</div>
+                                                </div>
+                                                <div class="review_text">
+                                                    <p>제주 감귤 레지던스에 대한 간략한 리뷰</p>
+                                                </div>
+                                                <div class="review_name">이진만</div>
+                                                <div class="review_date">2025-02-10</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
+                        <!-- 숙소 위치 -->
+
+                        <div class="location_on_map">
+                            <div class="location_on_map_title">숙소 위치</div>
+
+                            <!-- Google Map -->
+
+                            <div class="travelix_map">
+                                <div id="google_map" class="google_map">
+                                    <div class="map_container">
+                                        <div id="map"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -659,10 +767,12 @@
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/offers_custom.js"></script>
+<script src="plugins/colorbox/jquery.colorbox-min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+<script src="js/single_listing_custom.js"></script>
 
 </body>
 
