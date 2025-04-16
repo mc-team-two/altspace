@@ -20,6 +20,17 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping("/contacts")
+    public String contacts(){
+        return "contacts";
+    }
+
+
+    @RequestMapping("/mypage")
+    public String mypage() {
+        return "mypage";
+}
+
     @RequestMapping("/elements")
     public String elements(){
         return "elements";

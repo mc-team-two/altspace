@@ -1,6 +1,7 @@
 package com.mc.app.service;
 
 import com.mc.app.dto.SocialUser;
+import com.mc.app.dto.User;
 import com.mc.app.frame.MCService;
 import com.mc.app.repository.SocialUserRepository;
 import com.mc.app.repository.UserRepository;
@@ -40,5 +41,9 @@ public class SocialUserService implements MCService<SocialUser, String> {
     @Override
     public List<SocialUser> get() throws Exception {
         return socialUserRepository.select();
+    }
+
+    public User getBySocialId(String s) throws Exception {
+        return socialUserRepository.selectUserBySocialId(s);
     }
 }

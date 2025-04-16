@@ -1,65 +1,54 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ishot
-  Date: 25. 4. 7.
-  Time: 오후 2:15
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<div>
-    <head>
-        <title>Travelix</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Travelix Project">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-        <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-        <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-        <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
-        <link rel="stylesheet" type="text/css" href="styles/responsive.css">
-    </head>
+<head>
+    <title>Altspace</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Altspace Project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
+    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+</head>
 
-    <div class="super_container">
+    <!-- Header -->
 
-        <!-- Header -->
+    <header class="header">
 
-        <header class="header">
+        <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
 
-            <!-- Top Bar -->
-
-            <div class="top_bar">
-                <div class="container">
-                    <div class="row">
-                        <div class="col d-flex flex-row">
-                            <div class="phone">+45 345 3324 56789</div>
-                            <div class="social">
-                                <ul class="social_list">
-                                    <li class="social_list_item"><a href="#"><i class="fa fa-pinterest"
-                                                                                aria-hidden="true"></i></a></li>
-                                    <li class="social_list_item"><a href="#"><i class="fa fa-facebook"
-                                                                                aria-hidden="true"></i></a></li>
-                                    <li class="social_list_item"><a href="#"><i class="fa fa-twitter"
-                                                                                aria-hidden="true"></i></a></li>
-                                    <li class="social_list_item"><a href="#"><i class="fa fa-dribbble"
-                                                                                aria-hidden="true"></i></a></li>
-                                    <li class="social_list_item"><a href="#"><i class="fa fa-behance"
-                                                                                aria-hidden="true"></i></a></li>
-                                    <li class="social_list_item"><a href="#"><i class="fa fa-linkedin"
-                                                                                aria-hidden="true"></i></a></li>
-                                </ul>
-                            </div>
-
+        <div class="top_bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col d-flex flex-row">
+                        <div class="phone">02-1234-5678</div>
+                        <div class="social">
+                            <ul class="social_list">
+                                <li class="social_list_item"><a href="#"><i class="fa fa-pinterest"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-facebook"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-twitter"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-dribbble"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-behance"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="#"><i class="fa fa-linkedin"
+                                                                            aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="user_box ml-auto">
                             <%--                            <c:choose>--%>
                             <%--                                <c:when test="${sessionScope.cust.custId == null}">--%>
-                            <div class="user_box ml-auto">
-                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
-                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a></div>
+                            <div class="user_box_login user_box_link"><a href="<c:url value="/login" /> ">로그인</a></div>
+                            <div class="user_box_register user_box_link"><a href="<c:url value="/login/register" /> ">회원가입</a>
                             </div>
                             <%--                                </c:when>--%>
                             <%--                                <c:otherwise>--%>
@@ -70,29 +59,28 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Main Navigation -->
+        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
 
-            <nav class="main_nav">
-                <div class="container">
-                    <div class="row">
-                        <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
-                            <div class="logo"><a href="<c:url value="/"/> "><img src="../images/Altspace_darkmode_logo_small.png" alt="AltSpace Logo">AltSpace</a></div>
+        <nav class="main_nav">
+            <div class="container">
+                <div class="row">
+                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                        <div class="logo_container">
+                            <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png"
+                                                                                 alt="AltSpace Logo"></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
-
-                                <li class="munu_item"><a href="<c:url value="/"/> ">Home</a></li>
-                                <li class="munu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                                <li class="munu_item"><a href="<c:url value="/offers"/> ">예약</a></li>
-                                <li class="menu_item"><a href="<c:url value="/roominfo"/> ">객실정보</a></li>
-                                <li class="menu_item"><a href="<c:url value="#"/> ">고객센터</a></li>
-                                <li class="menu_item"><a href="<c:url value="#"/> ">마이페이지</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/mypage"/> ">마이페이지</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                                 x="0px" y="0px"
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                  width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
                                  xml:space="preserve">
 								<g>
@@ -125,15 +113,13 @@
                         </div>
                     </div>
                 </div>
-            </nav>
-        </header>
-    </div>
+            </div>
+        </nav>
+    </header>
 
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="styles/bootstrap4/popper.js"></script>
-    <script src="styles/bootstrap4/bootstrap.min.js"></script>
-    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-    <script src="plugins/easing/easing.js"></script>
-    <script src="js/custom.js"></script>
-
-</div>
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="styles/bootstrap4/popper.js"></script>
+<script src="styles/bootstrap4/bootstrap.min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script src="js/custom.js"></script>

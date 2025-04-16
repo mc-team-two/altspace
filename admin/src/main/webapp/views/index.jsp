@@ -6,34 +6,30 @@
 
 <!-- beautify ignore:start -->
 <html
-        lang="ko"
-        class="light-style layout-menu-fixed"
-        dir="ltr"
-        data-theme="theme-default"
-        data-assets-path="../assets/"
-        data-template="vertical-menu-template-free"
+    lang="ko"
+    class="light-style layout-menu-fixed"
+    dir="ltr"
+    data-theme="theme-default"
+    data-assets-path="../assets/"
+    data-template="vertical-menu-template-free"
 >
 <head>
-    <meta charset="utf-8" />
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-
     <title>알트 스페이스(Alt Space)</title>
-
-    <meta name="description" content="" />
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon1.ico" />
+
+    <%--jQuery CDN--%>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <%-- kakao map library --%>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
@@ -45,7 +41,6 @@
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
     <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
@@ -56,6 +51,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -66,7 +62,7 @@
         <!-- Menu -->
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
-                <a href="index.html" class="app-brand-link">
+                <a href="/" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                         width="25"
@@ -163,23 +159,13 @@
 
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href='<c:url value="/space/space1"/>' class="menu-link">
-                                <div data-i18n="Without menu">내 공간 목록</div>
+                            <a href='<c:url value="/space/add"/>' class="menu-link">
+                                <div data-i18n="Without navbar">공간 추가</div>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href='<c:url value="/space/space2"/>' class="menu-link">
-                                <div data-i18n="Without navbar">공간 추가/수정/삭제</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/space/space3"/>' class="menu-link">
-                                <div data-i18n="Container">공간 상세 정보</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/space/space4"/>' class="menu-link">
-                                <div data-i18n="Fluid">공간 일정 관리</div>
+                            <a href='<c:url value="/space/get"/>' class="menu-link">
+                                <div data-i18n="Without menu">내 공간 관리</div>
                             </a>
                         </li>
                     </ul>
@@ -314,10 +300,9 @@
 
 
             <!-- Navbar -->
-            <nav
-                    class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-                    id="layout-navbar"
-            >
+            <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+                 id="layout-navbar">
+
                 <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
                     <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                         <i class="bx bx-menu bx-sm"></i>
@@ -340,85 +325,57 @@
                     <!-- /Search -->
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-                        <c:choose>
-                            <c:when test="${sessionScope.cust.custId == null}">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/login"/> ">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/register"/> ">Register</a>
-                                </li>
-                            </c:when>
-
-                            <c:otherwise>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="<c:url value="/logout"/> ">Logout</a>
-                                </li>
-                            </c:otherwise>
-                        </c:choose>
-
                         <!-- User -->
-<%--                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                <div class="avatar avatar-online">
-                                    <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                                </div>
-                            </a>
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+
+                            <!-- 로그인 상태일 경우 -->
+                            <c:if test="${not empty sessionScope.user}">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
+                                            <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
+                                            <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </c:if>
+
+                            <!-- 로그인 안 된 상태일 경우 -->
+                            <c:if test="${empty sessionScope.user}">
+                                <a class="nav-link hide-arrow" href="<c:url value='/auth/login'/>">
+                                    <div class="avatar">
+                                        <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
+                                            <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
+                                            <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
+                                        </svg>
+                                    </div>
+                                </a>
+                            </c:if>
+
+                            <!-- 드롭다운 메뉴 (로그인한 경우만 의미 있음) -->
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar avatar-online">
-                                                    <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">이진만</span>
-                                                <small class="text-muted">관리자</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="<c:url value='/mypage'/>">
                                         <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">내 프로필</span>
+                                        <span class="align-middle">마이페이지</span>
                                     </a>
                                 </li>
+                                <li><div class="dropdown-divider"></div></li>
                                 <li>
                                     <a class="dropdown-item" href="#">
                                         <i class="bx bx-cog me-2"></i>
-                                        <span class="align-middle">설정</span>
+                                        <span class="align-middle">테마 설정</span>
                                     </a>
                                 </li>
+                                <li><div class="dropdown-divider"></div></li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">청구서</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span>
-                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="auth-login-basic.html">
+                                    <a class="dropdown-item" href="<c:url value='/auth/logout'/>">
                                         <i class="bx bx-power-off me-2"></i>
-                                        <span class="align-middle">로그아웃</span>
+                                        <span class="align-middle"><strong>로그아웃</strong></span>
                                     </a>
                                 </li>
                             </ul>
-                        </li>--%>
+                        </li>
                         <!--/ User -->
                     </ul>
                 </div>

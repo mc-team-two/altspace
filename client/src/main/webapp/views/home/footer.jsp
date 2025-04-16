@@ -10,13 +10,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 
-<!DOCTYPE html>
-<html lang="ko">
 <head>
     <title>AltSpace</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
+    <meta name="description" content="Altspace Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -26,9 +24,6 @@
     <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 </head>
-
-
-<body>
 
 <!-- 푸터 -->
 
@@ -139,42 +134,9 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </footer>
-
-<!-- Copyright -->
-
-<div class="copyright">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 order-lg-1 order-2  ">
-                <div class="copyright_content d-flex flex-row align-items-center">
-                    <div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-                </div>
-            </div>
-            <div class="col-lg-9 order-lg-2 order-1">
-                <div class="footer_nav_container d-flex flex-row align-items-center justify-content-lg-end">
-                    <div class="footer_nav">
-                        <ul class="footer_nav_list">
-                            <li class="footer_nav_item"><a href="#">home</a></li>
-                            <li class="footer_nav_item"><a href="about.html">about us</a></li>
-                            <li class="footer_nav_item"><a href="offers.html">offers</a></li>
-                            <li class="footer_nav_item"><a href="blog.html">news</a></li>
-                            <li class="footer_nav_item"><a href="contact.html">contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="super_container">
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
@@ -182,8 +144,3 @@
 <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="plugins/easing/easing.js"></script>
 <script src="js/custom.js"></script>
-
-</div>
-</body>
-
-</html>
