@@ -25,8 +25,8 @@ public class AccomService implements MCService<Accommodations,Integer> {
     }
 
     @Override
-    public void del(Integer integer) throws Exception {
-
+    public void del(Integer accId) throws Exception {
+        accomRepository.delete(accId);
     }
 
     @Override
@@ -37,5 +37,9 @@ public class AccomService implements MCService<Accommodations,Integer> {
     @Override
     public List<Accommodations> get() throws Exception {
         return accomRepository.select();
+    }
+
+    public List<Accommodations> getByHostId(String s) throws Exception {
+        return accomRepository.selectByHostId(s);
     }
 }

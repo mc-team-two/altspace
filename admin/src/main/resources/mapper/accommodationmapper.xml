@@ -11,9 +11,9 @@
     <select id="selectOne" parameterType="Integer" resultType="Accommodations">
         SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId}
     </select>
-    <!--  개별 유저가 등록한 모든 숙소 조회 -->
-    <select id="selectByUserId" parameterType="String" resultType="Accommodations">
-        SELECT * FROM accommodations WHERE host_id=#{host_id}
+    <!--  개별 호스트가 등록한 모든 숙소 조회 -->
+    <select id="selectByHostId" parameterType="String" resultType="Accommodations">
+        SELECT * FROM accommodations WHERE host_id=#{hostId}
     </select>
     <!--  숙소 추가  -->
     <insert id="insertAccommodation" parameterType="Accommodations">
@@ -39,7 +39,9 @@
     <!--     숙소 수정 -->
     <update id="updateAccommodation" parameterType="Accommodations"> UPDATE Accommodations SET name = #{name}, location = #{location}, price_night = #{priceNight}, person_max = #{personMax}, description = #{description}, status = #{status}, category = #{category}, room_type = #{roomType}, breakfast = #{breakfast}, pool = #{pool}, barbecue = #{barbecue}, pet = #{pet}, update_day = NOW() WHERE accommodation_id = #{accommodationId} </update>
     <!--     숙소 삭제 -->
-    <delete id="deleteAccommodation" parameterType="int"> DELETE FROM Accommodations WHERE accommodation_id = #{accommodationId} </delete>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM Accommodations WHERE accommodation_id = #{accommodationId}
+    </delete>
     <!--     호스트 아이디로 숙소 찾기 -->
     <select id="selectAccommodationsByHostId" parameterType="string" resultType="Accommodations"> SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations WHERE host_id = #{hostId} </select>
     <!--    이름이나 지역으로 숙소 찾기  -->
