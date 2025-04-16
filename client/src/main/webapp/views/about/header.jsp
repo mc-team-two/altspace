@@ -66,24 +66,21 @@
     <nav class="main_nav">
         <div class="container">
             <div class="row">
-                <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
                     <div class="logo_container">
-                        <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png"
-                                                                             alt="AltSpace Logo"></a></div>
+                        <div class="logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
                     </div>
                     <div class="main_nav_container ml-auto">
                         <ul class="main_nav_list">
-                            <li class="munu_item"><a href="<c:url value="/"/> ">홈</a></li>
-                            <li class="munu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                            <li class="munu_item"><a href="<c:url value="/offers"/> ">예약</a></li>
-                            <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                            <li class="menu_item"><a href="<c:url value="/mypage"/> ">마이페이지</a></li>
+                            <li class="main_nav_item"><a href="/">홈</a></li>
+                            <li class="main_nav_item"><a href="/about">Altspace란</a></li>
+                            <li class="main_nav_item"><a href="/contact">고객센터</a></li>
+                            <li class="main_nav_item"><a href="/details">예약 내역</a></li>
                         </ul>
                     </div>
                     <div class="content_search ml-lg-0 ml-auto">
-                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                             width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
-                             xml:space="preserve">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                             width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
 								<g>
                                     <g>
                                         <g>

@@ -64,14 +64,14 @@
                 <div class="row">
                     <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
                         <div class="logo_container">
-                            <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
+                            <div class="logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
                                 <li class="main_nav_item"><a href="/">홈</a></li>
                                 <li class="main_nav_item"><a href="/about">Altspace란</a></li>
                                 <li class="main_nav_item"><a href="/contact">고객센터</a></li>
-                                <li class="main_nav_item"><a href="/mypage">마이페이지</a></li>
+                                <li class="main_nav_item"><a href="/details">예약내역</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
