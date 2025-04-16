@@ -49,8 +49,8 @@
               </ul>
             </div>
             <div class="user_box ml-auto">
-              <div class="user_box_login user_box_link"><a href="#">login</a></div>
-              <div class="user_box_register user_box_link"><a href="#">register</a></div>
+              <div class="user_box_login user_box_link"><a href="/login">login</a></div>
+              <div class="user_box_register user_box_link"><a href="/login/register">register</a></div>
             </div>
           </div>
         </div>

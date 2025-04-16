@@ -59,6 +59,8 @@
                         </c:when>
                         <c:otherwise>
                         <div class="user_box ml-auto">
+                            <div class="user_box_login user_box_link"><a href="/login">로그인</a></div>
+                            <div class="user_box_register user_box_link"><a href="/login/register">회원가입</a></div>
                             <div class="user_box_login user_box_link">
                                 <a href="<c:url value="/mypage?id=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                             </div>
