@@ -43,8 +43,8 @@
                             </ul>
                         </div>
                         <div class="user_box ml-auto">
-                            <div class="user_box_login user_box_link"><a href="#">로그인</a></div>
-                            <div class="user_box_register user_box_link"><a href="#">회원가입</a></div>
+                            <div class="user_box_login user_box_link"><a href="/login">로그인</a></div>
+                            <div class="user_box_register user_box_link"><a href="/login/register">회원가입</a></div>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                 <div class="row">
                     <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
                         <div class="logo_container">
-                            <div class="logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
+                            <div class="logo"><a href="/"><img src="images/logo.png"></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
