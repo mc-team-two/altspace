@@ -4,12 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mc.app.repository.AccomRepository">
     <!--  전체 숙소 조회  -->
-    <select id="select" resultType="Accommodations"> SELECT * FROM accommodations ORDER BY create_day DESC </select>
+    <select id="select" resultType="Accommodations">
+        SELECT * FROM accommodations ORDER BY create_day DESC
+    </select>
     <!--  하나의 숙소 조회  -->
-    <select id="selectOne" parameterType="Integer" resultType="Accommodations"> SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId} </select>
+    <select id="selectOne" parameterType="Integer" resultType="Accommodations">
+        SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId}
+    </select>
+    <!--  개별 유저가 등록한 모든 숙소 조회 -->
+    <select id="selectByUserId" parameterType="String" resultType="Accommodations">
+        SELECT * FROM accommodations WHERE host_id=#{host_id}
+    </select>
     <!--  숙소 추가  -->
     <insert id="insertAccommodation" parameterType="Accommodations">
-        INSERT INTO Accommodations ( host_id, name, location, price_night, person_max, description, status, category, room_type, breakfast, pool, barbecue, pet, create_day, update_day ) VALUES ( #{hostId}, #{name}, #{location}, #{priceNight}, #{personMax}, #{description}, #{status}, #{category}, #{roomType}, #{breakfast}, #{pool}, #{barbecue}, #{pet}, NOW(), NOW() )
+        INSERT INTO Accommodations (
+            host_id, name, location, price_night,
+            person_max, description, status,
+            category, room_type,
+            breakfast, pool, barbecue, pet,
+            latitude, longitude,
+            create_day, update_day )
+        VALUES ( #{hostId}, #{name}, #{location}, #{priceNight},
+                #{personMax}, #{description}, #{status},
+                #{category}, #{roomType},
+                #{breakfast}, #{pool}, #{barbecue}, #{pet},
+                #{latitude}, #{longitude},
+                NOW(), NOW() )
         <selectKey resultType="int" keyProperty="accommodationId" order="AFTER"> SELECT LAST_INSERT_ID() </selectKey>
     </insert>
     <!--     숙소 번호로 찾기 -->

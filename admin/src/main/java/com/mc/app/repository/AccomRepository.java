@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface AccomRepository extends MCRepository<Accommodations,Integer> {
-
+    void insertAccommodation(Accommodations acc);
 }
