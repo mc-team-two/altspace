@@ -5,13 +5,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/roominfo")
-public class roomInfoController {
+@RequestMapping("/details")
+public class DetailsController {
 
-    String dir ="roominfo/";
+    String dir ="details/";
 
     @RequestMapping("")
-    public String roomInfo(Model model) {
+    public String details(Model model) {
         model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
         model.addAttribute("footer", dir + "footer");

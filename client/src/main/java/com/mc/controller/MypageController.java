@@ -11,7 +11,7 @@ import com.mc.app.dto.User;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
-public class mypageController {
+public class MypageController {
 
     public String dir = "mypage/";
 

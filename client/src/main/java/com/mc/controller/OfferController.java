@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/offers")
-public class offerController {
+public class OfferController {
 
     final AccomService accomService;
     final ReviewService reviewService;

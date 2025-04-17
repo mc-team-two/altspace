@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/contact")
-public class contactController {
+public class ContactController {
     @RequestMapping("")
     public String main() {
         return "contact";
