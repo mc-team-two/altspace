@@ -42,27 +42,26 @@
                         </div>
 
                         <c:choose>
-                        <c:when test="${sessionScope.user.userId == null}">
-                            <div class="user_box ml-auto">
-                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
-                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                            <c:when test="${sessionScope.user.userId == null}">
+                                <div class="user_box ml-auto">
+                                    <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                                    <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                        <div class="user_box ml-auto">
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/mypage?id=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
-                            </div>
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/cart?id=${sessionScope.user.name}"/> ">Cart</a>
-                            </div>
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/auth/logout"/> ">logout</a></div>
-                        </div>
-                    </div>
-                    </c:otherwise>
-                    </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="user_box ml-auto">
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                                    </div>
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                                    </div>
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/auth/logout"/> ">logout</a></div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -119,5 +118,6 @@
                 </div>
             </div>
         </nav>
+        </div>
     </header>
 </div>

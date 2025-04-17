@@ -17,246 +17,42 @@
     <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
 </head>
 
-    <!-- Home -->
+<!-- 홈 -->
 
-    <div class="home">
-        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/about_background.jpg"></div>
-        <div class="home_content">
-            <div class="home_title">about us</div>
-        </div>
+<div class="home">
+    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/about_background.jpg"></div>
+    <div class="home_content">
+        <div class="home_title">알트스페이스란</div>
     </div>
+</div>
 
-    <!-- Intro -->
+<!-- Altspace 소개 -->
 
-    <div class="intro">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7">
-                    <div class="intro_image"><img src="images/intro.png" alt=""></div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="intro_content">
-                        <div class="intro_title">we have the best tours</div>
-                        <p class="intro_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate eros, iaculis consequat nisl. Nunc et suscipit urna. Integer elementum orci eu vehicula pretium. Donec bibendum tristique condimentum. Aenean in lacus ligula. Phasellus euismod gravida eros. Aenean nec ipsum aliquet, pharetra magna id, interdum sapien. Etiam id lorem eu nisl pellentesque semper. Nullam tincidunt metus placerat, suscipit leo ut, tempus nulla. Fusce at eleifend tellus. Ut eleifend dui nunc, non fermentum quam placerat non. Etiam venenatis nibh augue, sed eleifend justo tristique eu</p>
-                        <div class="button intro_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>
-                    </div>
-                </div>
+<div class="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="intro_image"><img src="images/intro.png" alt=""></div>
             </div>
-        </div>
-    </div>
-
-    <!-- Stats -->
-
-    <div class="stats">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="section_title">years statistics</div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1 text-center">
-                    <p class="stats_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis vulputate eros, iaculis consequat nisl. Nunc et suscipit urna. Integer elementum orci eu vehicula pretium. Donec bibendum tristique condimentum. Aenean in lacus ligula. </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="stats_years">
-                        <div class="stats_years_last">2016</div>
-                        <div class="stats_years_new float-right">2017</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="stats_contents">
-
-                        <!-- Stats Item -->
-                        <div class="stats_item d-flex flex-md-row flex-column clearfix">
-                            <div class="stats_last order-md-1 order-3">
-                                <div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_1.png" alt="">
-                                </div>
-                                <div class="stats_last_content">
-                                    <div class="stats_number">1642</div>
-                                    <div class="stats_type">Clients</div>
-                                </div>
-                            </div>
-                            <div class="stats_bar order-md-2 order-2" data-x="1642" data-y="3527" data-color="#31124b">
-                                <div class="stats_bar_perc">
-                                    <div>
-                                        <div class="stats_bar_value"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats_new order-md-3 order-1 text-right">
-                                <div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_1.png" alt="">
-                                </div>
-                                <div class="stats_new_content">
-                                    <div class="stats_number">3527</div>
-                                    <div class="stats_type">Clients</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Stats Item -->
-                        <div class="stats_item d-flex flex-md-row flex-column clearfix">
-                            <div class="stats_last order-md-1 order-3">
-                                <div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_2.png" alt="">
-                                </div>
-                                <div class="stats_last_content">
-                                    <div class="stats_number">768</div>
-                                    <div class="stats_type">Returning Clients</div>
-                                </div>
-                            </div>
-                            <div class="stats_bar order-md-2 order-2" data-x="768" data-y="145" data-color="#a95ce4">
-                                <div class="stats_bar_perc">
-                                    <div>
-                                        <div class="stats_bar_value"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats_new order-md-3 order-1 text-right">
-                                <div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_2.png" alt="">
-                                </div>
-                                <div class="stats_new_content">
-                                    <div class="stats_number">145</div>
-                                    <div class="stats_type">Returning Clients</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Stats Item -->
-                        <div class="stats_item d-flex flex-md-row flex-column clearfix">
-                            <div class="stats_last order-md-1 order-3">
-                                <div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_3.png" alt="">
-                                </div>
-                                <div class="stats_last_content">
-                                    <div class="stats_number">11546</div>
-                                    <div class="stats_type">Reach</div>
-                                </div>
-                            </div>
-                            <div class="stats_bar order-md-2 order-2" data-x="11546" data-y="9321" data-color="#fa6f1b">
-                                <div class="stats_bar_perc">
-                                    <div>
-                                        <div class="stats_bar_value"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats_new order-md-3 order-1 text-right">
-                                <div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_3.png" alt="">
-                                </div>
-                                <div class="stats_new_content">
-                                    <div class="stats_number">9321</div>
-                                    <div class="stats_type">Reach</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Stats Item -->
-                        <div class="stats_item d-flex flex-md-row flex-column clearfix">
-                            <div class="stats_last order-md-1 order-3">
-                                <div class="stats_last_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_4.png" alt="">
-                                </div>
-                                <div class="stats_last_content">
-                                    <div class="stats_number">3729</div>
-                                    <div class="stats_type">Items</div>
-                                </div>
-                            </div>
-                            <div class="stats_bar order-md-2 order-2" data-x="3729" data-y="17429" data-color="#fa9e1b">
-                                <div class="stats_bar_perc">
-                                    <div>
-                                        <div class="stats_bar_value"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stats_new order-md-3 order-1 text-right">
-                                <div class="stats_new_icon d-flex flex-column align-items-center justify-content-end">
-                                    <img src="images/stats_4.png" alt="">
-                                </div>
-                                <div class="stats_new_content">
-                                    <div class="stats_number">17429</div>
-                                    <div class="stats_type">More Items</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+            <div class="col-lg-5">
+                <div class="intro_content">
+                    <div class="intro_title">Altspace에 오신 것을 환영합니다!</div>
+                    <p class="intro_text">
+                        Altspace™는 메뉴를 빠르게 여는 Alt + Space 단축키에 간결하게 정리된 레이아웃을 가진 웹사이트를 통해 빠르고 편리한 공간 예약 서비스를 제공하고 있습니다.
+                    <p></p>
+                    Altspace에서 다양한 호텔 및 리조트는 물론 게스트하우스, 모텔, 파티룸 등 프라이빗한 공간을 안심하고 예약하실 수 있으며 이용 요금, 편의 시설과 서비스,
+                    예약 가능 객실, 반려동물 동반 여부 등 등 모든 정보를 한 눈에 확인하실 수 있습니다.
+                    <p></p>
+                    본 웹사이트는 멀티캠퍼스 2조 운영진이 (이예진, 이황수, 임유경, 박정우, 김부건) 공동 운영합니다. 자세한 문의사항 또는 분쟁의 경우 아래 연락처로 연락 바랍니다.
+                    <p></p>
+                    02-1234-5678 / 1588-1588 / help.alt@altspace.com
+                    <div class="button intro_button"><div class="button_bcg"></div><a href="/">예약하러 가기<span></span><span></span><span></span></a></div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Add -->
-
-    <div class="add">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="add_container">
-                        <div class="add_background" style="background-image:url(images/add.jpg)"></div>
-                        <div class="add_content">
-                            <h1 class="add_title">thailand</h1>
-                            <div class="add_subtitle">From <span>$999</span></div>
-                            <div class="button add_button"><div class="button_bcg"></div><a href="#">explore now<span></span><span></span><span></span></a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Milestones -->
-
-    <div class="milestones">
-        <div class="container">
-            <div class="row">
-
-                <!-- Milestone -->
-                <div class="col-lg-3 milestone_col">
-                    <div class="milestone text-center">
-                        <div class="milestone_icon"><img src="images/milestone_1.png" alt=""></div>
-                        <div class="milestone_counter" data-end-value="255">0</div>
-                        <div class="milestone_text">Clients</div>
-                    </div>
-                </div>
-
-                <!-- Milestone -->
-                <div class="col-lg-3 milestone_col">
-                    <div class="milestone text-center">
-                        <div class="milestone_icon"><img src="images/milestone_2.png" alt=""></div>
-                        <div class="milestone_counter" data-end-value="1176">0</div>
-                        <div class="milestone_text">Projects</div>
-                    </div>
-                </div>
-
-                <!-- Milestone -->
-                <div class="col-lg-3 milestone_col">
-                    <div class="milestone text-center">
-                        <div class="milestone_icon"><img src="images/milestone_3.png" alt=""></div>
-                        <div class="milestone_counter" data-end-value="39">0</div>
-                        <div class="milestone_text">Countries</div>
-                    </div>
-                </div>
-
-                <!-- Milestone -->
-                <div class="col-lg-3 milestone_col">
-                    <div class="milestone text-center">
-                        <div class="milestone_icon"><img src="images/milestone_4.png" alt=""></div>
-                        <div class="milestone_counter" data-end-value="127">0</div>
-                        <div class="milestone_text">Coffees</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>

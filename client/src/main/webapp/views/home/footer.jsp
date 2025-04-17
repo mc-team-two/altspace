@@ -24,7 +24,6 @@
     <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 </head>
-
 <!-- 푸터 -->
 
 <footer class="footer">
@@ -134,6 +133,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </footer>

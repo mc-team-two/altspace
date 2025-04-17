@@ -1,23 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-
 <head>
-    <title>Altspace | Altspace란 | 가장 빠른 공간대여 알트스페이스</title>
+    <title>숙소 정보</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Altspace Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
 </head>
-<!-- 헤더 -->
-
 <header class="header">
 
     <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
@@ -29,20 +27,28 @@
                     <div class="phone">02-1234-5678</div>
                     <div class="social">
                         <ul class="social_list">
-                            <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            </li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-facebook"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-twitter"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-dribbble"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-behance"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="#"><i class="fa fa-linkedin"
+                                                                        aria-hidden="true"></i></a></li>
                         </ul>
                     </div>
 
                     <c:choose>
                         <c:when test="${sessionScope.user.userId == null}">
                             <div class="user_box ml-auto">
-                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
-                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a>
+                                </div>
+                                <div class="user_box_register user_box_link"><a
+                                        href="<c:url value="/login/register"/> ">회원가입</a>
                                 </div>
                             </div>
                         </c:when>
@@ -78,12 +84,14 @@
                             <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
+                            <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
                         </ul>
                     </div>
                     <div class="content_search ml-lg-0 ml-auto">
-                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                             width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                             x="0px" y="0px"
+                             width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+                             xml:space="preserve">
 								<g>
                                     <g>
                                         <g>
@@ -121,6 +129,9 @@
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="plugins/easing/easing.js"></script>
-<script src="js/custom.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="plugins/colorbox/jquery.colorbox-min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+<script src="js/single_listing_custom.js"></script>

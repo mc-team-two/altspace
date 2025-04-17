@@ -1,27 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ishot
-  Date: 25. 4. 7.
-  Time: 오후 3:08
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <head>
-    <title>Single Listing</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
+
+    <head>
+        <title>Altspace | 나의 예약 | 가장 빠른 공간대여 알트스페이스</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Travelix Project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
+        <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
+        <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+    </head>
 </head>
 
 <div class="super_container">
@@ -47,32 +40,31 @@
                                 <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
-
                         <c:choose>
-                        <c:when test="${sessionScope.user.userId == null}">
-                            <div class="user_box ml-auto">
-                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
-                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                            <c:when test="${sessionScope.user.userId == null}">
+                                <div class="user_box ml-auto">
+                                    <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                                    <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                    </div>
                                 </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                        <div class="user_box ml-auto">
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/mypage?id=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
-                            </div>
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/cart?id=${sessionScope.user.name}"/> ">Cart</a>
-                            </div>
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/auth/logout"/> ">logout</a></div>
-                        </div>
-                    </div>
-                    </c:otherwise>
-                    </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="user_box ml-auto">
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                                    </div>
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                                    </div>
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/auth/logout"/> ">logout</a></div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
+        </div>
 
         <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
 
@@ -85,10 +77,10 @@
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
-                                <li class="main_nav_item"><a href="/">홈</a></li>
-                                <li class="main_nav_item"><a href="/about">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="/contact">고객센터</a></li>
-                                <li class="main_nav_item"><a href="/details">예약내역</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">

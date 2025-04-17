@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/about")
-public class aboutController {
+public class AboutController {
 
     String dir = "about/";
 
     @RequestMapping("")
     public String about(Model model) {
-        model.addAttribute("header", dir + "header");
+        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
         model.addAttribute("footer", dir + "footer");
-        return "about";
+        return "index";
     }
 }

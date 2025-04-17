@@ -3,19 +3,17 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-    <title>Altspace | Altspace란 | 가장 빠른 공간대여 알트스페이스</title>
+    <title>Altspace | 고객센터</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Altspace Project">
+    <meta name="description" content="Travelix Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/contact_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/contact_responsive.css">
 </head>
+
 <!-- 헤더 -->
 
 <header class="header">
@@ -71,14 +69,14 @@
             <div class="row">
                 <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
                     <div class="logo_container">
-                        <div class="logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
+                        <div class="logo"><a href="<c:url value="/"/> "><img src="images/logo.png" alt=""></a></div>
                     </div>
                     <div class="main_nav_container ml-auto">
                         <ul class="main_nav_list">
                             <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
+                            <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
                         </ul>
                     </div>
                     <div class="content_search ml-lg-0 ml-auto">
@@ -116,11 +114,11 @@
             </div>
         </div>
     </nav>
+
 </header>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="js/custom.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="js/contact_custom.js"></script>

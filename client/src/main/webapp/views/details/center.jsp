@@ -1,10 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
-    <title>Single Listing</title>
+    <title>Altspace | 나의 예약 | 가장 빠른 공간대여 알트스페이스</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Travelix Project">
@@ -12,15 +11,25 @@
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
 </head>
 
 <body>
 
+<div class="menu trans_500">
+    <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
+        <div class="menu_close_container"><div class="menu_close"></div></div>
+        <div class="logo menu_logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
+        <ul>
+            <li class="menu_item"><a href="index.html">home</a></li>
+            <li class="menu_item"><a href="about.html">about us</a></li>
+            <li class="menu_item"><a href="offers.html">offers</a></li>
+            <li class="menu_item"><a href="blog.html">news</a></li>
+            <li class="menu_item"><a href="contact.html">contact</a></li>
+        </ul>
+    </div>
+</div>
 <!-- 홈 -->
 
 <div class="home">
@@ -118,17 +127,14 @@
                     <div class="sidebar_title">MENU</div>
                     <div class="sidebar_list">
                         <ul>
-                            <li><a href="/details">나의 예약</a></li>
-                            <li><a href="/review">나의 리뷰</a></li>
+                            <li><a href="<c:url value="/details"/> ">나의 예약</a></li>
+                            <li><a href="<c:url value="/review"/> ">나의 리뷰</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
 </div>
 
 <script src="js/jquery-3.2.1.min.js"></script>

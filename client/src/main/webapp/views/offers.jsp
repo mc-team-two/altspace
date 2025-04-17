@@ -48,10 +48,28 @@
                 <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
               </ul>
             </div>
-            <div class="user_box ml-auto">
-              <div class="user_box_login user_box_link"><a href="/login">login</a></div>
-              <div class="user_box_register user_box_link"><a href="/login/register">register</a></div>
-            </div>
+
+            <c:choose>
+              <c:when test="${sessionScope.user.userId == null}">
+                <div class="user_box ml-auto">
+                  <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                  <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                  </div>
+                </div>
+              </c:when>
+              <c:otherwise>
+                <div class="user_box ml-auto">
+                  <div class="user_box_login user_box_link">
+                    <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                  </div>
+                  <div class="user_box_login user_box_link">
+                    <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                  </div>
+                  <div class="user_box_login user_box_link">
+                    <a href="<c:url value="/auth/logout"/> ">logout</a></div>
+                </div>
+              </c:otherwise>
+            </c:choose>
           </div>
         </div>
       </div>
@@ -72,7 +90,6 @@
                 <li class="main_nav_item"><a href="<c:url value="/about"/> ">about us</a></li>
                 <li class="main_nav_item"><a href="<c:url value="/offers"/> ">offers</a></li>
                 <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">RoomInfo</a></li>
-                <li class="main_nav_item"><a href="<c:url value="/elements"/> ">Elements</a></li>
               </ul>
             </div>
             <div class="content_search ml-lg-0 ml-auto">
