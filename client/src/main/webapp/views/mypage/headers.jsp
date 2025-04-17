@@ -52,10 +52,10 @@
                         <c:otherwise>
                         <div class="user_box ml-auto">
                             <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                                <a href="<c:url value="/mypage?id=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                             </div>
                             <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                                <a href="<c:url value="/cart?id=${sessionScope.user.name}"/> ">Cart</a>
                             </div>
                             <div class="user_box_login user_box_link">
                                 <a href="<c:url value="/auth/logout"/> ">logout</a></div>
@@ -81,7 +81,7 @@
                                 <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">

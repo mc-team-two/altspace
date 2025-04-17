@@ -17,6 +17,8 @@ public class Reviews {
     private int accommodationId;    // 리뷰 대상 숙박시설
     private int grade;              // 평점
     private String comment;         // 내용
+    private String name;            // 숙소 이름(조인해서 받아오는 값)
+    private String location;        // 숙소 주소(조인해서 받아오는 값)
     private Timestamp createDay;
     private Timestamp updateDay;
 

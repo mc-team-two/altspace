@@ -26,17 +26,17 @@
 
 <div class="super_container">
 
-    <!-- Header -->
+    <!-- 헤더 -->
 
     <header class="header">
 
-        <!-- Top Bar -->
+        <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
 
         <div class="top_bar">
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        <div class="phone">+45 345 3324 56789</div>
+                        <div class="phone">02-1234-5678</div>
                         <div class="social">
                             <ul class="social_list">
                                 <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
@@ -59,10 +59,10 @@
                         <c:otherwise>
                         <div class="user_box ml-auto">
                             <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                                <a href="<c:url value="/mypage?id=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                             </div>
                             <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                                <a href="<c:url value="/cart?id=${sessionScope.user.name}"/> ">Cart</a>
                             </div>
                             <div class="user_box_login user_box_link">
                                 <a href="<c:url value="/auth/logout"/> ">logout</a></div>
@@ -70,25 +70,25 @@
                     </div>
                     </c:otherwise>
                     </c:choose>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Main Navigation -->
+        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
 
         <nav class="main_nav">
             <div class="container">
                 <div class="row">
-                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
                         <div class="logo_container">
-                            <div class="logo"><a href="<c:url value="/"/> "><img src="../images/Altspace_darkmode_logo_small.png" alt="AltSpace Logo">AltSpace</a></div>
+                            <div class="logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
-                                <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
+                                <li class="main_nav_item"><a href="/">홈</a></li>
+                                <li class="main_nav_item"><a href="/about">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="/contact">고객센터</a></li>
+                                <li class="main_nav_item"><a href="/details">예약내역</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
@@ -126,6 +126,7 @@
                 </div>
             </div>
         </nav>
+
     </header>
 </div>
 
