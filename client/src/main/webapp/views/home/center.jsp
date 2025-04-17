@@ -417,23 +417,6 @@
                                         </div>
                                         <div class="offer_reviews_rating text-center">8.1</div>
                                     </div>
-
-                                    <div class="hotel_info_text"><div>
-                                        <p>이메일: ${email}</p>
-                                        <p>이름: ${name}</p>
-                                        <p>전화번호: ${phone}</p>
-                                        <p>가입일: <fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
-                                        <p>정보 수정일:
-                                            <c:choose>
-                                                <c:when test="${updatedAt == null}">
-                                                    수정 기록 없음
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <fmt:formatDate value="${updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>

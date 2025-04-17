@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/roominfo")
 public class roomInfoController {
 
-    String dir ="roomInfo/";
+    String dir ="roominfo/";
 
     @RequestMapping("")
     public String roomInfo(Model model) {
+        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
-        return "roominfo";
+        model.addAttribute("footer", dir + "footer");
+        return "index";
     }
 }

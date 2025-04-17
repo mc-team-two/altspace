@@ -1,29 +1,21 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ishot
-  Date: 25. 4. 7.
-  Time: 오후 2:20
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-
 <head>
-    <title>Altspace</title>
+    <title>숙소 정보</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
+    <meta name="description" content="Altspace Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
 </head>
-
 <!-- 푸터 -->
 
 <footer class="footer">
@@ -37,7 +29,8 @@
                         <div class="logo_container footer_logo">
                             <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
                         </div>
-                        <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
+                        <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고:
+                            2025-서울영등포-0001 |
                             관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹</p>
                         <ul class="footer_social_list">
                             <li class="footer_social_item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
@@ -114,34 +107,45 @@
                     <div class="footer_content footer_contact">
                         <ul class="contact_info_list">
                             <li class="contact_info_item d-flex flex-row">
-                                <div><div class="contact_info_icon"><img src="images/placeholder.svg" alt=""></div></div>
+                                <div>
+                                    <div class="contact_info_icon"><img src="images/placeholder.svg" alt=""></div>
+                                </div>
                                 <div class="contact_info_text">서울 영등포구 여의동로 330 (여의도동, 알트타워)</div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
-                                <div><div class="contact_info_icon"><img src="images/phone-call.svg" alt=""></div></div>
+                                <div>
+                                    <div class="contact_info_icon"><img src="images/phone-call.svg" alt=""></div>
+                                </div>
                                 <div class="contact_info_text">02-1234-5678 / 1588-1588</div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
-                                <div><div class="contact_info_icon"><img src="images/message.svg" alt=""></div></div>
-                                <div class="contact_info_text"><a href="mailto:help.alt@altspace.com?Subject=Hello" target="_top">help.alt@altspace.com</a></div>
+                                <div>
+                                    <div class="contact_info_icon"><img src="images/message.svg" alt=""></div>
+                                </div>
+                                <div class="contact_info_text"><a href="mailto:help.alt@altspace.com?Subject=Hello"
+                                                                  target="_top">help.alt@altspace.com</a></div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
-                                <div><div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div></div>
-                                <div class="contact_info_text"><a href="https://altspace.com/help">www.altspace.com/help</a></div>
+                                <div>
+                                    <div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div>
+                                </div>
+                                <div class="contact_info_text"><a
+                                        href="https://altspace.com/help">www.altspace.com/help</a></div>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </footer>
 
-
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="plugins/easing/easing.js"></script>
-<script src="js/custom.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="plugins/colorbox/jquery.colorbox-min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+<script src="js/single_listing_custom.js"></script>

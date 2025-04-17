@@ -12,7 +12,9 @@ public class reviewController {
 
     @RequestMapping("")
     public String review(Model model) {
+        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
-        return "review";
+        model.addAttribute("footer", dir + "footer");
+        return "index";
     }
 }

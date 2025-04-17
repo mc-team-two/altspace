@@ -12,7 +12,9 @@ public class detailsController {
 
     @RequestMapping("")
     public String details(Model model) {
+        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
-        return "details";
+        model.addAttribute("footer", dir + "footer");
+        return "index";
     }
 }
