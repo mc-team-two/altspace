@@ -1,21 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<head>
-    <title>숙소 정보</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Altspace Project">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
-</head>
+
 <header class="header">
 
     <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
@@ -43,7 +29,7 @@
                     </div>
 
                     <c:choose>
-                        <c:when test="${sessionScope.user.userId == null}">
+                        <c:when test="${sessionScope.user.name == null}">
                             <div class="user_box ml-auto">
                                 <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a>
                                 </div>
@@ -55,10 +41,10 @@
                         <c:otherwise>
                             <div class="user_box ml-auto">
                                 <div class="user_box_login user_box_link">
-                                    <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                                    <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                                 </div>
                                 <div class="user_box_login user_box_link">
-                                    <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                                    <a href="<c:url value="/cart?name=${sessionScope.user.name}"/> ">Cart</a>
                                 </div>
                                 <div class="user_box_login user_box_link">
                                     <a href="<c:url value="/auth/logout"/> ">logout</a></div>
@@ -84,7 +70,7 @@
                             <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
+                            <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
                         </ul>
                     </div>
                     <div class="content_search ml-lg-0 ml-auto">

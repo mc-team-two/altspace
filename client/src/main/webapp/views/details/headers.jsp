@@ -1,21 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<head>
-
-    <head>
-        <title>Altspace | 나의 예약 | 가장 빠른 공간대여 알트스페이스</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="Travelix Project">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-        <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
-        <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-    </head>
-</head>
 
 <div class="super_container">
 
@@ -41,7 +26,7 @@
                             </ul>
                         </div>
                         <c:choose>
-                            <c:when test="${sessionScope.user.userId == null}">
+                            <c:when test="${sessionScope.user.name == null}">
                                 <div class="user_box ml-auto">
                                     <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
                                     <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
@@ -51,10 +36,10 @@
                             <c:otherwise>
                                 <div class="user_box ml-auto">
                                     <div class="user_box_login user_box_link">
-                                        <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                                        <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                                     </div>
                                     <div class="user_box_login user_box_link">
-                                        <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                                        <a href="<c:url value="/cart?name=${sessionScope.user.name}"/> ">Cart</a>
                                     </div>
                                     <div class="user_box_login user_box_link">
                                         <a href="<c:url value="/auth/logout"/> ">logout</a></div>
