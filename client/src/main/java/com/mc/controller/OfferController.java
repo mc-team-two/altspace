@@ -6,25 +6,16 @@ import com.mc.app.service.AccomService;
 import com.mc.app.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@Controller
-<<<<<<<< HEAD:client/src/main/java/com/mc/controller/contactController.java
-@RequestMapping("/contact")
-public class contactController {
-    @RequestMapping("")
-    public String main() {
-        return "contact";
-========
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/offers")
-public class offerController {
+public class OfferController {
 
     final AccomService accomService;
     final ReviewService reviewService;
@@ -37,7 +28,6 @@ public class offerController {
         model.addAttribute("accomm", accomm);
 
         return "offers";
->>>>>>>> master:client/src/main/java/com/mc/controller/offerController.java
     }
 
     @RequestMapping("/detail")
