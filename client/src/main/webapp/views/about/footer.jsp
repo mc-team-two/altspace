@@ -1,9 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: ishot
+  Date: 25. 4. 7.
+  Time: 오후 2:20
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-    <title>Altspace | Altspace란 | 가장 빠른 공간대여 알트스페이스</title>
+    <title>Altspace</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Travelix Project">
@@ -13,11 +20,11 @@
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 </head>
 
-<!-- 푸터 -->
+    <!-- 푸터 -->
 
 <footer class="footer">
     <div class="container">
@@ -150,3 +157,11 @@
         </div>
     </div>
 </div>
+
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="styles/bootstrap4/popper.js"></script>
+<script src="styles/bootstrap4/bootstrap.min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script src="js/custom.js"></script>

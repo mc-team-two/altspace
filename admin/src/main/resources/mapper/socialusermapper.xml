@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mc.app.repository.SocialUserRepository">
+    <select id="selectUserBySocialId" parameterType="String" resultType="User">
+        select
+            u.user_id, role, email, password, name, phone, created_at, updated_at
+        from users u
+            inner join social_users s
+                on u.user_id = s.user_id
+        where s.provider_user_id = #{providerUserId};
+    </select>
+    <select id="selectOne" parameterType="String" resultType="socialUser">
+        select *
+        from social_users
+        where user_id=#{user_id}
+    </select>
+    <select id="select" resultType="socialUser">
+        SELECT * FROM social_users
+    </select>
+    <insert id="insert" parameterType="socialUser">
+        INSERT INTO social_users (user_id, provider, provider_user_id, connected_at)
+            VALUE (#{userId},#{provider},#{providerUserId}, #{connectedAt})
+    </insert>
+    <update id="update" parameterType="user">
+
+    </update>
+    <delete id="delete" parameterType="String">
+
+    </delete>
+
+</mapper>

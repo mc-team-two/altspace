@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="styles/offers_responsive.css">
 </head>
 
+
+
 <!-- 홈 -->
 
 <div class="home">
@@ -288,15 +290,16 @@
 
                 <div class="offers_grid">
 
-                    <!-- 호텔 1 -->
+                    <!-- Offers Item -->
 
                     <div class="offers_item rating_4">
                         <div class="row">
                             <div class="col-lg-1 temp_col"></div>
                             <div class="col-lg-3 col-1680-4">
                                 <div class="offers_image_container">
+                                    <!-- Image by https://unsplash.com/@kensuarez -->
                                     <div class="offers_image_background" style="background-image:url(images/offer_1.jpg)"></div>
-                                    <div class="offer_name"><a href="/roominfo">grand castle</a></div>
+                                    <div class="offer_name"><a href="single_listing.html">grand castle</a></div>
                                 </div>
                             </div>
                             <div class="col-lg-8">
@@ -340,7 +343,7 @@
                                 <div class="offers_image_container">
                                     <!-- Image by https://unsplash.com/@mindaugas -->
                                     <div class="offers_image_background" style="background-image:url(images/offer_6.jpg)"></div>
-                                    <div class="offer_name"><a href="/roominfo">grand castle</a></div>
+                                    <div class="offer_name"><a href="single_listing.html">grand castle</a></div>
                                 </div>
                             </div>
                             <div class="col-lg-8">
@@ -384,7 +387,7 @@
                                 <div class="offers_image_container">
                                     <!-- Image by https://unsplash.com/@itsnwa -->
                                     <div class="offers_image_background" style="background-image:url(images/offer_8.jpg)"></div>
-                                    <div class="offer_name"><a href="/roominfo">grand castle</a></div>
+                                    <div class="offer_name"><a href="single_listing.html">grand castle</a></div>
                                 </div>
                             </div>
                             <div class="col-lg-8">
@@ -414,14 +417,29 @@
                                         </div>
                                         <div class="offer_reviews_rating text-center">8.1</div>
                                     </div>
+
+                                    <div class="hotel_info_text"><div>
+                                        <p>이메일: ${email}</p>
+                                        <p>이름: ${name}</p>
+                                        <p>전화번호: ${phone}</p>
+                                        <p>가입일: <fmt:formatDate value="${createdAt}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+                                        <p>정보 수정일:
+                                            <c:choose>
+                                                <c:when test="${updatedAt == null}">
+                                                    수정 기록 없음
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <fmt:formatDate value="${updatedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </div>
