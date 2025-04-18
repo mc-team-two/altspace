@@ -106,10 +106,13 @@ public class SpaceController {
         return "index";
     }
 
-    //이거 외않되..? 예진님이 제발도와주세요제발요...
     @RequestMapping("/updatespace")
-    public String updatespace(Model model, Accommodations acc) throws Exception {
-        accomService.mod(acc);
-        return "redirect:/space/detail?id="+acc.getHostId();
+    public String updatespace(Accommodations acc, Model model) {
+        try {
+            accomService.mod(acc);
+            return "redirect:/space/detail?id=" + acc.getAccommodationId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

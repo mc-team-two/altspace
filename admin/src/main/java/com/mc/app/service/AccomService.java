@@ -20,8 +20,8 @@ public class AccomService implements MCService<Accommodations,Integer> {
     }
 
     @Override
-    public void mod(Accommodations accommodations) throws Exception {
-
+    public void mod(Accommodations acc) throws Exception {
+        accomRepository.updateAccommodation(acc);
     }
 
     @Override
