@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ishot
-  Date: 25. 4. 7.
-  Time: 오후 2:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
@@ -40,43 +33,70 @@
                         <div class="phone">02-1234-5678</div>
                         <div class="social">
                             <ul class="social_list">
-                                <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="/"><i class="fa fa-pinterest"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="/"><i class="fa fa-facebook"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="/"><i class="fa fa-twitter"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="/"><i class="fa fa-dribbble"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="/"><i class="fa fa-behance"
+                                                                            aria-hidden="true"></i></a></li>
+                                <li class="social_list_item"><a href="/"><i class="fa fa-linkedin"
+                                                                            aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
+                        <c:choose>
+                        <c:when test="${sessionScope.user.userId == null}">
+                            <div class="user_box ml-auto">
+                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
                         <div class="user_box ml-auto">
                             <div class="user_box_login user_box_link"><a href="/login">로그인</a></div>
                             <div class="user_box_register user_box_link"><a href="/login/register">회원가입</a></div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/mypage?id=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
+                            </div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/cart?id=${sessionScope.user.name}"/> ">Cart</a>
+                            </div>
+                            <div class="user_box_login user_box_link">
+                                <a href="<c:url value="/auth/logout"/> ">logout</a></div>
                         </div>
                     </div>
+                    </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
 
-        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
+<!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
 
-        <nav class="main_nav">
-            <div class="container">
-                <div class="row">
-                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
-                        <div class="logo_container">
-                            <div class="logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
-                        </div>
-                        <div class="main_nav_container ml-auto">
-                            <ul class="main_nav_list">
-                                <li class="main_nav_item"><a href="/">홈</a></li>
-                                <li class="main_nav_item"><a href="/about">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="/contact">고객센터</a></li>
-                                <li class="main_nav_item"><a href="/details">예약내역</a></li>
-                            </ul>
-                        </div>
-                        <div class="content_search ml-lg-0 ml-auto">
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                 width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+<nav class="main_nav">
+    <div class="container">
+        <div class="row">
+            <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                <div class="logo_container">
+                    <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png"
+                                                                         alt="AltSpace Logo"></a></div>
+                </div>
+                <div class="main_nav_container ml-auto">
+                    <ul class="main_nav_list">
+                        <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+                        <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+                        <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                        <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
+                    </ul>
+                </div>
+                <div class="content_search ml-lg-0 ml-auto">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                         width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+                         xml:space="preserve">
 								<g>
                                     <g>
                                         <g>
@@ -95,22 +115,22 @@
                                         </g>
                                     </g>
                                 </g>
-							</svg>
-                        </div>
+                    </svg>
+                </div>
 
-                        <form id="search_form" class="search_form bez_1">
-                            <input type="search" class="search_content_input bez_1">
-                        </form>
+                <form id="search_form" class="search_form bez_1">
+                    <input type="search" class="search_content_input bez_1">
+                </form>
 
-                        <div class="hamburger">
-                            <i class="fa fa-bars trans_200"></i>
-                        </div>
-                    </div>
+                <div class="hamburger">
+                    <i class="fa fa-bars trans_200"></i>
                 </div>
             </div>
-        </nav>
+        </div>
+    </div>
+</nav>
 
-    </header>
+</header>
 
     <!-- 홈 -->
 
@@ -130,16 +150,16 @@
         <div class="search">
             <div class="search_inner">
 
-                <!-- Search Contents -->
+                <!-- 검색 -->
 
                 <div class="container fill_height no-padding">
                     <div class="row fill_height no-margin">
                         <div class="col fill_height no-padding">
 
-                            <!-- Search Panel 1 -->
+                            <!-- 검색 패널 -->
 
                             <div class="search_panel active">
-                                <form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                                <form action="/" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                     <div class="search_item">
                                         <div>목적지</div>
                                         <input type="text" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
@@ -162,7 +182,7 @@
                                         </select>
                                     </div>
 
-                                    <!-- Search Panel 1 추가 옵션 -->
+                                    <!-- 검색 패널 추가 옵션 -->
 
                                     <div class="extras">
                                         <ul class="search_extras clearfix">
@@ -201,139 +221,6 @@
                                     <button class="button search_button">검색하기<span></span><span></span><span></span></button>
                                 </form>
                             </div>
-
-                            <!-- Search Panel 2 -->
-
-                            <div class="search_panel active_2">
-                                <form action="#" id="search_form_2" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                                    <div class="search_item">
-                                        <div>목적지</div>
-                                        <input type="text" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>체크인</div>
-                                        <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>체크아웃</div>
-                                        <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>인원</div>
-                                        <select name="adults" id="adults_2" class="dropdown_item_select search_input">
-                                            <option>1명</option>
-                                            <option>2명</option>
-                                            <option>3~5명</option>
-                                            <option>5명 이상</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Search Panel 2 추가 옵션 -->
-
-                                    <div class="extras">
-                                        <ul class="search_extras clearfix">
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_6" class="search_extras_cb">
-                                                    <label for="search_extras_6">반려동물 동반 가능</label>
-                                                </div>
-                                            </li>
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_7" class="search_extras_cb">
-                                                    <label for="search_extras_7">주차 가능</label>
-                                                </div>
-                                            </li>
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_8" class="search_extras_cb">
-                                                    <label for="search_extras_8">Wi-Fi/인터넷</label>
-                                                </div>
-                                            </li>
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_9" class="search_extras_cb">
-                                                    <label for="search_extras_9">비흡연 객실</label>
-                                                </div>
-                                            </li>
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_10" class="search_extras_cb">
-                                                    <label for="search_extras_10">욕조/풀장</label>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <button class="button search_button">검색하기<span></span><span></span><span></span></button>
-                                </form>
-                            </div>
-
-                            <!-- Search Panel 3 -->
-
-                            <div class="search_panel active_3">
-                                <form action="#" id="search_form_3" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                                    <div class="search_item">
-                                        <div>위치</div>
-                                        <input type="text" class="destination search_input" placeholder="위치나 파티룸을 검색해보세요." required="required">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>체크인</div>
-                                        <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>체크아웃</div>
-                                        <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-                                    </div>
-                                    <div class="search_item">
-                                        <div>인원</div>
-                                        <select name="adults" id="adults_3" class="dropdown_item_select search_input">
-                                            <option>1명</option>
-                                            <option>2명</option>
-                                            <option>3~5명</option>
-                                            <option>5명 이상</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Search Panel 3 추가 옵션 -->
-
-                                    <div class="extras">
-                                        <ul class="search_extras clearfix">
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_11" class="search_extras_cb">
-                                                    <label for="search_extras_11">반려동물 동반 가능</label>
-                                                </div>
-                                            </li>
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_12" class="search_extras_cb">
-                                                    <label for="search_extras_12">주차 가능</label>
-                                                </div>
-                                            </li>
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_13" class="search_extras_cb">
-                                                    <label for="search_extras_13">Wi-Fi/인터넷</label>
-                                                </div>
-                                            </li>
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_14" class="search_extras_cb">
-                                                    <label for="search_extras_14">비흡연 객실</label>
-                                                </div>
-                                            </li>
-                                            <li class="search_extras_item">
-                                                <div class="clearfix">
-                                                    <input type="checkbox" id="search_extras_15" class="search_extras_cb">
-                                                    <label for="search_extras_15">욕조/풀장</label>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <button class="button search_button">검색하기<span></span><span></span><span></span></button>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -347,7 +234,7 @@
                 <div class="col-lg-1 temp_col"></div>
                 <div class="col-lg-11">
 
-                    <!-- Offers Sorting -->
+                    <!-- 필터링 -->
                     <div class="offers_sorting_container">
                         <ul class="offers_sorting">
                             <li>
@@ -382,11 +269,12 @@
                 </div>
 
                 <div class="col-lg-12">
-                    <!-- Offers Grid -->
+
+                    <!-- 목록 -->
 
                     <div class="offers_grid">
 
-                        <!-- 호텔 1 -->
+                        <!-- 목록 1 -->
 
                         <div class="offers_item rating_4">
                             <div class="row">
@@ -394,7 +282,7 @@
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
                                         <div class="offers_image_background" style="background-image:url(images/offer_1.jpg)"></div>
-                                        <div class="offer_name"><a href="/roominfo">제주 감귤 레지던스</a></div>
+                                        <div class="offer_name"><a href="<c:url value="/roominfo"/> ">제주 감귤 레지던스</a></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
@@ -429,7 +317,7 @@
                             </div>
                         </div>
 
-                        <!-- Offers Item -->
+                        <!-- 목록 2 -->
 
                         <div class="offers_item rating_5">
                             <div class="row">
@@ -473,7 +361,7 @@
                             </div>
                         </div>
 
-                        <!-- Offers Item -->
+                        <!-- 목록 3 -->
 
                         <div class="offers_item rating_3">
                             <div class="row">
@@ -535,7 +423,7 @@
                     <div class="footer_col">
                         <div class="footer_content footer_about">
                             <div class="logo_container footer_logo">
-                                <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
+                                <div class="logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
                             </div>
                             <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
                                 관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹</p>
@@ -614,19 +502,19 @@
                         <div class="footer_content footer_contact">
                             <ul class="contact_info_list">
                                 <li class="contact_info_item d-flex flex-row">
-                                    <div><div class="contact_info_icon"><img src="images/placeholder.svg" alt=""></div></div>
+                                    <div><div class="contact_info_icon"><img src="images/placeholder.svg"></div></div>
                                     <div class="contact_info_text">서울 영등포구 여의동로 330 (여의도동, 알트타워)</div>
                                 </li>
                                 <li class="contact_info_item d-flex flex-row">
-                                    <div><div class="contact_info_icon"><img src="images/phone-call.svg" alt=""></div></div>
+                                    <div><div class="contact_info_icon"><img src="images/phone-call.svg"></div></div>
                                     <div class="contact_info_text">02-1234-5678 / 1588-1588</div>
                                 </li>
                                 <li class="contact_info_item d-flex flex-row">
-                                    <div><div class="contact_info_icon"><img src="images/message.svg" alt=""></div></div>
+                                    <div><div class="contact_info_icon"><img src="images/message.svg"></div></div>
                                     <div class="contact_info_text"><a href="mailto:help.alt@altspace.com?Subject=Hello" target="_top">help.alt@altspace.com</a></div>
                                 </li>
                                 <li class="contact_info_item d-flex flex-row">
-                                    <div><div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div></div>
+                                    <div><div class="contact_info_icon"><img src="images/planet-earth.svg"></div></div>
                                     <div class="contact_info_text"><a href="https://altspace.com/help">www.altspace.com/help</a></div>
                                 </li>
                             </ul>

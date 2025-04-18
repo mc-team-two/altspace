@@ -17,76 +17,81 @@
     <link rel="stylesheet" type="text/css" href="styles/responsive.css">
 </head>
 
-<div class="super_container">
+<!-- 헤더 -->
 
-    <!-- Header -->
+<header class="header">
 
-    <header class="header">
+    <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
 
-        <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
-
-        <div class="top_bar">
-            <div class="container">
-                <div class="row">
-                    <div class="col d-flex flex-row">
-                        <div class="phone">02-1234-5678</div>
-                        <div class="social">
-                            <ul class="social_list">
-                                <li class="social_list_item"><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-                                <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>
-
-                        <c:choose>
-                        <c:when test="${sessionScope.user.userId == null}">
-                            <div class="user_box ml-auto">
-                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
-                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
-                                </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                        <div class="user_box ml-auto">
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
-                            </div>
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
-                            </div>
-                            <div class="user_box_login user_box_link">
-                                <a href="<c:url value="/auth/logout"/> ">logout</a></div>
-                        </div>
+    <div class="top_bar">
+        <div class="container">
+            <div class="row">
+                <div class="col d-flex flex-row">
+                    <div class="phone">02-1234-5678</div>
+                    <div class="social">
+                        <ul class="social_list">
+                            <li class="social_list_item"><a href="/"><i class="fa fa-pinterest"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="/"><i class="fa fa-facebook"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="/"><i class="fa fa-twitter"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="/"><i class="fa fa-dribbble"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="/"><i class="fa fa-behance"
+                                                                        aria-hidden="true"></i></a></li>
+                            <li class="social_list_item"><a href="/"><i class="fa fa-linkedin"
+                                                                        aria-hidden="true"></i></a></li>
+                        </ul>
                     </div>
-                    </c:otherwise>
-                    </c:choose>
+                    <c:choose>
+                    <c:when test="${sessionScope.user.userId == null}">
+                        <div class="user_box ml-auto">
+                            <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                            <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                            </div>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                    <div class="user_box ml-auto">
+                        <div class="user_box_login user_box_link">
+                            <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                        </div>
+                        <div class="user_box_login user_box_link">
+                            <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                        </div>
+                        <div class="user_box_login user_box_link">
+                            <a href="<c:url value="/auth/logout"/> ">logout</a></div>
                     </div>
                 </div>
+                </c:otherwise>
+                </c:choose>
             </div>
+        </div>
+    </div>
 
-        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
+    <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터) -->
 
-        <nav class="main_nav">
-            <div class="container">
-                <div class="row">
-                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
-                        <div class="logo_container">
-                            <div class="logo"><a  href="<c:url value="/" /> "><img src="images/logo.png" alt=""></a></div>
-                        </div>
-                        <div class="main_nav_container ml-auto">
-                            <ul class="main_nav_list">
-                                <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">예약 내역</a></li>
-                            </ul>
-                        </div>
-                        <div class="content_search ml-lg-0 ml-auto">
-                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                 width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+    <nav class="main_nav">
+        <div class="container">
+            <div class="row">
+                <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                    <div class="logo_container">
+                        <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png"
+                                                                             alt="AltSpace Logo"></a></div>
+                    </div>
+                    <div class="main_nav_container ml-auto">
+                        <ul class="main_nav_list">
+                            <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+                            <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+                            <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                            <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
+                        </ul>
+                    </div>
+                    <div class="content_search ml-lg-0 ml-auto">
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                             width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+                             xml:space="preserve">
 								<g>
                                     <g>
                                         <g>
@@ -105,19 +110,18 @@
                                         </g>
                                     </g>
                                 </g>
-							</svg>
-                        </div>
+                        </svg>
+                    </div>
 
-                        <form id="search_form" class="search_form bez_1">
-                            <input type="search" class="search_content_input bez_1">
-                        </form>
+                    <form id="search_form" class="search_form bez_1">
+                        <input type="search" class="search_content_input bez_1">
+                    </form>
 
-                        <div class="hamburger">
-                            <i class="fa fa-bars trans_200"></i>
-                        </div>
+                    <div class="hamburger">
+                        <i class="fa fa-bars trans_200"></i>
                     </div>
                 </div>
             </div>
-        </nav>
-    </header>
-</div>
+        </div>
+    </nav>
+</header>

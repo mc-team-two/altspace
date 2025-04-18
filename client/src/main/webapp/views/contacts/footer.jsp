@@ -1,27 +1,17 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ishot
-  Date: 25. 4. 7.
-  Time: 오후 2:20
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-    <title>Altspace | Altspace란 | 가장 빠른 공간대여 알트스페이스</title>
+    <title>Altspace | 고객센터</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Altspace Project">
+    <meta name="description" content="Travelix Project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/contact_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/contact_responsive.css">
 </head>
 
 <!-- 푸터 -->
