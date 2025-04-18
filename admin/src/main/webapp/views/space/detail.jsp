@@ -66,7 +66,7 @@
 </style>
 
 <script>
-    const space_add = {
+    const space_update = {
         map: null,
         geocoder: null,
         marker: null,
@@ -81,17 +81,17 @@
                     $('#personMax').val(val - 1);
                 }
             });
-            $('#btn_add').click(() => {
+            $('#btn_update').click(() => {
                 if (this.validateForm()) {
-                    let c = confirm('저장하시겠습니까?');
+                    let c = confirm('스페이스 정보를 수정하시겠습니까?');
                     if (c === true) {
                         this.send();
                     }
                 }
             });
-            $('#search-btn').click(()=>{
-                this.displayMap();
-            })
+            $('#search-btn').on('click', function(){
+                space_update.displayMap(); // 주소 검색 팝업은 이때만 뜰 수 있도록 함.
+            });
         },
         validateForm: function () {
             let isValid = true;
@@ -125,7 +125,7 @@
 
             let container = $('#map').get(0);   // DOM
             let option = {
-                center: new kakao.maps.LatLng(37.518276, 126.957746), // 지도의 중심좌표
+                center: new kakao.maps.LatLng(${data.latitude}, ${data.longitude}),    //지도의 중심 좌표
                 level: 5 // 지도의 확대 레벨
             }
 
@@ -135,12 +135,12 @@
             this.geocoder = new kakao.maps.services.Geocoder();
             //마커를 미리 생성
             this.marker = new kakao.maps.Marker({
-                position: new kakao.maps.LatLng(37.518276, 126.957746),
+                position: new kakao.maps.LatLng(${data.latitude}, ${data.longitude}),
                 map: this.map
             });
         },
         displayMap: function () {
-            this.initMap();
+            this.initMap(); // 지도 초기화
 
             let map = this.map;
             let geocoder = this.geocoder;
@@ -181,16 +181,18 @@
             }).open();
         },
         send: function () {
-            $('#space_add_form').attr({
+            $('#space_update_form').attr({
                 'method': 'post',
                 'enctype': 'multipart/form-data',
-                'action': '<c:url value="/space/addimpl"/>'
+                'action': '<c:url value="/space/updatespace"/>'
             });
-            $('#space_add_form').submit();
+            $('#space_update_form').submit();
+            alert("스페이스 정보가 수정되었습니다.")
         }
     };
     $(function(){
-        space_add.init();
+        space_update.init();
+        space_update.initMap(); // 지도만 미리 보여주기 (팝업 없이)
     });
 </script>
 
@@ -199,13 +201,12 @@
     <div class="card shadow mb-4">
 
         <div class="card-header">
-            <h2>스페이스 신규 추가 탭</h2>
-            <h3>테스트용: 지워주세요 :: ${data.name}</h3>
+            <h2>스페이스 수정하기</h2>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <form id="space_add_form" style="overflow-x:hidden">
+                <form id="space_update_form" style="overflow-x:hidden">
                     <h1 class="h3 mb-2 text-gray-800">기본 정보</h1>
                     <div class="row">
                     <%--category--%>
@@ -214,10 +215,10 @@
                             <h6 class="m-0 font-weight-bold text-primary">건물 유형</h6>
                         </label>
                         <select class="form-control" id="category" name="category">
-                            <option value="아파트">아파트</option>
-                            <option value="단독주택">단독주택</option>
-                            <option value="오피스텔">오피스텔</option>
-                            <option value="빌라">빌라</option>
+                            <option value="아파트" <c:if test="${data.category eq '아파트'}">selected</c:if>>아파트</option>
+                            <option value="단독주택" <c:if test="${data.category eq '단독주택'}">selected</c:if>>단독주택</option>
+                            <option value="오피스텔" <c:if test="${data.category eq '오피스텔'}">selected</c:if>>오피스텔</option>
+                            <option value="빌라" <c:if test="${data.category eq '빌라'}">selected</c:if>>빌라</option>
                         </select>
                     </div>
                     <%--roomType--%>
@@ -226,9 +227,15 @@
                             <h6 class="m-0 font-weight-bold text-primary">공간 유형</h6>
                         </label>
                         <select class="form-control" id="roomType" name="roomType">
-                            <option value="공간 전체">공간 전체: 게스트가 숙소 전체 단독으로 사용</option>
-                            <option value="방">방: 단독으로 사용하는 개인실과 공용 공간이 있는 형태</option>
-                            <option value="호스텔 내 다인실">호스텔 내 다인실: 직원이 상주하는 전문 숙박시설</option>
+                            <option value="공간 전체" <c:if test="${data.roomType eq '공간 전체'}">selected</c:if>>
+                                공간 전체: 게스트가 숙소 전체 단독으로 사용
+                            </option>
+                            <option value="방" <c:if test="${data.roomType eq '방'}">selected</c:if>>
+                                방: 단독으로 사용하는 개인실과 공용 공간이 있는 형태
+                            </option>
+                            <option value="호스텔 내 다인실" <c:if test="${data.roomType eq '호스텔 내 다인실'}">selected</c:if>>
+                                호스텔 내 다인실: 직원이 상주하는 전문 숙박시설
+                            </option>
                         </select>
                     </div>
 
@@ -250,8 +257,13 @@
                                     </svg>
                                 </div>
                             </div>
-                            <input type="number" class="form-control text-center border-left-0 border-right-0"
-                                   id="personMax" name="personMax" min="2" value="2" readonly>
+
+                            <input type="number"
+                                   class="form-control text-center border-left-0 border-right-0"
+                                   id="personMax" name="personMax"
+                                   min="2"
+                                   value="${data.personMax}"
+                                   readonly>
                             <div class="input-group-append">
                                 <div id="plus-btn" role="button"
                                      class="d-flex align-items-center justify-content-center rounded-circle"
@@ -264,7 +276,6 @@
                             </div>
                         </div>
                     </div>
-                    </div>
                     <%--location--%>
                     <div class="form-group">
                         <label for="location">
@@ -276,7 +287,7 @@
                                 <path d="M206.549,0c-82.6,0-149.3,66.7-149.3,149.3c0,28.8,9.2,56.3,22,78.899l97.3,168.399c6.1,11,18.4,16.5,30,16.5 c11.601,0,23.3-5.5,30-16.5l97.3-168.299c12.9-22.601,22-49.601,22-78.901C355.849,66.8,289.149,0,206.549,0z M206.549,193.4 c-30,0-54.5-24.5-54.5-54.5s24.5-54.5,54.5-54.5s54.5,24.5,54.5,54.5C261.049,169,236.549,193.4,206.549,193.4z"></path>
                               </svg>
                             </div>
-                            <input type="text" class="form-control" id="location" placeholder="공간 주소를 입력하세요" name="location" style="border: none; background-color: #fff" readonly>
+                            <input type="text" class="form-control" id="location" placeholder="공간 주소를 입력하세요" name="location" value="${data.location}" style="border: none; background-color: #fff" readonly>
                             <div class="input-group-append" style="border: none;">
                                 <button id="search-btn" class="btn btn-primary" type="button" style="border: none; border-radius: 0 5px 5px 0;">검색</button>
                             </div>
@@ -296,16 +307,16 @@
                     <%--image1--%>
                     <div class="form-group">
                         <label for="image1"><h6 class="m-0 font-weight-bold text-primary">대표 사진</h6></label>
-                        <input type="file" class="form-control" id="image1" placeholder="Enter name" name="image1">
+                        <input type="file" class="form-control" id="image1" placeholder="Enter name" name="image1" value="${data.image1}">
                     </div>
 
                     <%--detail image--%>
                     <div class="form-group">
                         <label for="image2"><h6 class="m-0 font-weight-bold text-primary">상세 사진</h6></label>
-                        <input type="file" class="form-control mb-2" id="image2" name="image2">
-                        <input type="file" class="form-control mb-2" id="image3" name="image3">
-                        <input type="file" class="form-control mb-2" id="image4" name="image4">
-                        <input type="file" class="form-control" id="image5" name="image5">
+                        <input type="file" class="form-control mb-2" id="image2" name="image2" value="${data.image2}">
+                        <input type="file" class="form-control mb-2" id="image3" name="image3" value="${data.image3}">
+                        <input type="file" class="form-control mb-2" id="image4" name="image4" value="${data.image4}">
+                        <input type="file" class="form-control" id="image5" name="image5" value="${data.image5}">
                     </div>
 
                     <%--name--%>
@@ -313,14 +324,14 @@
                         <label for="name">
                             <h6 class="m-0 font-weight-bold text-primary">스페이스 이름</h6>
                         </label>
-                        <input type="text" class="form-control" id="name" placeholder="스페이스 이름은 필수입니다." value="진만이네 별장" name="name">
+                        <input type="text" class="form-control" id="name" placeholder="스페이스 이름은 필수입니다." value="${data.name}" name="name">
                     </div>
                     <%--description--%>
                     <div class="form-group">
                         <label for="description">
                             <h6 class="m-0 font-weight-bold text-primary">스페이스 소개</h6>
                         </label>
-                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">해변 근처의 Chill한 별장</textarea>
+                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">${data.description}</textarea>
                     </div>
 
                     <hr>
@@ -328,7 +339,8 @@
                     <%--breakfast--%>
                     <div class="form-group">
                         <label class="switch">
-                            <input type="checkbox" name="breakfast" id="breakfast">
+                            <input type="checkbox" name="breakfast" id="breakfast"
+                                   <c:if test="${data.breakfast == 'true'}">checked</c:if>>
                             <span class="slider round"></span>
                             조식 포함
                         </label>
@@ -336,7 +348,8 @@
                     <%--pool--%>
                     <div class="form-group">
                         <label class="switch">
-                            <input type="checkbox" name="pool" id="pool">
+                            <input type="checkbox" name="pool" id="pool"
+                                   <c:if test="${data.pool == 'true'}">checked</c:if>>
                             <span class="slider round"></span>
                             수영장 포함
                         </label>
@@ -344,7 +357,8 @@
                     <%--barbecue--%>
                     <div class="form-group">
                         <label class="switch">
-                            <input type="checkbox" name="barbecue" id="barbecue">
+                            <input type="checkbox" name="barbecue" id="barbecue"
+                                   <c:if test="${data.barbecue == 'true'}">checked</c:if>>
                             <span class="slider round"></span>
                             바베큐 가능
                         </label>
@@ -352,7 +366,8 @@
                     <%--pet--%>
                     <div class="form-group">
                         <label class="switch">
-                            <input type="checkbox" name="pet" id="pet">
+                            <input type="checkbox" name="pet" id="pet"
+                                   <c:if test="${data.pet == 'true'}">checked</c:if>>
                             <span class="slider round"></span>
                             반려동물 동반 가능
                         </label>
@@ -374,7 +389,7 @@
                                     min="0"
                                     max="500000"
                                     step="1000"
-                                    value="15000"
+                                    value="${data.priceNight}"
                                     oninput="document.getElementById('priceNight').value = this.value"
                                     style="max-width: 120px;"
                             >
@@ -387,15 +402,15 @@
                                     min="0"
                                     max="500000"
                                     step="1000"
-                                    value="15000"
+                                    value="${data.priceNight}"
                                     oninput="document.getElementById('priceValue').value = this.value"
                             >
                         </div>
                     </div>
                 </form>
 
-                <button id="btn_add" type="button" class="btn btn-primary mt-3">
-                    스페이스 등록하기
+                <button id="btn_update" type="button" class="btn btn-primary mt-3">
+                    스페이스 수정하기
                 </button>
             </div>
         </div>
