@@ -13,21 +13,26 @@
     --text-color: #f5f5f5; /* 다크 모드 텍스트 색상 */
 }
 
-body {
+body  {
     background-color: var(--bg-color);
     color: var(--text-color);
-    /*transition: background-color 0.3s, color 0.3s; !* 부드러운 전환 효과 (선택 사항) *!*/
+    transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 (선택 사항) */
 }
 
 /* about 페이지에서는 intro가 home 밑 부분을 장악하고 있어서 이쪽을 타도록 커스텀.*/
 .intro{
     background-color: var(--bg-color);
-    /*transition: background-color 0.3s; !* 부드러운 전환 효과 (선택 사항) *!*/
+    transition: background-color 0.3s; /* 부드러운 전환 효과 (선택 사항) */
+}
+
+.blog{
+    background-color: var(--bg-color);
+    transition: background-color 0.3s; /* 부드러운 전환 효과 (선택 사항) */
 }
 
 .header,
 .main_nav {
-    /*transition: background-color 0.3s; !* 부드러운 전환 효과 (선택 사항) *!*/
+    transition: background-color 0.3s; /* 부드러운 전환 효과 (선택 사항) */
 }
 
 .offer_reviews_title{

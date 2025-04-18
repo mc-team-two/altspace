@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="user_box_login theme-switch">
                                         <label class="theme-toggle">
-                                            <input type="checkbox" id="theme-toggle-guest">
+                                            <input type="checkbox" id="theme-toggle-guest" class="theme-toggle">
                                             <span class="slider round">
                                             <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
                                             <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
