@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,7 +72,7 @@ public class AuthController {
         return dir + "find-password";
     }
 
-    // 실행
+    // rest, util
     @PostMapping("/registerimpl")
     public String registerimpl(@Valid User user, Model model, BindingResult bindingResult) {
         // 파라미터의 @Valid -> User DTO 유효성 검사
@@ -157,17 +159,55 @@ public class AuthController {
     }
 
     @RequestMapping("/mod")
-    public String mod(HttpSession httpSession) {
-        // TODO: user 세션에 다시 저장
-        // 마이페이지로 재접속
-        return "redirect:/mypage";
+    public ResponseEntity<?> mod(@RequestParam("id") String id,
+                      @RequestParam("name") String name,
+                      HttpSession httpSession) {
+        // 세션에서 유저 정보 가져오기
+        User curUser = (User) httpSession.getAttribute("user");
+
+        if (curUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요한 요청입니다.");
+        }
+        if (!curUser.getUserId().equals(id)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("허가되지 않은 요청입니다.");
+        }
+
+        try {
+            // User 객체의 name 필드 바꾸기
+            curUser.setName(name);
+
+            // DB 접근
+            userService.mod(curUser);
+
+            // 세션 처리
+            httpSession.removeAttribute("user");
+            httpSession.setAttribute("user", curUser);
+
+            return ResponseEntity.ok("회원 정보가 수정되었습니다");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().body("서버 오류가 발생했습니다.");
+        }
     }
 
-    @RequestMapping("/del")
-    public String del(HttpSession httpSession) {
-        // TODO : user 세션 다시 저장
-        // 메인으로 이동
-        return "redirect:/";
+    @PostMapping("/del")
+    public ResponseEntity<?> del(@RequestParam("id") String id, HttpSession httpSession) {
+        User curUser = (User) httpSession.getAttribute("user");
+
+        if (curUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요한 요청입니다.");
+        }
+        if (!curUser.getUserId().equals(id)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("허가되지 않은 요청입니다.");
+        }
+        try {
+            userService.del(id);
+            httpSession.invalidate();
+            return ResponseEntity.ok("탈퇴가 정상적으로 완료되었습니다.\n이용해주셔서 감사합니다.");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().body("회원 탈퇴 과정에서 서버 오류가 발생했습니다.");
+        }
     }
 
 }
