@@ -87,7 +87,7 @@
                 buyer_postcode: "12345"
             }, function(rsp) {
                 if (rsp.success) {
-                    $('#imp_hidden').val(rsp.imp_uid);
+                    $('#imp_hidden').val(rsp.imp_uid);  // 결제 완료 후 imp_uid input에 저장
                     // 실제 결제 정보 검증
                     $.ajax({
                         type: 'POST',
@@ -179,10 +179,10 @@
             <form id="data_del">
                 <div class="mb-3">
                     <h5>예약 내역</h5>
-                    <input type="text" name="guestId" value="${sessionScope.user.userId}">
-                    <input type="text" name="accommodationId" value="${accomm.accommodationId}">
-                    <input type="text" name="impUid" value="${payInfo.impUid}">
-                    <input type="text" name="reservationsId" value="${payInfo.reservationsId}">
+                    <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
+                    <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
+                    <input type="hidden" name="impUid" value="${payInfo.impUid}">
+                    <input type="hidden" name="reservationsId" value="${payInfo.reservationsId}">
                     <p><strong>체크인:</strong> <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd" /></p>
                     <p><strong>체크아웃:</strong> <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd" /></p>
                     <p><strong>결제 금액:</strong> <fmt:formatNumber value="${payInfo.payAmount}" type="number"/> 원</p>
@@ -195,6 +195,7 @@
                     <div class="card-body">
                         <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
                         <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
+                        <input type="hidden" id="imp_hidden" name="impUid">
                         <input type="hidden" name="checkIn" id="checkIn">
                         <input type="hidden" name="checkOut" id="checkOut">
                         <input type="hidden" name="payAmount" id="totalPrices">
