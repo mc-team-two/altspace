@@ -4,6 +4,47 @@
 <script>
   const mypage = {
     init: function () {
+      $('#name').keyup(()=>{
+        let curName = '${user.name}';
+        let nameInputVal = $('#name').val().trim();
+
+        if (curName !== nameInputVal) {
+          $('#btn-mod').removeAttr('disabled');
+          return;
+        }
+
+        $('#btn-mod').attr('disabled', true);
+
+      });
+      $('#btn-mod').click(() => {
+        let targetId = '${user.userId}';
+        let nameInputVal = $('#name').val().trim();
+
+        // 이름 유효성 검사
+        if (nameInputVal == null || nameInputVal === "") {
+          alert('이름은 필수 입력 항목입니다.');
+          $('#name').focus();
+          return;
+        } else if (!/^[가-힣]{2,10}$/.test(nameInputVal)) {
+          alert('이름은 2~10자의 한글로만 구성되어야 합니다.');
+          $('#name').focus();
+          return;
+        }
+
+        // 비동기 요청
+        $.ajax({
+          url: "<c:url value="/auth/mod?id="/>" + targetId + '&name=' + nameInputVal,
+          type: 'POST',
+          success: (resp)=>{
+            alert(resp);
+            window.location.reload();
+          },
+          error: (xhr)=>{
+            alert(xhr.responseText);
+          }
+        });
+
+      });
       $('#btn-del').click(() => {
         const targetId = '${user.userId}';
         const c = confirm('탈퇴하시겠습니까?\n모든 정보가 삭제되고 이 작업은 되돌릴 수 없습니다.');
@@ -21,15 +62,8 @@
           });
         }
       });
-
       $('#btn-logout').click(() => {
         window.location.href = "<c:url value='/auth/logout'/>";
-      });
-
-      $('#btn-mod').click(() => {
-
-        // 수정 페이지로 이동
-        window.location.href = "<c:url value='/auth/mod'/>";
       });
     }
   };
@@ -90,7 +124,7 @@
 
   <br>
   <div class="d-flex justify-content-end mb-4">
-    <button id="btn-mod" type="button" class="btn btn-secondary">변경하기</button>
+    <button id="btn-mod" type="button" class="btn btn-dark" disabled>변경하기</button>
   </div>
 
   <div class="d-flex justify-content-center">
