@@ -50,7 +50,7 @@
             </div>
 
             <c:choose>
-              <c:when test="${sessionScope.user.userId == null}">
+              <c:when test="${sessionScope.user.name == null}">
                 <div class="user_box ml-auto">
                   <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
                   <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
@@ -60,10 +60,10 @@
               <c:otherwise>
                 <div class="user_box ml-auto">
                   <div class="user_box_login user_box_link">
-                    <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                    <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                   </div>
                   <div class="user_box_login user_box_link">
-                    <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                    <a href="<c:url value="/cart?name=${sessionScope.user.name}"/> ">Cart</a>
                   </div>
                   <div class="user_box_login user_box_link">
                     <a href="<c:url value="/auth/logout"/> ">logout</a></div>
@@ -82,14 +82,14 @@
         <div class="row">
           <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
             <div class="logo_container">
-              <div class="logo"><a href="#"><img src="images/logo.png" alt="">travelix</a></div>
+              <div class="logo"><a href="#"><img src="images/logo.png" alt="">AltSpace</a></div>
             </div>
             <div class="main_nav_container ml-auto">
               <ul class="main_nav_list">
-                <li class="main_nav_item"><a href="<c:url value="/"/> ">home</a></li>
-                <li class="main_nav_item"><a href="<c:url value="/about"/> ">about us</a></li>
-                <li class="main_nav_item"><a href="<c:url value="/offers"/> ">offers</a></li>
-                <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">RoomInfo</a></li>
+                <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+                <li class="main_nav_item"><a href="<c:url value="/about"/> ">알트스페이스란</a></li>
+                <li class="main_nav_item"><a href="<c:url value="/offers"/> ">고객센터</a></li>
+                <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
               </ul>
             </div>
             <div class="content_search ml-lg-0 ml-auto">
@@ -135,11 +135,10 @@
       <div class="menu_close_container"><div class="menu_close"></div></div>
       <div class="logo"><a href="/"><img src="../images/Altspace_darkmode_logo_small.png" alt="AltSpace Logo">AltSpace</a></div>
       <ul>
-        <li class="main_nav_item"><a href="<c:url value="/"/> ">home</a></li>
-        <li class="main_nav_item"><a href="<c:url value="/about"/> ">about us</a></li>
-        <li class="main_nav_item"><a href="<c:url value="/offers"/> ">offers</a></li>
-        <li class="main_nav_item"><a href="<c:url value="/roominfo"/> ">RoomInfo</a></li>
-        <li class="main_nav_item"><a href="<c:url value="/elements"/> ">Elements</a></li>
+        <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+        <li class="main_nav_item"><a href="<c:url value="/about"/> ">AltSpace란</a></li>
+        <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고겍센터</a></li>
+        <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
       </ul>
     </div>
   </div>
