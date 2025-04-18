@@ -5,6 +5,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+        <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
 </head>
 
 <body>
@@ -135,6 +136,5 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/offers_custom.js"></script>
-</body>
 
-</html>
+<script src="js/darkmode.js"></script>

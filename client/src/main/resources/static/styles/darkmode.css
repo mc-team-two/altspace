@@ -1,0 +1,149 @@
+/*==============================================================================*/
+/*=========================== 기본 테마 및 보색 지정 ==============================*/
+/*==============================================================================*/
+
+:root {
+    --bg-color: #f5f5f5; /* 기본 밝은 모드 배경색 */
+    --text-color: #333; /* 기본 밝은 모드 텍스트 색상 */
+    /* 다른 변수들의 밝은 모드 값 */
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212; /* 다크 모드 배경색 */
+    --text-color: #f5f5f5; /* 다크 모드 텍스트 색상 */
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    /*transition: background-color 0.3s, color 0.3s; !* 부드러운 전환 효과 (선택 사항) *!*/
+}
+
+/* about 페이지에서는 intro가 home 밑 부분을 장악하고 있어서 이쪽을 타도록 커스텀.*/
+.intro{
+    background-color: var(--bg-color);
+    /*transition: background-color 0.3s; !* 부드러운 전환 효과 (선택 사항) *!*/
+}
+
+.header,
+.main_nav {
+    /*transition: background-color 0.3s; !* 부드러운 전환 효과 (선택 사항) *!*/
+}
+
+.offer_reviews_title{
+    color:var(--text-color)
+}
+
+.sorting_text{
+    color:var(--text-color)
+}
+
+
+.sidebar_title{
+    color:var(--text-color)
+}
+
+.intro_title{
+    color:var(--text-color)
+}
+
+.intro_text{
+    color:var(--text-color)
+}
+
+
+
+
+/*==============================================================================*/
+/*============================ 여기서부터는 스위치 ===============================*/
+/*==============================================================================*/
+
+/* 스위치 */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+
+
+/* 체크박스 숨김 */
+.theme-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* 슬라이더 */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+    display: flex; /* 아이콘 중앙 배치를 위해 flex 사용 */
+    align-items: center; /* 세로 중앙 정렬 */
+    padding: 0 8px; /* 아이콘 양쪽 여백 */
+    justify-content: space-between; /* 아이콘 양 끝 배치 */
+}
+
+/* 동그라미 */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* 누른 뒤 슬라이더 색상 변경 */
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+/* 누른 뒤 동그라미 이동 */
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* 아이콘 스타일 */
+.moon-icon,
+.sun-icon {
+    font-size: 1.2em; /* 아이콘 크기 조절 */
+    color: #fff; /* 기본 아이콘 색상 */
+    transition: opacity 0.4s; /* 부드러운 전환 효과 */
+}
+
+/* 초기 달 아이콘 보이기 */
+.sun-icon {
+    opacity: 0;
+}
+
+/* 체크되면 해 아이콘 보이기, 달 아이콘 숨기기 */
+input:checked + .slider .moon-icon {
+    opacity: 0;
+}
+
+input:checked + .slider .sun-icon {
+    opacity: 1;
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

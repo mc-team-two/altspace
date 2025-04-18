@@ -2,6 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
+  <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+  <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+</head>
+
 <div class="menu trans_500">
   <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
     <div class="menu_close_container"><div class="menu_close"></div></div>
@@ -121,3 +127,5 @@
     </div>
   </div>
 </div>
+
+<script src="js/darkmode.js"></script>

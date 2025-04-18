@@ -5,6 +5,7 @@
 <head>
   <link rel="stylesheet" type="text/css" href="styles/contact_styles.css">
   <link rel="stylesheet" type="text/css" href="styles/contact_responsive.css">
+  <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
 </head>
 
 <div class="menu trans_500">
@@ -59,3 +60,4 @@
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/contact_custom.js"></script>
+<script src="js/darkmode.js"></script>
