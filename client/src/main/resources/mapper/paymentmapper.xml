@@ -32,12 +32,12 @@
         SELECT *
         FROM payments
         WHERE guest_id = #{guestId}
+          AND imp_uid = #{impUid}
           AND accommodation_id = #{accommodationId}
-          AND check_in = #{checkIn}
-          AND check_out = #{checkOut}
-        ORDER BY create_day DESC
+          AND reservations_id = #{reservationsId}
         LIMIT 1
     </select>
+
 
     <update id="update" parameterType="payments">
         UPDATE payments
@@ -47,5 +47,23 @@
           AND check_in = #{checkIn}
           AND check_out = #{checkOut}
     </update>
+
+    <select id="selectPyAll" resultType="Payments" parameterType="Payments">
+        SELECT
+            p.*,
+            a.name,
+            a.location
+        FROM payments p JOIN accommodations a
+            ON p.accommodation_id = a.accommodation_id
+        WHERE p.guest_id = #{guestId}
+          AND p.pay_status = '완료'
+    </select>
+
+    <select id="selectPayment" parameterType="int" resultType="payments">
+        SELECT *
+        FROM payments
+        WHERE reservations_id = #{reservationsId}
+    </select>
+
 
 </mapper>
