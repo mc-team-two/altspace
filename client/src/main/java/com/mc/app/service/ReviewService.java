@@ -43,4 +43,8 @@ public class ReviewService implements MCService<Reviews,Integer> {
     public List<Reviews> selectReviewsAll(Integer integer) throws Exception {
         return reviewRepository.selectReviewsAll(integer);
     }
+
+    public Reviews selectReviewAccom(Integer integer) throws Exception {
+        return reviewRepository.selectReviewAccom(integer);
+    }
 }

@@ -148,12 +148,6 @@
                 action: '/review/upimpl?id=' + id
             }).submit();
         },
-        deleteRv: function(id) {
-            $('#reviewForm').attr({
-                method: 'post',
-                action: '/review/delimpl?id=' + id
-            }).submit();
-        }
     }
     $(document).ready(function () {
         change.init();
@@ -203,9 +197,7 @@
     </div>
     <div class="card mt-4 shadow-sm">
         <!-- 공통 폼 (id는 유일하게 하나만!) -->
-        <form id="reviewForm">
-            <%--<input type="hidden" name="reviewId" value="${review.reviewId}">--%>
-        </form>
+        <form id="reviewForm"></form>
 
         <div class="card-body">
             <h5 class="card-title">리뷰 목록</h5>
@@ -217,7 +209,6 @@
 
                     <!-- 리뷰 ID를 넘겨서 JS 함수에서 동적으로 처리 -->
                     <button type="button" class="btn btn-primary" onclick="change.updateRv('${rv.reviewId}')">리뷰 수정</button>
-                    <button type="button" class="btn btn-danger" onclick="change.deleteRv('${rv.reviewId}')">리뷰 삭제</button>
                 </div>
             </c:forEach>
         </div>

@@ -53,10 +53,10 @@
                     <c:otherwise>
                     <div class="user_box ml-auto">
                         <div class="user_box_login user_box_link">
-                            <a href="<c:url value="/mypage?id=${sessionScope.user.userId}"/> ">${sessionScope.user.userId}</a>
+                            <a href="<c:url value="/mypage?id=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                         </div>
                         <div class="user_box_login user_box_link">
-                            <a href="<c:url value="/cart?id=${sessionScope.user.userId}"/> ">Cart</a>
+                            <a href="<c:url value="/cart?id=${sessionScope.user.name}"/> ">Cart</a>
                         </div>
                         <div class="user_box_login user_box_link">
                             <a href="<c:url value="/auth/logout"/> ">logout</a></div>
