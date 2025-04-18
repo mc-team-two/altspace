@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
+<head>
+    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+</head>
+
 <!-- Header -->
 <header class="header">
 
@@ -30,8 +34,20 @@
                     <c:choose>
                         <c:when test="${sessionScope.user.name == null}">
                             <div class="user_box ml-auto">
-                                <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
-                                <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                <div class="user_box_login user_box_link">
+                                    <a href="<c:url value="/login"/> ">로그인</a>
+                                </div>
+                                <div class="user_box_login user_box_link">
+                                    <a href="<c:url value="/login/register"/> ">회원가입</a>
+                                </div>
+                                <div class="user_box_login theme-switch">
+                                    <label class="theme-toggle">
+                                        <input type="checkbox" id="theme-toggle-guest" class="theme-toggle">
+                                        <span class="slider round">
+                                            <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
+                                        </span>
+                                    </label>
                                 </div>
                             </div>
                         </c:when>
@@ -45,35 +61,45 @@
                                 </div>
                                 <div class="user_box_login user_box_link">
                                     <a href="<c:url value="/auth/logout"/> ">logout</a></div>
+                                <div class="user_box_login theme-switch">
+                                    <label class="theme-toggle">
+                                        <input type="checkbox" id="theme-toggle-user" class="theme-toggle">
+                                        <span class="slider round">
+                                <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
+                                <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
+                             </span>
+                                    </label>
+                                </div>
                             </div>
                         </c:otherwise>
                     </c:choose>
+
                 </div>
             </div>
         </div>
 
-    <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터, 마이페이지) -->
+        <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터, 마이페이지) -->
 
-    <nav class="main_nav">
-        <div class="container">
-            <div class="row">
-                <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
-                    <div class="logo_container">
-                        <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png" alt=""></a></div>
-                    </div>
-                    <div class="main_nav_container ml-auto">
-                        <ul class="main_nav_list">
-                            <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
-                        </ul>
-                    </div>
-                    <div class="content_search ml-lg-0 ml-auto">
-                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                             x="0px" y="0px"
-                             width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
-                             xml:space="preserve">
+        <nav class="main_nav">
+            <div class="container">
+                <div class="row">
+                    <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
+                        <div class="logo_container">
+                            <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png" alt=""></a></div>
+                        </div>
+                        <div class="main_nav_container ml-auto">
+                            <ul class="main_nav_list">
+                                <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
+                            </ul>
+                        </div>
+                        <div class="content_search ml-lg-0 ml-auto">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                 x="0px" y="0px"
+                                 width="17px" height="17px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
+                                 xml:space="preserve">
 								<g>
                                     <g>
                                         <g>
@@ -93,18 +119,18 @@
                                     </g>
                                 </g>
 							</svg>
-                    </div>
+                        </div>
 
-                    <form id="search_form" class="search_form bez_1">
-                        <input type="search" class="search_content_input bez_1">
-                    </form>
+                        <form id="search_form" class="search_form bez_1">
+                            <input type="search" class="search_content_input bez_1">
+                        </form>
 
-                    <div class="hamburger">
-                        <i class="fa fa-bars trans_200"></i>
+                        <div class="hamburger">
+                            <i class="fa fa-bars trans_200"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
     </div>
 </header>
