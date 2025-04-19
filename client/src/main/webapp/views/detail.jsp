@@ -80,14 +80,14 @@
                 merchant_uid: "ORD" + new Date().getTime(),
                 name: "${accomm.name}",
                 amount: Number($('#totalPrices').val()),
-                buyer_email: "guest@example.com",
-                buyer_name: "홍길동",
-                buyer_tel: "010-0000-0000",
-                buyer_addr: "서울시 강남구",
+                buyer_email: "${sessionScope.user.email}",
+                buyer_name: "${sessionScope.user.name}",
+                buyer_tel: "${sessionScope.user.phone}",
+                buyer_addr: "대구광역시",
                 buyer_postcode: "12345"
             }, function(rsp) {
                 if (rsp.success) {
-                    $('#imp_hidden').val(rsp.imp_uid);
+                    $('#imp_hidden').val(rsp.imp_uid);  // 결제 완료 후 imp_uid input에 저장
                     // 실제 결제 정보 검증
                     $.ajax({
                         type: 'POST',
@@ -110,7 +110,7 @@
             });
         },
         cancel:function(){
-            var impUid = $('#imp_hidden').val(); // 저장된 imp_uid 가져오기
+            let impUid = "${payInfo.impUid}"; // 저장된 imp_uid 가져오기
 
             if (!impUid) {
                 alert("결제 내역이 없습니다.");
@@ -120,7 +120,8 @@
             $.ajax({
                 type: "POST",
                 url: "/payment/cancel/" + impUid,
-                data: $('#data_add').serialize(),
+                data: $('#data_del').serialize(),
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 success: function(res) {
                     alert(res.message);
                     location.reload(); // 취소 후 새로고침
@@ -138,7 +139,7 @@
         review:function(){
             $('#data_add').attr({
                 'method':'post',
-                'action':'<c:url value="/offers/review?id=${accomm.accommodationId}"/>'
+                'action':'<c:url value="/review/rvdtSel?id=${accomm.accommodationId}"/>'
             });
             $('#data_add').submit();
         },
@@ -172,28 +173,58 @@
         </div>
     </div>
     <div class="card mb-4 shadow-sm">
-        <form id="data_add">
-            <div class="card-body">
-                <input type="hidden" name="guestId" value="guest001">
-                <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
-                <input type="hidden" name="checkIn" id="checkIn">
-                <input type="hidden" name="checkOut" id="checkOut">
-                <input type="hidden" name="payAmount" id="totalPrices">
-                <input type="hidden" name="payStatus" value="완료">
-                <input type="hidden" name="payMeans" value="카드">
-                <input type="hidden" id="imp_hidden" name="impUid">
-
-                <h5 class="mb-3">숙박 날짜 선택</h5>
-                <div class="form-group">
-                    <label for="dates">체크인 / 체크아웃 날짜</label>
-                    <input type="text" name="dates" class="form-control" id="dates"/>
+        <c:choose>
+            <c:when test="${pyStatus == '완료'}">
+            <!-- 결제 완료 상태: 예약 내역만 보여줌 -->
+            <form id="data_del">
+                <div class="mb-3">
+                    <h5>예약 내역</h5>
+                    <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
+                    <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
+                    <input type="hidden" name="impUid" value="${payInfo.impUid}">
+                    <input type="hidden" name="reservationsId" value="${payInfo.reservationsId}">
+                    <p><strong>체크인:</strong> <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd" /></p>
+                    <p><strong>체크아웃:</strong> <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd" /></p>
+                    <p><strong>결제 금액:</strong> <fmt:formatNumber value="${payInfo.payAmount}" type="number"/> 원</p>
                 </div>
-                <div class="mt-3" id="totalPrice" style="font-weight: bold;"></div>
-            </div>
-        </form>
-        <button id="sales_add_btn" class="btn btn-primary">결제</button>
-        <button id="cancel_btn" class="btn btn-danger">결제 취소</button>
-        <button id="review_btn" class="btn btn-primary">리뷰 작성</button>
+            </form>
+            </c:when>
+            <c:otherwise>
+                <!-- 결제 전: 날짜 선택 및 결제 폼 -->
+                <form id="data_add">
+                    <div class="card-body">
+                        <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
+                        <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
+                        <input type="hidden" id="imp_hidden" name="impUid">
+                        <input type="hidden" name="checkIn" id="checkIn">
+                        <input type="hidden" name="checkOut" id="checkOut">
+                        <input type="hidden" name="payAmount" id="totalPrices">
+                        <input type="hidden" name="payStatus" value="완료">
+                        <input type="hidden" name="payMeans" value="카드">
+
+                        <h5 class="mb-3">숙박 날짜 선택</h5>
+                        <div class="form-group">
+                            <label for="dates">체크인 / 체크아웃 날짜</label>
+                            <input type="text" name="dates" class="form-control" id="dates"/>
+                        </div>
+                        <div class="mt-3" id="totalPrice" style="font-weight: bold;"></div>
+                    </div>
+                </form>
+            </c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${pyStatus == '완료'}">
+                <!-- 결제 정보 조회 화면 -->
+                <button id="cancel_btn" class="btn btn-danger">결제 취소</button>
+                <button id="review_btn" class="btn btn-primary">리뷰 작성</button>
+            </c:when>
+            <c:otherwise>
+                <!-- 일반 숙소 예약 화면 -->
+                <button id="sales_add_btn" class="btn btn-primary">결제</button>
+            </c:otherwise>
+        </c:choose>
+
     </div>
     <div class="card mt-4 shadow-sm">
         <!-- 공통 폼 (id는 유일하게 하나만!) -->

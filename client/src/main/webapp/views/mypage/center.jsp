@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-
+    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
 </head>
 
 <div class="menu trans_500">
@@ -536,3 +536,4 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/offers_custom.js"></script>
+<script src="js/darkmode.js"></script>
