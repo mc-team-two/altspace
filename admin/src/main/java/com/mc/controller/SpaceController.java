@@ -106,4 +106,13 @@ public class SpaceController {
         return "index";
     }
 
+    @RequestMapping("/updatespace")
+    public String updatespace(Accommodations acc, Model model) {
+        try {
+            accomService.mod(acc);
+            return "redirect:/space/detail?id=" + acc.getAccommodationId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
