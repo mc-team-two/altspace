@@ -32,76 +32,39 @@
 </div>
 
 <!-- 센터 -->
-
 <div class="blog">
     <div class="container">
         <div class="row">
 
             <!-- 예약 내역 -->
-
             <div class="col-lg-8">
-
                 <div class="blog_post_container">
-
-                    <!-- 내역 1 -->
-
-                    <div class="blog_post">
-                        <div class="blog_post_image">
-                            <img src="images/blog_1.jpg">
-                            <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                                <div class="blog_post_day">예약</div>
-                                <div class="blog_post_month">2025-07-11</div>
+                    <c:forEach var="py" items="${paymentList}">
+                        <div class="blog_post">
+                            <div class="blog_post_image">
+                                <img src="images/blog_1.jpg"> <!-- 실제 이미지 경로가 있다면 p.imagePath 등으로 수정 -->
+                                <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
+                                    <div class="blog_post_day">${py.payStatus}</div>
+                                    <div class="blog_post_month">${py.checkIn}</div>
+                                </div>
+                            </div>
+                            <div class="blog_post_meta">
+                                <ul>
+                                    <li class="blog_post_meta_item">
+                                        <a href="<c:url value="/detail?id=${py.accommodationId}"/>">숙소 정보</a>
+                                    </li>
+                                    <li class="blog_post_meta_item">
+                                        <a href="<c:url value="/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&reservationsId=${py.reservationsId}"/>">결제 정보</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="blog_post_title">
+                                <a href="#">${py.name}</a> <!-- p.accommodationName 은 테이블 join or 따로 세팅 필요 -->
+                                <p></p>
                             </div>
                         </div>
-                        <div class="blog_post_meta">
-                            <ul>
-                                <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                                <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-                            </ul>
-                        </div>
-                        <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-                    </div>
-
-                    <!-- 내역 2 -->
-
-                    <div class="blog_post">
-                        <div class="blog_post_image">
-                            <img src="images/blog_2.jpg">
-                            <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                                <div class="blog_post_day">완료</div>
-                                <div class="blog_post_month">2025-01-11</div>
-                            </div>
-                        </div>
-                        <div class="blog_post_meta">
-                            <ul>
-                                <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                                <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-                            </ul>
-                        </div>
-                        <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-                    </div>
-
-                    <!-- 내역 3 -->
-
-                    <div class="blog_post">
-                        <div class="blog_post_image">
-                            <img src="images/blog_3.jpg">
-                            <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                                <div class="blog_post_day">완료</div>
-                                <div class="blog_post_month">2024-12-11</div>
-                            </div>
-                        </div>
-                        <div class="blog_post_meta">
-                            <ul>
-                                <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                                <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-                            </ul>
-                        </div>
-                        <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-                    </div>
-
+                    </c:forEach>
                 </div>
-
                 <div class="blog_navigation">
                     <ul>
                         <li class="blog_dot active"><div></div>01</li>
@@ -111,7 +74,6 @@
             </div>
 
             <!-- 사이드바 -->
-
             <div class="col-lg-4 sidebar_col">
 
                 <!-- 사이드바 메뉴 -->
