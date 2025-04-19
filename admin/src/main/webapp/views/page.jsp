@@ -5,6 +5,20 @@
 <!-- pagination start -->
 <div class="col text-center ">
   <ul class="pagination justify-content-center">
+
+    <%--처음으로--%>
+    <c:choose>
+      <c:when test="${cpage.getPrePage() != 0}">
+        <li class="page-item">
+          <a  class="page-link"  href="<c:url value="${target}/get?pageNo=1" />">&lt;&lt;</a>
+        </li>
+      </c:when>
+      <c:otherwise>
+        <li class="page-item disabled">
+          <a  class="page-link"  href="#">&lt;&lt;</a>
+        </li>
+      </c:otherwise>
+    </c:choose>
     <%--이전--%>
     <c:choose>
       <c:when test="${cpage.getPrePage() != 0}">
@@ -48,6 +62,21 @@
         </li>
       </c:otherwise>
     </c:choose>
+
+    <%--마지막으로--%>
+    <c:choose>
+        <c:when test="${cpage.getNextPage() != 0}">
+          <li class="page-item">
+            <a class="page-link"  href="<c:url value="${target}/get?pageNo=${cpage.getPages()}" />">&gt;&gt;</a>
+          </li>
+        </c:when>
+        <c:otherwise>
+          <li class="page-item disabled">
+            <a class="page-link"  href="#">&gt;&gt;</a>
+          </li>
+        </c:otherwise>
+      </c:choose>
+
   </ul>
 </div>
 <!-- pagination end -->
