@@ -12,4 +12,5 @@ import java.util.List;
 public interface AccomRepository extends MCRepository<Accommodations,Integer> {
     void insertAccommodation(Accommodations acc);
     List<Accommodations> selectByHostId(String hostId);
+    void updateAccommodation(Accommodations accommodation);  // update 메서드 추가
 }

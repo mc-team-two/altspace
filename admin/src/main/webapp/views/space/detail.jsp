@@ -209,6 +209,10 @@
                 <form id="space_update_form" style="overflow-x:hidden">
                     <h1 class="h3 mb-2 text-gray-800">기본 정보</h1>
                     <div class="row">
+
+                        <input type="hidden" name="accommodationId" value="${data.accommodationId}">
+                        <input type="hidden" name="status" value="활성">
+
                     <%--category--%>
                     <div class="form-group col-sm-4">
                         <label for="category">
@@ -292,31 +296,30 @@
                                 <button id="search-btn" class="btn btn-primary" type="button" style="border: none; border-radius: 0 5px 5px 0;">검색</button>
                             </div>
                         </div>
-                        <div id="map" style="display:none;margin-top:10px;border-radius:5px;"></div>
+                        <div id="map" style="margin-top:10px;border-radius:5px;"></div>
                     </div>
 
                     <%--lat, lng (hidden)--%>
                     <div>
-                        <input id="lat" name="latitude" type="hidden" step="any">
-                        <input id="lng" name="longitude" type="hidden" step="any">
+                        <input id="lat" name="latitude" type="hidden" step="any" value="${data.latitude}">
+                        <input id="lng" name="longitude" type="hidden" step="any" value="${data.longitude}">
                     </div>
-
 
                     <hr>
                     <h1 class="h3 mb-2 text-gray-800">상세 정보</h1>
                     <%--image1--%>
                     <div class="form-group">
                         <label for="image1"><h6 class="m-0 font-weight-bold text-primary">대표 사진</h6></label>
-                        <input type="file" class="form-control" id="image1" placeholder="Enter name" name="image1" value="${data.image1}">
+                        <input type="file" class="form-control" id="image1" placeholder="Enter name" name="image1">
                     </div>
 
                     <%--detail image--%>
                     <div class="form-group">
                         <label for="image2"><h6 class="m-0 font-weight-bold text-primary">상세 사진</h6></label>
-                        <input type="file" class="form-control mb-2" id="image2" name="image2" value="${data.image2}">
-                        <input type="file" class="form-control mb-2" id="image3" name="image3" value="${data.image3}">
-                        <input type="file" class="form-control mb-2" id="image4" name="image4" value="${data.image4}">
-                        <input type="file" class="form-control" id="image5" name="image5" value="${data.image5}">
+                        <input type="file" class="form-control mb-2" id="image2" name="image2">
+                        <input type="file" class="form-control mb-2" id="image3" name="image3">
+                        <input type="file" class="form-control mb-2" id="image4" name="image4">
+                        <input type="file" class="form-control" id="image5" name="image5">
                     </div>
 
                     <%--name--%>
