@@ -37,15 +37,15 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h2>스페이스 목록 조회 탭</h2>
-            <div>Total: <strong>${cpage.total}</strong> / Page: <strong>${cpage.pageNum}</strong> of <strong>${cpage.pages}</strong></div>
+            <p>총 ${fn:length(data)}개의 검색결과</p>
         </div>
         <div class="card-body">
-            <c:forEach var="item" items="${cpage.getList()}">
+            <c:forEach var="item" items="${data}" varStatus="status">
                 <div class="card" style="background-color:#eeeeee;margin-bottom:15px;">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-sm-10">
-                                <h2>${item.name}</h2>
+                                <h2>#${status.count}. ${item.name}</h2>
                             </div>
                             <div class="col-sm-2">
                                 <button type="button">펼치기</button>
@@ -99,6 +99,5 @@
                 </div>
             </c:forEach>
         </div>
-        <jsp:include page="../page.jsp"/>
     </div>
 </div>

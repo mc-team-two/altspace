@@ -12,6 +12,9 @@
         SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId}
     </select>
     <!--  개별 호스트가 등록한 모든 숙소 조회 -->
+    <select id="selectPageByHostId" parameterType="String" resultType="Accommodations">
+        SELECT * FROM accommodations WHERE host_id=#{hostId}
+    </select>
     <select id="selectByHostId" parameterType="String" resultType="Accommodations">
         SELECT * FROM accommodations WHERE host_id=#{hostId}
     </select>
