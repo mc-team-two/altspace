@@ -5,7 +5,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-        <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
 </head>
 
 <body>
