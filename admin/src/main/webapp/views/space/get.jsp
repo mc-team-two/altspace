@@ -58,12 +58,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-8">
-                                <p><img width="100%;" src="<c:url value='/imgs/타오1.jpg'/>" alt="대표사진"></p>
+                                <p><img width="100%" alt="대표사진" src="<c:url value='/imgs/${item.image1Name}'/>" /></p>
                                 <div style="display:flex; flex-direction: row;">
-                                    <span><img width="100%" src="<c:url value='/imgs/타오2.jpg'/>" alt="사진2"></span>
-                                    <span><img width="100%" src="<c:url value='/imgs/타오3.jpg'/>" alt="사진3"></span>
-                                    <span><img width="100%" src="<c:url value='/imgs/타오4.jpg'/>" alt="사진4"></span>
-                                    <span><img width="100%" src="<c:url value='/imgs/타오5.jpg'/>" alt="사진5"></span>
+                                    <span><img width="100%" alt="사진2" src="<c:url value='/imgs/${item.image2Name}'/>" /></span>
+                                    <span><img width="100%" alt="사진3" src="<c:url value='/imgs/${item.image3Name}'/>" /></span>
+                                    <span><img width="100%" alt="사진4" src="<c:url value='/imgs/${item.image4Name}'/>" /></span>
+                                    <span><img width="100%" alt="사진5" src="<c:url value='/imgs/${item.image5Name}'/>" /></span>
                                 </div>
                             </div>
                             <div class="col-sm-4">

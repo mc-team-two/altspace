@@ -4,7 +4,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.Accommodations;
 import com.mc.app.dto.User;
+import com.mc.app.repository.AccomRepository;
 import com.mc.app.service.AccomService;
+import com.mc.util.FileUploadUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RequestMapping("/space")
@@ -27,6 +29,9 @@ import java.util.List;
 public class SpaceController {
 
     final AccomService accomService;
+
+    @Value("${app.dir.uploadimgdir}")
+    String uploadDir;
 
     @Value("${app.key.kakaoJSApiKey}")
     String kakaoJSApiKey;
@@ -130,12 +135,49 @@ public class SpaceController {
     }
 
     @RequestMapping("/updatespace")
-    public String updatespace(Accommodations acc, Model model) {
+    public String updatespace(Accommodations acc,
+                              @RequestParam("image1") MultipartFile image1,
+                              @RequestParam("image2") MultipartFile image2,
+                              @RequestParam("image3") MultipartFile image3,
+                              @RequestParam("image4") MultipartFile image4,
+                              @RequestParam("image5") MultipartFile image5) {
+
         try {
+            // ✅ 이미지 파일이 있는 경우만 저장
+            if (image1 != null && !image1.isEmpty()) {
+                FileUploadUtil.saveFile(image1, uploadDir); // 실제 파일 저장
+                acc.setImage1Name(image1.getOriginalFilename()); // DB에 파일명 저장
+            }
+
+            if (image2 != null && !image2.isEmpty()) {
+                FileUploadUtil.saveFile(image2, uploadDir); // 실제 파일 저장
+                acc.setImage1Name(image2.getOriginalFilename()); // DB에 파일명 저장
+            }
+
+            if (image3 != null && !image3.isEmpty()) {
+                FileUploadUtil.saveFile(image3, uploadDir); // 실제 파일 저장
+                acc.setImage1Name(image3.getOriginalFilename()); // DB에 파일명 저장
+            }
+
+            if (image4 != null && !image4.isEmpty()) {
+                FileUploadUtil.saveFile(image4, uploadDir);
+                acc.setImage1Name(image4.getOriginalFilename());
+            }
+
+            if (image5 != null && !image5.isEmpty()) {
+                FileUploadUtil.saveFile(image5, uploadDir); // 실제 파일 저장
+                acc.setImage1Name(image5.getOriginalFilename()); // DB에 파일명 저장
+            }
+
+
+            // ✅ 숙소 정보 수정 처리
             accomService.mod(acc);
-            return "redirect:/space/detail?id=" + acc.getAccommodationId();
+
+            return "redirect:/space/get";
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RuntimeException("업데이트 중 오류 발생", e);
         }
     }
 }
