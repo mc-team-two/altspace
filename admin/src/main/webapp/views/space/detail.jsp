@@ -206,7 +206,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <form id="space_update_form" style="overflow-x:hidden">
+                <form action="/space/updatespace" method="post" enctype="multipart/form-data" id="space_update_form" style="overflow-x:hidden">
                     <h1 class="h3 mb-2 text-gray-800">기본 정보</h1>
                     <div class="row">
 
