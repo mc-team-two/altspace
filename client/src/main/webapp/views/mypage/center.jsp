@@ -3,22 +3,22 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-    <title>마이페이지</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
 </head>
 
-<div class="super_container">
+<div class="menu trans_500">
+    <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
+        <div class="menu_close_container"><div class="menu_close"></div></div>
+        <div class="logo menu_logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
+        <ul>
+            <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
+            <li class="menu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+            <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+            <li class="menu_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
+        </ul>
+    </div>
+</div>
+
     <!-- Home -->
 
     <div class="home">
@@ -399,7 +399,7 @@
                             <!-- Title -->
                             <div class="hotel_title_container d-flex flex-lg-row flex-column">
                                 <div class="hotel_title_content">
-                                    <h1 class="hotel_title">Grand Hotel Eurostar</h1>
+                                    <h1 class="hotel_title">임시 페이지 입니다</h1>
                                     <div class="rating_r rating_r_4 hotel_rating">
                                         <i></i>
                                         <i></i>
@@ -426,79 +426,79 @@
                         </div>
                     </div>
 
-                    <!-- Hotel Gallery -->
+<%--                    <!-- Hotel Gallery -->--%>
 
-                    <div class="hotel_gallery">
-                        <div class="hotel_slider_container">
-                            <div class="owl-carousel owl-theme hotel_slider">
+<%--                    <div class="hotel_gallery">--%>
+<%--                        <div class="hotel_slider_container">--%>
+<%--                            <div class="owl-carousel owl-theme hotel_slider">--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_1.jpg">
-                                        <img src="images/listing_thumb_1.jpg" alt="https://unsplash.com/@jbriscoe">
-                                    </a>
-                                </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_1.jpg">--%>
+<%--                                        <img src="images/listing_thumb_1.jpg" alt="https://unsplash.com/@jbriscoe">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_2.jpg">
-                                        <img src="images/listing_thumb_2.jpg" alt="https://unsplash.com/@grovemade">
-                                    </a>
-                                </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_2.jpg">--%>
+<%--                                        <img src="images/listing_thumb_2.jpg" alt="https://unsplash.com/@grovemade">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_3.jpg">
-                                        <img src="images/listing_thumb_3.jpg"
-                                             alt="https://unsplash.com/@fransaraco">
-                                    </a>
-                                </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_3.jpg">--%>
+<%--                                        <img src="images/listing_thumb_3.jpg"--%>
+<%--                                             alt="https://unsplash.com/@fransaraco">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_4.jpg">
-                                        <img src="images/listing_thumb_4.jpg" alt="https://unsplash.com/@workweek">
-                                    </a>
-                                </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_4.jpg">--%>
+<%--                                        <img src="images/listing_thumb_4.jpg" alt="https://unsplash.com/@workweek">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_5.jpg">
-                                        <img src="images/listing_thumb_5.jpg" alt="https://unsplash.com/@workweek">
-                                    </a>
-                                </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_5.jpg">--%>
+<%--                                        <img src="images/listing_thumb_5.jpg" alt="https://unsplash.com/@workweek">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_6.jpg">
-                                        <img src="images/listing_thumb_6.jpg" alt="https://unsplash.com/@avidenov">
-                                    </a>
-                                </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_6.jpg">--%>
+<%--                                        <img src="images/listing_thumb_6.jpg" alt="https://unsplash.com/@avidenov">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_7.jpg">
-                                        <img src="images/listing_thumb_7.jpg"
-                                             alt="https://unsplash.com/@pietruszka">
-                                    </a>
-                                </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_7.jpg">--%>
+<%--                                        <img src="images/listing_thumb_7.jpg"--%>
+<%--                                             alt="https://unsplash.com/@pietruszka">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_8.jpg">
-                                        <img src="images/listing_thumb_8.jpg" alt="https://unsplash.com/@rktkn">
-                                    </a>
-                                </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_8.jpg">--%>
+<%--                                        <img src="images/listing_thumb_8.jpg" alt="https://unsplash.com/@rktkn">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
 
-                                <!-- Hotel Gallery Slider Item -->
-                                <div class="owl-item">
-                                    <a class="colorbox cboxElement" href="images/listing_9.jpg">
-                                        <img src="images/listing_thumb_9.jpg" alt="https://unsplash.com/@mindaugas">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<%--                                <!-- Hotel Gallery Slider Item -->--%>
+<%--                                <div class="owl-item">--%>
+<%--                                    <a class="colorbox cboxElement" href="images/listing_9.jpg">--%>
+<%--                                        <img src="images/listing_thumb_9.jpg" alt="https://unsplash.com/@mindaugas">--%>
+<%--                                    </a>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
 
                     <!-- Hotel Info Text -->
                     <div class="hotel_info_text">
@@ -528,7 +528,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
@@ -537,3 +536,4 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/offers_custom.js"></script>
+<script src="js/darkmode.js"></script>

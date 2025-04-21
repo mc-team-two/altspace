@@ -43,4 +43,12 @@ public class PaymentService implements MCService<Payments,Integer> {
         return paymentRepository.selectOneTwo(payments);
     }
 
+    public List<Payments> selectPyAll(Payments payments) throws Exception {
+        return paymentRepository.selectPyAll(payments);
+    }
+
+    public Payments selectPayment(Integer integer) throws Exception {
+        return paymentRepository.selectPayment(integer);
+    }
+
 }

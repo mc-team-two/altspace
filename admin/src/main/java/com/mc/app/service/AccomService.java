@@ -1,5 +1,7 @@
 package com.mc.app.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.mc.app.dto.Accommodations;
 import com.mc.app.frame.MCService;
 import com.mc.app.repository.AccomRepository;
@@ -20,8 +22,8 @@ public class AccomService implements MCService<Accommodations,Integer> {
     }
 
     @Override
-    public void mod(Accommodations accommodations) throws Exception {
-
+    public void mod(Accommodations acc) throws Exception {
+        accomRepository.updateAccommodation(acc);
     }
 
     @Override
@@ -42,4 +44,10 @@ public class AccomService implements MCService<Accommodations,Integer> {
     public List<Accommodations> getByHostId(String s) throws Exception {
         return accomRepository.selectByHostId(s);
     }
+
+    public Page<Accommodations> getPageByHostId(String s, int pageNo) throws Exception {
+        PageHelper.startPage(pageNo, 3); // 한 페이지에 3개씩 표시
+        return accomRepository.selectPageByHostId(s);
+    }
+
 }

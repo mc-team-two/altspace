@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 @RequestMapping("/login")
 @Slf4j
-public class loginController {
+public class LoginController {
 
     private final UserService userService;
     private final SocialUserService socialUserService;

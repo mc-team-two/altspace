@@ -2,6 +2,7 @@ package com.mc.controller;
 
 import com.mc.app.dto.Accommodations;
 import com.mc.app.dto.Reviews;
+import com.mc.app.service.AccomService;
 import com.mc.app.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,28 +11,45 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/review")
 public class ReviewController {
 
+    final AccomService accomService;
     final ReviewService reviewService;
+    String dir ="review/";
 
     @RequestMapping("")
-    public String main(Model model,
+    public String review(Model model) {
+        model.addAttribute("headers", dir + "headers");
+        model.addAttribute("center", dir + "center");
+        model.addAttribute("footer", dir + "footer");
+        return "index";
+    }
+
+    @RequestMapping("/rvdtSel")
+    public String review(Model model, @RequestParam("id") int id) throws Exception {
+
+        Accommodations accomm = accomService.get(id);
+
+        model.addAttribute("accomm", accomm);
+        return "review";
+    }
+
+    @RequestMapping("/dtadd")
+    public String dtadd(Model model,
                        @RequestParam("id") int id,
                        Reviews reviews) throws Exception {
 
         reviewService.add(reviews);
-        return "redirect:/offers/detail?id=" + id;
+        return "redirect:/detail?id=" + id;
     }
 
     @RequestMapping("/upimpl")
     public String upimpl(Model model,
-                       @RequestParam("id") int id) throws Exception {
+                         @RequestParam("id") int id) throws Exception {
 
         Reviews review = reviewService.selectReviewAccom(id);
         log.info("review: " + review);
@@ -46,7 +64,7 @@ public class ReviewController {
                          Reviews reviews) throws Exception {
 
         reviewService.mod(reviews);
-        return "redirect:/offers/detail?id=" + id;
+        return "redirect:/detail?id=" + id;
     }
 
     @RequestMapping("/delete")
@@ -55,6 +73,6 @@ public class ReviewController {
                          @RequestParam("acId") int acid) throws Exception {
 
         reviewService.del(rvid);
-        return "redirect:/offers/detail?id=" + acid;
+        return "redirect:/detail?id=" + acid;
     }
 }

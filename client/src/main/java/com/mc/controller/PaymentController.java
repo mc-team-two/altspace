@@ -94,18 +94,19 @@ public class PaymentController {
 
     @ResponseBody
     @RequestMapping("/cancel/{imp_uid}")
-    public ResponseEntity<?> cancelPayment(@PathVariable("imp_uid") String imp_uid,
-                                           @RequestParam("guestId") String guestId,
+    public ResponseEntity<?> cancelPayment(@RequestParam("guestId") String guestId,
+                                           @RequestParam("impUid") String impUid,
                                            @RequestParam("accommodationId") int accommodationId,
-                                           @RequestParam("checkIn") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkIn,
-                                           @RequestParam("checkOut") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkOut) throws Exception {
+                                           @RequestParam("reservationsId") int reservationsId) throws Exception {
 
         // 1. 결제 정보 검색 (db조회 조건으로 사용)
         Payments payments = new Payments();
         payments.setGuestId(guestId);
+        payments.setImpUid(impUid);
         payments.setAccommodationId(accommodationId);
-        payments.setCheckIn(checkIn);
-        payments.setCheckOut(checkOut);
+        payments.setReservationsId(reservationsId);
+
+        log.info("Payments" + payments);
 
         // DB 에서 찾아온 데이터
         Payments targetPayment = paymentService.getOneTwo(payments);
@@ -122,14 +123,14 @@ public class PaymentController {
         }
 
         // 3. imp_uid 가져오기
-        String impUid = targetPayment.getImpUid(); // 여기서 가져옴!
-        if (impUid == null || impUid.isBlank()) {
+        String impUids = targetPayment.getImpUid(); // 여기서 가져옴!
+        if (impUids == null || impUids.isBlank()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("message", "결제 고유 ID가 존재하지 않습니다."));
         }
 
         // 4. 아임포트 결제 취소
-        CancelData cancelData = new CancelData(impUid, true);
+        CancelData cancelData = new CancelData(impUids, true);
         iamportClient.cancelPaymentByImpUid(cancelData);
 
         // 5. 결제 상태 DB 업데이트
