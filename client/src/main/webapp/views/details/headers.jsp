@@ -3,17 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-    <title>Altspace | 나의 예약 | 가장 빠른 공간대여 알트스페이스</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Travelix Project">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
 </head>
+
+<div class="super_container">
 
     <!-- 헤더 -->
 
@@ -36,10 +29,45 @@
                                 <li class="social_list_item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
                             </ul>
                         </div>
-                        <div class="user_box ml-auto">
-                            <div class="user_box_login user_box_link"><a href="/login">로그인</a></div>
-                            <div class="user_box_register user_box_link"><a href="/login/register">회원가입</a></div>
-                        </div>
+                        <c:choose>
+                            <c:when test="${sessionScope.user.name == null}">
+                                <div class="user_box ml-auto">
+                                    <div class="user_box_login user_box_link"><a href="<c:url value="/login"/> ">로그인</a></div>
+                                    <div class="user_box_register user_box_link"><a href="<c:url value="/login/register"/> ">회원가입</a>
+                                    </div>
+                                    <div class="user_box_login theme-switch">
+                                        <label class="theme-toggle">
+                                            <input type="checkbox" id="theme-toggle-guest" class="theme-toggle">
+                                            <span class="slider round">
+                                            <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
+                                        </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="user_box ml-auto">
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
+                                    </div>
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/cart?name=${sessionScope.user.name}"/> ">Cart</a>
+                                    </div>
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value="/auth/logout"/> ">logout</a></div>
+                                    <div class="user_box_login theme-switch">
+                                        <label class="theme-toggle">
+                                            <input type="checkbox" id="theme-toggle-user" class="theme-toggle">
+                                            <span class="slider round">
+                                            <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
+                                        </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -52,14 +80,14 @@
                 <div class="row">
                     <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start" id="top">
                         <div class="logo_container">
-                            <div class="logo"><a href="/"><img src="images/logo.png"></a></div>
+                            <div class="logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
                         </div>
                         <div class="main_nav_container ml-auto">
                             <ul class="main_nav_list">
-                                <li class="main_nav_item"><a href="/">홈</a></li>
-                                <li class="main_nav_item"><a href="/about">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="/contact">고객센터</a></li>
-                                <li class="main_nav_item"><a href="/details">예약내역</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
                             </ul>
                         </div>
                         <div class="content_search ml-lg-0 ml-auto">
@@ -97,4 +125,16 @@
                 </div>
             </div>
         </nav>
+
     </header>
+</div>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="styles/bootstrap4/popper.js"></script>
+<script src="styles/bootstrap4/bootstrap.min.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="plugins/colorbox/jquery.colorbox-min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+<script src="js/single_listing_custom.js"></script>
