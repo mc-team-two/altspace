@@ -2,7 +2,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
+<head>
+    <title>Altspace | 가장 빠른 공간대여 알트스페이스</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Altspace Project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
+    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="styles/offers_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/offers_responsive.css">
+</head>
+
 <!-- 푸터 -->
+
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -12,7 +26,7 @@
                 <div class="footer_col">
                     <div class="footer_content footer_about">
                         <div class="logo_container footer_logo">
-                            <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
+                            <div class="logo"><a href="/"><img src="images/logo.png"></a></div>
                         </div>
                         <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
                             관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹</p>
@@ -91,29 +105,44 @@
                     <div class="footer_content footer_contact">
                         <ul class="contact_info_list">
                             <li class="contact_info_item d-flex flex-row">
-                                <div><div class="contact_info_icon"><img src="images/placeholder.svg" alt=""></div></div>
+                                <div><div class="contact_info_icon"><img src="images/placeholder.svg"></div></div>
                                 <div class="contact_info_text">서울 영등포구 여의동로 330 (여의도동, 알트타워)</div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
-                                <div><div class="contact_info_icon"><img src="images/phone-call.svg" alt=""></div></div>
+                                <div><div class="contact_info_icon"><img src="images/phone-call.svg"></div></div>
                                 <div class="contact_info_text">02-1234-5678 / 1588-1588</div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
-                                <div><div class="contact_info_icon"><img src="images/message.svg" alt=""></div></div>
+                                <div><div class="contact_info_icon"><img src="images/message.svg"></div></div>
                                 <div class="contact_info_text"><a href="mailto:help.alt@altspace.com?Subject=Hello" target="_top">help.alt@altspace.com</a></div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
-                                <div><div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div></div>
+                                <div><div class="contact_info_icon"><img src="images/planet-earth.svg"></div></div>
                                 <div class="contact_info_text"><a href="https://altspace.com/help">www.altspace.com/help</a></div>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </footer>
+
+<!-- Copyright -->
+
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 order-lg-1 order-2  ">
+                <div class="copyright_content d-flex flex-row align-items-center">
+                    <div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
