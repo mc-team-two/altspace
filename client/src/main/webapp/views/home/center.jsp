@@ -323,7 +323,10 @@
                                                 <div class="offer_reviews_title">very good</div>
                                                 <div class="offer_reviews_subtitle"> reviews</div>
                                             </div>
-                                            <div class="offer_reviews_rating text-center"></div>
+                                            <div class="offer_reviews_rating text-center">
+                                                <c:forEach var="awr" items="${accommodationsWithRatingList}">
+                                                    ${awr.roundedRating} </c:forEach>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

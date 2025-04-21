@@ -1,9 +1,7 @@
 package com.mc.controller;
 
-import com.mc.app.dto.Accommodations;
-import com.mc.app.dto.Payments;
-import com.mc.app.dto.Reviews;
-import com.mc.app.dto.User;
+import com.mc.app.dto.*;
+import com.mc.app.repository.AccomRepository;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.PaymentService;
 import com.mc.app.service.ReviewService;
@@ -17,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,19 +27,24 @@ public class MainController {
     final AccomService accomService;
     final PaymentService paymentService;
     final ReviewService reviewService;
+    private final AccomRepository accomRepository;
 
     String dir = "home/";
 
     @RequestMapping("/")
     public String main(Model model) throws Exception {
 
-        List<Accommodations> accomm = null;
-        accomm = accomService.get();
+        List<Accommodations> accomm = accomService.get(); // 기존 숙소 목록 가져오기 (필요하다면)
 
         model.addAttribute("accomm", accomm);
         model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
         model.addAttribute("footer", dir + "footer");
+
+        // 서비스에서 숙소 목록과 평점 정보를 함께 가져오기
+        List<AccomodationsWithRating> accommodationsWithRatingList = accomService.getAccommodationsWithRating();
+        model.addAttribute("accommodationsWithRatingList", accommodationsWithRatingList);
+
         return "index";
     }
 

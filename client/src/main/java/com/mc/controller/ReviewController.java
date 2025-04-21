@@ -1,8 +1,10 @@
 package com.mc.controller;
 
 import com.mc.app.dto.Accommodations;
+import com.mc.app.dto.AccomodationsWithRating;
 import com.mc.app.dto.Reviews;
 import com.mc.app.service.AccomService;
+import com.mc.app.repository.AccomRepository;
 import com.mc.app.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -19,6 +24,7 @@ public class ReviewController {
 
     final AccomService accomService;
     final ReviewService reviewService;
+
     String dir ="review/";
 
     @RequestMapping("")
