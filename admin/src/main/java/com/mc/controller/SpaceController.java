@@ -1,5 +1,7 @@
 package com.mc.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.Accommodations;
 import com.mc.app.dto.User;
 import com.mc.app.service.AccomService;
@@ -61,7 +63,7 @@ public class SpaceController {
         return "redirect:/space/get";
     }
 
-
+/*
     @RequestMapping("/get")
     public String get(Model model, HttpSession httpSession){
         User user = (User) httpSession.getAttribute("user");
@@ -73,6 +75,27 @@ public class SpaceController {
             log.info(e.getMessage());
         }
         model.addAttribute("data", data);
+        model.addAttribute("center", dir+"get");
+        return "index";
+    }
+
+*/
+    @RequestMapping("/get")
+    public String get(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
+            Model model, HttpSession httpSession){
+
+        User user = (User) httpSession.getAttribute("user");
+        Page<Accommodations> page = null;
+        PageInfo<Accommodations> pageInfo = null;
+
+        try {
+            page = accomService.getPageByHostId(user.getUserId(), pageNo);
+            pageInfo = new PageInfo<>(page, 5); // 하단 네비게이션 개수: 5
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+        model.addAttribute("cpage", pageInfo);
+        model.addAttribute("target", "/space");
         model.addAttribute("center", dir+"get");
         return "index";
     }
