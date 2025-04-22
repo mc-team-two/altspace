@@ -192,6 +192,62 @@
     $(function(){
         space_add.init();
     });
+
+    function previewImage(input, previewId) {
+        const previewContainer = document.getElementById(previewId);
+        previewContainer.innerHTML = "";
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.style.width = "100%";
+                img.style.height = "120px";
+                img.style.objectFit = "cover";
+                img.style.borderRadius = "8px";
+
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = "제거";
+                removeBtn.className = "btn btn-sm btn-outline-danger btn-block mt-1";
+                removeBtn.onclick = function () {
+                    input.value = "";
+                    previewContainer.innerHTML = "";
+                };
+
+                previewContainer.appendChild(img);
+                previewContainer.appendChild(removeBtn);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function limitDetailImages(currentInput) {
+        const detailInputs = document.querySelectorAll('input[id^="image"]:not(#image1)');
+        let count = 0;
+
+        detailInputs.forEach(input => {
+            if (input.files.length > 0) count++;
+        });
+
+        if (count > 4) {
+            alert("상세 사진은 최대 4장까지만 업로드할 수 있습니다.");
+            currentInput.value = "";
+            const previewId = "preview" + currentInput.id.replace("image", "");
+            document.getElementById(previewId).innerHTML = "";
+        }
+    }
+
+    function validateForm() {
+        const mainImage = document.getElementById("image1");
+        if (!mainImage.files || mainImage.files.length === 0) {
+            alert("대표 사진은 필수입니다.");
+            mainImage.focus();
+            return false;
+        }
+        return true;
+    }
+
 </script>
 
 <div class="col-sm-12">
@@ -293,18 +349,26 @@
                     <hr>
                     <h1 class="h3 mb-2 text-gray-800">상세 정보</h1>
                     <%--image1--%>
-                    <div class="form-group">
-                        <label for="image1"><h6 class="m-0 font-weight-bold text-primary">대표 사진</h6></label>
-                        <input type="file" class="form-control" id="image1" placeholder="Enter name" name="image1">
+                    <div class="form-group border p-3 rounded mb-4">
+                        <label for="image1"><h6 class="text-primary">대표 사진 (필수)</h6></label>
+                        <input type="file" class="form-control mb-2" id="image1" name="image1" accept="image/*" onchange="previewImage(this, 'preview1')">
+                        <div id="preview1" class="image-preview" style="max-width: 300px;"></div>
                     </div>
 
                     <%--detail image--%>
-                    <div class="form-group">
-                        <label for="image2"><h6 class="m-0 font-weight-bold text-primary">상세 사진</h6></label>
-                        <input type="file" class="form-control mb-2" id="image2" name="image2">
-                        <input type="file" class="form-control mb-2" id="image3" name="image3">
-                        <input type="file" class="form-control mb-2" id="image4" name="image4">
-                        <input type="file" class="form-control" id="image5" name="image5">
+                    <div class="form-group border p-3 rounded">
+                        <label>
+                            <h6 class="text-secondary">상세 사진 (선택, 최대 4장)</h6>
+                        </label>
+                        <div class="d-flex flex-wrap gap-3">
+                            <c:forEach var="i" begin="2" end="5">
+                                <div style="width: 240px;">
+                                    <input type="file" class="form-control mb-2" id="image${i}" name="image${i}" accept="image/*"
+                                           onchange="limitDetailImages(this); previewImage(this, 'preview${i}')">
+                                    <div id="preview${i}" class="image-preview"></div>
+                                </div>
+                            </c:forEach>
+                        </div>
                     </div>
 
                     <%--name--%>
