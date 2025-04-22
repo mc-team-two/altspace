@@ -291,21 +291,29 @@
             <div class="col-lg-12">
                 <!-- Offers Grid -->
                 <div class="offers_grid">
-
                     <c:forEach var="a" items="${accomm}">
-                        <div class="offers_item rating_??">
+                        <%-- Find the matching rating for this accommodation --%>
+                        <c:set var="currentRating" value="0" />
+                        <c:forEach var="awr" items="${accommodationsWithRatingList}">
+                            <c:if test="${awr.accommodation.accommodationId == a.accommodationId}">
+                                <c:set var="currentRating" value="${awr.roundedRating}" />
+                            </c:if>
+                        </c:forEach>
+
+                        <div class="offers_item rating_${currentRating}">
                             <div class="row">
                                 <div class="col-lg-1 temp_col"></div>
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
-                                        <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/')"></div>
+                                        <!-- ID 기반의 일반 이미지 또는 패턴을 사용하기 위한 고정 이미지 경로 -->
+                                        <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/listing_${a.accommodationId % 9 + 1}.jpg')"></div>
                                         <div class="offer_name"><a href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="offers_content">
                                         <div class="offers_price">$${a.priceNight}<span>per night</span></div>
-                                        <div class="rating_r rating_r_?? offers_rating" data-rating="??">
+                                        <div class="rating_r rating_r_${currentRating} offers_rating" data-rating="${currentRating}">
                                             <i></i><i></i><i></i><i></i><i></i>
                                         </div>
                                         <p class="offers_text">${a.description}</p>
@@ -324,8 +332,7 @@
                                                 <div class="offer_reviews_subtitle"> reviews</div>
                                             </div>
                                             <div class="offer_reviews_rating text-center">
-                                                <c:forEach var="awr" items="${accommodationsWithRatingList}">
-                                                    ${awr.roundedRating} </c:forEach>
+                                                    ${currentRating}
                                             </div>
                                         </div>
                                     </div>

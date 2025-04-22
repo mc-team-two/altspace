@@ -26,15 +26,13 @@ public class MainController {
     private final UserService userService;
     final AccomService accomService;
     final PaymentService paymentService;
-    final ReviewService reviewService;
-    private final AccomRepository accomRepository;
 
     String dir = "home/";
 
     @RequestMapping("/")
     public String main(Model model) throws Exception {
 
-        List<Accommodations> accomm = accomService.get(); // 기존 숙소 목록 가져오기 (필요하다면)
+        List<Accommodations> accomm = accomService.get();
 
         model.addAttribute("accomm", accomm);
         model.addAttribute("headers", dir + "headers");
