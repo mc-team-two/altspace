@@ -326,8 +326,16 @@
                                         <div class="button book_button"><a href="<c:url value="/detail?id=${a.accommodationId}"/>">상세보기<span></span><span></span><span></span></a></div>
                                         <div class="offer_reviews">
                                             <div class="offer_reviews_content">
-                                                <div class="offer_reviews_title">very good</div>
-                                                <div class="offer_reviews_subtitle"> reviews</div>
+                                                <div class="offer_reviews_title">
+                                                    <c:choose>
+                                                        <c:when test="${currentRating >= 4}">최고예요!</c:when>
+                                                        <c:when test="${currentRating == 3}">좋아요!</c:when>
+                                                        <c:when test="${currentRating == 2}">괜찮아요!</c:when>
+                                                        <c:when test="${currentRating == 1}">그저 그래요!</c:when>
+                                                        <c:otherwise>평가 없음</c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                                <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
                                             </div>
                                             <div class="offer_reviews_rating text-center">
                                                     ${currentRating}
