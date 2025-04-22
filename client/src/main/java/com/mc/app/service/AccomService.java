@@ -1,32 +1,35 @@
 package com.mc.app.service;
 
 import com.mc.app.dto.Accommodations;
+import com.mc.app.dto.AccomodationsWithRating;
 import com.mc.app.frame.MCService;
 import com.mc.app.repository.AccomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AccomService implements MCService<Accommodations,Integer> {
+public class AccomService implements MCService<Accommodations, Integer> {
 
-    final AccomRepository accomRepository;
+    private final AccomRepository accomRepository;
+    private final ReviewService reviewService; // ReviewService 주입
 
     @Override
     public void add(Accommodations accommodations) throws Exception {
-
+        accomRepository.insert(accommodations);
     }
 
     @Override
     public void mod(Accommodations accommodations) throws Exception {
-
+        accomRepository.update(accommodations);
     }
 
     @Override
     public void del(Integer integer) throws Exception {
-
+        accomRepository.delete(integer);
     }
 
     @Override
@@ -38,4 +41,21 @@ public class AccomService implements MCService<Accommodations,Integer> {
     public List<Accommodations> get() throws Exception {
         return accomRepository.select();
     }
+
+    // 페이징된 숙소 목록과 함께 평균 평점을 반환하는 메서드
+    public List<AccomodationsWithRating> getAccommodationsWithRating(List<Accommodations> accommodations) throws Exception {
+        List<AccomodationsWithRating> accommodationsWithRatingList = new ArrayList<>();
+
+        for (Accommodations acc : accommodations) {
+            double avgRating = reviewService.getAverageRating((long) acc.getAccommodationId());
+            AccomodationsWithRating dto = AccomodationsWithRating.builder()
+                    .accommodation(acc)
+                    .averageRating(avgRating)
+                    .roundedRating((int) Math.round(avgRating))
+                    .build();
+            accommodationsWithRatingList.add(dto);
+        }
+        return accommodationsWithRatingList;
+    }
+
 }

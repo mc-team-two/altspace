@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <head>
     <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
@@ -287,25 +288,30 @@
                     </ul>
                 </div>
             </div>
-
             <div class="col-lg-12">
-                <!-- Offers Grid -->
                 <div class="offers_grid">
-
                     <c:forEach var="a" items="${accomm}">
-                        <div class="offers_item rating_??">
+                        <%-- Find the matching rating for this accommodation --%>
+                        <c:set var="currentRating" value="0" />
+                        <c:forEach var="awr" items="${accommodationsWithRatingList}">
+                            <c:if test="${awr.accommodation.accommodationId == a.accommodationId}">
+                                <c:set var="currentRating" value="${awr.roundedRating}" />
+                            </c:if>
+                        </c:forEach>
+
+                        <div class="offers_item rating_${currentRating}">
                             <div class="row">
                                 <div class="col-lg-1 temp_col"></div>
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
-                                        <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/')"></div>
+                                        <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/listing_${a.accommodationId % 9 + 1}.jpg')"></div>
                                         <div class="offer_name"><a href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="offers_content">
                                         <div class="offers_price">$${a.priceNight}<span>per night</span></div>
-                                        <div class="rating_r rating_r_?? offers_rating" data-rating="??">
+                                        <div class="rating_r rating_r_${currentRating} offers_rating" data-rating="${currentRating}">
                                             <i></i><i></i><i></i><i></i><i></i>
                                         </div>
                                         <p class="offers_text">${a.description}</p>
@@ -320,16 +326,41 @@
                                         <div class="button book_button"><a href="<c:url value="/detail?id=${a.accommodationId}"/>">상세보기<span></span><span></span><span></span></a></div>
                                         <div class="offer_reviews">
                                             <div class="offer_reviews_content">
-                                                <div class="offer_reviews_title">very good</div>
-                                                <div class="offer_reviews_subtitle"> reviews</div>
+                                                <div class="offer_reviews_title">
+                                                    <c:choose>
+                                                        <c:when test="${currentRating >= 4}">최고예요!</c:when>
+                                                        <c:when test="${currentRating == 3}">좋아요!</c:when>
+                                                        <c:when test="${currentRating == 2}">괜찮아요!</c:when>
+                                                        <c:when test="${currentRating == 1}">그저 그래요!</c:when>
+                                                        <c:otherwise>평가 없음</c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                                <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
                                             </div>
-                                            <div class="offer_reviews_rating text-center"></div>
+                                            <div class="offer_reviews_rating text-center">
+                                                    ${currentRating}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="blog_navigation">
+                            <ul class="d-flex flex-row align-items-center justify-content-center">
+                                <c:forEach var="i" begin="${pageInfo.navigateFirstPage}" end="${pageInfo.navigateLastPage}">
+                                    <li class="blog_page_item">
+                                        <a href="?pageNum=${i}" class="blog_dot ${i == pageInfo.pageNum ? 'active' : ''}">
+                                            <fmt:formatNumber value="${i}" pattern="0"/>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

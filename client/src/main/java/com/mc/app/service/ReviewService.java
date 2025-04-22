@@ -1,6 +1,5 @@
 package com.mc.app.service;
 
-import com.mc.app.dto.Payments;
 import com.mc.app.dto.Reviews;
 import com.mc.app.frame.MCService;
 import com.mc.app.repository.ReviewRepository;
@@ -11,9 +10,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewService implements MCService<Reviews,Integer> {
+public class ReviewService implements MCService<Reviews, Integer> {
 
-    final ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public void add(Reviews reviews) throws Exception {
@@ -46,5 +45,18 @@ public class ReviewService implements MCService<Reviews,Integer> {
 
     public Reviews selectReviewAccom(Integer integer) throws Exception {
         return reviewRepository.selectReviewAccom(integer);
+    }
+
+    public int getAverageRating(long accommodationId) {
+        List<Reviews> reviews = reviewRepository.selectReviewsAll((int) accommodationId);
+        if (reviews.isEmpty()) {
+            return 0;
+        }
+
+        int sum = 0;
+        for (Reviews review : reviews) {
+            sum += review.getGrade();
+        }
+        return sum / reviews.size();
     }
 }
