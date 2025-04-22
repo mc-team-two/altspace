@@ -13,8 +13,8 @@ spring:
       prefix: /views/
       suffix: .jsp
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/spacedb?characterEncoding=utf8
-    username: userdev #ENC(tflb+WDeXH++6lNNLDKmOA==)
+    url: jdbc:mysql://49.50.172.52:3306/altspacedb?characterEncoding=utf8
+    username: userdev_NCP #ENC(tflb+WDeXH++6lNNLDKmOA==)
     password: 111111  #ENC(Z3hh8Mdzuse1dxq271vdyg==)
 
 # 3. MyBatis
