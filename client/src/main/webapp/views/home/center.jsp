@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <head>
     <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
@@ -287,9 +288,7 @@
                     </ul>
                 </div>
             </div>
-
             <div class="col-lg-12">
-                <!-- Offers Grid -->
                 <div class="offers_grid">
                     <c:forEach var="a" items="${accomm}">
                         <%-- Find the matching rating for this accommodation --%>
@@ -305,7 +304,6 @@
                                 <div class="col-lg-1 temp_col"></div>
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
-                                        <!-- ID 기반의 일반 이미지 또는 패턴을 사용하기 위한 고정 이미지 경로 -->
                                         <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/listing_${a.accommodationId % 9 + 1}.jpg')"></div>
                                         <div class="offer_name"><a href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a></div>
                                     </div>
@@ -340,6 +338,21 @@
                             </div>
                         </div>
                     </c:forEach>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="blog_navigation">
+                            <ul class="d-flex flex-row align-items-center justify-content-center">
+                                <c:forEach var="i" begin="${pageInfo.navigateFirstPage}" end="${pageInfo.navigateLastPage}">
+                                    <li class="blog_page_item">
+                                        <a href="?pageNum=${i}" class="blog_dot ${i == pageInfo.pageNum ? 'active' : ''}">
+                                            <fmt:formatNumber value="${i}" pattern="0"/>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

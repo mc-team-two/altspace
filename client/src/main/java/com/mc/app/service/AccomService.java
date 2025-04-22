@@ -42,9 +42,8 @@ public class AccomService implements MCService<Accommodations, Integer> {
         return accomRepository.select();
     }
 
-    // 숙소 목록과 함께 평균 평점을 반환하는 메서드 (AccomService의 특화 기능)
-    public List<AccomodationsWithRating> getAccommodationsWithRating() throws Exception {
-        List<Accommodations> accommodations = accomRepository.selectAllAccommodations();
+    // 페이징된 숙소 목록과 함께 평균 평점을 반환하는 메서드
+    public List<AccomodationsWithRating> getAccommodationsWithRating(List<Accommodations> accommodations) throws Exception {
         List<AccomodationsWithRating> accommodationsWithRatingList = new ArrayList<>();
 
         for (Accommodations acc : accommodations) {
@@ -58,4 +57,5 @@ public class AccomService implements MCService<Accommodations, Integer> {
         }
         return accommodationsWithRatingList;
     }
+
 }

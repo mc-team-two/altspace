@@ -1,21 +1,18 @@
 package com.mc.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.*;
-import com.mc.app.repository.AccomRepository;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.PaymentService;
-import com.mc.app.service.ReviewService;
 import com.mc.app.service.UserService;
 import java.sql.Date;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,21 +23,28 @@ public class MainController {
     private final UserService userService;
     final AccomService accomService;
     final PaymentService paymentService;
+    private static final int PAGE_SIZE = 10; // 한 페이지에 표시할 숙소 수
 
     String dir = "home/";
 
     @RequestMapping("/")
-    public String main(Model model) throws Exception {
+    public String main(Model model,
+                       @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) throws Exception {
 
-        List<Accommodations> accomm = accomService.get();
+        PageHelper.startPage(pageNum, PAGE_SIZE); // PageHelper 시작
 
-        model.addAttribute("accomm", accomm);
+
+        List<Accommodations> allAccomm = accomService.get();
+        PageInfo<Accommodations> pageInfo = new PageInfo<>(allAccomm); // PageInfo 객체 생성
+
+        model.addAttribute("accomm", allAccomm);
+        model.addAttribute("pageInfo", pageInfo);
+
         model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
         model.addAttribute("footer", dir + "footer");
 
-        // 서비스에서 숙소 목록과 평점 정보를 함께 가져오기
-        List<AccomodationsWithRating> accommodationsWithRatingList = accomService.getAccommodationsWithRating();
+        List<AccomodationsWithRating> accommodationsWithRatingList = accomService.getAccommodationsWithRating(pageInfo.getList());
         model.addAttribute("accommodationsWithRatingList", accommodationsWithRatingList);
 
         return "index";
