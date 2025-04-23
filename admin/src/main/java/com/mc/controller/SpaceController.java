@@ -47,7 +47,12 @@ public class SpaceController {
 
     @PostMapping("/addimpl")
     public String addimpl(Accommodations acc,
-                          HttpSession httpSession){
+                          @RequestParam("image1") MultipartFile image1,
+                          @RequestParam("image2") MultipartFile image2,
+                          @RequestParam("image3") MultipartFile image3,
+                          @RequestParam("image4") MultipartFile image4,
+                          @RequestParam("image5") MultipartFile image5,
+                          HttpSession httpSession) {
 
         // 현재 유저 정보
         User currentUser = (User) httpSession.getAttribute("user");
@@ -56,12 +61,37 @@ public class SpaceController {
         // 활성 정보
         acc.setStatus("활성");
 
-        log.info(acc.toString());
-        // DB 접근
+        // 이미지 처리
         try {
+            if (image1 != null && !image1.isEmpty()) {
+                FileUploadUtil.saveFile(image1, uploadDir);
+                acc.setImage1Name(image1.getOriginalFilename());
+            }
+            if (image2 != null && !image2.isEmpty()) {
+                FileUploadUtil.saveFile(image2, uploadDir);
+                acc.setImage2Name(image2.getOriginalFilename());
+            }
+            if (image3 != null && !image3.isEmpty()) {
+                FileUploadUtil.saveFile(image3, uploadDir);
+                acc.setImage3Name(image3.getOriginalFilename());
+            }
+            if (image4 != null && !image4.isEmpty()) {
+                FileUploadUtil.saveFile(image4, uploadDir);
+                acc.setImage4Name(image4.getOriginalFilename());
+            }
+            if (image5 != null && !image5.isEmpty()) {
+                FileUploadUtil.saveFile(image5, uploadDir);
+                acc.setImage5Name(image5.getOriginalFilename());
+            }
+
+            log.info(acc.toString());
+
+            // DB 저장
             accomService.add(acc);
+
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("등록 중 오류 발생", e);
         }
 
         // 처리 후 리다이렉트
