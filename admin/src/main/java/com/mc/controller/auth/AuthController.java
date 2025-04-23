@@ -108,7 +108,7 @@ public class AuthController {
             model.addAttribute("msg", msg);
             return "auth/register";
         }
-        return "redirect:auth/login";
+        return "auth/login";
     }
 
     @PostMapping("/loginimpl")
