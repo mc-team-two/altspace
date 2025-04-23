@@ -67,7 +67,7 @@
             pool,
             barbecue,
             pet,
-            create_day
+            create_day,
             update_day
         FROM
             Accommodations
@@ -91,7 +91,7 @@
             pool,
             barbecue,
             pet,
-            create_day
+            create_day,
             update_day
         FROM
             Accommodations
@@ -139,7 +139,7 @@
             pool,
             barbecue,
             pet,
-            create_day
+            create_day,
             update_day
         FROM
             Accommodations
@@ -163,7 +163,7 @@
         pool,
         barbecue,
         pet,
-        create_day
+        create_day,
         update_day
         FROM
         Accommodations
@@ -202,7 +202,7 @@
             pool,
             barbecue,
             pet,
-            create_day
+            create_day,
             update_day
         FROM
             Accommodations
@@ -221,5 +221,30 @@
         WHERE
         accommodation_id = #{accommodationId}
     </update>
+
+<!--    주소값을 정확히 일치하는 게 아니라, 포함된 값을 불러오도록 쿼리 수정. -->
+    <select id="searchAccommodationsByLocation" parameterType="string" resultType="Accommodations">
+        SELECT
+            accommodation_id AS accommodationId,
+            host_id AS hostId,
+            name,
+            location,
+            price_night AS priceNight,
+            person_max AS personMax,
+            description,
+            status,
+            category,
+            room_type AS roomType,
+            breakfast,
+            pool,
+            barbecue,
+            pet,
+            create_day,
+            update_day
+        FROM
+            Accommodations
+        WHERE
+            location LIKE CONCAT('%', #{location}, '%')
+    </select>
 
 </mapper>

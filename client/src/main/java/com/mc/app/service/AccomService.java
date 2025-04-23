@@ -58,4 +58,8 @@ public class AccomService implements MCService<Accommodations, Integer> {
         return accommodationsWithRatingList;
     }
 
+    // 지역으로 숙소를 검색하는 메서드 (location 컬럼에 검색어 포함)
+    public List<Accommodations> getAccommodationsByLocation(String location) {
+        return accomRepository.searchAccommodationsByLocation(location);
+    }
 }
