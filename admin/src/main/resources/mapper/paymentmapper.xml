@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mc.app.repository.PaymentRepository">
 
+    <select id="select" resultType="Payments">
+        SELECT *
+        FROM payments
+    </select>
+
     <insert id="insert" parameterType="payments">
         INSERT INTO payments (
             guest_id,
