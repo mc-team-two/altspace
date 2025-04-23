@@ -21,6 +21,7 @@
     <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="styles/offers_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/offers_responsive.css">
+    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
 </head>
 
 <body>
@@ -64,7 +65,7 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/offers_custom.js"></script>
-
+<script src="js/darkmode.js"></script>
 </body>
 
 </html>
