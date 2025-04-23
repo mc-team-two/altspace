@@ -51,4 +51,8 @@ public class PaymentService implements MCService<Payments,Integer> {
         return paymentRepository.selectPayment(integer);
     }
 
+    public List<Payments> getByHostId(String s) throws Exception {
+        return paymentRepository.selectByHostId(s);
+    }
+
 }

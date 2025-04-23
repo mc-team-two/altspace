@@ -1,7 +1,9 @@
 package com.mc.controller;
 
 import com.mc.app.dto.Payments;
+import com.mc.app.dto.User;
 import com.mc.app.service.PaymentService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -20,8 +22,9 @@ public class PaymentController {
     final PaymentService paymentService;
 
     @RequestMapping("/payment1")
-    public String payment1(Model model) throws Exception {
-        List<Payments> payments = paymentService.get();
+    public String payment1(Model model, HttpSession httpSession) throws Exception {
+        User user = (User) httpSession.getAttribute("user");
+        List<Payments> payments = paymentService.getByHostId(user.getUserId());
         log.info(payments.toString());
         model.addAttribute("payments", payments);
         model.addAttribute("center", dir+"payment1");

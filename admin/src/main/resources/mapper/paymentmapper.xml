@@ -3,12 +3,12 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mc.app.repository.PaymentRepository">
-
-    <select id="select" resultType="Payments">
-        SELECT *
-        FROM payments
+    <select id="selectByHostId" parameterType="String" resultType="Payments">
+        SELECT p.*, a.name, a.location
+        FROM payments p INNER JOIN accommodations a
+        ON p.accommodation_id = a.accommodation_id
+        WHERE a.host_id = #{hostId};
     </select>
-
     <insert id="insert" parameterType="payments">
         INSERT INTO payments (
             guest_id,
