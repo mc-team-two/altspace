@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mc.app.repository.PaymentRepository">
+
+    <insert id="insert" parameterType="payments">
+        INSERT INTO payments (
+            guest_id,
+            accommodation_id,
+            check_in,
+            check_out,
+            pay_amount,
+            pay_status,
+            pay_means,
+            imp_uid,
+            create_day
+        ) VALUES (
+             #{guestId},
+             #{accommodationId},
+             #{checkIn},
+             #{checkOut},
+             #{payAmount},
+             #{payStatus},
+             #{payMeans},
+             #{impUid},
+             NOW()
+        )
+    </insert>
+
+    <select id="selectOneTwo" parameterType="payments" resultType="Payments">
+        SELECT *
+        FROM payments
+        WHERE guest_id = #{guestId}
+          AND imp_uid = #{impUid}
+          AND accommodation_id = #{accommodationId}
+          AND reservations_id = #{reservationsId}
+        LIMIT 1
+    </select>
+
+
+    <update id="update" parameterType="payments">
+        UPDATE payments
+        SET pay_status = #{payStatus}
+        WHERE guest_id = #{guestId}
+          AND accommodation_id = #{accommodationId}
+          AND check_in = #{checkIn}
+          AND check_out = #{checkOut}
+    </update>
+
+    <select id="selectPyAll" resultType="Payments" parameterType="Payments">
+        SELECT
+            p.*,
+            a.name,
+            a.location
+        FROM payments p JOIN accommodations a
+            ON p.accommodation_id = a.accommodation_id
+        WHERE p.guest_id = #{guestId}
+          AND p.pay_status = '완료'
+    </select>
+
+    <select id="selectPayment" parameterType="int" resultType="payments">
+        SELECT *
+        FROM payments
+        WHERE reservations_id = #{reservationsId}
+    </select>
+
+
+</mapper>
