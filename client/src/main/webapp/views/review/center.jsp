@@ -30,81 +30,43 @@
   <div class="container">
     <div class="row">
 
-      <!-- 예약 내역 -->
+        <!-- 내가 작성한 리뷰 리스트 출력 -->
+        <c:forEach var="rv" items="${ReviewList}">
+            <div class="col-lg-8">
+                <div class="card mb-4 p-3 shadow-sm">
+                    <!-- 숙소 이름 + 수정/삭제 드롭다운 -->
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1 font-weight-bold">${rv.name}</h5>
+                            <p class="mb-2 text-muted">${rv.location}</p>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu${rv.reviewId}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu${rv.reviewId}">
+                                <a class="dropdown-item" href="/review/update?id=${rv.reviewId}">수정하기</a>
+                                <a class="dropdown-item" href="/review/delete?id=${rv.reviewId}" onclick="return confirm('삭제하시겠습니까?');">삭제하기</a>
+                            </div>
+                        </div>
+                    </div>
 
-      <div class="col-lg-8">
+                    <!-- 유저 이름과 별점 (별점 왼쪽 정렬) -->
+                    <div class="d-flex align-items-center mb-2">
+                        <span class="text-warning mr-3">★ ${rv.grade}</span>
+                        <span class="text-primary font-weight-semibold">${rv.guestId}</span>
+                    </div>
 
-        <div class="blog_post_container">
+                    <!-- 리뷰 내용 -->
+                    <p class="mb-2">${rv.comment}</p>
 
-          <!-- 내역 1 -->
-
-          <div class="blog_post">
-            <div class="blog_post_image">
-              <img src="images/blog_1.jpg">
-              <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                <div class="blog_post_day">예약</div>
-                <div class="blog_post_month">2025-07-11</div>
-              </div>
+                    <!-- 작성일 -->
+                    <small class="text-muted">${rv.createDay}</small>
+                </div>
             </div>
-            <div class="blog_post_meta">
-              <ul>
-                <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-              </ul>
-            </div>
-            <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-          </div>
-
-          <!-- 내역 2 -->
-
-          <div class="blog_post">
-            <div class="blog_post_image">
-              <img src="images/blog_2.jpg">
-              <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                <div class="blog_post_day">완료</div>
-                <div class="blog_post_month">2025-01-11</div>
-              </div>
-            </div>
-            <div class="blog_post_meta">
-              <ul>
-                <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-              </ul>
-            </div>
-            <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-          </div>
-
-          <!-- 내역 3 -->
-
-          <div class="blog_post">
-            <div class="blog_post_image">
-              <img src="images/blog_3.jpg">
-              <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                <div class="blog_post_day">완료</div>
-                <div class="blog_post_month">2024-12-11</div>
-              </div>
-            </div>
-            <div class="blog_post_meta">
-              <ul>
-                <li class="blog_post_meta_item"><a href="/roominfo">숙소 정보</a></li>
-                <li class="blog_post_meta_item"><a href="">결제 정보</a></li>
-              </ul>
-            </div>
-            <div class="blog_post_title"><a href="#">제주 감귤 레지던스</a></div>
-          </div>
-
-        </div>
-
-        <div class="blog_navigation">
-          <ul>
-            <li class="blog_dot active"><div></div>01</li>
-            <li class="blog_dot"><div></div>02</li>
-          </ul>
-        </div>
-      </div>
+        </c:forEach>
 
       <!-- 사이드바 -->
-
       <div class="col-lg-4 sidebar_col">
 
         <!-- 사이드바 메뉴 -->

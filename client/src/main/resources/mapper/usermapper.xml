@@ -16,7 +16,7 @@
         SELECT * FROM users
     </select>
     <insert id="insert" parameterType="user">
-        INSERT INTO users (user_id, role, email, password, name, phone, created_at)
+        INSERT INTO users (user_id, role, email, password, name, phone, create_day)
             VALUE (#{userId},#{role},#{email}, #{password}, #{name}, #{phone}, now())
     </insert>
     <update id="update" parameterType="user">

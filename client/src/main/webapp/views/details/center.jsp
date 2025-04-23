@@ -62,7 +62,7 @@
                                         <a href="<c:url value="/detail?id=${py.accommodationId}"/>">숙소 정보</a>
                                     </li>
                                     <li class="blog_post_meta_item">
-                                        <a href="<c:url value="/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&reservationsId=${py.reservationsId}"/>">결제 정보</a>
+                                        <a href="<c:url value="/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&paymentId=${py.paymentId}"/>">결제 정보</a>
                                     </li>
                                 </ul>
                             </div>
