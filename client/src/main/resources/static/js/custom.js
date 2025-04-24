@@ -456,48 +456,56 @@ $(document).ready(function()
     // 지역 검색 버튼 클릭 이벤트 리스너
 	 */
 
-    $("#searchAccommodationBtn").on("click", function() {
-        const location = $("#searchInput").val();
-        if (location) {
-            searchAccommodationsByLocation(location);
-        } else {
-            alert("검색어를 입력해주세요.");
-        }
-    });
+	$("#searchAccommodationBtn").on("click", function() {
+		const location = $("#searchInput").val();
+		if (location) {
+			searchAccommodationsByLocation(location);
+		} else {
+			alert("검색어를 입력해주세요.");
+		}
+	});
 
-    function searchAccommodationsByLocation(location) {
-        $.ajax({
-            url: "/search-accommodations", // 지역 검색 API 엔드포인트 URL
-            type: "GET",
-            data: { location: location },
-            dataType: "json",
-            success: function(accommodations) {
-                displaySearchResults(accommodations);
-            },
-            error: function(error) {
-                alert("숙소 검색에 실패했습니다.");
-                console.error(error);
-            }
-        });
-    }
+	function searchAccommodationsByLocation(location) {
+		$.ajax({
+			url: "/search-accommodations", // 지역 검색 API 엔드포인트 URL
+			type: "GET",
+			data: { location: location },
+			dataType: "json",
+			success: function(accommodations) {
+				displaySearchResults(accommodations);
+			},
+			error: function(error) {
+				alert("숙소 검색에 실패했습니다.");
+				console.error(error);
+			}
+		});
+	}
 
-    function displaySearchResults(accommodations) {
-        const offersGrid = $(".offers_grid");
-        offersGrid.empty(); // 기존 목록 비우기
+	function displaySearchResults(accommodations) {
+		const offersGrid = $(".offers_grid");
+		offersGrid.empty(); // 기존 목록 비우기
 
-        if (accommodations && accommodations.length > 0) {
-            $.each(accommodations, function(index, accommodation) {
-                const ratingClass = `rating_${Math.round(accommodation.rating)}`;
-                const listItem = `
-                    <div class="offers_item ${ratingClass}">
-                        <div class="row">
-                            <div class="col-lg-1 temp_col"></div>
-                            <div class="col-lg-3 col-1680-4">
-                                <div class="offers_image_container">
-                                    <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/listing_${accommodation.accommodationId % 9 + 1}.jpg')"></div>
-                                    <div class="offer_name"><a href="<c:url value="/detail?id=${accommodation.accommodationId}"/>">${accommodation.name}</a></div>
-                                </div>
-                            </div>
+		if (accommodations && accommodations.length > 0) {
+			$.each(accommodations, function(index, accommodation) {
+				const ratingClass = `rating_${Math.round(accommodation.rating)}`;
+				// 첫 번째 이미지를 사용하거나, 원하는 로직에 따라 이미지 선택
+				let imageUrl = '';
+				if (accommodation.image1) {
+					imageUrl = `/images/listing_${accommodation.image1}`;
+				} else {
+					imageUrl = `/images/default.jpg`;
+				}
+
+				const listItem = `
+					<div class="offers_item ${ratingClass}">
+						<div class="row">
+							<div class="col-lg-1 temp_col"></div>
+							<div class="col-lg-3 col-1680-4">
+								<div class="offers_image_container">
+									<div class="offers_image_background" style="background-image:url('/images/listing_${accommodation.image1}')"></div>
+                    				<div class="offer_name"><a href="/detail?id=${accommodation.accommodationId}">${accommodation.name}</a></div>
+								</div>
+							</div>
                             <div class="col-lg-8">
                                 <div class="offers_content">
                                     <div class="offers_price">$${accommodation.priceNight}<span>per night</span></div>
@@ -507,13 +515,13 @@ $(document).ready(function()
                                     <p class="offers_text">${accommodation.description}</p>
                                     <div class="offers_icons">
                                         <ul class="offers_icons_list">
-                                            <li class="offers_icons_item"><img src="images/post.png" alt=""></li>
-                                            <li class="offers_icons_item"><img src="images/compass.png" alt=""></li>
-                                            <li class="offers_icons_item"><img src="images/bicycle.png" alt=""></li>
-                                            <li class="offers_icons_item"><img src="images/sailboat.png" alt=""></li>
+                                            <li class="offers_icons_item"><img alt="" src="images/post.png"></li>
+                                            <li class="offers_icons_item"><img alt="" src="images/compass.png"></li>
+                                            <li class="offers_icons_item"><img alt="" src="images/bicycle.png"></li>
+                                            <li class="offers_icons_item"><img alt="" src="images/sailboat.png"></li>
                                         </ul>
                                     </div>
-                                    <div class="button book_button"><a href="<c:url value="/detail?id=${accommodation.accommodationId}"/>">상세보기<span></span><span></span><span></span></a></div>
+                                    <div class="button book_button"><a href="/detail?id=${accommodation.accommodationId}">상세보기<span></span><span></span><span></span></a></div>
                                     <div class="offer_reviews">
                                         <div class="offer_reviews_content">
                                             <div class="offer_reviews_title">
@@ -530,18 +538,18 @@ $(document).ready(function()
                         </div>
                     </div>
                 `;
-                offersGrid.append(listItem);
-            });
-        } else {
-            offersGrid.html("<p>검색 결과가 없습니다.</p>");
-        }
-    }
+				offersGrid.append(listItem);
+			});
+		} else {
+			offersGrid.html("<p>검색 결과가 없습니다.</p>");
+		}
+	}
 
-    function getRatingText(rating) {
-        if (rating >= 4) return "최고예요!";
-        if (rating === 3) return "좋아요!";
-        if (rating === 2) return "괜찮아요!";
-        if (rating === 1) return "그저 그래요!";
-        return "평가 없음";
-    }
+	function getRatingText(rating) {
+		if (rating >= 4) return "최고예요!";
+		if (rating === 3) return "좋아요!";
+		if (rating === 2) return "괜찮아요!";
+		if (rating === 1) return "그저 그래요!";
+		return "평가가 없어요";
+	}
 });

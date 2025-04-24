@@ -239,8 +239,15 @@
             pool,
             barbecue,
             pet,
-            create_day,
-            update_day
+            latitude,
+            longitude,
+            image1_name,
+            image2_name,
+            image3_name,
+            image4_name,
+            image5_name,
+            create_day AS createDay,
+            update_day AS updateDay
         FROM
             Accommodations
         WHERE
