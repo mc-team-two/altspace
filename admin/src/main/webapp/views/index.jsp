@@ -135,15 +135,8 @@
             <div class="menu-inner-shadow"></div>
 
             <ul class="menu-inner py-1">
-                <!-- 1. 대시보드 -->
-                <li class="menu-item">
-                    <a href='<c:url value="/dashboard/dashboard"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                        <div data-i18n="Analytics">주요 지표</div>
-                    </a>
-                </li>
 
-                <!-- 2. 공간 관리 -->
+                <!-- 1. 공간 관리 -->
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-layout"></i>
@@ -164,7 +157,7 @@
                     </ul>
                 </li>
 
-                <!-- 3. 예약/결제 관리 -->
+                <!-- 2. 예약/결제 관리 -->
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-cube-alt"></i>
@@ -184,7 +177,7 @@
                     </ul>
                 </li>
 
-                <!-- 6. 리뷰 관리 -->
+                <!-- 3. 리뷰 관리 -->
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-collection"></i>
@@ -192,43 +185,17 @@
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href='<c:url value="/review/review1"/>' class="menu-link">
+                            <a href='<c:url value="/review/list"/>' class="menu-link">
                                 <div data-i18n="Without menu">후기 목록</div>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href='<c:url value="/review/review2"/>' class="menu-link">
+                            <a href='<c:url value="/review/check"/>' class="menu-link">
                                 <div data-i18n="Container">후기 승인/거부</div>
                             </a>
                         </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/review/review3"/>' class="menu-link">
-                                <div data-i18n="Fluid">후기 응답</div>
-                            </a>
-                        </li>
                     </ul>
                 </li>
-
-                <!-- 7. 설정 -->
-                <li class="menu-item">
-                    <a href="javascript:void(0)" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-box"></i>
-                        <div data-i18n="User interface">설정</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href='<c:url value="/setting/setting1"/>' class="menu-link">
-                                <div data-i18n="Accordion">계정 설정(호스트 정보)</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/setting/setting2"/>' class="menu-link">
-                                <div data-i18n="Alerts">알림 및 이메일 설정</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
             </ul>
         </aside>
         <!-- / Menu -->
