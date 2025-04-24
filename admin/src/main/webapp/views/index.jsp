@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
 
     <!-- Helpers -->
     <script src="../assets/vendor/js/helpers.js"></script>
@@ -69,13 +70,9 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
                 <a href="/" class="app-brand-link">
-              <span class="app-brand-logo demo">
-                <img height="45" src="<c:url value="/imgs/Altspace_lightmode_Horizontal.png"/>" alt="알트스페이스 로고">
-              </span>
-                </a>
-
-                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+      <span class="app-brand-logo demo">
+        <img height="45" src="<c:url value="/imgs/Altspace_lightmode_Horizontal.png"/>" alt="알트스페이스 로고">
+      </span>
                 </a>
             </div>
 
@@ -83,66 +80,58 @@
 
             <ul class="menu-inner py-1">
 
-                <!-- 1. 공간 관리 -->
+                <!-- 공간 관리 섹션 -->
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">공간 관리</span>
+                </li>
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div data-i18n="Layouts">공간 관리</div>
+                    <a href='<c:url value="/space/add"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
+                        <box-icon name='add-to-queue'></box-icon>
+                        <div>공간 추가</div>
                     </a>
-
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href='<c:url value="/space/add"/>' class="menu-link">
-                                <div data-i18n="Without navbar">공간 추가</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/space/get"/>' class="menu-link">
-                                <div data-i18n="Without menu">내 공간 관리</div>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href='<c:url value="/space/get"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-building-house"></i>
+                        <div>내 공간 관리</div>
+                    </a>
                 </li>
 
-                <!-- 2. 예약/결제 관리 -->
+                <!-- 결제/예약 조회 섹션 -->
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">결제/예약 조회</span>
+                </li>
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                        <div data-i18n="Misc">결제/예약 조회</div>
+                    <a href='<c:url value="/payment/pay"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                        <div>결제 내역</div>
                     </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href='<c:url value="/payment/pay"/>' class="menu-link">
-                                <div data-i18n="Without menu">결제 내역</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/payment/booking"/>' class="menu-link">
-                                <div data-i18n="Container">공간별 예약 내역</div>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href='<c:url value="/payment/booking"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-calendar-check"></i>
+                        <div>공간별 예약 내역</div>
+                    </a>
                 </li>
 
-                <!-- 3. 리뷰 관리 -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-collection"></i>
-                        <div data-i18n="Basic">후기 관리</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href='<c:url value="/review/list"/>' class="menu-link">
-                                <div data-i18n="Without menu">후기 목록</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/review/check"/>' class="menu-link">
-                                <div data-i18n="Container">후기 승인/거부</div>
-                            </a>
-                        </li>
-                    </ul>
+                <!-- 후기 관리 섹션 -->
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">후기 관리</span>
                 </li>
+                <li class="menu-item">
+                    <a href='<c:url value="/review/list"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-comment-detail"></i>
+                        <div>후기 목록</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href='<c:url value="/review/check"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-check-shield"></i>
+                        <div>후기 승인/거부</div>
+                    </a>
+                </li>
+
             </ul>
         </aside>
         <!-- / Menu -->
@@ -282,6 +271,11 @@
 </div>
 <!-- / Layout wrapper -->
 
+<!-- Calendar -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css" />
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->

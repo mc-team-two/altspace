@@ -9,7 +9,7 @@
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100">
                     <div class="card-body text-center">
-                        <h5 class="card-title">스페이스 번호: ${pay.accommodationId}</h5>
+                        <h5 class="card-title">${pay.name}</h5>
                         <a href="<c:url value='/payment/detail?accommodationId=${pay.accommodationId}'/>"
                            class="btn btn-primary mt-2">
                             예약 내역 보기

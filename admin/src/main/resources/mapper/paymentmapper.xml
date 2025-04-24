@@ -65,8 +65,13 @@
     </select>
 
     <select id="selectByAccommodationId" resultType="com.mc.app.dto.Payments">
-        SELECT * FROM payments
-        WHERE accommodation_id = #{accommodationId}
+        SELECT
+            p.*,
+            a.name,
+            a.location
+        FROM payments p
+                 JOIN accommodations a ON p.accommodation_id = a.accommodation_id
+        WHERE p.accommodation_id = #{accommodationId}
     </select>
 
     <select id="selectPayment" parameterType="int" resultType="payments">
