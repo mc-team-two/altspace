@@ -31,7 +31,7 @@ public class PaymentController {
     public String pay(Model model, HttpSession httpSession) throws Exception {
         User user = (User) httpSession.getAttribute("user");
         List<Payments> payments = paymentService.getByHostId(user.getUserId());
-        log.info(payments.toString());
+
         model.addAttribute("payments", payments);
         model.addAttribute("center", dir+"pay");
         model.addAttribute("index", dir+"index");
