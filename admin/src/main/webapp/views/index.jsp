@@ -18,7 +18,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon1.ico" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/altspace.png" />
 
     <%--jQuery CDN--%>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -276,6 +276,9 @@
 <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css" />
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://unpkg.com/tippy.js@6"></script>
+
+<!-- Booking -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
