@@ -137,23 +137,10 @@
             <ul class="menu-inner py-1">
                 <!-- 1. 대시보드 -->
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <a href='<c:url value="/dashboard/dashboard"/>' class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Analytics">주요 지표</div>
                     </a>
-
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href='<c:url value="/dashboard/dashboard1"/>' class="menu-link">
-                                <div data-i18n="Without menu">전체 통계(예약 수, 수익)</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/dashboard/dashboard2"/>' class="menu-link">
-                                <div data-i18n="Without navbar">최근 활동 로그</div>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <!-- 2. 공간 관리 -->
@@ -190,13 +177,8 @@
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href='<c:url value="/payment/payment2"/>' class="menu-link">
-                                <div data-i18n="Container">결제 상태 확인</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/payment/payment3"/>' class="menu-link">
-                                <div data-i18n="Fluid">환불 처리</div>
+                            <a href='<c:url value="/payment/booking"/>' class="menu-link">
+                                <div data-i18n="Container">공간별 예약 내역</div>
                             </a>
                         </li>
                     </ul>
