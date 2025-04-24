@@ -65,8 +65,16 @@
     <update id="updateAccommodationStatus" parameterType="java.util.Map"> UPDATE Accommodations SET status = #{status}, update_day = NOW() WHERE accommodation_id = #{accommodationId} </update>
     <!--     카테고리로 숙소 찾기  -->
     <select id="selectAccommodationsByCategory" parameterType="string" resultType="com.mc.app.dto.Accommodations"> SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations WHERE category = #{category} </select>
+
+    <!-- 사용자 ID로 소유 스페이스 목록 조회 -->
+    <select id="findByUserId" resultType="Accommodations">
+        SELECT *
+        FROM accommodations
+        WHERE host_id = #{hostId}
+    </select>
+
     <!--     숙소 태그 업데이트  -->
-    <update id="updateAccommodationAmenities" parameterType="com.mc.app.dto.Accommodations">
+    <update id="updateAccommodationAmenities" parameterType="Accommodations">
         UPDATE Accommodations SET
         <if test="breakfast != null">breakfast = #{breakfast},</if>
         <if test="pool != null">pool = #{pool},</if>

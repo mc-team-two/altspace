@@ -26,7 +26,7 @@ public class PaymentService implements MCService<Payments,Integer> {
 
     @Override
     public void del(Integer integer) throws Exception {
-
+        paymentRepository.delete(integer);
     }
 
     @Override
@@ -53,6 +53,10 @@ public class PaymentService implements MCService<Payments,Integer> {
 
     public List<Payments> getByHostId(String s) throws Exception {
         return paymentRepository.selectByHostId(s);
+    }
+
+    public List<Payments> getByAccommodationId(int accommodationId) throws Exception {
+        return paymentRepository.selectByAccommodationId(accommodationId);
     }
 
 }

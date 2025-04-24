@@ -124,7 +124,7 @@
                   </g>
                 </svg>
               </span>
-                    <span class="app-brand-text demo menu-text fw-bolder">Alt Space 관리자</span>
+                    <span class="app-brand-text demo menu-text fw-bolder">Alt Space 호스트</span>
                 </a>
 
                 <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -177,65 +177,15 @@
                     </ul>
                 </li>
 
-                <!-- 3. 예약 관리 -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">예약 관리</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href='<c:url value="/book/book1"/>' class="menu-link">
-                                <div data-i18n="Without menu">예약 목록</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/book/book2"/>' class="menu-link">
-                                <div data-i18n="Container">예약 상태 변경</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/book/book3"/>' class="menu-link">
-                                <div data-i18n="Fluid">예약 내역 검색 및 필터링</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- 4. 고객 관리 -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle" onclick="toggleMenu()">
-                        <i class="menu-icon tf-icons bx bx-lock-open-alt"></i>
-                        <div data-i18n="Authentications">고객 관리</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href='<c:url value="/cust/cust1"/>' class="menu-link">
-                                <div data-i18n="Without menu">고객 목록</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/cust/cust2"/>' class="menu-link">
-                                <div data-i18n="Container">고객 정보 조회</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href='<c:url value="/cust/cust3"/>' class="menu-link">
-                                <div data-i18n="Fluid">고객 예약 내역</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- 5. 결제 관리 -->
+                <!-- 3. 예약/결제 관리 -->
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                        <div data-i18n="Misc">결제 관리</div>
+                        <div data-i18n="Misc">결제/예약 조회</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href='<c:url value="/payment/payment1"/>' class="menu-link">
+                            <a href='<c:url value="/payment/pay"/>' class="menu-link">
                                 <div data-i18n="Without menu">결제 내역</div>
                             </a>
                         </li>
