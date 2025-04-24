@@ -15,4 +15,5 @@ public interface PaymentRepository extends MCRepository<Payments,Integer> {
     List<Payments> selectPyAll(Payments payments) throws Exception;
     Payments selectPayment(Integer integer) throws Exception;
     List<Payments> selectByHostId(String s) throws Exception;
+    List<Payments> selectByAccommodationId(int accommodationId);
 }

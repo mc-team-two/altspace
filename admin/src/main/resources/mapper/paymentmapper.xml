@@ -64,6 +64,11 @@
           AND p.pay_status = '완료'
     </select>
 
+    <select id="selectByAccommodationId" resultType="com.mc.app.dto.Payments">
+        SELECT * FROM payments
+        WHERE accommodation_id = #{accommodationId}
+    </select>
+
     <select id="selectPayment" parameterType="int" resultType="payments">
         SELECT *
         FROM payments

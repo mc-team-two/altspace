@@ -21,6 +21,11 @@ public class AccomService implements MCService<Accommodations,Integer> {
     @Value("${app.dir.uploadimgdir}")
     String uploadDir;
 
+    public List<Accommodations> getByUserId(String userId) {
+        // 사용자가 보유한 스페이스 목록을 반환
+        return accomRepository.findByUserId(userId);
+    }
+
     @Override
     public void add(Accommodations acc) throws Exception {
         acc.setImage1Name(acc.getImage1().getOriginalFilename());

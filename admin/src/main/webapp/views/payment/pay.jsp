@@ -4,9 +4,15 @@
 
 <div class="col-sm-12">
     <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h3>결제 내역 전체보기</h3>
-            <hr>
+            <!-- 버튼 그룹으로 필터 -->
+            <div class="btn-group" role="group" aria-label="결제 상태 필터">
+                <button type="button" class="btn btn-outline-secondary filter-btn active">전체</button>
+                <button type="button" class="btn btn-outline-success filter-btn" data-status="완료">완료</button>
+                <button type="button" class="btn btn-outline-warning filter-btn" data-status="취소">취소</button>
+                <button type="button" class="btn btn-outline-danger filter-btn" data-status="환불">환불</button>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -71,5 +77,24 @@
             },
             order: [[5, 'desc']] // 결제시각 기준 내림차순 정렬
         });
-    })
+    });
+
+    // Custom filter
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+        const statusText = data[6]; // 7번째 열 (0-based index)
+        if (!currentStatus || currentStatus === "전체") {
+            return true;
+        }
+        return statusText.trim() === currentStatus;
+    });
+
+    // 버튼 클릭 필터링
+    $('.filter-btn').on('click', function () {
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+
+        currentStatus = $(this).data('status') || "전체";
+        table.draw();
+    });
+
 </script>

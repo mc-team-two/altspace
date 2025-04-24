@@ -25,7 +25,7 @@
     review:function(){
       $('#data_add').attr({
         'method':'post',
-        'action':'<c:url value="/review/dtadd?id=${accomm.accommodationId}"/>'
+        'action':'<c:url value="/review/reviewUpload?id=${accomm.accommodationId}"/>'
       });
       $('#data_add').submit();
     }
@@ -41,11 +41,12 @@
     <!-- 숙소 이름 (예: 드롭다운 또는 hidden input) -->
     <div class="form-group">
       <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
+      <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
 
       <p><strong>숙소 이름:</strong> ${accomm.name}</p>
       <p><strong>위치:</strong> ${accomm.location}</p>
       <label for="guestName">작성자 이름</label>
-      <input type="text" class="form-control" id="guestName" name="guestId" value="${sessionScope.user.name}">
+      <input type="text" class="form-control" id="guestName" value="${sessionScope.user.name}">
     </div>
     <!-- 평점 선택 -->
     <div class="form-group">
@@ -66,7 +67,7 @@
     </div>
   </form>
   <!-- 제출 버튼 -->
-  <button class="btn btn-primary" id="review_btn">리뷰 작성</button>
+  <button class="btn btn-primary" id="review_btn">리뷰 업로드</button>
 </div>
 
 </body>

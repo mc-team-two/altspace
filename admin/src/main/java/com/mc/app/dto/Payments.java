@@ -23,7 +23,7 @@ public class Payments {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkOut;
     private BigDecimal payAmount;
-    private String payStatus;            // '완료', '취소'
+    private String payStatus;            // '완료', '취소', '환불'
     private String payMeans;             // '카드', '계좌이체'
     private String impUid;
     private String name;                 // 숙소 이름(조인해서 가져오는 데이터)

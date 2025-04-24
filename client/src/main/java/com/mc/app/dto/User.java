@@ -39,6 +39,6 @@ public class User {
     @Pattern(regexp = "^01(?:0|1|[6-9])-\\d{3,4}-\\d{4}$", message = "유효한 전화번호 형식이 아닙니다.")
     private String phone;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime createDay;
+    private LocalDateTime updateDay;
 }

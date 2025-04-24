@@ -12,5 +12,6 @@ import java.util.List;
 public interface ReviewRepository extends MCRepository<Reviews,Integer> {
     List<Reviews> selectReviewsAll(Integer integer);
     Reviews selectReviewAccom(Integer integer);
+    List<Reviews> getMyReviews(Reviews reviews);
 
 }

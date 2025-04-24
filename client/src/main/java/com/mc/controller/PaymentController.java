@@ -62,6 +62,19 @@ public class PaymentController {
         // 실제로 필요한 결제 정보만 꺼냄
         Payment payment = response.getResponse();
         BigDecimal paidAmount = payment.getAmount();
+        String payMethod = payment.getPayMethod();
+
+        // 결제 수단 한글 매핑
+        String displayMethod = switch (payMethod) {
+            case "card"     -> "신용카드";  // 페이북
+            case "trans"    -> "계좌이체";
+            case "vbank"    -> "가상계좌";
+            case "phone"    -> "휴대폰결제";
+            case "kakaopay" -> "카카오페이"; // point
+            case "tosspay"  -> "토스페이";
+            case "payco"    -> "페이코";
+            default         -> "기타";
+        };
 
         // 여기에 DB에 저장할 로직 추가
         // 아임포트에서 결제가 완료된 경우 paid 상태
@@ -71,6 +84,7 @@ public class PaymentController {
             if (paidAmount.compareTo(payments.getPayAmount()) == 0) {
                 // 정상 결제일 경우 DB에 저장
                 payments.setPayStatus("완료");
+                payments.setPayMeans(payMethod);  // 결제수단 알게되면 여기에 displayMethod 넣기
                 paymentService.add(payments);
 
                 // 성공한 결제 객체를 JSON으로 반환
@@ -97,14 +111,14 @@ public class PaymentController {
     public ResponseEntity<?> cancelPayment(@RequestParam("guestId") String guestId,
                                            @RequestParam("impUid") String impUid,
                                            @RequestParam("accommodationId") int accommodationId,
-                                           @RequestParam("reservationsId") int reservationsId) throws Exception {
+                                           @RequestParam("paymentId") int paymentId) throws Exception {
 
         // 1. 결제 정보 검색 (db조회 조건으로 사용)
         Payments payments = new Payments();
         payments.setGuestId(guestId);
         payments.setImpUid(impUid);
         payments.setAccommodationId(accommodationId);
-        payments.setReservationsId(reservationsId);
+        payments.setPaymentId(paymentId);
 
         log.info("Payments" + payments);
 
