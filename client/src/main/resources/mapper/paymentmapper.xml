@@ -34,7 +34,7 @@
         WHERE guest_id = #{guestId}
           AND imp_uid = #{impUid}
           AND accommodation_id = #{accommodationId}
-          AND reservations_id = #{reservationsId}
+          AND payment_id = #{paymentId}
         LIMIT 1
     </select>
 
@@ -62,7 +62,7 @@
     <select id="selectPayment" parameterType="int" resultType="payments">
         SELECT *
         FROM payments
-        WHERE reservations_id = #{reservationsId}
+        WHERE payment_id = #{paymentId}
     </select>
 
 

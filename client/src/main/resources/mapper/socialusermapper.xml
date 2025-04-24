@@ -5,7 +5,7 @@
 <mapper namespace="com.mc.app.repository.SocialUserRepository">
     <select id="selectUserBySocialId" parameterType="String" resultType="User">
         select
-            u.user_id, role, email, password, name, phone, created_at, updated_at
+            u.user_id, role, email, password, name, phone, create_day, update_day
         from users u
             inner join social_users s
                 on u.user_id = s.user_id

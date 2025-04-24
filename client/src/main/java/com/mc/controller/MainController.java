@@ -62,14 +62,17 @@ public class MainController {
     public String detail(Model model,
                          @RequestParam("id") int id,
                          @RequestParam(value = "pyStatus", required = false) String pyStatus,
-                         @RequestParam(value = "reservationsId", required = false) Integer reservationsId) throws Exception {
+                         @RequestParam(value = "paymentId", required = false) Integer paymentId) throws Exception {
 
         Accommodations accomm = accomService.get(id);
         model.addAttribute("accomm", accomm);
 
-        // pyStatus가 '완료'이고 reservationsId 있다면 결제 상세 조회
-        if ("완료".equals(pyStatus) && reservationsId != null) {
-            Payments payInfo = paymentService.selectPayment(reservationsId);  // reservationsId로 조회하는 메서드
+        List<Reviews> review = reviewService.selectReviewsAll(id);
+        model.addAttribute("review", review);
+
+        // pyStatus가 '완료'이고 paymentId 있다면 결제 상세 조회
+        if ("완료".equals(pyStatus) && paymentId != null) {
+            Payments payInfo = paymentService.selectPayment(paymentId);  // paymentId 조회하는 메서드
 
             // LocalDate → java.sql.Date 로 변환
             Date checkInDate = Date.valueOf(payInfo.getCheckIn());

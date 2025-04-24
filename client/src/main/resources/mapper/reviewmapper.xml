@@ -97,4 +97,20 @@
         WHERE r.review_id = #{reviewId}
     </select>
 
+    <!-- userID로 내가 쓴 리뷰 전체보기 -->
+    <select id="getMyReviews" parameterType="Reviews" resultType="Reviews">
+        SELECT
+            r.review_id,
+            r.grade,
+            r.comment,
+            r.create_day,
+            a.name,
+            a.location
+        FROM reviews r JOIN accommodations a
+            ON r.accommodation_id = a.accommodation_id
+        WHERE r.guest_id = #{guestId}
+        ORDER BY r.create_day DESC
+    </select>
+
+
 </mapper>
