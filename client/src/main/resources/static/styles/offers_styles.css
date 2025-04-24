@@ -1525,6 +1525,65 @@ section
 }
 
 /*********************************
+9.4 Blog for Pagination
+*********************************/
+
+.blog_navigation
+{
+	margin-top: 100px;
+}
+.blog_dot
+{
+	display: inline-block;
+	position: relative;
+	height: 35px;
+	line-height: 35px;
+	color: #2b2b2b;
+	cursor: pointer;
+	font-size: 13px;
+	font-weight: 600;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.blog_dot:hover
+{
+	color: #fa9e1c;
+}
+.blog_dot:hover.active div
+{
+	border-color: #fa9e1c;
+}
+.blog_dot.active
+{
+	padding-left: 13px;
+	padding-right: 9px;
+	margin-right: 3px;
+	color: #fa9e1c;
+}
+.blog_dot div
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: solid 2px transparent;
+	border-radius: 18px;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.blog_dot.active div
+{
+	border: solid 2px #fa9e1c;
+}
+
+/*********************************
 10. Footer
 *********************************/
 

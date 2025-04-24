@@ -108,7 +108,7 @@ public class AuthController {
             model.addAttribute("msg", msg);
             return "auth/register";
         }
-        return "redirect:auth/login";
+        return "auth/login";
     }
 
     @PostMapping("/loginimpl")
@@ -207,6 +207,21 @@ public class AuthController {
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().body("회원 탈퇴 과정에서 서버 오류가 발생했습니다.");
+        }
+    }
+
+    @PostMapping("/check-email")
+    public ResponseEntity<?> checkEmail(@RequestParam("email") String email) {
+        log.info("레스트");
+        try {
+            User dbUser = userService.getByEmail(email);
+            if (dbUser != null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 이메일 주소입니다.");
+            }
+            return ResponseEntity.ok("사용 가능한 이메일 주소입니다.");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().body("서버 오류가 발생했습니다.");
         }
     }
 

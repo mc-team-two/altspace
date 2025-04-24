@@ -12,6 +12,9 @@
         SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId}
     </select>
     <!--  개별 호스트가 등록한 모든 숙소 조회 -->
+    <select id="selectPageByHostId" parameterType="String" resultType="Accommodations">
+        SELECT * FROM accommodations WHERE host_id=#{hostId}
+    </select>
     <select id="selectByHostId" parameterType="String" resultType="Accommodations">
         SELECT * FROM accommodations WHERE host_id=#{hostId}
     </select>
@@ -22,14 +25,14 @@
             person_max, description, status,
             category, room_type,
             breakfast, pool, barbecue, pet,
-            image1, image2, image3, image4, image5,
+            image1_name, image2_name, image3_name, image4_name, image5_name,
             latitude, longitude,
             create_day, update_day )
         VALUES ( #{hostId}, #{name}, #{location}, #{priceNight},
                 #{personMax}, #{description}, #{status},
                 #{category}, #{roomType},
                 #{breakfast}, #{pool}, #{barbecue}, #{pet},
-                #{image1}, #{image2}, #{image3}, #{image4}, #{image5},
+                #{image1Name}, #{image2Name}, #{image3Name}, #{image4Name}, #{image5Name},
                 #{latitude}, #{longitude},
                 NOW(), NOW() )
         <selectKey resultType="int" keyProperty="accommodationId" order="AFTER"> SELECT LAST_INSERT_ID() </selectKey>
@@ -39,7 +42,11 @@
     <!--     모든 숙소 찾기 -->
     <select id="selectAllAccommodations" resultType="Accommodations"> SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations </select>
     <!--     숙소 수정 -->
-    <update id="updateAccommodation" parameterType="Accommodations"> UPDATE Accommodations SET name = #{name}, location = #{location}, price_night = #{priceNight}, person_max = #{personMax}, description = #{description}, status = #{status}, category = #{category}, room_type = #{roomType}, breakfast = #{breakfast}, pool = #{pool}, barbecue = #{barbecue}, pet = #{pet}, update_day = NOW() WHERE accommodation_id = #{accommodationId} </update>
+    <update id="updateAccommodation" parameterType="Accommodations">
+        UPDATE Accommodations
+        SET name = #{name}, location = #{location}, price_night = #{priceNight}, person_max = #{personMax}, description = #{description}, status = #{status}, category = #{category}, room_type = #{roomType}, breakfast = #{breakfast}, pool = #{pool}, barbecue = #{barbecue}, pet = #{pet}, image1_name=#{image1Name}, image2_name=#{image2Name}, image3_name=#{image3Name}, image4_name=#{image4Name}, image5_name=#{image5Name},update_day = NOW()
+        WHERE accommodation_id = #{accommodationId}
+    </update>
     <!--     숙소 삭제 -->
     <delete id="delete" parameterType="Integer">
         DELETE FROM Accommodations WHERE accommodation_id = #{accommodationId}
@@ -58,8 +65,16 @@
     <update id="updateAccommodationStatus" parameterType="java.util.Map"> UPDATE Accommodations SET status = #{status}, update_day = NOW() WHERE accommodation_id = #{accommodationId} </update>
     <!--     카테고리로 숙소 찾기  -->
     <select id="selectAccommodationsByCategory" parameterType="string" resultType="com.mc.app.dto.Accommodations"> SELECT accommodation_id AS accommodationId, host_id AS hostId, name, location, price_night AS priceNight, person_max AS personMax, description, status, category, room_type AS roomType, breakfast, pool, barbecue, pet, create_day AS createDay, update_day AS updateDay FROM Accommodations WHERE category = #{category} </select>
+
+    <!-- 사용자 ID로 소유 스페이스 목록 조회 -->
+    <select id="findByUserId" resultType="Accommodations">
+        SELECT *
+        FROM accommodations
+        WHERE host_id = #{hostId}
+    </select>
+
     <!--     숙소 태그 업데이트  -->
-    <update id="updateAccommodationAmenities" parameterType="com.mc.app.dto.Accommodations">
+    <update id="updateAccommodationAmenities" parameterType="Accommodations">
         UPDATE Accommodations SET
         <if test="breakfast != null">breakfast = #{breakfast},</if>
         <if test="pool != null">pool = #{pool},</if>

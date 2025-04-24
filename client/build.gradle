@@ -75,6 +75,9 @@ dependencies {
     // 아임포트 API 사용
     implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
 
+    // pagenation api 적용
+    implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6'
+
     allprojects {
         repositories {
             maven { url 'https://jitpack.io' }

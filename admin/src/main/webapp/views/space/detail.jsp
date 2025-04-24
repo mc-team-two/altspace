@@ -94,27 +94,25 @@
             });
         },
         validateForm: function () {
-            let isValid = true;
-
-            // 공간 명칭 체크
-            if ($('#location').val() === '') {
+            // 1) 위치 체크
+            if (!$('#location').val().trim()) {
                 alert("위치를 입력해주세요.");
-                isValid = false;
+                return false;
             }
 
-            // 이미지 체크 (대표 사진)
-            if ($('#image1').val() === '') {
+            // 2) 대표 사진 체크: 신규 파일 선택 or 기존 이미지가 보여지고 있으면 OK
+            const mainInput  = document.getElementById("image1");
+            const preview1   = document.getElementById("preview1");
+            const hasNewFile = mainInput.files && mainInput.files.length > 0;
+            const hasOldImg  = preview1.querySelector("img") !== null;
+
+            if (!hasNewFile && !hasOldImg) {
                 alert("대표 사진을 업로드해주세요.");
-                isValid = false;
+                mainInput.focus();
+                return false;
             }
 
-            // 스페이스 명칭 체크
-            if ($('#name').val().trim() === '') {
-                alert("스페이스 이름을 입력해주세요.");
-                isValid = false;
-            }
-
-            return isValid;
+            return true;
         },
         initMap: function(){
             $('#map').css({
@@ -190,10 +188,90 @@
             alert("스페이스 정보가 수정되었습니다.")
         }
     };
+
     $(function(){
         space_update.init();
         space_update.initMap(); // 지도만 미리 보여주기 (팝업 없이)
+
+        // 기존 미리보기 이미지 위에만 '제거' 버튼 추가
+        for (let i = 1; i <= 5; i++) {
+            const container = document.getElementById(`preview${i}`);
+            const input     = document.getElementById(`image${i}`);
+            const img       = container.querySelector('img');
+            if (img) {
+                const btn = document.createElement('button');
+                btn.textContent = '제거';
+                btn.className = 'btn btn-sm btn-outline-danger btn-block mt-1';
+                btn.onclick   = () => {
+                    input.value = '';
+                    container.innerHTML = '';
+                };
+                container.appendChild(btn);
+            }
+        }
     });
+
+    // 이미지 미리보기 함수
+    function previewImage(input, previewId) {
+        const preview = document.getElementById(previewId);
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.innerHTML = '<img src="' + e.target.result + '" style="width:300px;height:120px;object-fit:cover;border-radius:8px;">';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function renderPreview(src, previewContainer, input) {
+        const img = document.createElement("img");
+        img.src = src;
+        img.style.width = "100%";
+        img.style.height = "120px";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "8px";
+
+        // '제거' 버튼 추가
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "제거";
+        removeBtn.className = "btn btn-sm btn-outline-danger btn-block mt-1";
+        removeBtn.onclick = function () {
+            input.value = "";
+            previewContainer.innerHTML = ""; // 미리보기 초기화
+        };
+
+        previewContainer.appendChild(img);
+        previewContainer.appendChild(removeBtn);
+    }
+
+    // 상세 이미지 최대 4개까지 업로드 함수
+    function limitDetailImages(currentInput) {
+        const detailInputs = document.querySelectorAll('input[id^="image"]:not(#image1)');
+        let count = 0;
+
+        detailInputs.forEach(input => {
+            if (input.files.length > 0) count++;
+        });
+
+        if (count > 4) {
+            alert("상세 사진은 최대 4장까지만 업로드할 수 있습니다.");
+            currentInput.value = "";
+            const previewId = "preview" + currentInput.id.replace("image", "");
+            document.getElementById(previewId).innerHTML = "";
+        }
+    }
+
+    // 폼 검증 함수
+    function validateForm() {
+        const mainImage = document.getElementById("image1");
+        if (!mainImage.files || mainImage.files.length === 0) {
+            alert("대표 사진은 필수입니다.");
+            mainImage.focus();
+            return false;
+        }
+        return true;
+    }
+
 </script>
 
 <div class="col-sm-12">
@@ -206,7 +284,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <form id="space_update_form" style="overflow-x:hidden">
+                <form action="/space/updatespace" method="post" enctype="multipart/form-data" id="space_update_form" style="overflow-x:hidden">
                     <h1 class="h3 mb-2 text-gray-800">기본 정보</h1>
                     <div class="row">
 
@@ -307,20 +385,109 @@
 
                     <hr>
                     <h1 class="h3 mb-2 text-gray-800">상세 정보</h1>
-                    <%--image1--%>
-                    <div class="form-group">
-                        <label for="image1"><h6 class="m-0 font-weight-bold text-primary">대표 사진</h6></label>
-                        <input type="file" class="form-control" id="image1" placeholder="Enter name" name="image1">
-                    </div>
 
-                    <%--detail image--%>
-                    <div class="form-group">
-                        <label for="image2"><h6 class="m-0 font-weight-bold text-primary">상세 사진</h6></label>
-                        <input type="file" class="form-control mb-2" id="image2" name="image2">
-                        <input type="file" class="form-control mb-2" id="image3" name="image3">
-                        <input type="file" class="form-control mb-2" id="image4" name="image4">
-                        <input type="file" class="form-control" id="image5" name="image5">
-                    </div>
+                        <%-- 대표 사진 --%>
+                        <div class="form-group border p-3 rounded mb-4">
+                            <label for="image1"><h6 class="text-primary">대표 사진 (필수)</h6></label>
+                            <input type="file" class="form-control mb-2"
+                                   id="image1"
+                                   name="image1"
+                                   accept="image/*"
+                                   onchange="previewImage(this, 'preview1')">
+
+                            <!-- preview1 영역에 항상 초기 이미지 표시 -->
+                            <div id="preview1" class="image-preview">
+                                <img src="${pageContext.request.contextPath}/imgs/${data.image1Name}"
+                                     style="width:300px; height:120px; object-fit:cover; border-radius:8px;">
+                            </div>
+
+                            <!-- 기존 이미지 이름을 서버로 전달 -->
+                            <input type="hidden" name="image1Name" value="${data.image1Name}"/>
+                        </div>
+
+                        <%-- 상세 사진 --%>
+                        <div class="form-group border p-3 rounded">
+                            <label><h6 class="text-secondary">상세 사진 (선택, 최대 4장)</h6></label>
+                            <div class="d-flex flex-wrap gap-3">
+
+                                <!-- 이미지 2 -->
+                                <div style="width:240px;">
+                                    <input type="file"
+                                           class="form-control mb-2"
+                                           id="image2"
+                                           name="image2"
+                                           accept="image/*"
+                                           onchange="limitDetailImages(this); previewImage(this, 'preview2')">
+
+                                    <div id="preview2" class="image-preview">
+                                        <c:if test="${not empty data.image2Name}">
+                                            <img src="${pageContext.request.contextPath}/imgs/${data.image2Name}"
+                                                 style="width:220px;height:120px;object-fit:cover;border-radius:8px;">
+                                        </c:if>
+                                    </div>
+
+                                    <input type="hidden" name="image2Name" value="${data.image2Name}"/>
+                                </div>
+
+                                <!-- 이미지 3 -->
+                                <div style="width:240px;">
+                                    <input type="file"
+                                           class="form-control mb-2"
+                                           id="image3"
+                                           name="image3"
+                                           accept="image/*"
+                                           onchange="limitDetailImages(this); previewImage(this, 'preview3')">
+
+                                    <div id="preview3" class="image-preview">
+                                        <c:if test="${not empty data.image3Name}">
+                                            <img src="${pageContext.request.contextPath}/imgs/${data.image3Name}"
+                                                 style="width:220px;height:120px;object-fit:cover;border-radius:8px;">
+                                        </c:if>
+                                    </div>
+
+                                    <input type="hidden" name="image3Name" value="${data.image3Name}"/>
+                                </div>
+
+                                <!-- 이미지 4 -->
+                                <div style="width:240px;">
+                                    <input type="file"
+                                           class="form-control mb-2"
+                                           id="image4"
+                                           name="image4"
+                                           accept="image/*"
+                                           onchange="limitDetailImages(this); previewImage(this, 'preview4')">
+
+                                    <div id="preview4" class="image-preview">
+                                        <c:if test="${not empty data.image4Name}">
+                                            <img src="${pageContext.request.contextPath}/imgs/${data.image4Name}"
+                                                 style="width:220px;height:120px;object-fit:cover;border-radius:8px;">
+                                        </c:if>
+                                    </div>
+
+                                    <input type="hidden" name="image4Name" value="${data.image4Name}"/>
+                                </div>
+
+                                <!-- 이미지 5 -->
+                                <div style="width:240px;">
+                                    <input type="file"
+                                           class="form-control mb-2"
+                                           id="image5"
+                                           name="image5"
+                                           accept="image/*"
+                                           onchange="limitDetailImages(this); previewImage(this, 'preview5')">
+
+                                    <div id="preview5" class="image-preview">
+                                        <c:if test="${not empty data.image5Name}">
+                                            <img src="${pageContext.request.contextPath}/imgs/${data.image5Name}"
+                                                 style="width:220px;height:120px;object-fit:cover;border-radius:8px;">
+                                        </c:if>
+                                    </div>
+
+                                    <input type="hidden" name="image5Name" value="${data.image5Name}"/>
+                                </div>
+
+                            </div>
+                        </div>
 
                     <%--name--%>
                     <div class="form-group">

@@ -161,11 +161,11 @@
         <form method="post" action="/auth/loginimpl" class="text-left">
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required>
+                <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required value="host@example.com">
             </div>
             <div class="form-group">
                 <label for="password">비밀번호</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력해 주세요" required>
+                <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력해 주세요" required value="password123!!">
             </div>
             <button id="login-btn" type="submit" class="btn btn-block login-btn">로그인</button>
         </form>
