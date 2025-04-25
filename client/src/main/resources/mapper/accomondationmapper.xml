@@ -57,22 +57,22 @@
 <!--    숙소 번호로 찾기-->
     <select id="selectAccommodationById" parameterType="int" resultType="Accommodations">
         SELECT
-        accommodation_id AS accommodationId,
-        host_id AS hostId,
+        accommodation_id,
+        host_id,
         name,
         location,
-        price_night AS priceNight,
-        person_max AS personMax,
+        price_night,
+        person_max,
         description,
         status,
         category,
-        room_type AS roomType,
+        room_type,
         breakfast,
         pool,
         barbecue,
         pet,
-        create_day AS createDay,
-        update_day AS updateDay
+        create_day,
+        update_day
         FROM
         Accommodations
         WHERE
@@ -82,22 +82,22 @@
 <!--    모든 숙소 찾기-->
     <select id="selectAllAccommodations" resultType="Accommodations">
         SELECT
-        accommodation_id AS accommodationId,
-        host_id AS hostId,
+        accommodation_id,
+        host_id,
         name,
         location,
-        price_night AS priceNight,
-        person_max AS personMax,
+        price_night,
+        person_max,
         description,
         status,
         category,
-        room_type AS roomType,
+        room_type,
         breakfast,
         pool,
         barbecue,
         pet,
-        create_day AS createDay,
-        update_day AS updateDay
+        create_day,
+        update_day
         FROM
         Accommodations
     </select>
@@ -133,22 +133,22 @@
 <!--    호스트 아이디로 숙소 찾기-->
     <select id="selectAccommodationsByHostId" parameterType="string" resultType="Accommodations">
         SELECT
-        accommodation_id AS accommodationId,
-        host_id AS hostId,
+        accommodation_id,
+        host_id,
         name,
         location,
-        price_night AS priceNight,
-        person_max AS personMax,
+        price_night,
+        person_max,
         description,
         status,
         category,
-        room_type AS roomType,
+        room_type,
         breakfast,
         pool,
         barbecue,
         pet,
-        create_day AS createDay,
-        update_day AS updateDay
+        create_day,
+        update_day,
         FROM
         Accommodations
         WHERE
@@ -158,22 +158,22 @@
 <!--   이름이나 지역으로 숙소 찾기 -->
     <select id="searchAccommodations" parameterType="java.util.Map" resultType="Accommodations">
         SELECT
-        accommodation_id AS accommodationId,
-        host_id AS hostId,
+        accommodation_id,
+        host_id,
         name,
         location,
-        price_night AS priceNight,
-        person_max AS personMax,
+        price_night,
+        person_max,
         description,
         status,
         category,
-        room_type AS roomType,
+        room_type,
         breakfast,
         pool,
         barbecue,
         pet,
-        create_day AS createDay,
-        update_day AS updateDay
+        create_day,
+        update_day
         FROM
         Accommodations
         <where>
@@ -199,22 +199,22 @@
 <!--    카테고리로 숙소 찾기 -->
     <select id="selectAccommodationsByCategory" parameterType="string" resultType="com.mc.app.dto.Accommodations">
         SELECT
-        accommodation_id AS accommodationId,
-        host_id AS hostId,
+        accommodation_id,
+        host_id,
         name,
         location,
-        price_night AS priceNight,
-        person_max AS personMax,
+        price_night,
+        person_max,
         description,
         status,
         category,
-        room_type AS roomType,
+        room_type,
         breakfast,
         pool,
         barbecue,
         pet,
-        create_day AS createDay,
-        update_day AS updateDay
+        create_day,
+        update_day
         FROM
         Accommodations
         WHERE
@@ -233,5 +233,37 @@
         WHERE
         accommodation_id = #{accommodationId}
     </update>
+
+<!--    주소값을 정확히 일치하는 게 아니라, 포함된 값을 불러오도록 쿼리 수정. -->
+    <select id="searchAccommodationsByLocation" parameterType="string" resultType="Accommodations">
+        SELECT
+            accommodation_id,
+            host_id,
+            name,
+            location,
+            price_night,
+            person_max,
+            description,
+            status,
+            category,
+            room_type,
+            breakfast,
+            pool,
+            barbecue,
+            pet,
+            latitude,
+            longitude,
+            image1_name,
+            image2_name,
+            image3_name,
+            image4_name,
+            image5_name,
+            create_day,
+            update_day
+        FROM
+            Accommodations
+        WHERE
+            location LIKE CONCAT('%', #{location}, '%')
+    </select>
 
 </mapper>

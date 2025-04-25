@@ -45,12 +45,11 @@
                     <div class="col fill_height no-padding">
 
                         <!-- Search Panel 1 -->
-
                         <div class="search_panel active">
-                            <form action="#" id="search_form_1" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
+                            <form id="searchForm" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                 <div class="search_item">
                                     <div>목적지</div>
-                                    <input type="text" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
+                                    <input type="text" id="searchInput" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
                                 </div>
                                 <div class="search_item">
                                     <div>체크인</div>
@@ -106,7 +105,10 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <button class="button search_button">검색하기<span></span><span></span><span></span></button>
+                                <button type="button" class="button search_button" id="searchAccommodationBtn">검색하기<span></span><span></span><span></span></button>
+
+                                <%--Geolocation 세션 저장을 위한 버튼. 어떻게 더 이쁘게 꾸밀지는 정우님 확인이 필요.--%>
+                                <button class="button search_button" id="geolocationBtn">내 위치 검색<span></span><span></span><span></span></button>
                             </form>
                         </div>
 
@@ -263,7 +265,8 @@
                             <i class="fa fa-chevron-down"></i>
                             <ul>
                                 <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }' data-parent=".price_sorting"><span>전체</span></li>
-                                <li class="sort_btn" data-isotope-option='{ "sortBy": "price" }' data-parent=".price_sorting"><span>낮은 가격순</span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "price", "sortAscending": true }' data-parent=".price_sorting"><span>낮은 가격순</span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "price", "sortAscending": false }' data-parent=".price_sorting"><span>높은 가격순</span></li>
                             </ul>
                         </li>
                         <li>
@@ -271,18 +274,21 @@
                             <i class="fa fa-chevron-down"></i>
                             <ul>
                                 <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>전체</span></li>
-                                <li class="sort_btn" data-isotope-option='{ "sortBy": "name" }'><span>가나다순</span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "name", "sortAscending": true }'><span>가나다순</span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "name", "sortAscending": false }'><span>역순</span></li>
                             </ul>
                         </li>
                         <li>
                             <span class="sorting_text">별점</span>
                             <i class="fa fa-chevron-down"></i>
                             <ul>
-                                <li class="filter_btn" data-filter="*"><span>전체</span></li>
-                                <li class="sort_btn" data-isotope-option='{ "sortBy": "stars" }'><span>낮은 별점순</span></li>
-                                <li class="filter_btn" data-filter=".rating_3"><span>3</span></li>
-                                <li class="filter_btn" data-filter=".rating_4"><span>4</span></li>
-                                <li class="filter_btn" data-filter=".rating_5"><span>5</span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'><span>전체</span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "stars", "sortAscending": true }'><span>낮은 별점순</span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "stars", "sortAscending": false }'><span>높은 별점순</span></li>
+<%--                                기능 보류. isotope에서 처리하는 녀석과 아닌 녀석이 한 카테고리에 있어서 전체 소트가 안먹힘..--%>
+<%--                                <li class="filter_btn" data-filter=".rating_3"><span>3</span></li>--%>
+<%--                                <li class="filter_btn" data-filter=".rating_4"><span>4</span></li>--%>
+<%--                                <li class="filter_btn" data-filter=".rating_5"><span>5</span></li>--%>
                             </ul>
                         </li>
                     </ul>
@@ -332,7 +338,7 @@
                                                         <c:when test="${currentRating == 3}">좋아요!</c:when>
                                                         <c:when test="${currentRating == 2}">괜찮아요!</c:when>
                                                         <c:when test="${currentRating == 1}">그저 그래요!</c:when>
-                                                        <c:otherwise>평가 없음</c:otherwise>
+                                                        <c:otherwise>평가가 없어요</c:otherwise>
                                                     </c:choose>
                                                 </div>
                                                 <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
