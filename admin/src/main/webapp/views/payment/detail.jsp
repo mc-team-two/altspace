@@ -1,36 +1,41 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>예약 달력</title>
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
-</head>
-<body>
-<div class="container my-4">
-    <h3 class="mb-4">스페이스 ${filteredId} 예약 달력</h3>
-    <a href="<c:url value='/payment/booking'/>" class="btn btn-outline-secondary btn-sm mb-3">내 스페이스 목록</a>
-    <div id="calendar"></div>
-</div>
 
+<!-- ✅ FullCalendar 스타일 -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
 <style>
-    #calendar { max-width: 900px; margin: 0 auto; }
+    #calendar {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* 이벤트 박스를 크게 블럭형으로 */
+    .fc-daygrid-event {
+        display: block;
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 6px;
+        line-height: 1.6;
+        height: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+<!-- ✅ 캘린더 초기화 -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const events = [
             <c:forEach var="pay" items="${payments}" varStatus="loop">
             <c:if test="${pay.payStatus eq '완료'}">
             {
-                title: '예약 (${pay.payStatus}) - ${pay.payAmount}원',
+                title: '[ID: ${pay.guestId}]님 예약 - ${pay.payAmount}원',
                 start: '${pay.checkIn}',
                 end: '${pay.checkOut}',
-                color: '#28a745'
+                color: '#696cff',
+                guestId: '${pay.guestId}'
             }<c:if test="${!loop.last}">,</c:if>
             </c:if>
             </c:forEach>
@@ -45,11 +50,25 @@
                 center: 'title',
                 right: 'dayGridMonth,listMonth'
             },
-            events: events
+            eventDisplay: 'block',
+            events: events,
+            eventDidMount: function(info) {
+                // 툴팁에 전체 텍스트 표시
+                tippy(info.el, {
+                    content: info.event.title,
+                    theme: 'light',
+                    placement: 'top',
+                    delay: [200, 0]
+                });
+            }
         });
+
         calendar.render();
     });
 </script>
 
-</body>
-</html>
+<div class="container my-4">
+    <h3 class="mb-4">${payments[0].name} 예약 내역</h3>
+    <a href="<c:url value='/payment/booking'/>" class="btn btn-outline-secondary btn-sm mb-3">내 스페이스 목록</a>
+    <div id="calendar"></div>
+</div>

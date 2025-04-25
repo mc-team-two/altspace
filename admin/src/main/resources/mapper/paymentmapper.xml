@@ -4,11 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mc.app.repository.PaymentRepository">
     <select id="selectByHostId" parameterType="String" resultType="Payments">
-        SELECT p.*, a.name, a.location
-        FROM payments p INNER JOIN accommodations a
-        ON p.accommodation_id = a.accommodation_id
+        SELECT p.*, a.name, a.location, a.image1_name AS image1Name
+        FROM payments p
+                 INNER JOIN accommodations a ON p.accommodation_id = a.accommodation_id
         WHERE a.host_id = #{hostId};
     </select>
+
     <insert id="insert" parameterType="payments">
         INSERT INTO payments (
             guest_id,
@@ -21,16 +22,16 @@
             imp_uid,
             create_day
         ) VALUES (
-             #{guestId},
-             #{accommodationId},
-             #{checkIn},
-             #{checkOut},
-             #{payAmount},
-             #{payStatus},
-             #{payMeans},
-             #{impUid},
-             NOW()
-        )
+                     #{guestId},
+                     #{accommodationId},
+                     #{checkIn},
+                     #{checkOut},
+                     #{payAmount},
+                     #{payStatus},
+                     #{payMeans},
+                     #{impUid},
+                     NOW()
+                 )
     </insert>
 
     <select id="selectOneTwo" parameterType="payments" resultType="Payments">
@@ -40,9 +41,8 @@
           AND imp_uid = #{impUid}
           AND accommodation_id = #{accommodationId}
           AND reservations_id = #{reservationsId}
-        LIMIT 1
+            LIMIT 1
     </select>
-
 
     <update id="update" parameterType="payments">
         UPDATE payments
@@ -54,19 +54,18 @@
     </update>
 
     <select id="selectPyAll" resultType="Payments" parameterType="Payments">
-        SELECT
-            p.*,
-            a.name,
-            a.location
-        FROM payments p JOIN accommodations a
-            ON p.accommodation_id = a.accommodation_id
+        SELECT p.*, a.name, a.location, a.image1_name AS image1Name
+        FROM payments p
+                 JOIN accommodations a ON p.accommodation_id = a.accommodation_id
         WHERE p.guest_id = #{guestId}
           AND p.pay_status = '완료'
     </select>
 
     <select id="selectByAccommodationId" resultType="com.mc.app.dto.Payments">
-        SELECT * FROM payments
-        WHERE accommodation_id = #{accommodationId}
+        SELECT p.*, a.name, a.location, a.image1_name AS image1Name
+        FROM payments p
+                 JOIN accommodations a ON p.accommodation_id = a.accommodation_id
+        WHERE p.accommodation_id = #{accommodationId}
     </select>
 
     <select id="selectPayment" parameterType="int" resultType="payments">
@@ -74,6 +73,5 @@
         FROM payments
         WHERE reservations_id = #{reservationsId}
     </select>
-
 
 </mapper>
