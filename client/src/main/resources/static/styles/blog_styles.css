@@ -149,7 +149,7 @@ h6::selection
 }
 .form-control
 {
-	color: #db5246;
+	color: #212529; /* 원래 빨강인데 검정색으로 수정했어요! */
 }
 section
 {
