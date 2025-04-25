@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.*;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.PaymentService;
+import com.mc.app.service.ReviewService;
 import com.mc.app.service.UserService;
 import java.sql.Date;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class MainController {
     private final UserService userService;
     final AccomService accomService;
     final PaymentService paymentService;
+    final ReviewService reviewService;
     private static final int PAGE_SIZE = 10; // 한 페이지에 표시할 숙소 수
 
     String dir = "home/";

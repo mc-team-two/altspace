@@ -310,7 +310,7 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="offers_content">
-                                        <div class="offers_price">$${a.priceNight}<span>per night</span></div>
+                                        <div class="offers_price">₩${a.priceNight}<span>per night</span></div>
                                         <div class="rating_r rating_r_${currentRating} offers_rating" data-rating="${currentRating}">
                                             <i></i><i></i><i></i><i></i><i></i>
                                         </div>
