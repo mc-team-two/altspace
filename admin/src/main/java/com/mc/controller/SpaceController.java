@@ -98,23 +98,6 @@ public class SpaceController {
         return "redirect:/space/get";
     }
 
-/*
-    @RequestMapping("/get")
-    public String get(Model model, HttpSession httpSession){
-        User user = (User) httpSession.getAttribute("user");
-        List<Accommodations> data = null;
-        try {
-            data = accomService.getByHostId(user.getUserId());
-            // log.info(data.toString());
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
-        model.addAttribute("data", data);
-        model.addAttribute("center", dir+"get");
-        return "index";
-    }
-
-*/
     @RequestMapping("/get")
     public String get(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
             Model model, HttpSession httpSession){

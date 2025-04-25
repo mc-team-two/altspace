@@ -10,23 +10,16 @@ public class ReviewController {
 
     String dir = "review/";
 
-    @RequestMapping("/review1")
+    @RequestMapping("/list")
     public String review1(Model model){
-        model.addAttribute("center", dir+"review1");
+        model.addAttribute("center", dir+"list");
         model.addAttribute("index", dir+"index");
         return "index";
     }
 
-    @RequestMapping("/review2")
+    @RequestMapping("/check")
     public String review2(Model model){
-        model.addAttribute("center", dir+"review2");
-        model.addAttribute("index", dir+"index");
-        return "index";
-    }
-
-    @RequestMapping("/review3")
-    public String review3(Model model){
-        model.addAttribute("center", dir+"review3");
+        model.addAttribute("center", dir+"check");
         model.addAttribute("index", dir+"index");
         return "index";
     }

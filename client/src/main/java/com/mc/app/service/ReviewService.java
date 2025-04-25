@@ -43,8 +43,12 @@ public class ReviewService implements MCService<Reviews, Integer> {
         return reviewRepository.selectReviewsAll(integer);
     }
 
-    public Reviews selectReviewAccom(Integer integer) throws Exception {
-        return reviewRepository.selectReviewAccom(integer);
+    public List<Reviews> getMyReviews(Reviews reviews) throws Exception {
+        return reviewRepository.getMyReviews(reviews);
+    }
+
+    public Reviews getMyReviewById(Integer integer) throws Exception {
+        return reviewRepository.getMyReviewById(integer);
     }
 
     public int getAverageRating(long accommodationId) {
@@ -59,4 +63,5 @@ public class ReviewService implements MCService<Reviews, Integer> {
         }
         return sum / reviews.size();
     }
+
 }

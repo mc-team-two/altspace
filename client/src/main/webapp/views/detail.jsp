@@ -76,7 +76,7 @@
 
             IMP.request_pay({
                 pg: "html5_inicis",
-                pay_method: "card",
+                pay_method: "card",   // 카드 결제 창을 띄어달라는 의미 / 카드 결제가 아님
                 merchant_uid: "ORD" + new Date().getTime(),
                 name: "${accomm.name}",
                 amount: Number($('#totalPrices').val()),
@@ -137,11 +137,11 @@
             });
         },
         review:function(){
-            $('#data_add').attr({
+            $('#data_del').attr({
                 'method':'post',
-                'action':'<c:url value="/review/rvdtSel?id=${accomm.accommodationId}"/>'
+                'action':'<c:url value="/review/dtadd?id=${accomm.accommodationId}"/>'
             });
-            $('#data_add').submit();
+            $('#data_del').submit();
         },
         updateRv: function(id) {
             $('#reviewForm').attr({
@@ -182,7 +182,7 @@
                     <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
                     <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
                     <input type="hidden" name="impUid" value="${payInfo.impUid}">
-                    <input type="hidden" name="reservationsId" value="${payInfo.reservationsId}">
+                    <input type="hidden" name="paymentId" value="${payInfo.paymentId}">
                     <p><strong>체크인:</strong> <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd" /></p>
                     <p><strong>체크아웃:</strong> <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd" /></p>
                     <p><strong>결제 금액:</strong> <fmt:formatNumber value="${payInfo.payAmount}" type="number"/> 원</p>
@@ -200,7 +200,6 @@
                         <input type="hidden" name="checkOut" id="checkOut">
                         <input type="hidden" name="payAmount" id="totalPrices">
                         <input type="hidden" name="payStatus" value="완료">
-                        <input type="hidden" name="payMeans" value="카드">
 
                         <h5 class="mb-3">숙박 날짜 선택</h5>
                         <div class="form-group">
@@ -237,9 +236,6 @@
                     <p><strong>작성자:</strong> ${rv.guestId}</p>
                     <p><strong>평점:</strong> ${rv.grade}점</p>
                     <p><strong>내용:</strong> ${rv.comment}</p>
-
-                    <!-- 리뷰 ID를 넘겨서 JS 함수에서 동적으로 처리 -->
-                    <button type="button" class="btn btn-primary" onclick="change.updateRv('${rv.reviewId}')">리뷰 수정</button>
                 </div>
             </c:forEach>
         </div>
