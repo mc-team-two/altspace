@@ -89,13 +89,13 @@
 
   <div class="form-group">
     <label for="phone">휴대폰</label>
-    <input type="text" class="form-control" id="phone" value="${user.phone}" readonly>
+    <input type="text" class="form-control" id="phone" value="${user.phone}" readonly style="background-color: #eeeeee !important;">
   </div>
 
   <div class="form-group">
     <label for="email">이메일</label>
     <div class="input-group">
-      <input type="text" class="form-control border-right-0" id="email" value="${user.email}" readonly>
+      <input type="text" class="form-control border-right-0" id="email" value="${user.email}" readonly style="background-color: #eeeeee !important;">
       <%--소셜 로그인 제공업체 아이콘--%>
       <c:if test="${socialUser.provider != null}">
         <div class="input-group-append">
@@ -119,7 +119,7 @@
 
   <div class="form-group">
     <label for="role">가입 유형</label>
-    <input type="text" class="form-control" id="role" value="${user.role}" readonly>
+    <input type="text" class="form-control" id="role" value="${user.role}" readonly style="background-color: #eeeeee !important;">
   </div>
 
   <br>
