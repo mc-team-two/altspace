@@ -19,7 +19,10 @@ public class MainController {
     final SocialUserService socialUserService;
 
     @RequestMapping("/")
-    public String main(Model model) throws Exception {
+    public String main(Model model, HttpSession httpSession) throws Exception {
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
         model.addAttribute("center","center");
         return "index";
     }
