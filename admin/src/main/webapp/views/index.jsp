@@ -69,9 +69,9 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
                 <a href="/" class="app-brand-link">
-      <span class="app-brand-logo demo">
-        <img height="45" src="<c:url value="/imgs/Altspace_lightmode_Horizontal.png"/>" alt="알트스페이스 로고">
-      </span>
+                  <span class="app-brand-logo demo">
+                    <img height="45" src="<c:url value="/imgs/Altspace_lightmode_Horizontal.png"/>" alt="알트스페이스 로고">
+                  </span>
                 </a>
             </div>
 
