@@ -274,14 +274,9 @@
 
 </script>
 
-<div class="col-sm-12">
-
+<div class="container">
+    <p class="text-muted">공간 관리 > <a href="<c:url value="/space/get"/>">내 공간 관리</a> > 스페이스 수정</p>
     <div class="card shadow mb-4">
-
-        <div class="card-header">
-            <h2>스페이스 수정하기</h2>
-        </div>
-
         <div class="card-body">
             <div class="table-responsive">
                 <form action="/space/updatespace" method="post" enctype="multipart/form-data" id="space_update_form" style="overflow-x:hidden">

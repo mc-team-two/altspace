@@ -33,7 +33,8 @@
     })
 </script>
 
-<div class="col-sm-12">
+<div class="container">
+    <p class="text-muted">공간 관리 > 내 공간 관리</p>
     <div class="card shadow mb-4">
         <div class="card-body">
             <%--contents 시작--%>
