@@ -310,7 +310,7 @@
                                 <div class="col-lg-1 temp_col"></div>
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
-                                        <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/listing_${a.accommodationId % 9 + 1}.jpg')"></div>
+                                        <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
                                         <div class="offer_name"><a href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a></div>
                                     </div>
                                 </div>

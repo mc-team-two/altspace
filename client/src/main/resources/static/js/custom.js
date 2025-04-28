@@ -487,57 +487,61 @@ $(document).ready(function()
 
 		if (accommodations && accommodations.length > 0) {
 			$.each(accommodations, function(index, accommodation) {
-				const ratingClass = `rating_${Math.round(accommodation.rating)}`;
-				// 첫 번째 이미지를 사용하거나, 원하는 로직에 따라 이미지 선택
-				let imageUrl = '';
-				if (accommodation.image1) {
-					imageUrl = `/images/listing_${accommodation.image1}`;
+				// Assuming you have rating data from somewhere, or using a default value
+				const rating = accommodation.rating || 4; // Default to 4 if not provided
+				const ratingClass = `rating_${Math.round(rating)}`;
+
+				let imageUrl;
+				if (accommodation.image1Name) {
+					imageUrl = `/images/${accommodation.image1Name}`
+				} else if (accommodation.image1Name) {
+					imageUrl = `/images/${accommodation.image1Name}`;
 				} else {
 					imageUrl = `/images/default.jpg`;
 				}
 
 				const listItem = `
-					<div class="offers_item ${ratingClass}">
-						<div class="row">
-							<div class="col-lg-1 temp_col"></div>
-							<div class="col-lg-3 col-1680-4">
-								<div class="offers_image_container">
-									<div class="offers_image_background" style="background-image:url('/images/listing_${accommodation.image1}')"></div>
-                    				<div class="offer_name"><a href="/detail?id=${accommodation.accommodationId}">${accommodation.name}</a></div>
-								</div>
-							</div>
-                            <div class="col-lg-8">
-                                <div class="offers_content">
-                                    <div class="offers_price">$${accommodation.priceNight}<span>per night</span></div>
-                                    <div class="rating_r rating_r_${Math.round(accommodation.rating)} offers_rating" data-rating="${Math.round(accommodation.rating)}">
-                                        <i></i><i></i><i></i><i></i><i></i>
-                                    </div>
-                                    <p class="offers_text">${accommodation.description}</p>
-                                    <div class="offers_icons">
-                                        <ul class="offers_icons_list">
-                                            <li class="offers_icons_item"><img alt="" src="images/post.png"></li>
-                                            <li class="offers_icons_item"><img alt="" src="images/compass.png"></li>
-                                            <li class="offers_icons_item"><img alt="" src="images/bicycle.png"></li>
-                                            <li class="offers_icons_item"><img alt="" src="images/sailboat.png"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="button book_button"><a href="/detail?id=${accommodation.accommodationId}">상세보기<span></span><span></span><span></span></a></div>
-                                    <div class="offer_reviews">
-                                        <div class="offer_reviews_content">
-                                            <div class="offer_reviews_title">
-                                                ${getRatingText(Math.round(accommodation.rating))}
-                                            </div>
-                                            <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
-                                        </div>
-                                        <div class="offer_reviews_rating text-center">
-                                            ${Math.round(accommodation.rating)}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            <div class="offers_item ${ratingClass}">
+               <div class="row">
+                  <div class="col-lg-1 temp_col"></div>
+                  <div class="col-lg-3 col-1680-4">
+                     <div class="offers_image_container">
+                        <div class="offers_image_background" style="background-image:url('${imageUrl}')"></div>
+                            <div class="offer_name"><a href="/detail?id=${accommodation.accommodationId}">${accommodation.name}</a></div>
+                     </div>
+                  </div>
+                          <div class="col-lg-8">
+                              <div class="offers_content">
+                                  <div class="offers_price">$${accommodation.priceNight}<span>per night</span></div>
+                                  <div class="rating_r rating_r_${Math.round(rating)} offers_rating" data-rating="${Math.round(rating)}">
+                                      <i></i><i></i><i></i><i></i><i></i>
+                                  </div>
+                                  <p class="offers_text">${accommodation.description}</p>
+                                  <div class="offers_icons">
+                                      <ul class="offers_icons_list">
+                                          <li class="offers_icons_item"><img alt="" src="images/post.png"></li>
+                                          <li class="offers_icons_item"><img alt="" src="images/compass.png"></li>
+                                          <li class="offers_icons_item"><img alt="" src="images/bicycle.png"></li>
+                                          <li class="offers_icons_item"><img alt="" src="images/sailboat.png"></li>
+                                      </ul>
+                                  </div>
+                                  <div class="button book_button"><a href="/detail?id=${accommodation.accommodationId}">상세보기<span></span><span></span><span></span></a></div>
+                                  <div class="offer_reviews">
+                                      <div class="offer_reviews_content">
+                                          <div class="offer_reviews_title">
+                                              ${getRatingText(Math.round(rating))}
+                                          </div>
+                                          <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
+                                      </div>
+                                      <div class="offer_reviews_rating text-center">
+                                          ${Math.round(rating)}
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              `;
 				offersGrid.append(listItem);
 			});
 		} else {
