@@ -91,7 +91,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/space/get"/>' class="menu-link">
+                    <a href='<c:url value="/space/list"/>' class="menu-link">
                         <i class="menu-icon tf-icons bx bx-building-house"></i>
                         <div>내 공간 관리</div>
                     </a>
@@ -138,16 +138,9 @@
         <!-- Layout container -->
         <div class="layout-page">
 
-
             <!-- Navbar -->
             <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                  id="layout-navbar">
-
-                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                        <i class="bx bx-menu bx-sm"></i>
-                    </a>
-                </div>
 
                 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                     <!-- Search -->
