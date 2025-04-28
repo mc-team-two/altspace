@@ -6,9 +6,6 @@
     .form-group {
         margin-bottom: 15px;
     }
-    .button {
-        margin-top: 10px; /* 원하는 간격으로 조정 */
-    }
 
     #map{
         width: 100%;
