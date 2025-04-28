@@ -225,6 +225,12 @@
             <!-- Content wrapper -->
             <div class="content-wrapper">
 
+                <!-- floating button -->
+                <a href="#" class="btn btn-primary rounded-circle d-flex justify-content-center align-items-center position-fixed"
+                   style="width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 1030; font-size: 24px;">
+                    <i class="bi bi-plus"></i>
+                </a>
+
                 <!-- Content -->
 
                 <div class="container" style="margin-top:30px;margin-bottom:30px">
