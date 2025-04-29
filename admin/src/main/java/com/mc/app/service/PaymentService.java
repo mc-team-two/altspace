@@ -59,4 +59,17 @@ public class PaymentService implements MCService<Payments,Integer> {
         return paymentRepository.selectByAccommodationId(accommodationId);
     }
 
+    public Integer getMonthTotal() throws Exception {
+        return paymentRepository.selectMonthTotal();
+    }
+
+    // 내일 이후의 완료된 예약 건수 가져오기
+    public List<Payments> getUpcomingReservations() throws Exception {
+        return paymentRepository.selectUpcomingReservations();
+    }
+
+    // 오늘 체크인 예약 건수 가져오기
+    public Integer getTodayCheckInCount() throws Exception {
+        return paymentRepository.countTodayCheckIn();
+    }
 }
