@@ -13,9 +13,9 @@ spring:
       prefix: /views/
       suffix: .jsp
   datasource:
-    url: jdbc:mysql://49.50.172.52:3306/altspacedb?characterEncoding=utf8
-    username: userdev_NCP #ENC(tflb+WDeXH++6lNNLDKmOA==)
-    password: 111111  #ENC(Z3hh8Mdzuse1dxq271vdyg==)
+    url: ENC(QNchFVJLPg19xTYyjbM2WCRVIiAAZFJqQL3epsD9GufJl3yx6KwkqsfagKyplY1LLS63UY6pdpZX/xCy16073C+CYEgVVirlIoh/61th75Y=)
+    username: ENC(x0MI4+flphCUA9uwSe5E1YjQR1RqZwbW)
+    password: ENC(nnfXWWddf2J6fomi4HX+gw==)
 
 # 3. MyBatis
 mybatis:
@@ -33,16 +33,20 @@ logging:
 # 5. App
 app:
   key:
-    kakaoApiKey: d9815fe45ece611b664e99901e3a45b0
-    kakaoJSApiKey: abe605724fcc63bdb6710be41d7bb2fd
-    googleApiKey: 179241731828-8p6vci91eru8c1c9l9n7d67kmpmba7ls.apps.googleusercontent.com
-    googleApiSecretKey: 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
-    naverApiKey: GTwwnLrG6H_Hrx4QozHX
-    naverApiSecretKey: 8ASwbGFGVj
-    algo: PBEWithMD5AndDES
-    skey: mykey
+    kakaoApiKey: ENC(TbeZheIzhR4CUxKFbDqQmpdsqGKx7B6iq2KPQWOJDNdnTnnF4c/2+P21YIQutNyp)
+    kakaoJSApiKey: ENC(lGwCEAx0P3L2qe9jVYdq/MWXt3zWLnrfceWkdpUG3wfRzwEIogbx4qJXv7Bflw+R)
+    googleApiKey: ENC(2ZntVl7VItdoFSR9MFm7sAt+lVmV5ejY3yt6QkQ+IN73AtS8HAgkbiIN58cA+vNMaDSq94dpyUeWuWYylyhb5Yynf+BMKyqbIBo0m07c2n/fvicFmwE7Hw==)
+    googleApiSecretKey: ENC(wqRdJ0edAHlyzC1s2qTfgPRTOdXdX/L2v342Vs7NTifnbaqOHuIAIH6Iu2B1CDed)
+    naverApiKey: ENC(W21CWi5vucRAWCqK4GMx1P+L27Q66k3kJRU/e0BOyxs=)
+    naverApiSecretKey: ENC(P7kspdfWVZVOh9kr3DG+ogt3pyebrCLy)
   dir:
-    imgdir: file:///C:/Users/mnew0/OneDrive/Desktop/altspace/imgs/  # 화면 출력 용
-    uploadimgdir: C:/Users/mnew0/OneDrive/Desktop/altspace/imgs/    # 파일 Write 용
+    imgdir: file:///C:/Users/yejin/Documents/github/altspace/imgs/  # 화면 출력 용
+    uploadimgdir: C:/Users/yejin/Documents/github/altspace/imgs/    # 파일 Write 용
   url:
     serverUrl : http://127.0.0.1:9090
+
+# 6. jasypt
+jasypt:
+  encryptor:
+    password: space
+    algorithm: PBEWithMD5AndDES

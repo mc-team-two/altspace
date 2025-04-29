@@ -2,18 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="col-sm-12">
+<div class="container">
+    <p class="text-muted">결제/예약 조회 > 결제 내역</p>
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h3>결제 내역 전체보기</h3>
-            <!-- 버튼 그룹으로 필터 -->
-            <div class="btn-group" role="group" aria-label="결제 상태 필터">
-                <button type="button" class="btn btn-outline-secondary filter-btn active">전체</button>
-                <button type="button" class="btn btn-outline-success filter-btn" data-status="완료">완료</button>
-                <button type="button" class="btn btn-outline-warning filter-btn" data-status="취소">취소</button>
-                <button type="button" class="btn btn-outline-danger filter-btn" data-status="환불">환불</button>
-            </div>
-        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table id="paymentsTable" class="table table-hover">

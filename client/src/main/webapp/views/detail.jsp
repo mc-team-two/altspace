@@ -200,7 +200,6 @@
                         <input type="hidden" name="checkOut" id="checkOut">
                         <input type="hidden" name="payAmount" id="totalPrices">
                         <input type="hidden" name="payStatus" value="완료">
-                        <%--<input type="hidden" name="payMeans" value="카드">--%>
 
                         <h5 class="mb-3">숙박 날짜 선택</h5>
                         <div class="form-group">

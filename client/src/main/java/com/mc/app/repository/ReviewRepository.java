@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 @Mapper
 public interface ReviewRepository extends MCRepository<Reviews,Integer> {
+    Reviews getMyReviewById(Integer integer);
     List<Reviews> selectReviewsAll(Integer integer);
-    Reviews selectReviewAccom(Integer integer);
     List<Reviews> getMyReviews(Reviews reviews);
 
 }

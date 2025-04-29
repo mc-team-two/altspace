@@ -57,6 +57,22 @@ body  {
 }
 
 
+/* 다크 모드일 때 모든 드롭다운 메뉴 버튼 텍스트 색상 변경 */
+
+[data-theme="dark"] .offers_sorting > li > ul {
+    background-color: var(--bg-color);
+    color: var(--text-color); /* 다크 모드 텍스트 색상 사용 */
+}
+
+[data-theme="dark"] .offers_sorting > li > ul > li > span {
+    background-color: var(--bg-color);
+    color: var(--text-color); /* 다크 모드 텍스트 색상 사용 */
+}
+
+/* (선택 사항) 마우스 오버 시 텍스트 색상 등 추가 스타일 (전체 드롭다운 메뉴에 적용) */
+.offers_sorting > li > ul > li:hover > span {
+    color: #aaa; /* 예시: 밝은 회색 */
+}
 
 
 /*==============================================================================*/

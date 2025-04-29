@@ -116,12 +116,16 @@ public class AccomService implements MCService<Accommodations,Integer> {
         return accomRepository.select();
     }
 
+    public List<Accommodations> getFilteredList() throws Exception {
+        return accomRepository.select();
+    }
+
     public List<Accommodations> getByHostId(String s) throws Exception {
         return accomRepository.selectByHostId(s);
     }
 
     public Page<Accommodations> getPageByHostId(String s, int pageNo) throws Exception {
-        PageHelper.startPage(pageNo, 3); // 한 페이지에 3개씩 표시
+        PageHelper.startPage(pageNo, 6); // 한 페이지에 5개씩 표시
         return accomRepository.selectPageByHostId(s);
     }
 

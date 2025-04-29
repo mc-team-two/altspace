@@ -5,15 +5,19 @@ import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.*;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.PaymentService;
+import com.mc.app.service.ReviewService;
 import com.mc.app.service.UserService;
 import java.sql.Date;
+
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +27,8 @@ public class MainController {
     private final UserService userService;
     final AccomService accomService;
     final PaymentService paymentService;
+    final ReviewService reviewService;
+  
     private static final int PAGE_SIZE = 10; // 한 페이지에 표시할 숙소 수
 
     String dir = "home/";
@@ -84,5 +90,18 @@ public class MainController {
             model.addAttribute("checkOutDate", checkOutDate);
         }
         return "detail";
+    }
+
+    @PostMapping("/save-location")
+    @ResponseBody
+    public String saveLocation(@RequestBody Map<String, Double> location, HttpSession session) {
+        double latitude = location.get("latitude");
+        double longitude = location.get("longitude");
+
+        // 세션에 위치 정보 저장
+        session.setAttribute("userLatitude", latitude);
+        session.setAttribute("userLongitude", longitude);
+
+        return "위치 정보가 세션에 저장되었습니다.";
     }
 }

@@ -24,6 +24,11 @@ public class MainController {
 
     @RequestMapping("/")
     public String main(Model model) throws Exception {
+        // 로그인 했을 때만 접속 가능함
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
+      
         Integer monthTotal = paymentService.getMonthTotal();    // 이번 달 총 결제 금액 가져오기
         String formattedMonthTotal = String.format("%,d", monthTotal);
 
