@@ -23,7 +23,7 @@ public class MainController {
     final PaymentService paymentService;
 
     @RequestMapping("/")
-    public String main(Model model) throws Exception {
+    public String main(Model model, HttpSession httpSession) throws Exception {
         // 로그인 했을 때만 접속 가능함
         if (httpSession.getAttribute("user") == null) {
             return "redirect:/auth/login";
