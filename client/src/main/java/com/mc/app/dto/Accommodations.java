@@ -29,11 +29,11 @@ public class Accommodations {
     private boolean pet;                 // BIT(1)
     private BigDecimal latitude;         // 위도
     private BigDecimal longitude;        // 경도
-    private String image1Name;
-    private String image2Name;
-    private String image3Name;
-    private String image4Name;
-    private String image5Name;
+    private String image1Name;    // 카멜 케이스로 변경
+    private String image2Name;    // 카멜 케이스로 변경
+    private String image3Name;    // 카멜 케이스로 변경
+    private String image4Name;    // 카멜 케이스로 변경
+    private String image5Name;    // 카멜 케이스로 변경
     private Timestamp createDay;         // 등록일
     private Timestamp updateDay;         // 수정일
 }

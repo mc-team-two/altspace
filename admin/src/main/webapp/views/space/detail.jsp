@@ -6,9 +6,6 @@
     .form-group {
         margin-bottom: 15px;
     }
-    .button {
-        margin-top: 10px; /* 원하는 간격으로 조정 */
-    }
 
     #map{
         width: 100%;
@@ -62,6 +59,17 @@
 
     .slider.round::before {
         border-radius: 50%;
+    }
+
+    /* 기존 스타일 아래에 추가 */
+    p.text-muted a {
+        color: inherit; /* 부모 요소(p.text-muted)의 글자색을 상속받음 */
+        text-decoration: none; /* 밑줄 제거 */
+    }
+
+    /* (선택 사항) 마우스를 올렸을 때 밑줄을 다시 표시하여 링크임을 알림 */
+    p.text-muted a:hover {
+        text-decoration: underline;
     }
 </style>
 
@@ -274,14 +282,9 @@
 
 </script>
 
-<div class="col-sm-12">
-
+<div class="container">
+    <p class="text-muted">공간 관리 > <a href="<c:url value="/space/get"/>">내 공간 관리</a> > 스페이스 수정</p>
     <div class="card shadow mb-4">
-
-        <div class="card-header">
-            <h2>스페이스 수정하기</h2>
-        </div>
-
         <div class="card-body">
             <div class="table-responsive">
                 <form action="/space/updatespace" method="post" enctype="multipart/form-data" id="space_update_form" style="overflow-x:hidden">

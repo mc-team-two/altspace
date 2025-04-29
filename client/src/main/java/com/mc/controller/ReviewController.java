@@ -11,10 +11,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @Slf4j
@@ -52,14 +53,6 @@ public class ReviewController {
         return "index";
     }
 
-    @RequestMapping("/dtadd")
-    public String dtadd(Model model, @RequestParam("id") int id) throws Exception {
-
-        Accommodations accomm = accomService.get(id);
-        model.addAttribute("accomm", accomm);
-        return "review";
-    }
-
     @RequestMapping("/reviewUpload")
     public String reviewUpload(Model model,
                                @RequestParam("id") int id,
@@ -69,38 +62,32 @@ public class ReviewController {
         return "redirect:/detail?id=" + id;
     }
 
-
-
-
-
-
-    @RequestMapping("/rvdtSel")
-    public String review(Model model, @RequestParam("id") int id) throws Exception {
-
-        Accommodations accomm = accomService.get(id);
-
-        model.addAttribute("accomm", accomm);
-        return "redirect:/detail?id=" + id;
-    }
-
-
-
-
-    @RequestMapping("/update")
-    public String update(Model model,
-                         @RequestParam("id") int id,
-                         Reviews reviews) throws Exception {
-
-        reviewService.mod(reviews);
-        return "redirect:/detail?id=" + id;
+    @ResponseBody
+    @PostMapping("/update")
+    public Map<String, Object> update(@RequestBody Reviews reviews) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            reviewService.mod(reviews);
+            result.put("success", true);
+        } catch (Exception e) {
+            result.put("success", false);
+        }
+        return result;
     }
 
     @RequestMapping("/delete")
-    public String delete(Model model,
-                         @RequestParam("rvId") int rvid,
-                         @RequestParam("acId") int acid) throws Exception {
-
+    public String delete(Model model, @RequestParam("rvId") int rvid) throws Exception {
         reviewService.del(rvid);
-        return "redirect:/detail?id=" + acid;
+        return "redirect:/review";
     }
+
+    /* 삭제 x 사용 가능 */
+    @RequestMapping("/dtadd")
+    public String dtadd(Model model, @RequestParam("id") int id) throws Exception {
+
+        Accommodations accomm = accomService.get(id);
+        model.addAttribute("accomm", accomm);
+        return "review";
+    }
+
 }

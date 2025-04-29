@@ -88,8 +88,14 @@ public class MainController {
             model.addAttribute("payInfo", payInfo);
             model.addAttribute("checkInDate", checkInDate);
             model.addAttribute("checkOutDate", checkOutDate);
+
         }
-        return "detail";
+
+        model.addAttribute("headers", "payments/headers");
+        model.addAttribute("center", "payments/center");
+        model.addAttribute("footer", "payments/footer");
+
+        return "index";
     }
 
     @PostMapping("/save-location")

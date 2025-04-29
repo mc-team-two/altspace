@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableEncryptableProperties
 public class JasyptConfig {
 
-    private static final String KEY = "mykey";
+    private static final String KEY = "space";
     private static final String ALGORITHM =  "PBEWithMD5AndDES";
 
     @Bean("jasyptStringEncryptor")

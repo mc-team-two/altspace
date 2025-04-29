@@ -40,8 +40,8 @@
     }
 </style>
 
-<div class="container my-4">
-    <h3 class="mb-4">내 스페이스 예약 조회</h3>
+<div class="container">
+    <p class="text-muted">결제/예약 조회 > 공간별 예약 내역</p>
     <div class="row">
         <c:forEach var="pay" items="${payments}">
             <div class="col-md-6 col-lg-4 mb-4">

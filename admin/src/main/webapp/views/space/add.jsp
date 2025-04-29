@@ -250,14 +250,9 @@
 
 </script>
 
-<div class="col-sm-12">
-
+<div class="container">
+    <p class="text-muted">공간 관리 > 공간 추가</p>
     <div class="card shadow mb-4">
-
-        <div class="card-header">
-            <h2>스페이스 신규 추가 탭</h2>
-        </div>
-
         <div class="card-body">
             <div class="table-responsive">
                 <form id="space_add_form" style="overflow-x:hidden">

@@ -15,12 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.List;
 
 @RequestMapping("/space")
 @Controller
@@ -95,10 +91,10 @@ public class SpaceController {
         }
 
         // 처리 후 리다이렉트
-        return "redirect:/space/get";
+        return "redirect:/space/list";
     }
 
-    @RequestMapping("/get")
+    @RequestMapping("/list")
     public String get(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
             Model model, HttpSession httpSession){
 
@@ -114,7 +110,7 @@ public class SpaceController {
         }
         model.addAttribute("cpage", pageInfo);
         model.addAttribute("target", "/space");
-        model.addAttribute("center", dir+"get");
+        model.addAttribute("center", dir+"list");
         return "index";
     }
 
@@ -186,7 +182,7 @@ public class SpaceController {
             // ✅ 숙소 정보 수정 처리
             accomService.mod(acc);
 
-            return "redirect:/space/get";
+            return "redirect:/space/list";
 
         } catch (Exception e) {
             e.printStackTrace();
