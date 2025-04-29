@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 
     private final UserService userService;
-    private final SocialUserService socialUserService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final StandardPBEStringEncryptor standardPBEStringEncryptor;
 
     String dir = "login/";
 
@@ -90,6 +93,10 @@ public class LoginController {
 
         // email 중복 아니라면
         user.setUserId(AuthUtil.generateUUID());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); // 비밀번호 (복호화 불가)
+        user.setName(standardPBEStringEncryptor.encrypt(user.getName()));   // 이름
+        user.setPhone(standardPBEStringEncryptor.encrypt(user.getPhone())); // 휴대폰 번호
+
         try {
             userService.add(user);
             log.info(user.toString());

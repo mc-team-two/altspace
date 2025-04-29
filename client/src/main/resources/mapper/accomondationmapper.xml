@@ -264,6 +264,39 @@
             Accommodations
         WHERE
             location LIKE CONCAT('%', #{location}, '%')
+          AND status = '활성'
     </select>
 
+    <!-- 위치 기반 검색 -->
+    <select id="searchAccommodationsByGeoLocation" parameterType="java.util.Map" resultType="com.mc.app.dto.Accommodations">
+        SELECT
+            accommodation_id,
+            host_id,
+            name,
+            location,
+            price_night,
+            person_max,
+            description,
+            status,
+            category,
+            room_type,
+            breakfast,
+            pool,
+            barbecue,
+            pet,
+            latitude,
+            longitude,
+            image1_name,
+            image2_name,
+            image3_name,
+            image4_name,
+            image5_name,
+            create_day,
+            update_day
+        FROM
+            Accommodations
+        WHERE
+            ST_Distance_Sphere(POINT(longitude, latitude), POINT(#{userLongitude}, #{userLatitude})) &lt;= #{radius}
+          AND status = '활성'
+    </select>
 </mapper>

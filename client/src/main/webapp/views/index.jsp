@@ -66,6 +66,7 @@
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
 <script src="js/offers_custom.js"></script>
 <script src="js/darkmode.js"></script>
+<script src="js/iconpopper.js"></script>
 </body>
 
 </html>
