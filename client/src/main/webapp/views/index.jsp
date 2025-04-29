@@ -59,6 +59,15 @@
 </div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
+<!-- iamport.payment.js -->
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<!-- moment.js -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- daterangepicker.js + CSS -->
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<!-- Bootstrap 4.6.2 JS (bundle 포함 = popper.js 포함) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
 <script src="plugins/Isotope/isotope.pkgd.min.js"></script>
