@@ -10,8 +10,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,11 +36,13 @@ public class AuthController {
 
     private final UserService userService;
     private final SocialUserService socialUserService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final StandardPBEStringEncryptor standardPBEStringEncryptor;
 
     // 페이지 연결
     @RequestMapping("/login")
     public String login(HttpSession httpSession) {
-        // 로그인 세션이 존재하면 접근할 수 없음
+        // 로그인 세션이 존재하면 접근할 수 없음 (잘못된 접근)
         if (httpSession.getAttribute("user") != null) {
             return "redirect:/";
         }
@@ -76,7 +80,7 @@ public class AuthController {
     @PostMapping("/registerimpl")
     public String registerimpl(@Valid User user, Model model, BindingResult bindingResult) {
         // 파라미터의 @Valid -> User DTO 유효성 검사
-        // 유효성 검사 통과 못했을 시
+        // 유효성 검사 실패시
         if (bindingResult.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder();
             bindingResult.getFieldErrors().forEach(error ->
@@ -90,16 +94,20 @@ public class AuthController {
             return "auth/register";
         }
 
-        // 유효성 테스트 통과시 : 고유 id 부여 후 DB에 푸시
-        // email -> 유니크 key
+        // 유효성 검사 통과시
+        // #1. DB에서 이메일 주소 중복 검사 (unique key)
         if (userService.getByEmail(user.getEmail()) != null) {
             String msg = "사용중인 이메일 주소입니다.";
             model.addAttribute("msg", msg);
             return "auth/register";
         }
 
-        // email 중복 아니라면
+        // #2. DB에 푸시 (고유 UID 제공 + 암호화)
         user.setUserId(AuthUtil.generateUUID());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); // 비밀번호 (복호화 불가)
+        user.setName(standardPBEStringEncryptor.encrypt(user.getName()));   // 이름
+        user.setPhone(standardPBEStringEncryptor.encrypt(user.getPhone())); // 휴대폰 번호
+
         try {
             userService.add(user);
             log.info(user.toString());
@@ -116,28 +124,26 @@ public class AuthController {
                             @RequestParam("password") String password,
                             Model model, HttpSession httpSession) {
 
-        // DB 접근 #1 - email 사용자가 있는지 확인
+        // 해당 email을 사용하는 유저가 DB에 있는지 확인
         User dbUser = userService.getByEmail(email);
 
-        // 1. 유저가 존재하지 않음
+        // #1. 유저가 없으면 -> 에러 처리
         if (dbUser == null) {
             model.addAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다");
             return "auth/login";
         }
 
-        // 2. 일반 이메일 회원 (비밀번호 필드가 있어야 함)
-        if (dbUser.getPassword() != null) {
-            // 패스워드 비교
-            if (dbUser.getPassword().equals(password)) {
-                httpSession.setAttribute("user", dbUser);
-                return "redirect:/";
-            } else {
-                model.addAttribute("msg", "비밀번호가 틀렸습니다");
-                return "auth/login";
-            }
+        // 유저가 있으면 ->
+        // #2. 일반 회원인지 확인 (비밀번호 필드가 있음)
+        if (dbUser.getPassword() != null && bCryptPasswordEncoder.matches(password, dbUser.getPassword())) {
+            httpSession.setAttribute("user", dbUser);
+            return "redirect:/";
+        } else if (!bCryptPasswordEncoder.matches(password, dbUser.getPassword())){
+            model.addAttribute("msg", "비밀번호가 틀렸습니다");
+            return "auth/login";
         }
 
-        // 3. 소셜 로그인 회원
+        // #3. 소셜 회원인지 확인 (비밀번호 필드가 없음)
         try {
             // dbUser가 존재함 -> user_id 로 조회
             SocialUser sUser = socialUserService.get(dbUser.getUserId());
