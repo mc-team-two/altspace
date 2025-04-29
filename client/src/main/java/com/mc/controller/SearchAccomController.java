@@ -1,6 +1,7 @@
 package com.mc.controller;
 
 import com.mc.app.dto.Accommodations;
+import com.mc.app.dto.AccomodationsWithRating;
 import com.mc.app.service.AccomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,28 +17,26 @@ public class SearchAccomController {
     @Autowired
     private AccomService accomService;
 
+    private AccomodationsWithRating accomodationsWithRating;
+
     @GetMapping("/search-accommodations")
     @ResponseBody
-    public List<Accommodations> searchAccommodations(@RequestParam("location") String location) {
+
+    public Object searchAccommodations(@RequestParam("location") String location,
+                                       @RequestParam(value = "withRating", required = false, defaultValue = "false") boolean withRating) throws Exception {
         List<Accommodations> accommodations = accomService.getAccommodationsByLocation(location);
-        return accommodations.stream()
-                .map(this::convertToResponseDTO)
-                .collect(Collectors.toList());
+        if (withRating) {
+            return accomService.getAccommodationsWithRating(accommodations);
+        } else {
+            return accommodations;
+        }
     }
 
-    private Accommodations convertToResponseDTO(Accommodations accommodation) {
-
-        return Accommodations.builder()
-                .accommodationId(accommodation.getAccommodationId())
-                .name(accommodation.getName())
-                .location(accommodation.getLocation())
-                .priceNight(accommodation.getPriceNight())
-                .description(accommodation.getDescription())
-                .image1Name(accommodation.getImage1Name())
-                .image2Name(accommodation.getImage2Name())
-                .image3Name(accommodation.getImage3Name())
-                .image4Name(accommodation.getImage4Name())
-                .image5Name(accommodation.getImage5Name())
-                .build();
+    @GetMapping("/search-accommodations-geo")
+    public List<Accommodations> searchAccommodationsByGeoLocation(
+            @RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude,
+            @RequestParam("radius") double radius) {
+        return accomService.searchAccommodationsByGeoLocation(latitude, longitude, radius);
     }
 }

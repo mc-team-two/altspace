@@ -2,558 +2,541 @@
 
 /******************************
 
-[Table of Contents]
-
-1. Vars and Inits
-2. Set Header
-3. Init Home Slider
-4. Init Menu
-5. Init Search
-6. Init CTA Slider
-7. Init Testimonials Slider
-8. Init Search Form
-9. Geolocation
-
-
-******************************/
-
-$(document).ready(function()
-{
-	"use strict";
-
-	/* 
-
-	1. Vars and Inits
-
-	*/
-
-	var menu = $('.menu');
-	var menuActive = false;
-	var header = $('.header');
-	var searchActive = false;
-
-	setHeader();
-
-	$(window).on('resize', function()
-	{
-		setHeader();
-	});
-
-	$(document).on('scroll', function()
-	{
-		setHeader();
-	});
-
-	initHomeSlider();
-	initMenu();
-	initSearch();
-	initCtaSlider();
-	initTestSlider();
-	initSearchForm();
-
-	/* 
-
-	2. Set Header
-
-	*/
-
-	function setHeader()
-	{
-		if(window.innerWidth < 992)
-		{
-			if($(window).scrollTop() > 100)
-			{
-				header.addClass('scrolled');
-			}
-			else
-			{
-				header.removeClass('scrolled');
-			}
-		}
-		else
-		{
-			if($(window).scrollTop() > 100)
-			{
-				header.addClass('scrolled');
-			}
-			else
-			{
-				header.removeClass('scrolled');
-			}
-		}
-		if(window.innerWidth > 991 && menuActive)
-		{
-			closeMenu();
-		}
-	}
-
-	/* 
-
-	3. Init Home Slider
-
-	*/
-
-	function initHomeSlider()
-	{
-		if($('.home_slider').length)
-		{
-			var homeSlider = $('.home_slider');
-
-			homeSlider.owlCarousel(
-			{
-				items:1,
-				loop:true,
-				autoplay:false,
-				smartSpeed:1200,
-				dotsContainer:'main_slider_custom_dots'
-			});
-
-			/* Custom nav events */
-			if($('.home_slider_prev').length)
-			{
-				var prev = $('.home_slider_prev');
-
-				prev.on('click', function()
-				{
-					homeSlider.trigger('prev.owl.carousel');
-				});
-			}
-
-			if($('.home_slider_next').length)
-			{
-				var next = $('.home_slider_next');
-
-				next.on('click', function()
-				{
-					homeSlider.trigger('next.owl.carousel');
-				});
-			}
-
-			/* Custom dots events */
-			if($('.home_slider_custom_dot').length)
-			{
-				$('.home_slider_custom_dot').on('click', function()
-				{
-					$('.home_slider_custom_dot').removeClass('active');
-					$(this).addClass('active');
-					homeSlider.trigger('to.owl.carousel', [$(this).index(), 300]);
-				});
-			}
-
-			/* Change active class for dots when slide changes by nav or touch */
-			homeSlider.on('changed.owl.carousel', function(event)
-			{
-				$('.home_slider_custom_dot').removeClass('active');
-				$('.home_slider_custom_dots li').eq(event.page.index).addClass('active');
-			});	
-
-			// add animate.css class(es) to the elements to be animated
-			function setAnimation ( _elem, _InOut )
-			{
-				// Store all animationend event name in a string.
-				// cf animate.css documentation
-				var animationEndEvent = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-
-				_elem.each ( function ()
-				{
-					var $elem = $(this);
-					var $animationType = 'animated ' + $elem.data( 'animation-' + _InOut );
-
-					$elem.addClass($animationType).one(animationEndEvent, function ()
-					{
-						$elem.removeClass($animationType); // remove animate.css Class at the end of the animations
-					});
-				});
-			}
-
-			// Fired before current slide change
-			homeSlider.on('change.owl.carousel', function(event)
-			{
-				var $currentItem = $('.home_slider_item', homeSlider).eq(event.item.index);
-				var $elemsToanim = $currentItem.find("[data-animation-out]");
-				setAnimation ($elemsToanim, 'out');
-			});
-
-			// Fired after current slide has been changed
-			homeSlider.on('changed.owl.carousel', function(event)
-			{
-				var $currentItem = $('.home_slider_item', homeSlider).eq(event.item.index);
-				var $elemsToanim = $currentItem.find("[data-animation-in]");
-				setAnimation ($elemsToanim, 'in');
-			})
-		}
-	}
-
-	/* 
-
-	4. Init Menu
-
-	*/
-
-	function initMenu()
-	{
-		if($('.hamburger').length && $('.menu').length)
-		{
-			var hamb = $('.hamburger');
-			var close = $('.menu_close_container');
-
-			hamb.on('click', function()
-			{
-				if(!menuActive)
-				{
-					openMenu();
-				}
-				else
-				{
-					closeMenu();
-				}
-			});
-
-			close.on('click', function()
-			{
-				if(!menuActive)
-				{
-					openMenu();
-				}
-				else
-				{
-					closeMenu();
-				}
-			});
-
-	
-		}
-	}
-
-	function openMenu()
-	{
-		menu.addClass('active');
-		menuActive = true;
-	}
-
-	function closeMenu()
-	{
-		menu.removeClass('active');
-		menuActive = false;
-	}
-
-	/* 
-
-	5. Init Search
-
-	*/
-
-	function initSearch()
-	{
-		if($('.search_tab').length)
-		{
-			$('.search_tab').on('click', function()
-			{
-				$('.search_tab').removeClass('active');
-				$(this).addClass('active');
-				var clickedIndex = $('.search_tab').index(this);
-
-				var panels = $('.search_panel');
-				panels.removeClass('active');
-				$(panels[clickedIndex]).addClass('active');
-			});
-		}
-	}
-
-	/* 
-
-	6. Init CTA Slider
-
-	*/
-
-	function initCtaSlider()
-	{
-		if($('.cta_slider').length)
-		{
-			var ctaSlider = $('.cta_slider');
-
-			ctaSlider.owlCarousel(
-			{
-				items:1,
-				loop:true,
-				autoplay:false,
-				nav:false,
-				dots:false,
-				smartSpeed:1200
-			});
-
-			/* Custom nav events */
-			if($('.cta_slider_prev').length)
-			{
-				var prev = $('.cta_slider_prev');
-
-				prev.on('click', function()
-				{
-					ctaSlider.trigger('prev.owl.carousel');
-				});
-			}
-
-			if($('.cta_slider_next').length)
-			{
-				var next = $('.cta_slider_next');
-
-				next.on('click', function()
-				{
-					ctaSlider.trigger('next.owl.carousel');
-				});
-			}
-		}
-	}
-
-	/* 
-
-	7. Init Testimonials Slider
-
-	*/
-
-	function initTestSlider()
-	{
-		if($('.test_slider').length)
-		{
-			var testSlider = $('.test_slider');
-
-			testSlider.owlCarousel(
-			{
-				loop:true,
-				nav:false,
-				dots:false,
-				smartSpeed:1200,
-				margin:30,
-				responsive:
-				{
-					0:{items:1},
-					480:{items:1},
-					768:{items:2},
-					992:{items:3}
-				}
-			});
-
-			/* Custom nav events */
-			if($('.test_slider_prev').length)
-			{
-				var prev = $('.test_slider_prev');
-
-				prev.on('click', function()
-				{
-					testSlider.trigger('prev.owl.carousel');
-				});
-			}
-
-			if($('.test_slider_next').length)
-			{
-				var next = $('.test_slider_next');
-
-				next.on('click', function()
-				{
-					testSlider.trigger('next.owl.carousel');
-				});
-			}
-		}
-	}
-
-	/* 
-
-	8. Init Search Form
-
-	*/
-
-	function initSearchForm()
-	{
-		if($('.search_form').length)
-		{
-			var searchForm = $('.search_form');
-			var searchInput = $('.search_content_input');
-			var searchButton = $('.content_search');
-
-			searchButton.on('click', function(event)
-			{
-				event.stopPropagation();
-
-				if(!searchActive)
-				{
-					searchForm.addClass('active');
-					searchActive = true;
-
-					$(document).one('click', function closeForm(e)
-					{
-						if($(e.target).hasClass('search_content_input'))
-						{
-							$(document).one('click', closeForm);
-						}
-						else
-						{
-							searchForm.removeClass('active');
-							searchActive = false;
-						}
-					});
-				}
-				else
-				{
-					searchForm.removeClass('active');
-					searchActive = false;
-				}
-			});	
-		}
-	}
-
-	// 9. Geolocation
-
-	// 위치 정보 가져오기 버튼 이벤트 리스너
-	$("#geolocationBtn").on("click", function() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(sendLocationToServer, handleLocationError);
-		} else {
-			alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
-		}
-	});
-
-	// 위치 정보를 서버로 전송하는 함수
-	function sendLocationToServer(position) {
-		const latitude = position.coords.latitude;
-		const longitude = position.coords.longitude;
-
-		$.ajax({
-			url: "/save-location", // 위치 정보를 저장할 서버 측 URL
-			type: "POST",
-			contentType: "application/json",
-			data: JSON.stringify({ latitude: latitude, longitude: longitude }),
-			success: function(response) {
-				alert(response); // 서버 응답 처리 (예: "위치 정보가 세션에 저장되었습니다.")
-			},
-			error: function(error) {
-				alert("위치 정보 저장에 실패했습니다.");
-				console.error(error);
-			}
-		});
-	}
-
-	// 위치 정보 가져오기 실패 시 처리 함수
-	function handleLocationError(error) {
-		switch (error.code) {
-			case error.PERMISSION_DENIED:
-				alert("위치 정보 접근 권한이 거부되었습니다.");
-				break;
-			case error.POSITION_UNAVAILABLE:
-				alert("위치 정보를 사용할 수 없습니다.");
-				break;
-			case error.TIMEOUT:
-				alert("위치 정보 요청 시간이 초과되었습니다.");
-				break;
-			case error.UNKNOWN_ERROR:
-				alert("알 수 없는 오류가 발생했습니다.");
-				break;
-		}
-	}
-
-	// 10. search
-
-	/*
+ [Table of Contents]
+
+ 1. Vars and Inits
+ 2. Set Header
+ 3. Init Home Slider
+ 4. Init Menu
+ 5. Init Search
+ 6. Init CTA Slider
+ 7. Init Testimonials Slider
+ 8. Init Search Form
+ 9. Geolocation
+
+
+ ******************************/
+
+$(document).ready(function () {
+    "use strict";
+
+    /*
+
+    1. Vars and Inits
+
+    */
+
+    var menu = $('.menu');
+    var menuActive = false;
+    var header = $('.header');
+    var searchActive = false;
+
+    setHeader();
+
+    $(window).on('resize', function () {
+        setHeader();
+    });
+
+    $(document).on('scroll', function () {
+        setHeader();
+    });
+
+    initHomeSlider();
+    initMenu();
+    initSearch();
+    initCtaSlider();
+    initTestSlider();
+    initSearchForm();
+
+    /*
+
+    2. Set Header
+
+    */
+
+    function setHeader() {
+        if (window.innerWidth < 992) {
+            if ($(window).scrollTop() > 100) {
+                header.addClass('scrolled');
+            } else {
+                header.removeClass('scrolled');
+            }
+        } else {
+            if ($(window).scrollTop() > 100) {
+                header.addClass('scrolled');
+            } else {
+                header.removeClass('scrolled');
+            }
+        }
+        if (window.innerWidth > 991 && menuActive) {
+            closeMenu();
+        }
+    }
+
+    /*
+
+    3. Init Home Slider
+
+    */
+
+    function initHomeSlider() {
+        if ($('.home_slider').length) {
+            var homeSlider = $('.home_slider');
+
+            homeSlider.owlCarousel(
+                {
+                    items: 1,
+                    loop: true,
+                    autoplay: false,
+                    smartSpeed: 1200,
+                    dotsContainer: 'main_slider_custom_dots'
+                });
+
+            /* Custom nav events */
+            if ($('.home_slider_prev').length) {
+                var prev = $('.home_slider_prev');
+
+                prev.on('click', function () {
+                    homeSlider.trigger('prev.owl.carousel');
+                });
+            }
+
+            if ($('.home_slider_next').length) {
+                var next = $('.home_slider_next');
+
+                next.on('click', function () {
+                    homeSlider.trigger('next.owl.carousel');
+                });
+            }
+
+            /* Custom dots events */
+            if ($('.home_slider_custom_dot').length) {
+                $('.home_slider_custom_dot').on('click', function () {
+                    $('.home_slider_custom_dot').removeClass('active');
+                    $(this).addClass('active');
+                    homeSlider.trigger('to.owl.carousel', [$(this).index(), 300]);
+                });
+            }
+
+            /* Change active class for dots when slide changes by nav or touch */
+            homeSlider.on('changed.owl.carousel', function (event) {
+                $('.home_slider_custom_dot').removeClass('active');
+                $('.home_slider_custom_dots li').eq(event.page.index).addClass('active');
+            });
+
+            // add animate.css class(es) to the elements to be animated
+            function setAnimation(_elem, _InOut) {
+                // Store all animationend event name in a string.
+                // cf animate.css documentation
+                var animationEndEvent = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+
+                _elem.each(function () {
+                    var $elem = $(this);
+                    var $animationType = 'animated ' + $elem.data('animation-' + _InOut);
+
+                    $elem.addClass($animationType).one(animationEndEvent, function () {
+                        $elem.removeClass($animationType); // remove animate.css Class at the end of the animations
+                    });
+                });
+            }
+
+            // Fired before current slide change
+            homeSlider.on('change.owl.carousel', function (event) {
+                var $currentItem = $('.home_slider_item', homeSlider).eq(event.item.index);
+                var $elemsToanim = $currentItem.find("[data-animation-out]");
+                setAnimation($elemsToanim, 'out');
+            });
+
+            // Fired after current slide has been changed
+            homeSlider.on('changed.owl.carousel', function (event) {
+                var $currentItem = $('.home_slider_item', homeSlider).eq(event.item.index);
+                var $elemsToanim = $currentItem.find("[data-animation-in]");
+                setAnimation($elemsToanim, 'in');
+            })
+        }
+    }
+
+    /*
+
+    4. Init Menu
+
+    */
+
+    function initMenu() {
+        if ($('.hamburger').length && $('.menu').length) {
+            var hamb = $('.hamburger');
+            var close = $('.menu_close_container');
+
+            hamb.on('click', function () {
+                if (!menuActive) {
+                    openMenu();
+                } else {
+                    closeMenu();
+                }
+            });
+
+            close.on('click', function () {
+                if (!menuActive) {
+                    openMenu();
+                } else {
+                    closeMenu();
+                }
+            });
+
+
+        }
+    }
+
+    function openMenu() {
+        menu.addClass('active');
+        menuActive = true;
+    }
+
+    function closeMenu() {
+        menu.removeClass('active');
+        menuActive = false;
+    }
+
+    /*
+
+    5. Init Search
+
+    */
+
+    function initSearch() {
+        if ($('.search_tab').length) {
+            $('.search_tab').on('click', function () {
+                $('.search_tab').removeClass('active');
+                $(this).addClass('active');
+                var clickedIndex = $('.search_tab').index(this);
+
+                var panels = $('.search_panel');
+                panels.removeClass('active');
+                $(panels[clickedIndex]).addClass('active');
+            });
+        }
+    }
+
+    /*
+
+    6. Init CTA Slider
+
+    */
+
+    function initCtaSlider() {
+        if ($('.cta_slider').length) {
+            var ctaSlider = $('.cta_slider');
+
+            ctaSlider.owlCarousel(
+                {
+                    items: 1,
+                    loop: true,
+                    autoplay: false,
+                    nav: false,
+                    dots: false,
+                    smartSpeed: 1200
+                });
+
+            /* Custom nav events */
+            if ($('.cta_slider_prev').length) {
+                var prev = $('.cta_slider_prev');
+
+                prev.on('click', function () {
+                    ctaSlider.trigger('prev.owl.carousel');
+                });
+            }
+
+            if ($('.cta_slider_next').length) {
+                var next = $('.cta_slider_next');
+
+                next.on('click', function () {
+                    ctaSlider.trigger('next.owl.carousel');
+                });
+            }
+        }
+    }
+
+    /*
+
+    7. Init Testimonials Slider
+
+    */
+
+    function initTestSlider() {
+        if ($('.test_slider').length) {
+            var testSlider = $('.test_slider');
+
+            testSlider.owlCarousel(
+                {
+                    loop: true,
+                    nav: false,
+                    dots: false,
+                    smartSpeed: 1200,
+                    margin: 30,
+                    responsive:
+                        {
+                            0: {items: 1},
+                            480: {items: 1},
+                            768: {items: 2},
+                            992: {items: 3}
+                        }
+                });
+
+            /* Custom nav events */
+            if ($('.test_slider_prev').length) {
+                var prev = $('.test_slider_prev');
+
+                prev.on('click', function () {
+                    testSlider.trigger('prev.owl.carousel');
+                });
+            }
+
+            if ($('.test_slider_next').length) {
+                var next = $('.test_slider_next');
+
+                next.on('click', function () {
+                    testSlider.trigger('next.owl.carousel');
+                });
+            }
+        }
+    }
+
+    /*
+
+    8. Init Search Form
+
+    */
+
+    function initSearchForm() {
+        if ($('.search_form').length) {
+            var searchForm = $('.search_form');
+            var searchInput = $('.search_content_input');
+            var searchButton = $('.content_search');
+
+            searchButton.on('click', function (event) {
+                event.stopPropagation();
+
+                if (!searchActive) {
+                    searchForm.addClass('active');
+                    searchActive = true;
+
+                    $(document).one('click', function closeForm(e) {
+                        if ($(e.target).hasClass('search_content_input')) {
+                            $(document).one('click', closeForm);
+                        } else {
+                            searchForm.removeClass('active');
+                            searchActive = false;
+                        }
+                    });
+                } else {
+                    searchForm.removeClass('active');
+                    searchActive = false;
+                }
+            });
+        }
+    }
+
+    // 9. Geolocation
+
+    // 위치 정보 가져오기 버튼 이벤트 리스너
+    $("#geolocationBtn").on("click", function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(sendLocationToServer, handleLocationError);
+        } else {
+            alert("이 브라우저에서는 위치 정보를 지원하지 않습니다.");
+        }
+    });
+
+    // 위치 정보를 서버로 전송하는 함수
+    function sendLocationToServer(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        $.ajax({
+            url: "/save-location", // 위치 정보를 저장할 서버 측 URL
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({latitude: latitude, longitude: longitude}),
+            success: function (response) {
+                alert(response); // 서버 응답 처리 (예: "위치 정보가 세션에 저장되었습니다.")
+            },
+            error: function (error) {
+                alert("위치 정보 저장에 실패했습니다.");
+                console.error(error);
+            }
+        });
+    }
+
+    // 위치 정보 가져오기 실패 시 처리 함수
+    function handleLocationError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert("위치 정보 접근 권한이 거부되었습니다.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("위치 정보를 사용할 수 없습니다.");
+                break;
+            case error.TIMEOUT:
+                alert("위치 정보 요청 시간이 초과되었습니다.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("알 수 없는 오류가 발생했습니다.");
+                break;
+        }
+    }
+
+    // 10. search
+
+    /*
     // 지역 검색 버튼 클릭 이벤트 리스너
-	 */
+     */
 
-	$("#searchAccommodationBtn").on("click", function() {
-		const location = $("#searchInput").val();
-		if (location) {
-			searchAccommodationsByLocation(location);
-		} else {
-			alert("검색어를 입력해주세요.");
-		}
-	});
+    $("#searchAccommodationBtn").on("click", function () {
+        const location = $("#searchInput").val();
+        if (location) {
+            searchAccommodationsByLocation(location);
+        } else {
+            alert("검색어를 입력해주세요.");
+        }
+    });
 
-	function searchAccommodationsByLocation(location) {
-		$.ajax({
-			url: "/search-accommodations", // 지역 검색 API 엔드포인트 URL
-			type: "GET",
-			data: { location: location },
-			dataType: "json",
-			success: function(accommodations) {
-				displaySearchResults(accommodations);
-			},
-			error: function(error) {
-				alert("숙소 검색에 실패했습니다.");
-				console.error(error);
-			}
-		});
-	}
+    function searchAccommodationsByLocation(location) {
+        $.ajax({
+            url: "/search-accommodations", // 지역 검색 API 엔드포인트 URL
+            type: "GET",
+            data: {location: location, withRating: true},
+            dataType: "json",
+            success: function (accommodations) {
+                displaySearchResults(accommodations);
+            },
+            error: function (error) {
+                alert("숙소 검색에 실패했습니다.");
+                console.error(error);
+            }
+        });
+    }
 
-	function displaySearchResults(accommodations) {
-		const offersGrid = $(".offers_grid");
-		offersGrid.empty(); // 기존 목록 비우기
+    function displaySearchResults(accommodationsWithRating) {
+        const offersGrid = $(".offers_grid");
+        offersGrid.empty();
 
-		if (accommodations && accommodations.length > 0) {
-			$.each(accommodations, function(index, accommodation) {
-				// Assuming you have rating data from somewhere, or using a default value
-				const rating = accommodation.rating || 4; // Default to 4 if not provided
-				const ratingClass = `rating_${Math.round(rating)}`;
+        if (accommodationsWithRating && accommodationsWithRating.length > 0) {
+            $.each(accommodationsWithRating, function (index, item) {
+                const accommodation = item.accommodation;
+                const rating = item.roundedRating;
+                const ratingClass = `rating_${rating}`;
+                let imageUrl = '';
+                if (accommodation.image1Name) {
+                    imageUrl = `/images/${accommodation.image1Name}`;
+                } else {
+                    imageUrl = `/images/default.jpg`;
+                }
 
-				let imageUrl;
-				if (accommodation.image1Name) {
-					imageUrl = `/images/${accommodation.image1Name}`
-				} else if (accommodation.image1Name) {
-					imageUrl = `/images/${accommodation.image1Name}`;
-				} else {
-					imageUrl = `/images/default.jpg`;
-				}
+                const barbecueIcon = accommodation.barbecue ? `<li class="offers_icons_item" data-popper-content="바베큐 시설 안내"><i class="fa fa-fire" aria-hidden="true" title="바베큐"></i></li>` : '';
+                const breakfastIcon = accommodation.breakfast ? `<li class="offers_icons_item" data-popper-content="맛있는 조식 제공"><i class="fa fa-coffee" aria-hidden="true" title="조식"></i></li>` : '';
+                const petIcon = accommodation.pet ? `<li class="offers_icons_item" data-popper-content="반려동물 동반 가능"><i class="fa fa-paw" aria-hidden="true" title="반려동물"></i></li>` : '';
+                const poolIcon = accommodation.pool ? `<li class="offers_icons_item" data-popper-content="시원한 수영장 이용"><i class="fa fa-tint" aria-hidden="true" title="수영장"></i></li>` : '';
 
-				const listItem = `
-            <div class="offers_item ${ratingClass}">
-               <div class="row">
-                  <div class="col-lg-1 temp_col"></div>
-                  <div class="col-lg-3 col-1680-4">
-                     <div class="offers_image_container">
-                        <div class="offers_image_background" style="background-image:url('${imageUrl}')"></div>
-                            <div class="offer_name"><a href="/detail?id=${accommodation.accommodationId}">${accommodation.name}</a></div>
-                     </div>
-                  </div>
-                          <div class="col-lg-8">
-                              <div class="offers_content">
-                                  <div class="offers_price">$${accommodation.priceNight}<span>per night</span></div>
-                                  <div class="rating_r rating_r_${Math.round(rating)} offers_rating" data-rating="${Math.round(rating)}">
-                                      <i></i><i></i><i></i><i></i><i></i>
-                                  </div>
-                                  <p class="offers_text">${accommodation.description}</p>
-                                  <div class="offers_icons">
-                                      <ul class="offers_icons_list">
-                                          <li class="offers_icons_item"><img alt="" src="images/post.png"></li>
-                                          <li class="offers_icons_item"><img alt="" src="images/compass.png"></li>
-                                          <li class="offers_icons_item"><img alt="" src="images/bicycle.png"></li>
-                                          <li class="offers_icons_item"><img alt="" src="images/sailboat.png"></li>
-                                      </ul>
-                                  </div>
-                                  <div class="button book_button"><a href="/detail?id=${accommodation.accommodationId}">상세보기<span></span><span></span><span></span></a></div>
-                                  <div class="offer_reviews">
-                                      <div class="offer_reviews_content">
-                                          <div class="offer_reviews_title">
-                                              ${getRatingText(Math.round(rating))}
-                                          </div>
-                                          <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
-                                      </div>
-                                      <div class="offer_reviews_rating text-center">
-                                          ${Math.round(rating)}
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
+                const listItem = `
+             <div class="offers_item ${ratingClass}">
+                <div class="row">
+                   <div class="col-lg-1 temp_col"></div>
+                   <div class="col-lg-3 col-1680-4">
+                      <div class="offers_image_container">
+                         <div class="offers_image_background" style="background-image:url('${imageUrl}')"></div>
+                             <div class="offer_name"><a href="/detail?id=${accommodation.accommodationId}">${accommodation.name}</a></div>
                       </div>
-                  </div>
-              `;
-				offersGrid.append(listItem);
-			});
-		} else {
-			offersGrid.html("<p>검색 결과가 없습니다.</p>");
-		}
-	}
+                   </div>
+                           <div class="col-lg-8">
+                               <div class="offers_content">
+                                   <div class="offers_price">$${accommodation.priceNight}<span>per night</span></div>
+                                   <div class="rating_r rating_r_${rating} offers_rating" data-rating="${rating}">
+                                       <i></i><i></i><i></i><i></i><i></i>
+                                   </div>
+                                   <p class="offers_text">${accommodation.description}</p>
+                                   <div class="offers_icons">
+                                       <ul class="offers_icons_list">
+                                           ${barbecueIcon}
+                                           ${breakfastIcon}
+                                           ${petIcon}
+                                           ${poolIcon}
+                                       </ul>
+                                   </div>
+                                   <div class="button book_button"><a href="/detail?id=${accommodation.accommodationId}">상세보기<span></span><span></span><span></span></a></div>
+                                   <div class="offer_reviews">
+                                       <div class="offer_reviews_content">
+                                           <div class="offer_reviews_title">
+                                               ${getRatingText(rating)}
+                                           </div>
+                                           <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
+                                       </div>
+                                       <div class="offer_reviews_rating text-center">
+                                           ${rating}
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               `;
+                offersGrid.append(listItem);
+            });
 
-	function getRatingText(rating) {
-		if (rating >= 4) return "최고예요!";
-		if (rating === 3) return "좋아요!";
-		if (rating === 2) return "괜찮아요!";
-		if (rating === 1) return "그저 그래요!";
-		return "평가가 없어요";
-	}
+            // 검색 결과가 그려진 후에 팝업 기능 활성화
+            initIconPopper();
+
+        } else {
+            offersGrid.html("<p>검색 결과가 없습니다.</p>");
+        }
+    }
+
+    function getRatingText(rating) {
+        if (rating >= 4) return "최고예요!";
+        if (rating === 3) return "좋아요!";
+        if (rating === 2) return "괜찮아요!";
+        if (rating === 1) return "그저 그래요!";
+        return "평가가 없어요";
+    }
+
+// 팝업 기능을 초기화하는 함수
+    function initIconPopper() {
+        const tooltipTriggers = document.querySelectorAll('.offers_icons_item[data-popper-content]');
+
+        tooltipTriggers.forEach(trigger => {
+            const tooltip = document.createElement('div');
+            tooltip.classList.add('popper-tooltip');
+            tooltip.textContent = trigger.dataset.popperContent;
+            document.body.appendChild(tooltip);
+
+            // 1.x 버전의 Popper 사용
+            const popperInstance = new Popper(trigger, tooltip, {
+                placement: 'top',
+                modifiers: {
+                    offset: {
+                        offset: '0, 8',
+                    },
+                    arrow: {
+                        element: '.popper-arrow',
+                    },
+                },
+            });
+
+            const showEvents = ['mouseenter', 'focus'];
+            const hideEvents = ['mouseleave', 'blur'];
+
+            showEvents.forEach(event => {
+                trigger.addEventListener(event, () => {
+                    tooltip.classList.add('active');
+                    popperInstance.update();
+                });
+            });
+
+            hideEvents.forEach(event => {
+                trigger.addEventListener(event, () => {
+                    tooltip.classList.remove('active');
+                });
+            });
+        });
+    }
+
 });
