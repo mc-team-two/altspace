@@ -175,19 +175,19 @@
     <div class="card mb-4 shadow-sm">
         <c:choose>
             <c:when test="${pyStatus == '완료'}">
-            <!-- 결제 완료 상태: 예약 내역만 보여줌 -->
-            <form id="data_del">
-                <div class="mb-3">
-                    <h5>예약 내역</h5>
-                    <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
-                    <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
-                    <input type="hidden" name="impUid" value="${payInfo.impUid}">
-                    <input type="hidden" name="paymentId" value="${payInfo.paymentId}">
-                    <p><strong>체크인:</strong> <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd" /></p>
-                    <p><strong>체크아웃:</strong> <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd" /></p>
-                    <p><strong>결제 금액:</strong> <fmt:formatNumber value="${payInfo.payAmount}" type="number"/> 원</p>
-                </div>
-            </form>
+                <!-- 결제 완료 상태: 예약 내역만 보여줌 -->
+                <form id="data_del">
+                    <div class="mb-3">
+                        <h5>예약 내역</h5>
+                        <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
+                        <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
+                        <input type="hidden" name="impUid" value="${payInfo.impUid}">
+                        <input type="hidden" name="paymentId" value="${payInfo.paymentId}">
+                        <p><strong>체크인:</strong> <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd" /></p>
+                        <p><strong>체크아웃:</strong> <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd" /></p>
+                        <p><strong>결제 금액:</strong> <fmt:formatNumber value="${payInfo.payAmount}" type="number"/> 원</p>
+                    </div>
+                </form>
             </c:when>
             <c:otherwise>
                 <!-- 결제 전: 날짜 선택 및 결제 폼 -->
