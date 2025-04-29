@@ -57,10 +57,7 @@
                                     <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                                 </div>
                                 <div class="user_box_login user_box_link">
-                                    <a href="<c:url value="/cart?name=${sessionScope.user.name}"/> ">Cart</a>
-                                </div>
-                                <div class="user_box_login user_box_link">
-                                    <a href="<c:url value="/auth/logout"/> ">logout</a></div>
+                                    <a href="<c:url value="/auth/logout"/> ">로그아웃</a></div>
                                 <div class="user_box_login theme-switch">
                                     <label class="theme-toggle">
                                         <input type="checkbox" id="theme-toggle-user" class="theme-toggle">

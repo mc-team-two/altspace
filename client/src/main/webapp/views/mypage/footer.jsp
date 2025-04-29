@@ -1,10 +1,7 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-
-<body>
 
 <!-- 푸터 -->
 
@@ -32,42 +29,43 @@
         </div>
       </div>
 
-      <!-- Footer Column -->
+      <!-- 기존 템플릿 내용 삭제 후 정렬을 위한 빈 칸으로 활용 -->
       <div class="col-lg-3 footer_column">
         <div class="footer_col">
-          <div class="footer_title">blog posts</div>
+          <%--<div class="footer_title">blog posts</div>
           <div class="footer_content footer_blog">
 
-            <!-- Footer blog item -->
-            <div class="footer_blog_item clearfix">
-              <div class="footer_blog_image"><img src="images/footer_blog_1.jpg" alt="https://unsplash.com/@avidenov"></div>
-              <div class="footer_blog_content">
-                <div class="footer_blog_title"><a href="blog.html">Travel with us this year</a></div>
-                <div class="footer_blog_date">Nov 29, 2017</div>
+              <!-- Footer blog item -->
+              <div class="footer_blog_item clearfix">
+                  <div class="footer_blog_image"><img src="images/footer_blog_1.jpg" alt="https://unsplash.com/@avidenov"></div>
+                  <div class="footer_blog_content">
+                      <div class="footer_blog_title"><a href="blog.html">Travel with us this year</a></div>
+                      <div class="footer_blog_date">Nov 29, 2017</div>
+                  </div>
               </div>
-            </div>
 
-            <!-- Footer blog item -->
-            <div class="footer_blog_item clearfix">
-              <div class="footer_blog_image"><img src="images/footer_blog_2.jpg" alt="https://unsplash.com/@deannaritchie"></div>
-              <div class="footer_blog_content">
-                <div class="footer_blog_title"><a href="blog.html">New destinations for you</a></div>
-                <div class="footer_blog_date">Nov 29, 2017</div>
+              <!-- Footer blog item -->
+              <div class="footer_blog_item clearfix">
+                  <div class="footer_blog_image"><img src="images/footer_blog_2.jpg" alt="https://unsplash.com/@deannaritchie"></div>
+                  <div class="footer_blog_content">
+                      <div class="footer_blog_title"><a href="blog.html">New destinations for you</a></div>
+                      <div class="footer_blog_date">Nov 29, 2017</div>
+                  </div>
               </div>
-            </div>
 
-            <!-- Footer blog item -->
-            <div class="footer_blog_item clearfix">
-              <div class="footer_blog_image"><img src="images/footer_blog_3.jpg" alt="https://unsplash.com/@bergeryap87"></div>
-              <div class="footer_blog_content">
-                <div class="footer_blog_title"><a href="blog.html">Travel with us this year</a></div>
-                <div class="footer_blog_date">Nov 29, 2017</div>
+              <!-- Footer blog item -->
+              <div class="footer_blog_item clearfix">
+                  <div class="footer_blog_image"><img src="images/footer_blog_3.jpg" alt="https://unsplash.com/@bergeryap87"></div>
+                  <div class="footer_blog_content">
+                      <div class="footer_blog_title"><a href="blog.html">Travel with us this year</a></div>
+                      <div class="footer_blog_date">Nov 29, 2017</div>
+                  </div>
               </div>
-            </div>
 
-          </div>
+          </div>--%>
         </div>
       </div>
+
 
       <!-- 태그 -->
       <div class="col-lg-3 footer_column">
@@ -118,30 +116,3 @@
     </div>
   </div>
 </footer>
-
-<!-- Copyright -->
-
-<div class="copyright">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3 order-lg-1 order-2  ">
-        <div class="copyright_content d-flex flex-row align-items-center">
-          <div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="js/custom.js"></script>
-
-</body>
-
-</html>

@@ -111,139 +111,6 @@
                                 <button class="button search_button" id="geolocationBtn">내 위치 검색<span></span><span></span><span></span></button>
                             </form>
                         </div>
-
-                        <!-- Search Panel 2 -->
-
-                        <div class="search_panel active_2">
-                            <form action="#" id="search_form_2" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                                <div class="search_item">
-                                    <div>목적지</div>
-                                    <input type="text" class="destination search_input" placeholder="여행지나 숙소를 검색해보세요." required="required">
-                                </div>
-                                <div class="search_item">
-                                    <div>체크인</div>
-                                    <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-                                </div>
-                                <div class="search_item">
-                                    <div>체크아웃</div>
-                                    <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-                                </div>
-                                <div class="search_item">
-                                    <div>인원</div>
-                                    <select name="adults" id="adults_2" class="dropdown_item_select search_input">
-                                        <option>1명</option>
-                                        <option>2명</option>
-                                        <option>3~5명</option>
-                                        <option>5명 이상</option>
-                                    </select>
-                                </div>
-
-                                <!-- Search Panel 2 추가 옵션 -->
-
-                                <div class="extras">
-                                    <ul class="search_extras clearfix">
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_6" class="search_extras_cb">
-                                                <label for="search_extras_6">반려동물 동반 가능</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_7" class="search_extras_cb">
-                                                <label for="search_extras_7">주차 가능</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_8" class="search_extras_cb">
-                                                <label for="search_extras_8">Wi-Fi/인터넷</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_9" class="search_extras_cb">
-                                                <label for="search_extras_9">비흡연 객실</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_10" class="search_extras_cb">
-                                                <label for="search_extras_10">욕조/풀장</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <button class="button search_button">검색하기<span></span><span></span><span></span></button>
-                            </form>
-                        </div>
-
-                        <!-- Search Panel 3 -->
-
-                        <div class="search_panel active_3">
-                            <form action="#" id="search_form_3" class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
-                                <div class="search_item">
-                                    <div>위치</div>
-                                    <input type="text" class="destination search_input" placeholder="위치나 파티룸을 검색해보세요." required="required">
-                                </div>
-                                <div class="search_item">
-                                    <div>체크인</div>
-                                    <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
-                                </div>
-                                <div class="search_item">
-                                    <div>체크아웃</div>
-                                    <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
-                                </div>
-                                <div class="search_item">
-                                    <div>인원</div>
-                                    <select name="adults" id="adults_3" class="dropdown_item_select search_input">
-                                        <option>1명</option>
-                                        <option>2명</option>
-                                        <option>3~5명</option>
-                                        <option>5명 이상</option>
-                                    </select>
-                                </div>
-
-                                <!-- Search Panel 3 추가 옵션 -->
-
-                                <div class="extras">
-                                    <ul class="search_extras clearfix">
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_11" class="search_extras_cb">
-                                                <label for="search_extras_11">반려동물 동반 가능</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_12" class="search_extras_cb">
-                                                <label for="search_extras_12">주차 가능</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_13" class="search_extras_cb">
-                                                <label for="search_extras_13">Wi-Fi/인터넷</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_14" class="search_extras_cb">
-                                                <label for="search_extras_14">비흡연 객실</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_15" class="search_extras_cb">
-                                                <label for="search_extras_15">욕조/풀장</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button class="button search_button">검색하기<span></span><span></span><span></span></button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -316,7 +183,7 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="offers_content">
-                                        <div class="offers_price">₩${a.priceNight}<span>per night</span></div>
+                                        <div class="offers_price">₩${a.priceNight}<span>~1박</span></div>
                                         <div class="rating_r rating_r_${currentRating} offers_rating" data-rating="${currentRating}">
                                             <i></i><i></i><i></i><i></i><i></i>
                                         </div>
