@@ -74,4 +74,30 @@
         WHERE reservations_id = #{reservationsId}
     </select>
 
+    <select id="selectMonthTotal" resultType="int">
+        SELECT IFNULL(SUM(pay_amount), 0)
+        FROM payments
+        WHERE pay_status = '완료'
+          AND (
+            (MONTH(check_in) = MONTH(CURRENT_DATE()) AND YEAR(check_in) = YEAR(CURRENT_DATE()))
+                OR
+            (MONTH(check_out) = MONTH(CURRENT_DATE()) AND YEAR(check_out) = YEAR(CURRENT_DATE()))
+            )
+    </select>
+
+    <!-- 내일 이후 예약 건수 조회 -->
+    <select id="selectUpcomingReservations" resultType="Payments">
+        SELECT *
+        FROM payments
+        WHERE pay_status = '완료'
+        AND check_in > CURDATE()  <!-- 내일 이후 -->
+    </select>
+
+    <select id="countTodayCheckIn" resultType="int">
+        SELECT COUNT(*)
+        FROM payments
+        WHERE DATE(check_in) = CURRENT_DATE
+          AND pay_status = '완료'
+    </select>
+
 </mapper>
