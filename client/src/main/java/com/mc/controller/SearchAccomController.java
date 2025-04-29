@@ -22,7 +22,6 @@ public class SearchAccomController {
     @ResponseBody
     public Object searchAccommodations(@RequestParam("location") String location,
                                        @RequestParam(value = "withRating", required = false, defaultValue = "false") boolean withRating) throws Exception {
-        System.out.println("withRating 파라미터 값: " + withRating); // 로그 확인
         List<Accommodations> accommodations = accomService.getAccommodationsByLocation(location);
         if (withRating) {
             return accomService.getAccommodationsWithRating(accommodations); // 이 부분이 호출되어야 함

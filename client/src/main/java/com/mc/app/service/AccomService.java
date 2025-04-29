@@ -46,7 +46,6 @@ public class AccomService implements MCService<Accommodations, Integer> {
 
     // 페이징된 숙소 목록과 함께 평균 평점을 반환하는 메서드
     public List<AccomodationsWithRating> getAccommodationsWithRating(List<Accommodations> accommodations) throws Exception {
-        System.out.println("getAccommodationsWithRating 메서드 호출됨"); // 로그 출력
         List<AccomodationsWithRating> accommodationsWithRatingList = new ArrayList<>();
         for (Accommodations acc : accommodations) {
             double avgRating = reviewService.getAverageRating((long) acc.getAccommodationId());
@@ -62,7 +61,7 @@ public class AccomService implements MCService<Accommodations, Integer> {
 
     // 지역으로 숙소를 검색하는 메서드 (location 컬럼에 검색어 포함)
     public List<Accommodations> getAccommodationsByLocation(String location) {
-        return accomRepository.searchAccommodationsByLocation(location); // 올바른 호출: 인스턴스 사용
+        return accomRepository.searchAccommodationsByLocation(location);
     }
 
     // 지역으로 숙소를 검색하는 메서드 (geolocation 기반)
