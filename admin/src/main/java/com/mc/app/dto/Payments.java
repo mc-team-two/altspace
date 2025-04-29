@@ -30,4 +30,6 @@ public class Payments {
     private String location;             // 숙소 주소(조인해서 가져오는 데이터)
     private Timestamp createDay;
     private String image1Name;          // 숙소 대표 이미지(조인해서 가져오는 데이터)
+    private String userName;           // Users.name을 저장할 임시 필드
+    private int reservationsCount;      // 이번 달 예약 건수
 }

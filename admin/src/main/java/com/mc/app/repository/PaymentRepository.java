@@ -4,8 +4,8 @@ import com.mc.app.dto.Payments;
 import com.mc.app.frame.MCRepository;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Mapper
@@ -26,4 +26,12 @@ public interface PaymentRepository extends MCRepository<Payments,Integer> {
     // 오늘 체크인 예약 건수 조회
     int countTodayCheckIn() throws Exception;
 
+    // 오늘부터 7일 이내의 다가오는 예약 목록
+    List<Payments> selectUpcoming7DaysReservations() throws Exception;
+
+    // 이번 달 인기 스페이스 (예약 완료 수 기준 최다)
+    Payments selectPopularSpaceThisMonth() throws Exception;
+
+    // 최근 6개월간의 수익 조회
+    List<Map<String, Object>> selectLast6MonthsEarnings();
 }

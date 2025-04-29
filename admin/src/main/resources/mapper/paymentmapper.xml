@@ -79,9 +79,9 @@
         FROM payments
         WHERE pay_status = '완료'
           AND (
-            (MONTH(check_in) = MONTH(CURRENT_DATE()) AND YEAR(check_in) = YEAR(CURRENT_DATE()))
+            (YEAR(check_in) = YEAR(CURRENT_DATE()) AND MONTH(check_in) = MONTH(CURRENT_DATE()))
                 OR
-            (MONTH(check_out) = MONTH(CURRENT_DATE()) AND YEAR(check_out) = YEAR(CURRENT_DATE()))
+            (YEAR(check_out) = YEAR(CURRENT_DATE()) AND MONTH(check_out) = MONTH(CURRENT_DATE()))
             )
     </select>
 
@@ -98,6 +98,47 @@
         FROM payments
         WHERE DATE(check_in) = CURRENT_DATE
           AND pay_status = '완료'
+    </select>
+
+    <select id="selectUpcoming7DaysReservations" resultType="Payments">
+        SELECT
+            p.*,
+            u.name AS user_name,
+            a.name AS name
+        FROM Payments p
+                 JOIN Users u ON p.guest_id = u.user_id
+                 JOIN Accommodations a ON p.accommodation_id = a.accommodation_id
+        WHERE p.check_in BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), INTERVAL 7 DAY)
+          AND p.pay_status = '완료'
+        ORDER BY p.check_in ASC
+    </select>
+
+    <select id="selectPopularSpaceThisMonth" resultType="Payments">
+        SELECT
+            p.accommodation_id,
+            COUNT(*) AS reservations_count,
+            a.name,
+            a.location,
+            a.image1_name AS image1Name
+        FROM payments p
+                 JOIN accommodations a ON p.accommodation_id = a.accommodation_id
+        WHERE p.pay_status = '완료'
+            AND MONTH(p.create_day) = MONTH(CURRENT_DATE())
+          AND YEAR(p.create_day) = YEAR(CURRENT_DATE())
+        GROUP BY p.accommodation_id
+        ORDER BY reservations_count DESC
+            LIMIT 1
+    </select>
+
+    <select id="selectLast6MonthsEarnings" resultType="map">
+        SELECT
+            CONCAT(YEAR(ANY_VALUE(check_in)), '년 ', MONTH(ANY_VALUE(check_in)), '월') AS month, -- check_in에 ANY_VALUE() 적용
+            SUM(pay_amount) AS total
+        FROM payments
+        WHERE pay_status = '완료'
+          AND check_in >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
+        GROUP BY YEAR(check_in), MONTH(check_in)
+        ORDER BY YEAR(check_in) ASC, MONTH(check_in) ASC;
     </select>
 
 </mapper>

@@ -4,7 +4,7 @@
 
 <div class="container my-4">
 
-  <!-- 요약 카드 -->
+  <!-- 1행: 요약 카드 -->
   <div class="row text-center mb-4">
 
     <!-- 이번달 수익 카드-->
@@ -21,7 +21,7 @@
     <div class="col-md-3 mb-3">
       <div class="card shadow-sm h-100">
         <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-          <h6 class="card-title text-muted mb-2">📅 현재 예약 건수</h6>
+          <h6 class="card-title mb-2">📅 현재 예약 건수</h6>
           <h2 class="fw-bold mb-0" style="color: #696cff; font-size: 2rem;">${reservationCount}건</h2>
         </div>
       </div>
@@ -31,7 +31,7 @@
     <div class="col-md-3 mb-3">
       <div class="card shadow-sm h-100">
         <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-          <h6 class="card-title text-muted mb-2">🏠 오늘 체크인</h6>
+          <h6 class="card-title mb-2">🏠 오늘 체크인</h6>
           <h2 id="todayCheckInCount" class="text-danger fw-bold" style="font-size: 2rem; margin-bottom: 0;">${todayCheckInCount}건</h2>
         </div>
       </div>
@@ -41,7 +41,7 @@
     <div class="col-md-3 mb-3">
       <div class="card shadow-sm h-100">
         <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-          <h6 class="card-title text-muted mb-2">⭐ 신규 리뷰</h6>
+          <h6 class="card-title mb-2">⭐ 신규 리뷰</h6>
           <h2 class="text-warning fw-bold" style="margin-bottom: 0;">2건</h2>
         </div>
       </div>
@@ -49,59 +49,73 @@
 
   </div>
 
-  <!-- 다가오는 예약 -->
+  <!-- 2행: 다가오는 예약, 인기 스페이스-->
   <div class="row">
+
+    <!-- 다가오는 예약 -->
     <div class="col-md-8 mb-4">
-      <div class="card">
-        <div class="card-header bg-light">📌 다가오는 예약</div>
-        <div class="card-body p-0">
-          <table class="table table-striped mb-0">
-            <thead class="table-light">
-            <tr>
-              <th>게스트 이름</th>
-              <th>체크인</th>
-              <th>체크아웃</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>김민지</td>
-              <td>2025-04-30</td>
-              <td>2025-05-02</td>
-            </tr>
-            <tr>
-              <td>이서준</td>
-              <td>2025-05-01</td>
-              <td>2025-05-03</td>
-            </tr>
-            </tbody>
-          </table>
+
+      <div class="card shadow-sm h-100">
+        <div class="card-body d-flex flex-column justify-content-center p-4">
+          <h6 class="card-title mb-2">📌 다가오는 예약</h6>
+          <div class="card-body p-4">
+            <table class="table table-bordered table-hover">
+              <thead class="table-light">
+              <tr>
+                <th class="text-center">이름</th>
+                <th class="text-center">스페이스</th>
+                <th class="text-center">체크인</th>
+                <th class="text-center">체크아웃</th>
+              </tr>
+              </thead>
+              <tbody>
+              <c:choose>
+                <c:when test="${not empty upcoming7DaysReservations}">
+                  <c:forEach var="reservation" items="${upcoming7DaysReservations}">
+                    <tr>
+                      <td class="text-center">${reservation.userName}</td>
+                      <td class="text-center">${reservation.name}</td>
+                      <td class="text-center">${reservation.checkIn}</td>
+                      <td class="text-center">${reservation.checkOut}</td>
+                    </tr>
+                  </c:forEach>
+                </c:when>
+                <c:otherwise>
+                  <tr>
+                    <td colspan="3" class="text-center text-muted">📅 다가오는 예약이 없습니다.</td>
+                  </tr>
+                </c:otherwise>
+              </c:choose>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 알림 -->
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-header bg-light">🔔 알림</div>
-        <div class="card-body">
-          <ul class="list-unstyled mb-0">
-            <li>📩 박지훈님으로부터 새 메시지</li>
-            <li>📆 5월 5일 예약 요청</li>
-            <li>⭐ 신규 리뷰가 등록되었습니다</li>
-          </ul>
+    <!-- 이번 달 인기 스페이스 -->
+    <c:if test="${not empty popularSpace}">
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body d-flex flex-column justify-content-center p-4">
+            <h6 class="card-title mb-2">🏠 이번 달 인기 스페이스</h6>
+            <div class="text-center">
+              <h5 class="card-title mb-3 text-primary fw-bold" style="line-height: 1.1;">${popularSpace.name}</h5>
+              <p class="card-text text-muted mb-3" style="line-height: 0.5;">총 <strong>${popularSpace.reservationsCount}</strong>건의 예약이 완료되었습니다.</p>
+              <img src="${pageContext.request.contextPath}/imgs/${popularSpace.image1Name}" alt="숙소 이미지"
+                   class="img-fluid rounded" style="max-height: 180px;">
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </c:if>
   </div>
 
-  <!-- 수익 차트 -->
-  <div class="card">
-    <div class="card-header bg-light">
-      📈 월별 수익 추이
-    </div>
+  <!-- 3행: 수익 차트 -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-light fw-bold">📈 최근 6개월 수익 추이</div>
     <div class="card-body">
-      <canvas id="earningsChart" height="100"></canvas>
+      <canvas id="earningsChart" style="max-height: 300px; height: 300px;"></canvas>
     </div>
   </div>
 </div>
@@ -110,11 +124,17 @@
   document.addEventListener('DOMContentLoaded', function () {
     // 수익 숫자 애니메이션
     const monthTotalElement = document.getElementById('monthTotal');
-    const finalAmount = parseInt('${monthTotal}'); // 서버에서 받은 수익값
+    const finalAmount = parseInt('${monthTotal}'.replace(/,/g, '')); // 서버에서 받은 수익값
+
+    if (isNaN(finalAmount)) {
+      console.error('서버에서 받은 값이 올바르지 않습니다.');
+      return;
+    }
+
     let currentAmount = 0;
-    const duration = 1000; // 1초
+    const duration = 3000;
     const frameRate = 60;
-    const totalFrames = Math.round(duration / (1000 / frameRate));
+    const totalFrames = Math.round(duration / (2000 / frameRate));
     const increment = finalAmount / totalFrames;
 
     const counter = setInterval(() => {
@@ -123,31 +143,43 @@
         currentAmount = finalAmount;
         clearInterval(counter);
       }
-      monthTotalElement.innerText = Math.floor(currentAmount).toLocaleString() + "원";
+      // 소수점 반올림 후 천 단위 구분
+      monthTotalElement.innerText = Math.round(currentAmount).toLocaleString() + "원";
     }, 1000 / frameRate);
 
+    // 오늘 체크인 애니메이션
     const todayCheckInCountElement = document.getElementById('todayCheckInCount');
-    const todayCheckInCount = parseInt(todayCheckInCountElement.innerText);
+    let todayCheckInCount = parseInt(todayCheckInCountElement.innerText.trim(), 10);
+
+    if (isNaN(todayCheckInCount) || todayCheckInCount <= 0) {
+      console.error("유효한 숫자가 아닙니다:", todayCheckInCountElement.innerText);
+      todayCheckInCount = 0;  // 값이 0이거나 유효하지 않으면 애니메이션을 멈추도록 설정
+    }
 
     let currentCount = 0;
-    let interval = setInterval(() => {
+    const todayCheckInInterval = setInterval(() => {
       if (currentCount < todayCheckInCount) {
         currentCount++;
         todayCheckInCountElement.innerText = `${currentCount}건`;
       } else {
-        clearInterval(interval);
+        clearInterval(todayCheckInInterval);
+        // 애니메이션 끝나면 마지막 값을 갱신한 후 종료
+        todayCheckInCountElement.innerText = `${todayCheckInCount}건`;  // 최종 값이 그대로 남게 설정
       }
-    }, 30); // 30ms마다 1씩 증가
+    }, 30);
+
+    // 수익 데이터 가져오기
+    const earningsData = JSON.parse('${earningsDataJson}');
 
     // Chart.js - 월별 수익 그래프
     const ctx = document.getElementById('earningsChart').getContext('2d');
     const earningsChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['1월', '2월', '3월', '4월', '5월'],
+        labels: earningsData.map(data => data.month), // 월 정보
         datasets: [{
           label: '월별 수익 (₩)',
-          data: [800000, 950000, 1200000, 1100000, 1300000],
+          data: earningsData.map(data => data.total), // 수익 정보
           borderColor: 'rgba(75, 192, 192, 1)',
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           tension: 0.3,
@@ -157,6 +189,7 @@
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: false,
