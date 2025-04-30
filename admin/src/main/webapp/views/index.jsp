@@ -87,19 +87,19 @@
 
                 <!-- 공간 관리 섹션 -->
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">공간 관리</span>
+                    <span class="menu-header-text">스페이스 관리</span>
                 </li>
                 <li class="menu-item">
                     <a href='<c:url value="/space/add"/>' class="menu-link">
                         <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
                         <box-icon name='add-to-queue'></box-icon>
-                        <div>공간 추가</div>
+                        <div>스페이스 추가</div>
                     </a>
                 </li>
                 <li class="menu-item">
                     <a href='<c:url value="/space/list"/>' class="menu-link">
                         <i class="menu-icon tf-icons bx bx-building-house"></i>
-                        <div>내 공간 관리</div>
+                        <div>내 스페이스 조회</div>
                     </a>
                 </li>
 
@@ -116,7 +116,7 @@
                 <li class="menu-item">
                     <a href='<c:url value="/payment/booking"/>' class="menu-link">
                         <i class="menu-icon tf-icons bx bx-calendar-check"></i>
-                        <div>공간별 예약 내역</div>
+                        <div>스페이스별 예약 내역</div>
                     </a>
                 </li>
 
