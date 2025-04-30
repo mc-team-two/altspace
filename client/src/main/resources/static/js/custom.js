@@ -394,17 +394,31 @@ $(document).ready(function () {
     $("#searchAccommodationBtn").on("click", function () {
         const location = $("#searchInput").val();
         if (location) {
-            searchAccommodationsByLocation(location);
+            const extras = [];
+            if ($('#search_extras_1').prop('checked')) {
+                extras.push('breakfast');
+            }
+            if ($('#search_extras_2').prop('checked')) {
+                extras.push('pet');
+            }
+            if ($('#search_extras_3').prop('checked')) {
+                extras.push('barbecue');
+            }
+            if ($('#search_extras_4').prop('checked')) {
+                extras.push('pool');
+            }
+
+            searchAccommodationsByLocation(location, extras); // extras 파라미터 추가
         } else {
             alert("검색어를 입력해주세요.");
         }
     });
 
-    function searchAccommodationsByLocation(location) {
+    function searchAccommodationsByLocation(location, extras) {
         $.ajax({
-            url: "/search-accommodations", // 지역 검색 API 엔드포인트 URL
+            url: "/search-accommodations",
             type: "GET",
-            data: {location: location, withRating: true},
+            data: { location: location, withRating: true, extras: extras }, // extras 파라미터 추가
             dataType: "json",
             success: function (accommodations) {
                 displaySearchResults(accommodations);

@@ -55,7 +55,7 @@ public class AuthController {
             return "redirect:/";
         } else if (!bCryptPasswordEncoder.matches(password, dbUser.getPassword())) {
             model.addAttribute("msg", "비밀번호가 틀렸습니다");
-            return "auth/login";
+            return "login/login";
         }
 
         // 3. 소셜 로그인 회원

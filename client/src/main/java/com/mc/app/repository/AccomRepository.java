@@ -12,15 +12,9 @@ import java.util.Map;
 @Mapper
 public interface AccomRepository extends MCRepository<Accommodations,Integer> {
 
-    List<Accommodations> selectAllAccommodations();
-
-    List<Accommodations> searchAccommodations(Map<String, Object> searchMap);
-
-    // 키워드(이름, 위치, 설명) 기반 검색 메서드
-    List<Accommodations> searchAccommodationsByKeyword(String keyword);
-
-    // 위치 기반 검색 메서드 (MyBatis Mapper XML에 구현)
     List<Accommodations> searchAccommodationsByLocation(String location);
-
     List<Accommodations> searchAccommodationsByGeoLocation(Map<String, Object> params);
+    // 위치 기반 검색 메서드 (MyBatis Mapper XML에 구현)
+    // 변경: extras를 List<String> 타입으로 직접 받도록 수정
+    List<Accommodations> searchAccommodationsByLocation(String location, List<String> extras);
 }
