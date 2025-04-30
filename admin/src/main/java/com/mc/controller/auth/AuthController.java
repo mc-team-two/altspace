@@ -58,22 +58,13 @@ public class AuthController {
         return dir + "register";
     }
 
-    @RequestMapping("/find-id")
-    public String findid(HttpSession httpSession) {
+    @RequestMapping("/find-account")
+    public String findAccount(HttpSession httpSession) {
         // 로그인 세션이 존재하면 접근할 수 없음 (잘못된 접근)
         if (httpSession.getAttribute("user") != null) {
             return "redirect:/";
         }
-        return dir + "find-id";
-    }
-
-    @RequestMapping("/find-password")
-    public String findpassword(HttpSession httpSession) {
-        // 로그인 세션이 존재하면 접근할 수 없음 (잘못된 접근)
-        if (httpSession.getAttribute("user") != null) {
-            return "redirect:/";
-        }
-        return dir + "find-password";
+        return dir + "find-account";
     }
 
     // rest, util

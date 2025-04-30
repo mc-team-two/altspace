@@ -20,7 +20,7 @@
             VALUE (#{userId},#{role},#{email}, #{password}, #{name}, #{phone}, now())
     </insert>
     <update id="update" parameterType="user">
-        UPDATE users SET name=#{name} WHERE user_id=#{userId}
+        UPDATE users SET name=#{name}, password=#{password} WHERE user_id=#{userId}
     </update>
     <delete id="delete" parameterType="String">
         DELETE FROM users WHERE user_id=#{userId}
