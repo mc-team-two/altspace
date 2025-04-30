@@ -1,6 +1,7 @@
 package com.mc;
 
 import com.mc.app.service.EmailService;
+import com.mc.util.AuthUtil;
 import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,13 @@ public class MailApplicationTests {
             log.info("메일 전송 성공!");
         } catch (MessagingException e) {
             log.info("메일 전송 실패! : " + e.getMessage());
+        }
+    }
+
+    @Test
+    void generatePwdTest() {
+        for (int i=0; i<10; i++) {
+            System.out.println(AuthUtil.generatePwd());
         }
     }
 }
