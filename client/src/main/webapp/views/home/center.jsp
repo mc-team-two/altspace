@@ -81,31 +81,25 @@
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_1" class="search_extras_cb">
-                                                <label for="search_extras_1">반려동물 동반 가능</label>
+                                                <label for="search_extras_1">맛있는 조식 제공</label>
                                             </div>
                                         </li>
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_2" class="search_extras_cb">
-                                                <label for="search_extras_2">주차 가능</label>
+                                                <label for="search_extras_2">반려동물 동반 가능</label>
                                             </div>
                                         </li>
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_3" class="search_extras_cb">
-                                                <label for="search_extras_3">Wi-Fi/인터넷</label>
+                                                <label for="search_extras_3">바베큐 시설 안내</label>
                                             </div>
                                         </li>
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_4" class="search_extras_cb">
-                                                <label for="search_extras_4">비흡연 객실</label>
-                                            </div>
-                                        </li>
-                                        <li class="search_extras_item">
-                                            <div class="clearfix">
-                                                <input type="checkbox" id="search_extras_5" class="search_extras_cb">
-                                                <label for="search_extras_5">욕조/풀장</label>
+                                                <label for="search_extras_4">시원한 수영장 이용</label>
                                             </div>
                                         </li>
                                     </ul>
@@ -334,7 +328,7 @@
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
                                         <div class="offers_image_background"
-                                             style="background-image:url('${pageContext.request.contextPath}/images/listing_${a.accommodationId % 9 + 1}.jpg')"></div>
+                                        <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
                                         <div class="offer_name"><a
                                                 href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a>
                                         </div>

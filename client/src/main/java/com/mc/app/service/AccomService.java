@@ -17,7 +17,7 @@ import java.util.Map;
 public class AccomService implements MCService<Accommodations, Integer> {
 
     private final AccomRepository accomRepository;
-    private final ReviewService reviewService; // ReviewService 주입
+    private final ReviewService reviewService;
 
     @Override
     public void add(Accommodations accommodations) throws Exception {
@@ -60,8 +60,8 @@ public class AccomService implements MCService<Accommodations, Integer> {
     }
 
     // 지역으로 숙소를 검색하는 메서드 (location 컬럼에 검색어 포함)
-    public List<Accommodations> getAccommodationsByLocation(String location) {
-        return accomRepository.searchAccommodationsByLocation(location);
+    public List<Accommodations> getAccommodationsByLocation(String location, List<String> extras) {
+        return accomRepository.searchAccommodationsByLocation(location, extras); // 직접 전달
     }
 
     // 지역으로 숙소를 검색하는 메서드 (geolocation 기반)

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class SearchAccomController {
@@ -21,10 +20,12 @@ public class SearchAccomController {
 
     @GetMapping("/search-accommodations")
     @ResponseBody
-
-    public Object searchAccommodations(@RequestParam("location") String location,
-                                       @RequestParam(value = "withRating", required = false, defaultValue = "false") boolean withRating) throws Exception {
-        List<Accommodations> accommodations = accomService.getAccommodationsByLocation(location);
+    public Object searchAccommodations(
+            @RequestParam("location") String location,
+            @RequestParam(value = "withRating", required = false, defaultValue = "false") boolean withRating,
+            @RequestParam(value = "extras[]", required = false) List<String> extras // 추가된 파라미터
+    ) throws Exception {
+        List<Accommodations> accommodations = accomService.getAccommodationsByLocation(location, extras); // Service 메서드 변경
         if (withRating) {
             return accomService.getAccommodationsWithRating(accommodations);
         } else {
