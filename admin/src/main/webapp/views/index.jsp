@@ -148,75 +148,75 @@
             <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                  id="layout-navbar">
 
-                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                    <!-- Search -->
-                    <div class="navbar-nav align-items-center">
-                        <div class="nav-item d-flex align-items-center">
-                            <i class="bx bx-search fs-4 lh-0"></i>
-                            <input
-                                    type="text"
-                                    class="form-control border-0 shadow-none"
-                                    placeholder="Search..."
-                                    aria-label="Search..."
-                            />
-                        </div>
+                <div class="container-fluid d-flex justify-content-between align-items-center w-100">
+
+                    <!-- 왼쪽: 햄버거 버튼 -->
+                    <div class="d-flex align-items-center">
+                        <button class="navbar-toggler layout-menu-toggle border-0 me-2" type="button">
+                            <i class="bx bx-menu fs-3"></i>
+                        </button>
                     </div>
-                    <!-- /Search -->
 
-                    <ul class="navbar-nav flex-row align-items-center ms-auto">
-                        <!-- User -->
-                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <!-- 가운데: 페이지 제목 -->
+                    <div class="position-absolute start-50 translate-middle-x">
+                        <h5 class="mb-0 text-muted fw-semibold">빠르고 간편하게, Alt space</h5>
+                    </div>
 
-                            <!-- 로그인 상태일 경우 -->
-                            <c:if test="${not empty sessionScope.user}">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                    <div class="avatar avatar-online">
-                                        <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
-                                            <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
-                                            <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
-                                        </svg>
-                                    </div>
-                                </a>
-                            </c:if>
+                    <!-- 오른쪽: 사용자 메뉴 -->
+                    <div class="d-flex align-items-center">
 
-                            <!-- 로그인 안 된 상태일 경우 -->
-                            <c:if test="${empty sessionScope.user}">
-                                <a class="nav-link hide-arrow" href="<c:url value='/auth/login'/>">
-                                    <div class="avatar">
-                                        <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
-                                            <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
-                                            <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
-                                        </svg>
-                                    </div>
-                                </a>
-                            </c:if>
+                        <!-- 사용자 메뉴 (로그인 상태에 따라 달라짐) -->
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
 
-                            <!-- 드롭다운 메뉴 (로그인한 경우만 의미 있음) -->
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item" href="<c:url value='/mypage'/>">
-                                        <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">마이페이지</span>
+                                <!-- 로그인 상태일 경우 -->
+                                <c:if test="${not empty sessionScope.user}">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-2 text-end d-none d-md-block">
+                                                <div class="fw-bold">${sessionScope.user.name}님</div>
+                                                <small class="text-muted">환영합니다!</small>
+                                            </div>
+                                            <div class="avatar avatar-online">
+                                                <img src="<c:url value="/imgs/avatar.png"/>" class="w-px-40 h-auto rounded-circle" alt="User" />
+                                            </div>
+                                        </div>
                                     </a>
-                                </li>
-                                <li><div class="dropdown-divider"></div></li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-cog me-2"></i>
-                                        <span class="align-middle">테마 설정</span>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="<c:url value='/mypage'/>">
+                                                <i class="bx bx-user me-2"></i> 마이페이지
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" href="#" id="theme-toggle-dropdown">
+                                                <i class="bx bx-moon me-2"></i> 테마 설정
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" href="<c:url value='/auth/logout'/>">
+                                                <i class="bx bx-power-off me-2"></i> <strong>로그아웃</strong>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </c:if>
+
+                                <!-- 로그인 안 된 상태일 경우 -->
+                                <c:if test="${empty sessionScope.user}">
+                                    <a class="nav-link" href="<c:url value='/auth/login'/>">
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2 text-muted">로그인</span>
+                                            <div class="avatar">
+                                                <img src="/images/default-profile.svg" class="w-px-40 h-auto rounded-circle" alt="Login" />
+                                            </div>
+                                        </div>
                                     </a>
-                                </li>
-                                <li><div class="dropdown-divider"></div></li>
-                                <li>
-                                    <a class="dropdown-item" href="<c:url value='/auth/logout'/>">
-                                        <i class="bx bx-power-off me-2"></i>
-                                        <span class="align-middle"><strong>로그아웃</strong></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!--/ User -->
-                    </ul>
+                                </c:if>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
             <!-- / Navbar -->
@@ -226,13 +226,8 @@
 
                 <!-- floating button -->
                 <a href="#" class="btn btn-light rounded-circle d-flex justify-content-center align-items-center position-fixed shadow"
-                   style="width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 1030; padding: 15px;" data-bs-toggle="tooltip" title="1:1 대화창">
-                    <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.3121 23.3511C17.4463 23.0228 16.7081 22.5979 16.1266 22.1995C14.8513 22.7159 13.4578 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 14.2788 22.306 16.3983 21.1179 18.1551C21.0425 19.6077 21.8054 20.9202 22.5972 22.0816C23.2907 23.0987 23.1167 23.9184 21.8236 23.9917C21.244 24.0245 19.9903 23.9874 18.3121 23.3511ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 13.9503 20.3808 15.7531 19.328 17.2262C18.8622 17.8782 19.1018 19.0998 19.2616 19.8011C19.4167 20.4818 19.7532 21.2051 20.0856 21.8123C19.7674 21.7356 19.4111 21.6288 19.0212 21.481C18.1239 21.1407 17.3824 20.6624 16.8594 20.261C16.5626 20.0332 16.1635 19.9902 15.825 20.1494C14.6654 20.6947 13.3697 21 12 21C7.02944 21 3 16.9706 3 12ZM8.03001 15.2425C7.87428 14.6196 8.36619 14.0002 9.00016 13.9998H15.0002C15.6333 14.0002 16.126 14.6172 15.9703 15.24C15.4525 16.9881 13.7854 18 12.0002 18C10.2834 18 8.46902 16.9986 8.03001 15.2425ZM16.5 10C16.5 10.8284 15.8284 11.5 15 11.5C14.1716 11.5 13.5 10.8284 13.5 10C13.5 9.17157 14.1716 8.5 15 8.5C15.8284 8.5 16.5 9.17157 16.5 10ZM9 11.5C9.82843 11.5 10.5 10.8284 10.5 10C10.5 9.17157 9.82843 8.5 9 8.5C8.17157 8.5 7.5 9.17157 7.5 10C7.5 10.8284 8.17157 11.5 9 11.5Z" fill="#233446"></path> </g>
-                    </svg>
+                   style="width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 1030; padding: 15px;" data-bs-toggle="tooltip">
+                    <img src="<c:url value="/imgs/go_to_top.png"/>" alt="Back to top" style="width: 100%; height: 100%;" />
                 </a>
 
                 <!-- Content -->
