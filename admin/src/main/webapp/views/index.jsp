@@ -25,6 +25,7 @@
 
     <!-- Bootstrap CSS (index.jsp의 head에 있으면 중복 불필요) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -85,55 +86,48 @@
 
             <ul class="menu-inner py-1">
 
-                <!-- 공간 관리 섹션 -->
+                <!-- 스페이스 관리 -->
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">스페이스 관리</span>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/space/add"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
-                        <box-icon name='add-to-queue'></box-icon>
-                        <div>스페이스 추가</div>
+                    <a href='<c:url value="/space/list"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-building-house"></i>
+                        <div>내 스페이스</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/space/list"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-building-house"></i>
-                        <div>내 스페이스 조회</div>
+                    <a href='<c:url value="/space/booking"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-calendar-event"></i>
+                        <div>일정 확인</div>
                     </a>
                 </li>
 
-                <!-- 결제/예약 조회 섹션 -->
+                <!-- 결제 내역 -->
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">결제/예약 조회</span>
+                    <span class="menu-header-text">결제 내역</span>
                 </li>
                 <li class="menu-item">
                     <a href='<c:url value="/payment/pay"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-credit-card"></i>
-                        <div>결제 내역</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href='<c:url value="/payment/booking"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-calendar-check"></i>
-                        <div>스페이스별 예약 내역</div>
+                        <i class="menu-icon tf-icons bx bx-receipt"></i>
+                        <div>결제 내역 조회</div>
                     </a>
                 </li>
 
-                <!-- 후기 관리 섹션 -->
+                <!-- 호스트 센터 -->
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">후기 관리</span>
+                    <span class="menu-header-text">호스트 센터</span>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/review/list"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-comment-detail"></i>
-                        <div>후기 목록</div>
+                    <a href='<c:url value="/support/guide"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-book-open"></i>
+                        <div>운영 가이드</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/review/check"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-check-shield"></i>
-                        <div>후기 승인/거부</div>
+                    <a href='<c:url value="/support/message"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-message-square-detail"></i>
+                        <div>고객 메시지</div>
                     </a>
                 </li>
 
@@ -174,7 +168,7 @@
                                     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                         <div class="d-flex align-items-center">
                                             <div class="me-2 text-end d-none d-md-block">
-                                                <div class="fw-bold">${sessionScope.user.name}님</div>
+                                                <div class="fw-bold">${sessionScope.user.name} 호스트님</div>
                                                 <small class="text-muted">환영합니다!</small>
                                             </div>
                                             <div class="avatar avatar-online">
