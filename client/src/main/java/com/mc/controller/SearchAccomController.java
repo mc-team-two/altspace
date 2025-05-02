@@ -24,10 +24,11 @@ public class SearchAccomController {
             @RequestParam(value = "location", required = false) String location,
             @RequestParam(value = "checkInDate", required = false) String checkInDate,
             @RequestParam(value = "checkOutDate", required = false) String checkOutDate,
+            @RequestParam(value = "personnel", required = false) String personnel,
             @RequestParam(value = "extras[]", required = false) List<String> extras,
             @RequestParam(value = "withRating", required = false, defaultValue = "false") boolean withRating
     ) throws Exception {
-        List<Accommodations> accommodations = accomService.getAccommodationsByLocation(location, checkInDate, checkOutDate, extras);
+        List<Accommodations> accommodations = accomService.getAccommodationsByLocation(location, checkInDate, checkOutDate, personnel, extras);
         if (withRating) {
             return accomService.getAccommodationsWithRating(accommodations);
         } else {

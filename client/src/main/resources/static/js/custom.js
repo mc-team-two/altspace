@@ -394,6 +394,7 @@ $(document).ready(function () {
         const location = $("#searchInput").val();
         const checkIn = $("#checkInInput").val();
         const checkOut = $("#checkOutInput").val();
+        const personnel = $("#adults_1").val();
         const extras = [];
 
         if ($('#search_extras_1').prop('checked')) {
@@ -429,7 +430,7 @@ $(document).ready(function () {
         searchAccommodationsByLocation(location, checkIn, checkOut, extras);
     });
 
-    function searchAccommodationsByLocation(location, checkIn, checkOut, extras) {
+    function searchAccommodationsByLocation(location, checkIn, checkOut, personnel, extras) {
         $.ajax({
             url: "/search-accommodations",
             type: "GET",
@@ -437,6 +438,7 @@ $(document).ready(function () {
                 location: location,
                 checkInDate: checkIn,
                 checkOutDate: checkOut,
+                personnel: personnel,
                 withRating: true,
                 extras: extras
             },
