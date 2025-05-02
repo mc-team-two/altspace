@@ -21,11 +21,13 @@ public class SearchAccomController {
     @GetMapping("/search-accommodations")
     @ResponseBody
     public Object searchAccommodations(
-            @RequestParam("location") String location,
-            @RequestParam(value = "withRating", required = false, defaultValue = "false") boolean withRating,
-            @RequestParam(value = "extras[]", required = false) List<String> extras // 추가된 파라미터
+            @RequestParam(value = "location", required = false) String location,
+            @RequestParam(value = "checkInDate", required = false) String checkInDate,
+            @RequestParam(value = "checkOutDate", required = false) String checkOutDate,
+            @RequestParam(value = "extras[]", required = false) List<String> extras,
+            @RequestParam(value = "withRating", required = false, defaultValue = "false") boolean withRating
     ) throws Exception {
-        List<Accommodations> accommodations = accomService.getAccommodationsByLocation(location, extras); // Service 메서드 변경
+        List<Accommodations> accommodations = accomService.getAccommodationsByLocation(location, checkInDate, checkOutDate, extras);
         if (withRating) {
             return accomService.getAccommodationsWithRating(accommodations);
         } else {

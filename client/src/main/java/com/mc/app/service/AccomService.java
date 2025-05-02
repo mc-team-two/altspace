@@ -60,8 +60,13 @@ public class AccomService implements MCService<Accommodations, Integer> {
     }
 
     // 지역으로 숙소를 검색하는 메서드 (location 컬럼에 검색어 포함)
-    public List<Accommodations> getAccommodationsByLocation(String location, List<String> extras) {
-        return accomRepository.searchAccommodationsByLocation(location, extras); // 직접 전달
+    public List<Accommodations> getAccommodationsByLocation(String location, String checkInDate, String checkOutDate, List<String> extras) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("location", location);
+        params.put("checkInDate", checkInDate);
+        params.put("checkOutDate", checkOutDate);
+        params.put("extras", extras);
+        return accomRepository.searchAccommodationsByLocation(params);
     }
 
     // 지역으로 숙소를 검색하는 메서드 (geolocation 기반)

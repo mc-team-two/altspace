@@ -22,6 +22,7 @@
     <link rel="stylesheet" type="text/css" href="styles/offers_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/offers_responsive.css">
     <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 
 <body>
@@ -59,6 +60,7 @@
 </div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <!-- iamport.payment.js -->
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <!-- moment.js -->
@@ -76,6 +78,9 @@
 <script src="js/offers_custom.js"></script>
 <script src="js/darkmode.js"></script>
 <script src="js/iconpopper.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </body>
 
 </html>

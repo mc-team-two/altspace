@@ -234,37 +234,32 @@
         accommodation_id = #{accommodationId}
     </update>
 
-<!--    주소값을 정확히 일치하는 게 아니라, 포함된 값을 불러오도록 쿼리 수정. -->
+<!--    주소값을 정확히 일치하는 게 아니라, 포함된 값을 불러오도록 쿼리 수정.
+        5/2 체크인, 체크아웃 시간을 payments 테이블의 기간을 가져와서 값이 있다면 해당 기간동안 제외하는 로직 추가.-->
     <select id="searchAccommodationsByLocation" parameterType="map" resultType="Accommodations">
         SELECT
-        accommodation_id,
-        host_id,
-        name,
-        location,
-        price_night,
-        person_max,
-        description,
-        status,
-        category,
-        room_type,
-        breakfast,
-        pool,
-        barbecue,
-        pet,
-        latitude,
-        longitude,
-        image1_name,
-        image2_name,
-        image3_name,
-        image4_name,
-        image5_name,
-        create_day,
-        update_day
+        a.*
         FROM
-        Accommodations
+        Accommodations a
         WHERE
-        location LIKE CONCAT('%', #{location}, '%')
-        AND status = '활성'
+        a.status = '활성'
+        <if test="location != null and location != ''">
+            AND a.location LIKE CONCAT('%', #{location}, '%')
+        </if>
+        <if test="checkInDate != null and checkOutDate != null">
+            AND a.accommodation_id NOT IN (
+            SELECT DISTINCT
+            p.accommodation_id
+            FROM
+            payments p
+            WHERE
+            p.pay_status = '완료'
+            AND (
+<!--             검색 시작일 < 예약 종료일 AND 검색 종료일 > 예약 시작일-->
+            (#{checkInDate} &lt; p.check_out AND #{checkOutDate} &gt; p.check_in)
+            )
+            )
+        </if>
         <if test="extras != null and extras.size > 0">
             <foreach collection="extras" item="extra" open="AND (" separator=" OR " close=")">
                 <choose>

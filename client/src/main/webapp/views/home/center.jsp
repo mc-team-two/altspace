@@ -58,11 +58,11 @@
                                 </div>
                                 <div class="search_item">
                                     <div>체크인</div>
-                                    <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="check_in search_input" id="checkInInput" placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="search_item">
                                     <div>체크아웃</div>
-                                    <input type="text" class="check_out search_input" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="check_out search_input" id="checkOutInput" placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="search_item">
                                     <div>인원</div>
@@ -87,7 +87,7 @@
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_2" class="search_extras_cb">
-                                                <label for="search_extras_2">반려동물 동반 가능</label>
+                                                <label for="search_extras_2">반려동물 동반</label>
                                             </div>
                                         </li>
                                         <li class="search_extras_item">
@@ -99,7 +99,7 @@
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_4" class="search_extras_cb">
-                                                <label for="search_extras_4">시원한 수영장 이용</label>
+                                                <label for="search_extras_4">시원한 수영장</label>
                                             </div>
                                         </li>
                                     </ul>
@@ -314,7 +314,6 @@
             <div class="col-lg-12">
                 <div class="offers_grid">
                     <c:forEach var="a" items="${accomm}">
-                        <%-- Find the matching rating for this accommodation --%>
                         <c:set var="currentRating" value="0"/>
                         <c:forEach var="awr" items="${accommodationsWithRatingList}">
                             <c:if test="${awr.accommodation.accommodationId == a.accommodationId}">
@@ -327,7 +326,6 @@
                                 <div class="col-lg-1 temp_col"></div>
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
-                                        <div class="offers_image_background"
                                         <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
                                         <div class="offer_name"><a
                                                 href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a>
@@ -355,12 +353,12 @@
                                                     </li>
                                                 </c:if>
                                                 <c:if test="${a.pet}">
-                                                    <li class="offers_icons_item" data-popper-content="반려동물 동반 가능">
+                                                    <li class="offers_icons_item" data-popper-content="반려동물 동반">
                                                         <i class="fa fa-paw" aria-hidden="true" title="반려동물"></i>
                                                     </li>
                                                 </c:if>
                                                 <c:if test="${a.pool}">
-                                                    <li class="offers_icons_item" data-popper-content="시원한 수영장 이용">
+                                                    <li class="offers_icons_item" data-popper-content="시원한 수영장">
                                                         <i class="fa fa-tint" aria-hidden="true" title="수영장"></i>
                                                     </li>
                                                 </c:if>
