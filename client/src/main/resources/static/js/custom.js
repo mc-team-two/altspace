@@ -390,35 +390,58 @@ $(document).ready(function () {
     /*
     // 지역 검색 버튼 클릭 이벤트 리스너
      */
-
     $("#searchAccommodationBtn").on("click", function () {
         const location = $("#searchInput").val();
-        if (location) {
-            const extras = [];
-            if ($('#search_extras_1').prop('checked')) {
-                extras.push('breakfast');
-            }
-            if ($('#search_extras_2').prop('checked')) {
-                extras.push('pet');
-            }
-            if ($('#search_extras_3').prop('checked')) {
-                extras.push('barbecue');
-            }
-            if ($('#search_extras_4').prop('checked')) {
-                extras.push('pool');
-            }
+        const checkIn = $("#checkInInput").val();
+        const checkOut = $("#checkOutInput").val();
+        const personnel = $("#adults_1").val();
+        const extras = [];
 
-            searchAccommodationsByLocation(location, extras); // extras 파라미터 추가
-        } else {
-            alert("검색어를 입력해주세요.");
+        if ($('#search_extras_1').prop('checked')) {
+            extras.push('breakfast');
         }
+        if ($('#search_extras_2').prop('checked')) {
+            extras.push('pet');
+        }
+        if ($('#search_extras_3').prop('checked')) {
+            extras.push('barbecue');
+        }
+        if ($('#search_extras_4').prop('checked')) {
+            extras.push('pool');
+        }
+
+        // 유효성 검사
+        if (!location) {
+            alert("지역 정보를 채워넣어 주세요.");
+            return; // 검색 로직 중단
+        }
+
+        if (!checkIn) {
+            alert("체크인 날짜를 채워넣어 주세요.");
+            return; // 검색 로직 중단
+        }
+
+        if (!checkOut) {
+            alert("체크아웃 날짜를 채워넣어 주세요.");
+            return; // 검색 로직 중단
+        }
+
+        // 모든 필수 정보가 입력되었으면 검색 로직 실행
+        searchAccommodationsByLocation(location, checkIn, checkOut, extras);
     });
 
-    function searchAccommodationsByLocation(location, extras) {
+    function searchAccommodationsByLocation(location, checkIn, checkOut, personnel, extras) {
         $.ajax({
             url: "/search-accommodations",
             type: "GET",
-            data: { location: location, withRating: true, extras: extras }, // extras 파라미터 추가
+            data: {
+                location: location,
+                checkInDate: checkIn,
+                checkOutDate: checkOut,
+                personnel: personnel,
+                withRating: true,
+                extras: extras
+            },
             dataType: "json",
             success: function (accommodations) {
                 displaySearchResults(accommodations);

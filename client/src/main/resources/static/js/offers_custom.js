@@ -298,4 +298,45 @@ $(document).ready(function()
 			});	
 		}
 	}
+
+	// 8. daterangepicker
+
+
+	$(function() {
+		$('#checkInInput, #checkOutInput').daterangepicker({
+			singleDatePicker: true, // 단일 날짜 선택 모드 활성화
+			showDropdowns: true, // 년/월 드롭다운 표시
+			minDate: moment().startOf('day'), // 오늘 이전 날짜는 선택 불가 (선택 사항)
+			locale: {
+				format: 'YYYY-MM-DD', // 날짜 형식 설정
+				applyLabel: '적용',
+				cancelLabel: '취소',
+				daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+				monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				firstDay: 1 // 월요일부터 시작
+			}
+		});
+
+		// 체크인 날짜 선택 시 체크아웃 날짜의 minDate 설정 (선택 사항)
+		$('#checkInInput').on('apply.daterangepicker', function(ev, picker) {
+			$('#checkOutInput').daterangepicker({
+				singleDatePicker: true,
+				showDropdowns: true,
+				minDate: picker.startDate.add(1, 'days'), // 체크인 다음 날부터 선택 가능
+				locale: {
+					format: 'YYYY-MM-DD',
+					applyLabel: '적용',
+					cancelLabel: '취소',
+					daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+					monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+					firstDay: 1
+				}
+			});
+			// 체크아웃 input 필드가 이미 채워져 있다면 초기화 (선택 사항)
+			if ($('#checkOutInput').val()) {
+				$('#checkOutInput').val('');
+			}
+		});
+	});
+
 });
