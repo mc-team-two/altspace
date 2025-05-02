@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mc.app.repository.ReviewRepository">
     <!-- Insert -->
-    <insert id="insert" parameterType="Reviews">
+    <insert id="insert" parameterType="Reviews" useGeneratedKeys="true" keyProperty="reviewId">
         INSERT INTO reviews (
             guest_id,
             accommodation_id,
@@ -13,12 +13,12 @@
             create_day,
             update_day
         ) VALUES (
-            #{guestId},
-            #{accommodationId},
-            #{grade},
-            #{comment},
-            NOW(),
-            NOW()
+             #{guestId},
+             #{accommodationId},
+             #{grade},
+             #{comment},
+             NOW(),
+             NOW()
         )
     </insert>
 

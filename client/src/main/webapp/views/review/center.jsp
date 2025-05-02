@@ -8,6 +8,36 @@
   <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
   <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
   <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+
+    <style>
+        .review-slider-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 8px;
+        }
+
+        .review-slider-inner {
+            display: flex;
+            gap: 10px;
+            padding: 4px;
+        }
+
+        .slider-image-wrapper {
+            flex: 0 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-image {
+            height: 180px;
+            width: auto;
+            display: block;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+    </style>
 </head>
 
 <script>
@@ -50,34 +80,13 @@
         },
 
         update: function (id) {
-            const grade = $('#gradeInput-' + id).val();
-            const comment = $('#commentInput-' + id).val();
-
-            if (!grade || !comment) {
-                alert('평점과 내용을 모두 입력해주세요.');
-                return;
-            }
-
-            fetch('/review/update', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ reviewId: id, grade: grade, comment: comment })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    $('#gradeText-' + id).text('★ ' + grade);
-                    $('#commentText-' + id).text(comment);
-                    reviewEdit.toggleForm(id);
-                } else {
-                    alert('수정에 실패했습니다.');
-                }
-            })
-            .catch(error => {
-                alert('요청 중 오류가 발생했습니다.');
-                console.error(error);
+            $('#editForm-' + id + '-form').attr({
+                'method': 'post',
+                'action': '<c:url value="/review/update"/>'
             });
+            $('#editForm-' + id + '-form').submit();
         }
+
     };
 
     $(document).ready(function () {
@@ -109,7 +118,6 @@
 <!-- 센터 -->
 <div class="blog">
   <div class="container">
-
       <div class="row">
           <!-- 리뷰 리스트 (왼쪽) -->
           <div class="col-lg-8">
@@ -149,24 +157,45 @@
                           <span class="text-primary font-weight-semibold">${rv.guestId}</span>
                       </div>
 
+                      <!-- 이미지 슬라이더 영역 -->
+                      <c:if test="${not empty rv.imageUrl}">
+                          <div class="review-slider-container">
+                              <div class="review-slider-inner">
+                                  <c:forEach var="img" items="${rv.imageUrl}">
+                                      <div class="slider-image-wrapper">
+                                          <img src="/imgs/${img}" class="slider-image" />
+                                      </div>
+                                  </c:forEach>
+                              </div>
+                          </div>
+                      </c:if>
+
                       <!-- 리뷰 내용 -->
                       <p class="mb-2" id="commentText-${rv.reviewId}">${rv.comment}</p>
 
                       <!-- 수정 폼 (처음엔 숨김) -->
                       <div id="editForm-${rv.reviewId}" style="display: none;">
-                          <div class="form-group mb-2">
-                              <label for="gradeInput-${rv.reviewId}">평점</label>
-                              <select class="form-control" id="gradeInput-${rv.reviewId}" required>
-                                  <option value="">선택</option>
-                                  <c:forEach var="i" begin="1" end="5">
-                                      <option value="${i}" ${rv.grade == i ? 'selected' : ''}>${i}점</option>
-                                  </c:forEach>
-                              </select>
-                          </div>
-                          <div class="form-group mb-2">
-                              <label for="commentInput-${rv.reviewId}">리뷰 내용</label>
-                              <textarea class="form-control" id="commentInput-${rv.reviewId}" rows="4" required>${rv.comment}</textarea>
-                          </div>
+                          <form id="editForm-${rv.reviewId}-form" enctype="multipart/form-data">
+                              <div class="form-group mb-2">
+                                  <input type="hidden" name="reviewId" value="${rv.reviewId}">
+                                  <label for="gradeInput-${rv.reviewId}">평점</label>
+                                  <select class="form-control" id="gradeInput-${rv.reviewId}" name="grade" required>
+                                      <option value="">선택</option>
+                                      <c:forEach var="i" begin="1" end="5">
+                                          <option value="${i}" ${rv.grade == i ? 'selected' : ''}>${i}점</option>
+                                      </c:forEach>
+                                  </select>
+                              </div>
+                              <div class="form-group mb-2">
+                                  <label for="commentInput-${rv.reviewId}">리뷰 내용</label>
+                                  <textarea class="form-control" id="commentInput-${rv.reviewId}" name="comment" rows="4" required>${rv.comment}</textarea>
+                              </div>
+                              <!-- 이미지 업로드 추가 -->
+                              <div class="form-group mb-2">
+                                  <label for="imageInput-${rv.reviewId}">이미지 수정</label>
+                                  <input type="file" class="form-control" name="images" id="imageInput-${rv.reviewId}" multiple>
+                              </div>
+                          </form>
                           <button class="btn btn-sm btn-primary review-save-btn" data-review-id="${rv.reviewId}">저장</button>
                           <button class="btn btn-sm btn-secondary review-cancel-btn" data-review-id="${rv.reviewId}">취소</button>
                       </div>

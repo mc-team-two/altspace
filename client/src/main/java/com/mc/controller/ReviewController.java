@@ -45,6 +45,7 @@ public class ReviewController {
 
         // 실제 DB 조회(여러 건 가져올 수 있음)
         List<Reviews> ReviewList = reviewService.getMyReviews(reviews);
+        log.info("ReviewList.........." + ReviewList);
 
         model.addAttribute("ReviewList", ReviewList);
         model.addAttribute("headers", dir + "headers");
@@ -53,35 +54,7 @@ public class ReviewController {
         return "index";
     }
 
-    @RequestMapping("/reviewUpload")
-    public String reviewUpload(Model model,
-                               @RequestParam("id") int id,
-                               Reviews reviews) throws Exception {
-
-        reviewService.add(reviews);
-        return "redirect:/detail?id=" + id;
-    }
-
-    @ResponseBody
-    @PostMapping("/update")
-    public Map<String, Object> update(@RequestBody Reviews reviews) {
-        Map<String, Object> result = new HashMap<>();
-        try {
-            reviewService.mod(reviews);
-            result.put("success", true);
-        } catch (Exception e) {
-            result.put("success", false);
-        }
-        return result;
-    }
-
-    @RequestMapping("/delete")
-    public String delete(Model model, @RequestParam("rvId") int rvid) throws Exception {
-        reviewService.del(rvid);
-        return "redirect:/review";
-    }
-
-    /* 삭제 x 사용 가능 */
+    /* 리뷰 작성 페이지 이동 */
     @RequestMapping("/dtadd")
     public String dtadd(Model model, @RequestParam("id") int id) throws Exception {
 
@@ -90,4 +63,27 @@ public class ReviewController {
         return "review";
     }
 
+    /* 리뷰 수정 */
+    @RequestMapping("/update")
+    public String update(Reviews reviews) throws Exception {
+        reviewService.mod(reviews);
+        return "redirect:/review";
+    }
+
+    /* 리뷰 삭제 */
+    @RequestMapping("/delete")
+    public String delete(Model model, @RequestParam("rvId") int rvid) throws Exception {
+        reviewService.del(rvid);
+        return "redirect:/review";
+    }
+
+    /* 리뷰 업로드 */
+    @RequestMapping("/reviewUpload")
+    public String reviewUpload(Model model,
+                               @RequestParam("id") int id,
+                               Reviews reviews) throws Exception {
+
+        reviewService.add(reviews);
+        return "redirect:/review";
+    }
 }

@@ -12,6 +12,7 @@ import java.sql.Date;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,9 @@ public class MainController {
     final AccomService accomService;
     final PaymentService paymentService;
     final ReviewService reviewService;
+
+    @Value("${app.key.kakaoJSApiKey}")
+    String kakaoJSApiKey;
   
     private static final int PAGE_SIZE = 10; // 한 페이지에 표시할 숙소 수
 
@@ -91,6 +95,7 @@ public class MainController {
 
         }
 
+        model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
         model.addAttribute("headers", "payments/headers");
         model.addAttribute("center", "payments/center");
         model.addAttribute("footer", "payments/footer");

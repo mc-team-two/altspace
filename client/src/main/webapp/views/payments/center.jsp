@@ -109,6 +109,68 @@
             font-size: 1.5rem; /* 조금 더 크게 */
             font-weight: bold;
         }
+
+        .kakao-map-wrapper {
+            width: 100%;
+            margin-top: 1rem; /* 예약 박스와의 간격 확보 */
+            border-radius: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            font-family: 'Pretendard', sans-serif;
+            background-color: white;
+        }
+
+        .map-header {
+            text-align: left; /* 왼쪽 정렬 */
+            padding: 0.5rem 1rem;
+            font-size: 1rem; /* 큼 */
+            font-weight: 600;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .kakao-map {
+            width: 100%;
+            height: 450px;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .map-footer {
+            text-align: left; /* 왼쪽 정렬 */
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem; /* 작게 */
+            font-weight: 400;
+            background-color: #f5f5f5;
+            color: #555;
+        }
+
+        .review-slider-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 8px;
+        }
+
+        .review-slider-inner {
+            display: flex;
+            gap: 10px;
+            padding: 4px;
+        }
+
+        .slider-image-wrapper {
+            flex: 0 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-image {
+            height: 180px;
+            width: auto;
+            display: block;
+            object-fit: cover;
+            border-radius: 12px;
+        }
     </style>
 </head>
 
@@ -139,7 +201,6 @@
 
                 const checkin = picker.startDate;
                 const checkout = picker.endDate;
-
                 const delDays = checkout.diff(checkin, 'days'); // 숙박일수
                 const total = delDays * priceNight; // 숙박요금 합계
 
@@ -228,7 +289,7 @@
                     location.reload(); // 취소 후 새로고침
                 },
                 error: function(err) {
-                    try { // err는 실패한 응답이라 자동 파싱 x
+                    try {              // err는 실패한 응답이라 자동 파싱 x
                         const errorMsg = JSON.parse(err.responseText).message;
                         alert("취소 실패: " + errorMsg);
                     } catch (e) {
@@ -243,16 +304,52 @@
                 'action':'<c:url value="/review/dtadd?id=${accomm.accommodationId}"/>'
             });
             $('#data_del').submit();
+        }
+    };
+
+    const mapCenter = {
+        marker: null,
+        map: null,
+        init: function () {
+            this.displayMap();
+            this.getData(); // 최초 1회 호출
         },
-        updateRv: function(id) {
-            $('#reviewForm').attr({
-                method: 'post',
-                action: '/review/upimpl?id=' + id
-            }).submit();
+        displayMap: function() {
+            var mapContainer = document.getElementById('kaoMap');
+            var mapOption = {
+                center: new kakao.maps.LatLng(37.501634, 127.039886),
+                level: 3
+            };
+            this.map = new kakao.maps.Map(mapContainer, mapOption);
+
+            var mapTypeControl = new kakao.maps.MapTypeControl();
+            this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+            var zoomControl = new kakao.maps.ZoomControl();
+            this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
         },
-    }
-    $(document).ready(function () {
+        getData: function() {
+            $.ajax({
+                url: '/getlatlng',
+                success: (result) => {
+                    this.showMarker(result);
+                }
+            });
+        },
+        showMarker: function(result) {
+            if (this.marker != null) {
+                this.marker.setMap(null);
+            }
+            var markerPosition = new kakao.maps.LatLng(result.lat, result.lng);
+            this.marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+            this.marker.setMap(this.map);
+        }
+    };
+
+    $(document).ready(function() {
         change.init();
+        mapCenter.init();
     });
 </script>
 
@@ -277,7 +374,7 @@
 </div>
 
 <!-- 센터 -->
-<div class="container mt-5">
+<div class="container mt-4">
     <!-- 이미지 영역 -->
     <div class="row no-gutters">
         <!-- 대표 이미지 -->
@@ -319,7 +416,7 @@
     </div>
 
     <!-- 숙소 상세 정보 + 예약 박스 -->
-    <div class="row mt-4">
+    <div class="row mt-3">
         <!-- 숙소 상세 -->
         <div class="col-md-8 mb-4">
             <div class="card shadow-sm p-4 rounded-4">
@@ -418,8 +515,14 @@
         </div>
     </div>
 
+    <div class="kakao-map-wrapper">
+        <div class="map-header">위치</div>
+        <div id="kaoMap" class="kakao-map"></div>
+        <div class="map-footer">주소: ${accomm.location}</div>
+    </div>
+
     <!-- 리뷰 작성 및 목록 -->
-    <div class="card mt-5 shadow-sm p-4 rounded-4">
+    <div class="card mt-3 shadow-sm p-4 rounded-4">
         <!-- 공통 폼 (id는 유일하게 하나만!) -->
         <form id="reviewForm"></form>
         <div class="card-body">
@@ -427,8 +530,21 @@
             <c:forEach var="rv" items="${review}">
                 <div class="border-bottom mb-3 pb-2">
                     <p><strong>작성자:</strong> ${rv.guestId}</p>
-                    <p><strong>평점:</strong> ${rv.grade}점</p>
+                    <p><strong>평점:</strong>★ ${rv.grade}</p>
                     <p><strong>내용:</strong> ${rv.comment}</p>
+
+                    <!-- 이미지 슬라이더 영역 -->
+                    <c:if test="${not empty rv.imageUrl}">
+                        <div class="review-slider-container">
+                            <div class="review-slider-inner">
+                                <c:forEach var="img" items="${rv.imageUrl}">
+                                    <div class="slider-image-wrapper">
+                                        <img src="/imgs/${img}" class="slider-image" />
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
             </c:forEach>
             <c:if test="${empty review}">
