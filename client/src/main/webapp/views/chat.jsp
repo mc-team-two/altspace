@@ -15,59 +15,111 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <%--Bootstrap Icon--%>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+
   <%-- WebSocket Libraries --%>
   <script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/>"></script>
   <script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/>"></script>
 
   <style>
-    #all {
-      width: 400px;
-      height: 200px;
-      overflow: auto;
-      border: 2px solid red;
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden; /* 전체 페이지 스크롤 방지 */
     }
 
-    #me {
-      width: 400px;
-      height: 200px;
-      overflow: auto;
-      border: 2px solid blue;
+    .headerArea {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 7.5vh;
+      background-color: #ffffff;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      box-sizing: border-box;
     }
 
-    #to {
-      width: 400px;
-      height: 200px;
-      overflow: auto;
-      border: 2px solid green;
+    .headerArea a {
+      text-decoration: none;
+      color: black;
+      font-size: 18px;
+    }
+
+    .headerArea span {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .inputArea {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffffff;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .inputArea textarea {
+      width: 85%;
+      max-height: 100px; /* 최대 높이 (4줄) */
+      min-height: 36px;  /* 1줄 높이 */
+      height: 36px;      /* 기본 높이 */
+      resize: none;
+      background-color: #f5f5f9;
+      border: none;          /* 테두리 없음 */
+      border-radius: 15px;   /* 곡선 유지 */
+      outline: none;         /* 포커스 시에도 테두리 없음 */
+      overflow-y: hidden;    /* 기본적으로 스크롤바 숨김 */
+      padding: 0.5rem;       /* 패딩 추가 */
+    }
+
+    .inputArea button {
+      width: 15%;
+    }
+
+    .chatArea {
+      position: absolute;
+      top: 7.5vh;
+      bottom: 7.5vh;
+      left: 0;
+      width: 100%;
+      overflow-y: auto; /* 세로 스크롤 활성화 */
+      background-color: #f5f5f9;
+      padding: 1rem;
     }
   </style>
 </head>
 <body>
-<div class="col-sm-12 mx-auto">
-  <div class="card">
-    <div class="card-body">
-      <div class="col-sm-5">
-        <h1 id="adm_id">${sessionScope.user.userId}</h1>
-        <H1 id="status">Status</H1>
-        <button id="connect">Connect</button>
-        <button id="disconnect">Disconnect</button>
-
-        <h3>All</h3>
-        <input type="text" id="alltext"><button id="sendall">Send</button>
-        <div id="all"></div>
-
-        <h3>Me</h3>
-        <input type="text" id="metext"><button id="sendme">Send</button>
-        <div id="me"></div>
-
-        <h3>To</h3>
-        <input type="text" id="target">
-        <input type="text" id="totext"><button id="sendto">Send</button>
-        <div id="to"></div>
-
-      </div>
-    </div>
+<div class="headerArea">
+  <div>
+    <a href="#" onclick="window.close()">
+      <i class="bi bi-x-lg"></i>
+    </a>
+    <span class="ml-2">${acc.name}</span>
   </div>
+  <div id="status">
+    Status
+  </div>
+</div>
+<div class="chatArea">
+  <div id="to"></div>
+</div>
+<div id="adm_id" style="display: none;">${sessionScope.user.userId}</div>
+<div id="target" style="display: none;">${acc.hostId}</div>
+<div class="inputArea">
+  <textarea id="totext" placeholder="메시지를 입력해주세요."></textarea>
+  <button id="sendto" class="btn">전송</button>
 </div>
 
 <script>
@@ -76,30 +128,11 @@
     stompClient:null,
     init:function(){
       this.id = $('#adm_id').text();
-      $('#connect').click(()=>{
-        this.connect();
-      });
-      $('#disconnect').click(()=>{
-        this.disconnect();
-      });
-      $('#sendall').click(()=>{
-        let msg = JSON.stringify({
-          'sendid' : this.id,
-          'content1' : $("#alltext").val()
-        });
-        this.stompClient.send("/pub/receiveall", {}, msg);
-      });
-      $('#sendme').click(()=>{
-        let msg = JSON.stringify({
-          'sendid' : this.id,
-          'content1' : $("#metext").val()
-        });
-        this.stompClient.send("/pub/receiveme", {}, msg);
-      });
+      this.connect(); // 채팅방 접속시 바로 connect
       $('#sendto').click(()=>{
         var msg = JSON.stringify({
           'sendid' : this.id,
-          'receiveid' : $('#target').val(),
+          'receiveid' : $('#target').text(),
           'content1' : $('#totext').val()
         });
         this.stompClient.send('/pub/receiveto', {}, msg);
@@ -113,19 +146,9 @@
       this.stompClient.connect({}, function(frame) {
         websocket.setConnected(true);
         console.log('Connected: ' + frame);
-        this.subscribe('/sub', function(msg) {
-          $("#all").prepend(
-                  "<h4>" + JSON.parse(msg.body).sendid +":"+
-                  JSON.parse(msg.body).content1
-                  + "</h4>");
-        });
-        this.subscribe('/sub/'+sid, function(msg) {
-          $("#me").prepend(
-                  "<h4>" + JSON.parse(msg.body).sendid +":"+
-                  JSON.parse(msg.body).content1+ "</h4>");
-        });
         this.subscribe('/sub/to/'+sid, function(msg) {
-          $("#to").prepend(
+          console.log(JSON.parse(msg.body));
+          $(".chatArea").prepend(
                   "<h4>" + JSON.parse(msg.body).sendid +":"+
                   JSON.parse(msg.body).content1
                   + "</h4>");
@@ -149,6 +172,10 @@
   };
   $(function(){
     websocket.init();
+    // 닫히거나 새로고침 되기 직전에 호출됨
+    window.onbeforeunload = function(){
+     websocket.disconnect();
+    };
   });
 </script>
 
