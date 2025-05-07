@@ -115,8 +115,11 @@ public class MainController {
         return "위치 정보가 세션에 저장되었습니다.";
     }
 
-    @RequestMapping("/chat")
-    public String chat(Model model) {
+    @RequestMapping("/chat/{accId}")
+    public String chat(Model model,
+                       @PathVariable("accId") Integer accId) throws Exception {
+        Accommodations acc = accomService.get(accId);
+        model.addAttribute("acc", acc);
         model.addAttribute("serverUrl", webSocketUrl);
         return "chat";
     }

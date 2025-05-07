@@ -325,7 +325,7 @@
             <div class="card shadow-sm p-4 rounded-4">
                 <h2 class="fw-bold mb-4">${accomm.name}</h2>
                 <a href="#"
-                   onclick="window.open('<c:url value="/chat"/>', 'chatWindow', 'width=480,height=650'); return false;"
+                   onclick="window.open('<c:url value="/chat/${accomm.accommodationId}"/>', 'chatWindow', 'width=480,height=650'); return false;"
                    class="btn btn-dark mb-3">
                     <i class="bi bi-chat-left-dots"></i>
                     <span class="ml-2">1:1 문의하기</span>
