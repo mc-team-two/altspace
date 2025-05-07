@@ -28,11 +28,12 @@ public class MsgController {
         String id = msg.getSendid();
         template.convertAndSend("/sub/"+id,msg);
     }
+
     @MessageMapping("/receiveto") // 특정 Id에게 전송
     public void receiveto(Msg msg, SimpMessageHeaderAccessor headerAccessor) {
         String target = msg.getReceiveid();
         log.info("-------------------------");
-        log.info(target);
+        log.info(msg.toString());
 
         template.convertAndSend("/sub/to/"+target,msg);
     }

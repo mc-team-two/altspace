@@ -4,7 +4,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>채팅방</title>
+  <title>${acc.name} | 알트스페이스</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -98,6 +98,50 @@
       background-color: #f5f5f9;
       padding: 1rem;
     }
+
+    .chatArea .notice {
+      background-color: lightgray;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .bubbleArea {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 8px; /* 여백 추가 */
+    }
+
+    .bubbleArea.myMsg {
+      flex-direction: row-reverse; /* 내 메시지일 때 방향 반전 */
+    }
+
+    .bubbleMsg {
+      background-color: rgba(83, 53, 108, 0.3);
+      border-radius: 15px;
+      padding: 15px;
+      width: auto;
+      max-width: 85%;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .bubbleArea.myMsg .bubbleMsg {
+      background-color: rgba(0, 123, 255, 0.3); /* 내 메시지 - 파란색 */
+    }
+
+    .bubbleDate {
+      width: 15%;
+      font-size: 12px;
+      align-self: flex-end;
+      padding-left: 4px;
+    }
+
+    .bubbleArea.myMsg .bubbleDate {
+      padding-left: 0;
+      padding-right: 4px; /* 오른쪽에 여백 추가 */
+      text-align: right;  /* 오른쪽 정렬 */
+    }
   </style>
 </head>
 <body>
@@ -113,14 +157,17 @@
   </div>
 </div>
 <div class="chatArea">
-  <div id="to"></div>
+  <div class="notice px-2 py-2">
+    <i class="bi bi-megaphone"></i>
+    <span class="pl-3">일반 문의는 챗봇을 이용하시면 더 빠르고 정확합니다.</span>
+  </div>
 </div>
-<div id="adm_id" style="display: none;">${sessionScope.user.userId}</div>
-<div id="target" style="display: none;">${acc.hostId}</div>
 <div class="inputArea">
   <textarea id="totext" placeholder="메시지를 입력해주세요."></textarea>
   <button id="sendto" class="btn">전송</button>
 </div>
+<div id="adm_id" style="display: none;">${sessionScope.user.userId}</div>
+<div id="target" style="display: none;">${acc.hostId}</div>
 
 <script>
   let websocket = {
@@ -129,13 +176,25 @@
     init:function(){
       this.id = $('#adm_id').text();
       this.connect(); // 채팅방 접속시 바로 connect
+      // 보내기
       $('#sendto').click(()=>{
-        var msg = JSON.stringify({
+        const content = $('#totext').val();
+        if (!content.trim()) return; // 빈 메시지 전송 방지
+
+        const msg = JSON.stringify({
           'sendid' : this.id,
           'receiveid' : $('#target').text(),
-          'content1' : $('#totext').val()
+          'content1' : content,
+          'sentAt' : Date.now()
         });
         this.stompClient.send('/pub/receiveto', {}, msg);
+
+        // 화면에 내 메시지 추가
+        const bubbleHTML = websocket.makeBubble(msg);
+        $(".chatArea").append(bubbleHTML);
+        $(".chatArea").scrollTop($(".chatArea")[0].scrollHeight);  // 최신 메시지로 스크롤
+
+        $('#totext').val('');  // 입력창 초기화
       });
     },
     connect:function(){
@@ -146,12 +205,11 @@
       this.stompClient.connect({}, function(frame) {
         websocket.setConnected(true);
         console.log('Connected: ' + frame);
+        // 수신 (sub)
         this.subscribe('/sub/to/'+sid, function(msg) {
-          console.log(JSON.parse(msg.body));
-          $(".chatArea").prepend(
-                  "<h4>" + JSON.parse(msg.body).sendid +":"+
-                  JSON.parse(msg.body).content1
-                  + "</h4>");
+          const bubbleHTML = websocket.makeBubble(msg.body);
+          $(".chatArea").append(bubbleHTML);
+          $(".chatArea").scrollTop($(".chatArea")[0].scrollHeight);  // 최신 메시지로 스크롤
         });
       });
     },
@@ -164,17 +222,39 @@
     },
     setConnected:function(connected){
       if (connected) {
-        $("#status").text("Connected");
+        $("#status").text("Connected").css('color', 'green');
       } else {
-        $("#status").text("Disconnected");
+        $("#status").text("Disconnected").css('color', 'red');
       }
+    },
+    makeBubble:function(msg) {
+      let parsedMsg = JSON.parse(msg);
+
+      const isMine = parsedMsg.sendid === this.id;
+      const date = new Date(parsedMsg.sentAt); // 1746625671308
+      const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      let bubble = "";
+      bubble += `<div class="bubbleArea `;
+      bubble += isMine ? "myMsg" : "";
+      bubble += `">`;
+      bubble += `<div class="bubbleMsg">`;
+      bubble += parsedMsg.content1;
+      bubble += `</div>`;
+      bubble += `<div class="bubbleDate">`;
+      bubble += formattedTime;
+      bubble += `</div></div>`;
+      return bubble;
     }
   };
-  $(function(){
+  $(function () {
     websocket.init();
     // 닫히거나 새로고침 되기 직전에 호출됨
-    window.onbeforeunload = function(){
-     websocket.disconnect();
+    window.onbeforeunload = function () {
+      if (websocket.stompClient) {
+        websocket.stompClient.disconnect();
+      }
+      websocket.setConnected(false);
     };
   });
 </script>

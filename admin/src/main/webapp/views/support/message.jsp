@@ -2,20 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-    #all {
-        width: 400px;
-        height: 200px;
-        overflow: auto;
-        border: 2px solid red;
-    }
-
-    #me {
-        width: 400px;
-        height: 200px;
-        overflow: auto;
-        border: 2px solid blue;
-    }
-
     #to {
         width: 400px;
         height: 200px;
@@ -30,32 +16,25 @@
         stompClient:null,
         init:function(){
             this.id = $('#adm_id').text();
+            this.connect();
             $('#connect').click(()=>{
                 this.connect();
             });
             $('#disconnect').click(()=>{
                 this.disconnect();
             });
-            $('#sendall').click(()=>{
-                let msg = JSON.stringify({
-                    'sendid' : this.id,
-                    'content1' : $("#alltext").val()
-                });
-                this.stompClient.send("/pub/receiveall", {}, msg);
-            });
-            $('#sendme').click(()=>{
-                let msg = JSON.stringify({
-                    'sendid' : this.id,
-                    'content1' : $("#metext").val()
-                });
-                this.stompClient.send("/pub/receiveme", {}, msg);
-            });
             $('#sendto').click(()=>{
-                var msg = JSON.stringify({
+                const content = $('#totext').val();
+                if (!content.trim()) return; // 빈 메시지 전송 방지v
+
+                // publish
+                const msg = JSON.stringify({
                     'sendid' : this.id,
                     'receiveid' : $('#target').val(),
-                    'content1' : $('#totext').val()
+                    'content1' : content,
+                    'sentAt' : Date.now()
                 });
+                console.log(msg);
                 this.stompClient.send('/pub/receiveto', {}, msg);
             });
         },
@@ -67,17 +46,7 @@
             this.stompClient.connect({}, function(frame) {
                 websocket.setConnected(true);
                 console.log('Connected: ' + frame);
-                this.subscribe('/sub', function(msg) {
-                    $("#all").prepend(
-                        "<h4>" + JSON.parse(msg.body).sendid +":"+
-                        JSON.parse(msg.body).content1
-                        + "</h4>");
-                });
-                this.subscribe('/sub/'+sid, function(msg) {
-                    $("#me").prepend(
-                        "<h4>" + JSON.parse(msg.body).sendid +":"+
-                        JSON.parse(msg.body).content1+ "</h4>");
-                });
+                // subscribe
                 this.subscribe('/sub/to/'+sid, function(msg) {
                     $("#to").prepend(
                         "<h4>" + JSON.parse(msg.body).sendid +":"+
@@ -118,17 +87,8 @@
             <button id="connect">Connect</button>
             <button id="disconnect">Disconnect</button>
 
-            <h3>All</h3>
-            <input type="text" id="alltext"><button id="sendall">Send</button>
-            <div id="all"></div>
-
-            <h3>Me</h3>
-            <input type="text" id="metext"><button id="sendme">Send</button>
-            <div id="me"></div>
-
-            <h3>To</h3>
-            <input type="text" id="target">
-            <input type="text" id="totext"><button id="sendto">Send</button>
+            <input type="text" id="target" value="aaebc224">
+            <input type="text" id="totext"><button id="sendto">전송</button>
             <div id="to"></div>
 
         </div>
