@@ -123,8 +123,8 @@
         FROM payments p
                  JOIN accommodations a ON p.accommodation_id = a.accommodation_id
         WHERE p.pay_status = '완료'
-            AND MONTH(p.create_day) = MONTH(CURRENT_DATE())
-          AND YEAR(p.create_day) = YEAR(CURRENT_DATE())
+            AND MONTH(p.check_in) = MONTH(CURRENT_DATE())
+            AND YEAR(p.check_in) = YEAR(CURRENT_DATE())
         GROUP BY p.accommodation_id
         ORDER BY reservations_count DESC
             LIMIT 1
