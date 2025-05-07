@@ -94,21 +94,39 @@
     </div>
 
     <!-- 이번 달 인기 스페이스 -->
-    <c:if test="${not empty popularSpace}">
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-body d-flex flex-column justify-content-center p-4">
-            <h6 class="card-title mb-2">🏠 이번 달 인기 스페이스</h6>
-            <div class="text-center">
-              <h5 class="card-title mb-3 text-primary fw-bold" style="line-height: 1.1;">${popularSpace.name}</h5>
-              <p class="card-text text-muted mb-3" style="line-height: 0.5;">총 <strong>${popularSpace.reservationsCount}</strong>건의 예약이 완료되었습니다.</p>
-              <img src="${pageContext.request.contextPath}/imgs/${popularSpace.image1Name}" alt="숙소 이미지"
-                   class="img-fluid rounded" style="max-height: 180px;">
+    <c:choose>
+      <c:when test="${not empty popularSpace}">
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column justify-content-center p-4">
+              <h6 class="card-title mb-2">🏠 이번 달 인기 스페이스</h6>
+              <div class="text-center">
+                <h5 class="card-title mb-3 text-primary fw-bold" style="line-height: 1.1;">
+                    ${popularSpace.name}
+                </h5>
+                <p class="card-text text-muted mb-3" style="line-height: 0.5;">
+                  총 <strong>${popularSpace.reservationsCount}</strong>건의 예약이 완료되었습니다.
+                </p>
+                <img src="${pageContext.request.contextPath}/imgs/${popularSpace.image1Name}"
+                     alt="숙소 이미지"
+                     class="img-fluid rounded"
+                     style="max-height: 180px;">
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </c:if>
+      </c:when>
+      <c:otherwise>
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body d-flex flex-column justify-content-center p-4 text-center">
+              <h6 class="card-title mb-2">🏠 이번 달 인기 스페이스</h6>
+              <p class="card-text text-muted">데이터가 없습니다.</p>
+            </div>
+          </div>
+        </div>
+      </c:otherwise>
+    </c:choose>
   </div>
 
   <!-- 3행: 수익 차트 -->
