@@ -41,14 +41,14 @@
                     'sendid' : this.id,
                     'content1' : $("#alltext").val()
                 });
-                this.stompClient.send("/receiveall", {}, msg);
+                this.stompClient.send("/pub/receiveall", {}, msg);
             });
             $('#sendme').click(()=>{
                 let msg = JSON.stringify({
                     'sendid' : this.id,
                     'content1' : $("#metext").val()
                 });
-                this.stompClient.send("/receiveme", {}, msg);
+                this.stompClient.send("/pub/receiveme", {}, msg);
             });
             $('#sendto').click(()=>{
                 var msg = JSON.stringify({
@@ -56,7 +56,7 @@
                     'receiveid' : $('#target').val(),
                     'content1' : $('#totext').val()
                 });
-                this.stompClient.send('/receiveto', {}, msg);
+                this.stompClient.send('/pub/receiveto', {}, msg);
             });
         },
         connect:function(){
@@ -67,18 +67,18 @@
             this.stompClient.connect({}, function(frame) {
                 websocket.setConnected(true);
                 console.log('Connected: ' + frame);
-                this.subscribe('/send', function(msg) {
+                this.subscribe('/sub', function(msg) {
                     $("#all").prepend(
                         "<h4>" + JSON.parse(msg.body).sendid +":"+
                         JSON.parse(msg.body).content1
                         + "</h4>");
                 });
-                this.subscribe('/send/'+sid, function(msg) {
+                this.subscribe('/sub/'+sid, function(msg) {
                     $("#me").prepend(
                         "<h4>" + JSON.parse(msg.body).sendid +":"+
                         JSON.parse(msg.body).content1+ "</h4>");
                 });
-                this.subscribe('/send/to/'+sid, function(msg) {
+                this.subscribe('/sub/to/'+sid, function(msg) {
                     $("#to").prepend(
                         "<h4>" + JSON.parse(msg.body).sendid +":"+
                         JSON.parse(msg.body).content1
@@ -111,6 +111,7 @@
         호스트 센터 &nbsp;&nbsp;>&nbsp;&nbsp; <strong>고객 메시지</strong>
     </p>
     <div class="card">
+        <div class="card-body">
         <div class="col-sm-5">
             <h1 id="adm_id">${sessionScope.user.userId}</h1>
             <H1 id="status">Status</H1>
@@ -131,6 +132,6 @@
             <div id="to"></div>
 
         </div>
-
+        </div>
     </div>
 </div>

@@ -1,12 +1,12 @@
-package com.mc.app.dto;
+package com.mc.app.msg;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Getter
-@Setter
+@Data
 public class Msg {
     private String sendid;
     private String receiveid;
