@@ -4,6 +4,7 @@ import com.mc.app.dto.Guide;
 import com.mc.app.service.GuideService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/support")
 public class SupportController {
+
+    @Value("${app.url.serverUrl}")
+    String serverUrl;
 
     final GuideService guideService;
 
@@ -33,6 +37,7 @@ public class SupportController {
 
     @RequestMapping("/message")
     public String message(Model model){
+        model.addAttribute("serverUrl", serverUrl);
         model.addAttribute("center", dir+"message");
         model.addAttribute("index", dir+"index");
         return "index";
