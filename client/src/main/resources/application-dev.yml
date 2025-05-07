@@ -46,6 +46,7 @@ app:
     uploadimgdir: C:/Users/yejin/Documents/github/altspace/imgs/    # 파일 Write 용
   url:
     serverUrl : http://127.0.0.1:8080
+    webSocketUrl : http://127.0.0.1:9090
 
 # 6. iamport (유츌되면 안된대요 ㅠㅠ)
 imp:
