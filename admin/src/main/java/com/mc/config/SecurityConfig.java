@@ -26,7 +26,7 @@ public class SecurityConfig  {
     }
 
     @Bean
-    public StandardPBEStringEncryptor  textEncoder(@Value("${app.key.algo}") String algo, @Value("${app.key.skey}") String skey) {
+    public StandardPBEStringEncryptor  textEncoder(@Value("${jasypt.encryptor.algorithm}") String algo, @Value("${jasypt.encryptor.password}") String skey) {
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
         encryptor.setAlgorithm(algo);
         encryptor.setPassword(skey);

@@ -100,7 +100,7 @@
                             </li>
                             <li class="contact_info_item d-flex flex-row">
                                 <div><div class="contact_info_icon"><img src="images/message.svg" alt=""></div></div>
-                                <div class="contact_info_text"><a href="mailto:help.alt@altspace.com?Subject=Hello" target="_top">help.alt@altspace.com</a></div>
+                                <div class="contact_info_text"><a href="mailto:biz.altspace@gmail.com?Subject=Hello" target="_top">biz.altspace@gmail.com</a></div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
                                 <div><div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div></div>

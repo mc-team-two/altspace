@@ -25,6 +25,9 @@ import java.util.Map;
 @Slf4j
 public class MainController {
 
+    @Value("${app.url.webSocketUrl}")
+    String webSocketUrl;
+
     private final UserService userService;
     final AccomService accomService;
     final PaymentService paymentService;
@@ -131,5 +134,14 @@ public class MainController {
         session.setAttribute("userLongitude", longitude);
 
         return "위치 정보가 세션에 저장되었습니다.";
+    }
+
+    @RequestMapping("/chat/{accId}")
+    public String chat(Model model,
+                       @PathVariable("accId") Integer accId) throws Exception {
+        Accommodations acc = accomService.get(accId);
+        model.addAttribute("acc", acc);
+        model.addAttribute("serverUrl", webSocketUrl);
+        return "chat";
     }
 }

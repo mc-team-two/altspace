@@ -234,8 +234,49 @@
         accommodation_id = #{accommodationId}
     </update>
 
-<!--    주소값을 정확히 일치하는 게 아니라, 포함된 값을 불러오도록 쿼리 수정. -->
-    <select id="searchAccommodationsByLocation" parameterType="string" resultType="Accommodations">
+<!--    주소값을 정확히 일치하는 게 아니라, 포함된 값을 불러오도록 쿼리 수정.
+        5/2 체크인, 체크아웃 시간을 payments 테이블의 기간을 가져와서 값이 있다면 해당 기간동안 제외하는 로직 추가.
+        + 인원수 매칭도 비교대상에 추가.
+        -->
+    <select id="searchAccommodationsByLocation" parameterType="map" resultType="Accommodations">
+        SELECT
+        a.*
+        FROM
+        Accommodations a
+        <where>
+            a.status = '활성'
+            <if test="location != null and location != ''">
+                AND a.location LIKE CONCAT('%', #{location}, '%')
+            </if>
+            <if test="checkInDate != null and checkOutDate != null">
+                AND a.accommodation_id NOT IN (
+                SELECT DISTINCT
+                p.accommodation_id
+                FROM
+                payments p
+                WHERE
+                p.pay_status = '결제완료'
+                AND (#{checkInDate} &lt; p.check_out AND #{checkOutDate} &gt; p.check_in)
+                )
+            </if>
+            <if test="personnel != null and personnel != ''">
+                AND a.person_max &gt;= #{personnel}
+            </if>
+            <if test="extras != null and extras.size > 0">
+                <foreach collection="extras" item="extra" open="AND (" separator=" OR " close=")">
+                    <choose>
+                        <when test="extra == 'breakfast'">breakfast = true</when>
+                        <when test="extra == 'pet'">pet = true</when>
+                        <when test="extra == 'barbecue'">barbecue = true</when>
+                        <when test="extra == 'pool'">pool = true</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!-- 위치 기반 검색 -->
+    <select id="searchAccommodationsByGeoLocation" parameterType="java.util.Map" resultType="com.mc.app.dto.Accommodations">
         SELECT
             accommodation_id,
             host_id,
@@ -263,7 +304,7 @@
         FROM
             Accommodations
         WHERE
-            location LIKE CONCAT('%', #{location}, '%')
+            ST_Distance_Sphere(POINT(longitude, latitude), POINT(#{userLongitude}, #{userLatitude})) &lt;= #{radius}
+          AND status = '활성'
     </select>
-
 </mapper>

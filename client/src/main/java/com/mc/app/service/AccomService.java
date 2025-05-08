@@ -8,14 +8,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class AccomService implements MCService<Accommodations, Integer> {
 
     private final AccomRepository accomRepository;
-    private final ReviewService reviewService; // ReviewService 주입
+    private final ReviewService reviewService;
 
     @Override
     public void add(Accommodations accommodations) throws Exception {
@@ -45,7 +47,6 @@ public class AccomService implements MCService<Accommodations, Integer> {
     // 페이징된 숙소 목록과 함께 평균 평점을 반환하는 메서드
     public List<AccomodationsWithRating> getAccommodationsWithRating(List<Accommodations> accommodations) throws Exception {
         List<AccomodationsWithRating> accommodationsWithRatingList = new ArrayList<>();
-
         for (Accommodations acc : accommodations) {
             double avgRating = reviewService.getAverageRating((long) acc.getAccommodationId());
             AccomodationsWithRating dto = AccomodationsWithRating.builder()
@@ -59,7 +60,22 @@ public class AccomService implements MCService<Accommodations, Integer> {
     }
 
     // 지역으로 숙소를 검색하는 메서드 (location 컬럼에 검색어 포함)
-    public List<Accommodations> getAccommodationsByLocation(String location) {
-        return accomRepository.searchAccommodationsByLocation(location);
+    public List<Accommodations> getAccommodationsByLocation(String location, String checkInDate, String checkOutDate, String personnel, List<String> extras) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("location", location);
+        params.put("checkInDate", checkInDate);
+        params.put("checkOutDate", checkOutDate);
+        params.put("personnel", personnel); // 추가된 personnel 파라미터
+        params.put("extras", extras);
+        return accomRepository.searchAccommodationsByLocation(params);
+    }
+
+    // 지역으로 숙소를 검색하는 메서드 (geolocation 기반)
+    public List<Accommodations> searchAccommodationsByGeoLocation(double latitude, double longitude, double radius) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("userLatitude", latitude);
+        params.put("userLongitude", longitude);
+        params.put("radius", radius);
+        return accomRepository.searchAccommodationsByGeoLocation(params);
     }
 }

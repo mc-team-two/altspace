@@ -273,7 +273,6 @@
                         <p class="text-muted">${rv.comment}</p>
                     </c:if>
                 </c:forEach>
-
                 <a href="#reviewSection" class="text-decoration-none small text-primary">리뷰 전체 보기 →</a>
             </div>
         </div>
@@ -312,7 +311,7 @@
                             <i class="fa fa-paw text-info" style="font-size: 1.25rem;"></i><br/>
                             <small>반려동물</small>
                         </div>
-                    </c:if>
+                  </c:if>
                 </div>
             </div>
         </div>

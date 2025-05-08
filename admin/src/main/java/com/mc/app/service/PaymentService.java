@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -59,4 +60,29 @@ public class PaymentService implements MCService<Payments,Integer> {
         return paymentRepository.selectByAccommodationId(accommodationId);
     }
 
+    public Integer getMonthTotal() throws Exception {
+        return paymentRepository.selectMonthTotal();
+    }
+
+    // 내일 이후의 완료된 예약 건수 가져오기
+    public List<Payments> getUpcomingReservations() throws Exception {
+        return paymentRepository.selectUpcomingReservations();
+    }
+
+    // 오늘 체크인 예약 건수 가져오기
+    public Integer getTodayCheckInCount() throws Exception {
+        return paymentRepository.countTodayCheckIn();
+    }
+
+    public List<Payments> getUpcoming7DaysReservations() throws Exception {
+        return paymentRepository.selectUpcoming7DaysReservations();
+    }
+
+    public List<Map<String, Object>> getLast6MonthsEarnings() {
+        return paymentRepository.selectLast6MonthsEarnings();
+    }
+
+    public Payments getPopularSpaceThisMonth() throws Exception {
+        return paymentRepository.selectPopularSpaceThisMonth();
+    }
 }

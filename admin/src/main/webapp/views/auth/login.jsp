@@ -97,7 +97,6 @@
         /* footer 영역 */
         .footer-links {
             display: flex;
-            flex-wrap: nowrap;
             justify-content: center;
             font-size: 13px;
             margin-top: 15px;
@@ -173,9 +172,7 @@
         <div class="footer-links mt-3">
             <a href="/auth/register">회원가입</a>
             <span class="divider-pipe">|</span>
-            <a href="/auth/find-id">아이디 찾기</a>
-            <span class="divider-pipe">|</span>
-            <a href="/auth/find-password">비밀번호 찾기</a>
+            <a href="/auth/find-account">ID/PW 찾기</a>
         </div>
 
     </div>

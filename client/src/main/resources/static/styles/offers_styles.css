@@ -1524,6 +1524,55 @@ section
 	transform: translateY(-4px);
 }
 
+
+.offers .offers_icons .offers_icons_list .offers_icons_item > i.fa {
+	color: #fd7e14 !important;
+}
+.popper-tooltip {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	padding: 5px 10px;
+	border-radius: 3px;
+	font-size: 0.8em;
+	white-space: nowrap;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+	position: absolute; /* Popper.js에 의해 위치가 결정됨 */
+	z-index: 1000; /* 다른 요소 위에 표시 */
+}
+
+.popper-tooltip.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* 화살표 스타일 (선택 사항) */
+.popper-tooltip[data-popper-placement^='top'] > .popper-arrow {
+	bottom: -4px;
+}
+
+.popper-tooltip[data-popper-placement^='bottom'] > .popper-arrow {
+	top: -4px;
+}
+
+.popper-tooltip[data-popper-placement^='left'] > .popper-arrow {
+	right: -4px;
+}
+
+.popper-tooltip[data-popper-placement^='right'] > .popper-arrow {
+	left: -4px;
+}
+
+.popper-arrow {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background: inherit;
+	transform: rotate(45deg); /* 화살표 모양 */
+}
+
+
 /*********************************
 9.4 Blog for Pagination
 *********************************/

@@ -510,14 +510,14 @@
                             <p>이메일: ${user.email}</p>
                             <p>이름: ${user.name}</p>
                             <p>전화번호: ${user.phone}</p>
-                            <p>가입일: ${user.createdAt}</p>
+                            <p>가입일: ${user.createDay}</p>
                             <p>정보 수정일:
                                 <c:choose>
-                                    <c:when test="${user.updatedAt == null}">
+                                    <c:when test="${user.updateDay == null}">
                                         수정 기록 없음
                                     </c:when>
                                     <c:otherwise>
-                                        ${user.updatedAt}
+                                        ${user.updateDay}
                                     </c:otherwise>
                                 </c:choose>
                             </p>

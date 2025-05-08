@@ -23,6 +23,17 @@
     <%--jQuery CDN--%>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- Bootstrap CSS (index.jsp의 head에 있으면 중복 불필요) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <%-- Web Socket Lib    --%>
+    <script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
+    <script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
     <!-- DataTables JS -->
@@ -58,7 +69,6 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -70,9 +80,9 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
                 <a href="/" class="app-brand-link">
-      <span class="app-brand-logo demo">
-        <img height="45" src="<c:url value="/imgs/Altspace_lightmode_Horizontal.png"/>" alt="알트스페이스 로고">
-      </span>
+                  <span class="app-brand-logo demo">
+                    <img height="45" src="<c:url value="/imgs/Altspace_lightmode_Horizontal.png"/>" alt="알트스페이스 로고">
+                  </span>
                 </a>
             </div>
 
@@ -80,55 +90,48 @@
 
             <ul class="menu-inner py-1">
 
-                <!-- 공간 관리 섹션 -->
+                <!-- 스페이스 관리 -->
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">공간 관리</span>
+                    <span class="menu-header-text">스페이스 관리</span>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/space/add"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-add-to-queue"></i>
-                        <box-icon name='add-to-queue'></box-icon>
-                        <div>공간 추가</div>
+                    <a href='<c:url value="/space/list"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-building-house"></i>
+                        <div>내 스페이스</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/space/get"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-building-house"></i>
-                        <div>내 공간 관리</div>
+                    <a href='<c:url value="/space/booking"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-calendar-event"></i>
+                        <div>일정 확인</div>
                     </a>
                 </li>
 
-                <!-- 결제/예약 조회 섹션 -->
+                <!-- 결제 내역 -->
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">결제/예약 조회</span>
+                    <span class="menu-header-text">결제 내역</span>
                 </li>
                 <li class="menu-item">
                     <a href='<c:url value="/payment/pay"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-credit-card"></i>
-                        <div>결제 내역</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href='<c:url value="/payment/booking"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-calendar-check"></i>
-                        <div>공간별 예약 내역</div>
+                        <i class="menu-icon tf-icons bx bx-receipt"></i>
+                        <div>결제 내역 조회</div>
                     </a>
                 </li>
 
-                <!-- 후기 관리 섹션 -->
+                <!-- 호스트 센터 -->
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">후기 관리</span>
+                    <span class="menu-header-text">호스트 센터</span>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/review/list"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-comment-detail"></i>
-                        <div>후기 목록</div>
+                    <a href='<c:url value="/support/guide"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-book-open"></i>
+                        <div>운영 가이드</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/review/check"/>' class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-check-shield"></i>
-                        <div>후기 승인/거부</div>
+                    <a href='<c:url value="/support/message"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-message-square-detail"></i>
+                        <div>고객 메시지</div>
                     </a>
                 </li>
 
@@ -139,92 +142,91 @@
         <!-- Layout container -->
         <div class="layout-page">
 
-
             <!-- Navbar -->
             <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
                  id="layout-navbar">
 
-                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-                    <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                        <i class="bx bx-menu bx-sm"></i>
-                    </a>
-                </div>
+                <div class="container-fluid d-flex justify-content-between align-items-center w-100">
 
-                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                    <!-- Search -->
-                    <div class="navbar-nav align-items-center">
-                        <div class="nav-item d-flex align-items-center">
-                            <i class="bx bx-search fs-4 lh-0"></i>
-                            <input
-                                    type="text"
-                                    class="form-control border-0 shadow-none"
-                                    placeholder="Search..."
-                                    aria-label="Search..."
-                            />
-                        </div>
+                    <!-- 왼쪽: 햄버거 버튼 -->
+                    <div class="d-flex align-items-center">
+                        <button class="navbar-toggler layout-menu-toggle border-0 me-2" type="button">
+                            <i class="bx bx-menu fs-3"></i>
+                        </button>
                     </div>
-                    <!-- /Search -->
 
-                    <ul class="navbar-nav flex-row align-items-center ms-auto">
-                        <!-- User -->
-                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                    <!-- 가운데: 페이지 제목 -->
+                    <div class="position-absolute start-50 translate-middle-x">
+                        <h5 class="mb-0 text-muted fw-semibold">빠르고 간편하게, Alt space</h5>
+                    </div>
 
-                            <!-- 로그인 상태일 경우 -->
-                            <c:if test="${not empty sessionScope.user}">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                    <div class="avatar avatar-online">
-                                        <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
-                                            <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
-                                            <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
-                                        </svg>
-                                    </div>
-                                </a>
-                            </c:if>
+                    <!-- 오른쪽: 사용자 메뉴 -->
+                    <div class="d-flex align-items-center">
 
-                            <!-- 로그인 안 된 상태일 경우 -->
-                            <c:if test="${empty sessionScope.user}">
-                                <a class="nav-link hide-arrow" href="<c:url value='/auth/login'/>">
-                                    <div class="avatar">
-                                        <svg class="w-px-40 h-auto rounded-circle" xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 20 20" fill="none">
-                                            <circle cx="10" cy="6" r="4" fill="#C4C4C4"/>
-                                            <path d="M2 18c0-3.333 2.667-6 6-6h4c3.333 0 6 2.667 6 6" fill="#C4C4C4"/>
-                                        </svg>
-                                    </div>
-                                </a>
-                            </c:if>
+                        <!-- 사용자 메뉴 (로그인 상태에 따라 달라짐) -->
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
 
-                            <!-- 드롭다운 메뉴 (로그인한 경우만 의미 있음) -->
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item" href="<c:url value='/mypage'/>">
-                                        <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">마이페이지</span>
+                                <!-- 로그인 상태일 경우 -->
+                                <c:if test="${not empty sessionScope.user}">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-2 text-end d-none d-md-block">
+                                                <div class="fw-bold">${sessionScope.user.name} 호스트님</div>
+                                                <small class="text-muted">환영합니다!</small>
+                                            </div>
+                                            <div class="avatar avatar-online">
+                                                <img src="<c:url value="/imgs/avatar.png"/>" class="w-px-40 h-auto rounded-circle" alt="User" />
+                                            </div>
+                                        </div>
                                     </a>
-                                </li>
-                                <li><div class="dropdown-divider"></div></li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-cog me-2"></i>
-                                        <span class="align-middle">테마 설정</span>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="<c:url value='/mypage'/>">
+                                                <i class="bx bx-user me-2"></i> 마이페이지
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" href="#" id="theme-toggle-dropdown">
+                                                <i class="bx bx-moon me-2"></i> 테마 설정
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" href="<c:url value='/auth/logout'/>">
+                                                <i class="bx bx-power-off me-2"></i> <strong>로그아웃</strong>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </c:if>
+
+                                <!-- 로그인 안 된 상태일 경우 -->
+                                <c:if test="${empty sessionScope.user}">
+                                    <a class="nav-link" href="<c:url value='/auth/login'/>">
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2 text-muted">로그인</span>
+                                            <div class="avatar">
+                                                <img src="/images/default-profile.svg" class="w-px-40 h-auto rounded-circle" alt="Login" />
+                                            </div>
+                                        </div>
                                     </a>
-                                </li>
-                                <li><div class="dropdown-divider"></div></li>
-                                <li>
-                                    <a class="dropdown-item" href="<c:url value='/auth/logout'/>">
-                                        <i class="bx bx-power-off me-2"></i>
-                                        <span class="align-middle"><strong>로그아웃</strong></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!--/ User -->
-                    </ul>
+                                </c:if>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
             <!-- / Navbar -->
 
             <!-- Content wrapper -->
             <div class="content-wrapper">
+
+                <!-- floating button -->
+                <a href="#" class="btn btn-light rounded-circle d-flex justify-content-center align-items-center position-fixed shadow"
+                   style="width: 60px; height: 60px; bottom: 20px; right: 20px; z-index: 1030; padding: 15px;" data-bs-toggle="tooltip">
+                    <img src="<c:url value="/imgs/go_to_top.png"/>" alt="Back to top" style="width: 100%; height: 100%;" />
+                </a>
 
                 <!-- Content -->
 
