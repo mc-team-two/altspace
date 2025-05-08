@@ -12,6 +12,7 @@ import java.sql.Date;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class MainController {
+
+    @Value("${app.url.webSocketUrl}")
+    String webSocketUrl;
 
     private final UserService userService;
     final AccomService accomService;
@@ -109,5 +113,14 @@ public class MainController {
         session.setAttribute("userLongitude", longitude);
 
         return "위치 정보가 세션에 저장되었습니다.";
+    }
+
+    @RequestMapping("/chat/{accId}")
+    public String chat(Model model,
+                       @PathVariable("accId") Integer accId) throws Exception {
+        Accommodations acc = accomService.get(accId);
+        model.addAttribute("acc", acc);
+        model.addAttribute("serverUrl", webSocketUrl);
+        return "chat";
     }
 }
