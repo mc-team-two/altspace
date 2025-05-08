@@ -32,7 +32,7 @@
                     'sendid' : this.id,
                     'receiveid' : $('#target').val(),
                     'content1' : content,
-                    'sentAt' : Date.now()
+                    'sentAt' : new Date().toISOString() // ISO 형식으로 전송
                 });
                 console.log(msg);
                 this.stompClient.send('/pub/receiveto', {}, msg);

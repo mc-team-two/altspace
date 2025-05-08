@@ -185,7 +185,7 @@
           'sendid' : this.id,
           'receiveid' : $('#target').text(),
           'content1' : content,
-          'sentAt' : Date.now()
+          'sentAt' : new Date().toISOString() // ISO 형식으로 전송
         });
         this.stompClient.send('/pub/receiveto', {}, msg);
 
