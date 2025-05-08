@@ -41,21 +41,36 @@ app:
     googleApiSecretKey: ENC(wqRdJ0edAHlyzC1s2qTfgPRTOdXdX/L2v342Vs7NTifnbaqOHuIAIH6Iu2B1CDed)
     naverApiKey: ENC(W21CWi5vucRAWCqK4GMx1P+L27Q66k3kJRU/e0BOyxs=)
     naverApiSecretKey: ENC(P7kspdfWVZVOh9kr3DG+ogt3pyebrCLy)
+    algo: PBEWithMD5AndDES
+    skey: mykey
   dir:
-    imgdir: file:///C:/Users/yejin/Documents/github/altspace/imgs/  # 화면 출력 용
-    uploadimgdir: C:/Users/yejin/Documents/github/altspace/imgs/    # 파일 Write 용
+    imgdir: file:///C:/IntelliJ/IntelliJ IDEA 2024.3.4.1/project/altspace/imgs/  # 화면 출력 용
+    uploadimgdir: C:/IntelliJ/IntelliJ IDEA 2024.3.4.1/project/altspace/imgs/    # 파일 Write 용
   url:
     serverUrl : http://127.0.0.1:8080
     webSocketUrl : http://127.0.0.1:9090
 
-# 6. iamport (유츌되면 안된대요 ㅠㅠ)
+# 6. iamport
 imp:
   api:
     key: 0627011552872547
     secretkey: GDyeTp4vo1P5FKiy67lENk5IK52saDFpLW5vPyu2VioRkqVVvxYXpj8atqMsKc8nwywKJLM8g69cPe24
 
-# 7. jasypt
+# 7. NCP(OCR 은 혹시나 몰라서 일단 넣어놨어요.)
+ncp:
+  ocr:
+    url: https://tjoxzsvb05.apigw.ntruss.com/custom/v1/41403/f27adacaf33ea3d4f1e97a5ef5c73683d6f2e788d40d9c582d24f9c1676df942/infer
+    key: a1R1U21XY05xT1p4d2FOZEtOZXpGTFJoR2NrQllrYk4=
+  chatbot:
+    url: https://2sw2npiyi7.apigw.ntruss.com/custom/v1/17417/f27adacaf33ea3d4f1e97a5ef5c73683d6f2e788d40d9c582d24f9c1676df942
+    key: cm9qYVV4U1RGSVBIY21aVVJrUUFjb2NCWktoaHFWV3g=
+  papago:
+    id: 7poc0cqw3p
+    key: HrLIOMOGp2173lnuNHV73vpFzlb1Y8RGqXt3DpLv
+
+# 8. jasypt
 jasypt:
   encryptor:
     password: space
     algorithm: PBEWithMD5AndDES
+

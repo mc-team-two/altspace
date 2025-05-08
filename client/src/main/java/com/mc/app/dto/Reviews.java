@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,5 +23,7 @@ public class Reviews {
     private String location;        // 숙소 주소(조인해서 받아오는 값)
     private Timestamp createDay;
     private Timestamp updateDay;
-
+    private List<MultipartFile> images; // 파일 업로드용 (폼에서 들어오는 다중 파일)
+    private List<String> imageUrl;  // 이미지 URL 리스트 추가
+    private double rating;
 }

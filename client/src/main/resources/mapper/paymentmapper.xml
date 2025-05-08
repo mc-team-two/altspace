@@ -65,5 +65,11 @@
         WHERE payment_id = #{paymentId}
     </select>
 
+    <select id="selectCheckInCheckOut" parameterType="int" resultType="Payments">
+        SELECT *
+        FROM payments
+        WHERE accommodation_id = #{accommodationId}
+          AND pay_status = '완료'
+    </select>
 
 </mapper>

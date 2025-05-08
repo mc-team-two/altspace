@@ -51,4 +51,8 @@ public class PaymentService implements MCService<Payments,Integer> {
         return paymentRepository.selectPayment(integer);
     }
 
+    public List<Payments> selectCheckInCheckOut(Integer integer) throws Exception {
+        return paymentRepository.selectCheckInCheckOut(integer);
+    }
+
 }

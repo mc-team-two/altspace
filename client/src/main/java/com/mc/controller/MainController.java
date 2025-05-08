@@ -32,6 +32,9 @@ public class MainController {
     final AccomService accomService;
     final PaymentService paymentService;
     final ReviewService reviewService;
+
+    @Value("${app.key.kakaoJSApiKey}")
+    String kakaoJSApiKey;
   
     private static final int PAGE_SIZE = 10; // 한 페이지에 표시할 숙소 수
 
@@ -77,8 +80,25 @@ public class MainController {
         Accommodations accomm = accomService.get(id);
         model.addAttribute("accomm", accomm);
 
+        List<Payments> chInChOut =  paymentService.selectCheckInCheckOut(id);
+        model.addAttribute("chInChOut", chInChOut);
+
         List<Reviews> review = reviewService.selectReviewsAll(id);
         model.addAttribute("review", review);
+
+        // 총 리뷰 수
+        int reviewCount = review.size();
+        model.addAttribute("reviewCount", reviewCount);
+        // 평점 평균 계산
+        double averageRating = 0.0;
+        if (reviewCount > 0) {
+            double sum = 0.0;
+            for (Reviews r : review) {
+                sum += r.getGrade();
+            }
+            averageRating = Math.round((sum / (double) reviewCount) * 10.0) / 10.0; // 소수점 1자리 반올림
+        }
+        model.addAttribute("averageRating", averageRating);
 
         // pyStatus가 '완료'이고 paymentId 있다면 결제 상세 조회
         if ("완료".equals(pyStatus) && paymentId != null) {
@@ -95,6 +115,7 @@ public class MainController {
 
         }
 
+        model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
         model.addAttribute("headers", "payments/headers");
         model.addAttribute("center", "payments/center");
         model.addAttribute("footer", "payments/footer");

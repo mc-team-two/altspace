@@ -37,7 +37,7 @@
 
 <div class="container mt-5">
   <h2 class="mb-4">숙소 리뷰 작성</h2>
-  <form id="data_add">
+  <form id="data_add" enctype="multipart/form-data">
     <!-- 숙소 이름 (예: 드롭다운 또는 hidden input) -->
     <div class="form-group">
       <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
@@ -64,6 +64,10 @@
     <div class="form-group">
       <label for="comment">리뷰 내용</label>
       <textarea class="form-control" id="comment" name="comment" rows="5" placeholder="리뷰를 작성해주세요" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">이미지</label>
+      <input type="file" class="form-control" id="image" name="images" multiple>
     </div>
   </form>
   <!-- 제출 버튼 -->
