@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!doctype html>
 <html lang="ko">
@@ -9,181 +10,40 @@
     <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
     <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
-
-    <style>
-        /* 공통 이미지 스타일 */
-        .image-hover {
-            overflow: hidden;
-            position: relative;
-            border-radius: 10px;
-        }
-
-        .image-hover img {
-            transition: transform 0.5s ease;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* 마우스 올리면 확대 */
-        .image-hover:hover img {
-            transform: scale(1.05);
-        }
-
-        /* 사진 전체 보기 버튼 스타일 */
-        .overlay-btn {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            color: #fff;
-            font-weight: bold;
-            font-size: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            cursor: pointer;
-        }
-
-        /* 버튼은 hover시에만 나타남 */
-        .image-hover:hover .overlay-btn {
-            opacity: 1;
-        }
-
-        /* 예약 박스 고정 스타일 */
-        .sticky-reservation {
-            position: sticky;
-            top: 100px; /* 화면 위에서 100px 내려온 곳에 고정 */
-        }
-
-        /* 모바일 대응 */
-        @media (max-width: 768px) {
-            .sticky-reservation {
-                position: static; /* 모바일에서는 고정 안 하고 자연스럽게 */
-                margin-top: 20px;
-            }
-        }
-
-        .datepicker-input {
-            background-color: #f8f9fa;
-            cursor: pointer;
-            border-radius: 20px;
-            padding: 10px 20px;
-            border: 1px solid #ced4da;
-        }
-
-        .datepicker-input:focus {
-            border-color: #86b7fe;
-            outline: 0;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-        }
-
-        .price-box {
-            font-size: 0.9rem;
-            color: #555;
-            background: #f1f3f5;
-            padding: 15px;
-            border-radius: 15px;
-        }
-
-        .rounded-4 {
-            border-radius: 1.5rem;
-        }
-
-        .form-control {
-            border-radius: 20px;
-        }
-
-        .btn{
-            width: 100%;
-            border-radius: 20px;
-            padding: 12px 0;
-            font-size: 1rem;
-        }
-
-        .price-per-night {
-            font-size: 1.5rem; /* 조금 더 크게 */
-            font-weight: bold;
-        }
-
-        .kakao-map-wrapper {
-            width: 100%;
-            margin-top: 1rem; /* 예약 박스와의 간격 확보 */
-            border-radius: 1rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            font-family: 'Pretendard', sans-serif;
-            background-color: white;
-        }
-
-        .map-header {
-            text-align: left; /* 왼쪽 정렬 */
-            padding: 0.5rem 1rem;
-            font-size: 1rem; /* 큼 */
-            font-weight: 600;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        .kakao-map {
-            width: 100%;
-            height: 450px;
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .map-footer {
-            text-align: left; /* 왼쪽 정렬 */
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem; /* 작게 */
-            font-weight: 400;
-            background-color: #f5f5f5;
-            color: #555;
-        }
-
-        .review-slider-container {
-            overflow-x: auto;
-            white-space: nowrap;
-            padding-bottom: 8px;
-        }
-
-        .review-slider-inner {
-            display: flex;
-            gap: 10px;
-            padding: 4px;
-        }
-
-        .slider-image-wrapper {
-            flex: 0 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .slider-image {
-            height: 180px;
-            width: auto;
-            display: block;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-    </style>
+    <link rel="stylesheet" href="/styles/payment_styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
 <script>
     const change = {
         init: function () {
-            const priceNight = ${accomm.priceNight};
+            const reservedRanges = [
+                <c:forEach var="r" items="${chInChOut}" varStatus="status">
+                ["${r.checkIn}", "${r.checkOut}"]<c:if test="${!status.last}">,</c:if>
+                </c:forEach>                        // Status.last : 마지막 반복일 때만 true
+            ];
 
+            const bookedDates = [];
+            reservedRanges.forEach(range => {
+                let current = moment(range[0]);    // 시작 날짜(종료 날짜까지 하루씩 증가하면서 날짜를 추가함)
+                const end = moment(range[1]);      // 종료 날짜
+
+                while (current.isBefore(end, 'day')) {
+                    bookedDates.push(current.format('YYYY-MM-DD'));  // 현재 날짜 추가
+                    current.add(1, 'days');       // 하루 증가
+                }
+            });
+
+            const priceNight = ${accomm.priceNight};
             $('input[name="dates"]').daterangepicker({
                 autoApply: true,
                 minDate: moment().add(1, 'days'),
                 autoUpdateInput: false,
+                isInvalidDate: function(date) {
+                    return bookedDates.includes(date.format('YYYY-MM-DD'));
+                },
                 locale: {
                     format: 'YYYY-MM-DD',
                     applyLabel: "적용",
@@ -221,6 +81,7 @@
                     $('#payAmount').val(totalAmount);                           // 숨겨진 input에도 세팅
                 }, 100);
             });
+            this.displayMap();
 
             $('#sales_add_btn').click(()=>{
                 this.reqPay();
@@ -244,9 +105,7 @@
                 amount: Number($('#payAmount').val()),
                 buyer_email: "${sessionScope.user.email}",
                 buyer_name: "${sessionScope.user.name}",
-                buyer_tel: "${sessionScope.user.phone}",
-                buyer_addr: "대구광역시",
-                buyer_postcode: "12345"
+                buyer_tel: "${sessionScope.user.phone}"
             }, function(rsp) {
                 if (rsp.success) {
                     $('#imp_hidden').val(rsp.imp_uid);  // 결제 완료 후 imp_uid input에 저장
@@ -304,52 +163,35 @@
                 'action':'<c:url value="/review/dtadd?id=${accomm.accommodationId}"/>'
             });
             $('#data_del').submit();
-        }
-    };
-
-    const mapCenter = {
-        marker: null,
-        map: null,
-        init: function () {
-            this.displayMap();
-            this.getData(); // 최초 1회 호출
         },
-        displayMap: function() {
+        displayMap: function(){
             var mapContainer = document.getElementById('kaoMap');
             var mapOption = {
-                center: new kakao.maps.LatLng(37.501634, 127.039886),
-                level: 3
+                center: new kakao.maps.LatLng(${accomm.latitude}, ${accomm.longitude}),
+                level: 4
             };
             this.map = new kakao.maps.Map(mapContainer, mapOption);
+
+            // 마우스 휠 확대/축소 막기 (정확한 메서드 사용)
+            this.map.setZoomable(false);
 
             var mapTypeControl = new kakao.maps.MapTypeControl();
             this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
             var zoomControl = new kakao.maps.ZoomControl();
             this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-        },
-        getData: function() {
-            $.ajax({
-                url: '/getlatlng',
-                success: (result) => {
-                    this.showMarker(result);
-                }
-            });
-        },
-        showMarker: function(result) {
-            if (this.marker != null) {
-                this.marker.setMap(null);
-            }
-            var markerPosition = new kakao.maps.LatLng(result.lat, result.lng);
+
+            // 바로 마커 표시
+            var markerPosition = new kakao.maps.LatLng(${accomm.latitude}, ${accomm.longitude});
             this.marker = new kakao.maps.Marker({
                 position: markerPosition
             });
             this.marker.setMap(this.map);
         }
+
     };
 
     $(document).ready(function() {
         change.init();
-        mapCenter.init();
     });
 </script>
 
@@ -414,42 +256,84 @@
             </div>
         </div>
     </div>
+    <h2>${accomm.name}</h2>
+    <!-- 상단 정보 카드 3개 -->
+    <div class="row mt-3 mb-4">
+        <!-- 최근 리뷰 -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3 rounded-4 h-100">
+                <div class="d-flex align-items-center mb-2" style="font-size: 1rem; font-weight: bold;">
+                    <span class="badge bg-warning text-dark mr-1">
+                        <i class="bi bi-star-fill"></i>${averageRating}
+                    </span>
+                    <span>${reviewCount}개 리뷰</span>
+                </div>
+                <c:forEach var="rv" items="${review}" varStatus="status">
+                    <c:if test="${status.index == 0}">
+                        <p class="text-muted">${rv.comment}</p>
+                    </c:if>
+                </c:forEach>
 
-    <!-- 숙소 상세 정보 + 예약 박스 -->
-    <div class="row mt-3">
-        <!-- 숙소 상세 -->
-        <div class="col-md-8 mb-4">
-            <div class="card shadow-sm p-4 rounded-4">
-                <h2 class="fw-bold mb-4">${accomm.name}</h2>
-                <div class="row gy-3">
-                    <div class="col-6">
-                        <i class="bi bi-geo-alt-fill me-2 text-primary"></i><strong>위치:</strong> ${accomm.location}
-                    </div>
-                    <div class="col-6">
-                        <i class="bi bi-people-fill me-2 text-info"></i><strong>최대 인원:</strong> ${accomm.personMax} 명
-                    </div>
-                    <div class="col-6">
-                        <i class="bi bi-tag-fill me-2 text-secondary"></i><strong>카테고리:</strong> ${accomm.category}
-                    </div>
-                    <div class="col-6">
-                        <i class="bi bi-house-door-fill me-2 text-dark"></i><strong>객실 유형:</strong> ${accomm.roomType}
-                    </div>
-                    <div class="col-6">
-                        <i class="bi bi-cup-hot-fill me-2 text-danger"></i><strong>조식:</strong> ${accomm.breakfast ? '가능' : '불가능'}
-                    </div>
-                    <div class="col-6">
-                        <i class="bi bi-water me-2 text-primary"></i><strong>수영장:</strong> ${accomm.pool ? '있음' : '없음'}
-                    </div>
-                    <div class="col-6">
-                        <i class="bi bi-fire me-2 text-danger"></i><strong>바베큐:</strong> ${accomm.barbecue ? '가능' : '불가능'}
-                    </div>
-                    <div class="col-6">
-                        <i class="bi bi-paw-fill me-2 text-info"></i><strong>반려동물:</strong> ${accomm.pet ? '가능' : '불가능'}
-                    </div>
+                <a href="#reviewSection" class="text-decoration-none small text-primary">리뷰 전체 보기 →</a>
+            </div>
+        </div>
+        <!-- 숙소 정보 카드 -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3 rounded-4 h-100">
+                <h6 class="mb-3"><strong>부대시설 및 서비스</strong></h6>
+
+                <!-- 카테고리 · 룸타입 · 최대인원 -->
+                <div class="text mb-3" style="font-size:0.85rem; margin-top:-13px;">
+                    ${accomm.category} &middot; ${accomm.roomType} &middot; 최대 ${accomm.personMax}명
+                </div>
+
+                <!-- 부대시설 아이콘 -->
+                <div class="d-flex justify-content-start flex-wrap">
+                    <c:if test="${accomm.breakfast}">
+                        <div class="text-center mx-2 mb-2" style="margin-top: -5px;">
+                            <i class="fa fa-coffee text-danger" style="font-size: 1.25rem;"></i><br/>
+                            <small>조식</small>
+                        </div>
+                    </c:if>
+                    <c:if test="${accomm.pool}">
+                        <div class="text-center mx-2 mb-2" style="margin-top: -5px;">
+                            <i class="fa fa-swimmer text-primary" style="font-size: 1.25rem;"></i><br/>
+                            <small>수영장</small>
+                        </div>
+                    </c:if>
+                    <c:if test="${accomm.barbecue}">
+                        <div class="text-center mx-2 mb-2" style="margin-top: -5px;">
+                            <i class="fa fa-fire-alt text-warning" style="font-size: 1.25rem;"></i><br/>
+                            <small>바베큐</small>
+                        </div>
+                    </c:if>
+                    <c:if test="${accomm.pet}">
+                        <div class="text-center mx-2 mb-2" style="margin-top: -5px;">
+                            <i class="fa fa-paw text-info" style="font-size: 1.25rem;"></i><br/>
+                            <small>반려동물</small>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>
+        <!-- 위치 정보 카드 -->
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3 rounded-4 h-100">
+                <h6 class="mb-2"><strong>위치 정보</strong></h6>
+                <p class="text-muted">${accomm.location}</p>
+                <a href="#mapSection" class="text-primary small">지도보기 →</a>
+            </div>
+        </div>
+    </div>
 
+    <!-- 상세 설명 + 예약 박스 -->
+    <div class="row mb-4">
+        <!-- 숙소 설명 -->
+        <div class="col-md-8 mb-4">
+            <div class="card shadow-sm p-4 rounded-4">
+                <div>${accomm.description}</div>
+            </div>
+        </div>
         <!-- 예약 박스 -->
         <div class="col-md-4 sticky-reservation">
             <div class="card shadow-sm p-4 rounded-4">
@@ -489,10 +373,6 @@
                                 <input type="text" name="dates" class="form-control text-center datepicker-input" id="dates" readonly placeholder="체크인 - 체크아웃">
                             </div>
 
-                            <div class="d-grid mt-3 mb-3">
-                                <button id="sales_add_btn" type="button" class="btn btn-primary btn-reserve rounded-pill">예약하기</button>
-                            </div>
-
                             <div class="price-box">
                                 <div class="d-flex justify-content-between mb-2">
                                     <span><fmt:formatNumber value="${accomm.priceNight}" type="number"/> × <span id="nightsCount">0</span>박</span>
@@ -509,30 +389,30 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="d-grid mt-3 mb-3">
+                            <button id="sales_add_btn" type="button" class="btn btn-primary btn-reserve rounded-pill">예약하기</button>
+                        </div>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
     </div>
 
-    <div class="kakao-map-wrapper">
+    <div id="mapSection" class="kakao-map-wrapper">
         <div class="map-header">위치</div>
         <div id="kaoMap" class="kakao-map"></div>
         <div class="map-footer">주소: ${accomm.location}</div>
     </div>
 
     <!-- 리뷰 작성 및 목록 -->
-    <div class="card mt-3 shadow-sm p-4 rounded-4">
+    <div id="reviewSection" class="card mt-3 shadow-sm p-4 rounded-4">
         <!-- 공통 폼 (id는 유일하게 하나만!) -->
         <form id="reviewForm"></form>
         <div class="card-body">
             <h5 class="card-title">리뷰 목록</h5>
             <c:forEach var="rv" items="${review}">
                 <div class="border-bottom mb-3 pb-2">
-                    <p><strong>작성자:</strong> ${rv.guestId}</p>
-                    <p><strong>평점:</strong>★ ${rv.grade}</p>
-                    <p><strong>내용:</strong> ${rv.comment}</p>
-
                     <!-- 이미지 슬라이더 영역 -->
                     <c:if test="${not empty rv.imageUrl}">
                         <div class="review-slider-container">
@@ -545,6 +425,10 @@
                             </div>
                         </div>
                     </c:if>
+
+                    <p><strong>작성자:</strong> ${rv.guestId}</p>
+                    <p><strong>평점:</strong>★ ${rv.grade}</p>
+                    <p><strong>내용:</strong> ${rv.comment}</p>
                 </div>
             </c:forEach>
             <c:if test="${empty review}">
@@ -552,7 +436,6 @@
             </c:if>
         </div>
     </div>
-
 </div>
 
 <!-- 사진 전체 보기 모달 -->
