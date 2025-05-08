@@ -107,8 +107,8 @@
                                 <button type="button" class="button search_button" id="searchAccommodationBtn">
                                     검색하기<span></span><span></span><span></span></button>
 
-                                <%--Geolocation 세션 저장을 위한 버튼. 어떻게 더 이쁘게 꾸밀지는 정우님 확인이 필요.--%>
-                                <button class="button search_button" id="geolocationBtn">내 위치
+                                <%--Geolocation 세션 저장을 위한 버튼.--%>
+                                <button type="button" class="button search_button" id="geolocationBtn">내 위치
                                     검색<span></span><span></span><span></span></button>
                             </form>
                         </div>

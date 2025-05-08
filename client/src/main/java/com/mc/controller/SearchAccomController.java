@@ -37,10 +37,14 @@ public class SearchAccomController {
     }
 
     @GetMapping("/search-accommodations-geo")
-    public List<Accommodations> searchAccommodationsByGeoLocation(
+    @ResponseBody
+    public List<AccomodationsWithRating> searchAccommodationsByGeoLocation(
             @RequestParam("latitude") double latitude,
             @RequestParam("longitude") double longitude,
-            @RequestParam("radius") double radius) {
-        return accomService.searchAccommodationsByGeoLocation(latitude, longitude, radius);
+            @RequestParam("radius") double radius,
+            @RequestParam(value = "extras[]", required = false) List<String> extras,
+            @RequestParam(value = "withRating", required = false, defaultValue = "false") boolean withRating
+    ) throws Exception {
+        return accomService.searchAccommodationsByGeoLocation(latitude, longitude, radius, extras, withRating);
     }
 }

@@ -69,13 +69,27 @@ public class AccomService implements MCService<Accommodations, Integer> {
         params.put("extras", extras);
         return accomRepository.searchAccommodationsByLocation(params);
     }
-
-    // 지역으로 숙소를 검색하는 메서드 (geolocation 기반)
-    public List<Accommodations> searchAccommodationsByGeoLocation(double latitude, double longitude, double radius) {
+    public List<AccomodationsWithRating> searchAccommodationsByGeoLocation(double latitude, double longitude, double radius, List<String> extras, boolean withRating) throws Exception {
         Map<String, Object> params = new HashMap<>();
         params.put("userLatitude", latitude);
         params.put("userLongitude", longitude);
         params.put("radius", radius);
-        return accomRepository.searchAccommodationsByGeoLocation(params);
+        params.put("extras", extras);
+        List<Accommodations> accommodations = accomRepository.searchAccommodationsByGeoLocation(params);
+
+        if (withRating) {
+            return getAccommodationsWithRating(accommodations);
+        } else {
+            List<AccomodationsWithRating> accommodationsWithRatingList = new ArrayList<>();
+            for (Accommodations acc : accommodations) {
+                AccomodationsWithRating dto = AccomodationsWithRating.builder()
+                        .accommodation(acc)
+                        .averageRating(0) // Or null, depending on your DTO
+                        .roundedRating(0)   // Or null
+                        .build();
+                accommodationsWithRatingList.add(dto);
+            }
+            return accommodationsWithRatingList;
+        }
     }
 }
