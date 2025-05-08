@@ -178,14 +178,21 @@
       this.connect(); // 채팅방 접속시 바로 connect
       // 보내기
       $('#sendto').click(()=>{
+        // 메시지 컨텐츠
         const content = $('#totext').val();
         if (!content.trim()) return; // 빈 메시지 전송 방지
+
+        // 현재 시간을 UTC+9로 변환
+        const now = new Date();
+        const kstOffset = 9 * 60 * 60 * 1000; // 9시간을 밀리초로 변환
+        const kstDate = new Date(now.getTime() + kstOffset);
+        const sentAt = kstDate.toISOString().replace("Z", "+09:00");  // KST로 전송
 
         const msg = JSON.stringify({
           'sendid' : this.id,
           'receiveid' : $('#target').text(),
           'content1' : content,
-          'sentAt' : new Date().toISOString() // ISO 형식으로 전송
+          'sentAt' : sentAt
         });
         this.stompClient.send('/pub/receiveto', {}, msg);
 
@@ -229,10 +236,7 @@
     },
     makeBubble:function(msg) {
       let parsedMsg = JSON.parse(msg);
-
       const isMine = parsedMsg.sendid === this.id;
-      const date = new Date(parsedMsg.sentAt); // 1746625671308
-      const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       let bubble = "";
       bubble += `<div class="bubbleArea `;
@@ -242,9 +246,19 @@
       bubble += parsedMsg.content1;
       bubble += `</div>`;
       bubble += `<div class="bubbleDate">`;
-      bubble += formattedTime;
+      bubble += this.formatTime(parsedMsg.sentAt);
       bubble += `</div></div>`;
       return bubble;
+    },
+    formatTime:function(isoString){
+      const date = new Date(isoString);
+      const options = {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+        timeZone: 'Asia/Seoul'  // KST로 맞춤
+      };
+      return new Intl.DateTimeFormat('ko-KR', options).format(date);
     }
   };
   $(function () {

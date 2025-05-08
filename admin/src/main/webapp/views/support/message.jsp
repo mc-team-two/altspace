@@ -24,15 +24,22 @@
                 this.disconnect();
             });
             $('#sendto').click(()=>{
+                // 메시지 컨텐츠
                 const content = $('#totext').val();
-                if (!content.trim()) return; // 빈 메시지 전송 방지v
+                if (!content.trim()) return; // 빈 메시지 전송 방지
+
+                // 현재 시간을 UTC+9로 변환
+                const now = new Date();
+                const kstOffset = 9 * 60 * 60 * 1000; // 9시간을 밀리초로 변환
+                const kstDate = new Date(now.getTime() + kstOffset);
+                const sentAt = kstDate.toISOString().replace("Z", "+09:00");  // KST로 전송
 
                 // publish
                 const msg = JSON.stringify({
                     'sendid' : this.id,
                     'receiveid' : $('#target').val(),
                     'content1' : content,
-                    'sentAt' : new Date().toISOString() // ISO 형식으로 전송
+                    'sentAt' : sentAt
                 });
                 console.log(msg);
                 this.stompClient.send('/pub/receiveto', {}, msg);
@@ -50,7 +57,8 @@
                 this.subscribe('/sub/to/'+sid, function(msg) {
                     $("#to").prepend(
                         "<h4>" + JSON.parse(msg.body).sendid +":"+
-                        JSON.parse(msg.body).content1
+                        JSON.parse(msg.body).content1 + "---" +
+                        JSON.parse(msg.body).sentAt
                         + "</h4>");
                 });
             });

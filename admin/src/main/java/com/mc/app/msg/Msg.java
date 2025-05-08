@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -13,5 +11,5 @@ public class Msg {
     private String sendid;
     private String receiveid;
     private String content1;
-    private LocalDateTime sentAt;
+    private String sentAt;
 }
