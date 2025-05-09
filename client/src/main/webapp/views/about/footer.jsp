@@ -25,13 +25,6 @@
                         </div>
                         <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
                             관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹</p>
-                        <ul class="footer_social_list">
-                            <li class="footer_social_item"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                            <li class="footer_social_item"><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-                            <li class="footer_social_item"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li class="footer_social_item"><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                            <li class="footer_social_item"><a href="#"><i class="fa fa-behance"></i></a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -109,7 +102,7 @@
                             </li>
                             <li class="contact_info_item d-flex flex-row">
                                 <div><div class="contact_info_icon"><img src="images/message.svg" alt=""></div></div>
-                                <div class="contact_info_text"><a href="mailto:help.alt@altspace.com?Subject=Hello" target="_top">help.alt@altspace.com</a></div>
+                                <div class="contact_info_text"><a href="mailto:biz.altspace@gmail.com?Subject=Hello" target="_top">biz.altspace@gmail.com</a></div>
                             </li>
                             <li class="contact_info_item d-flex flex-row">
                                 <div><div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div></div>

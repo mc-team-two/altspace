@@ -8,7 +8,6 @@
 
 <!-- Header -->
 <header class="header">
-
     <!-- 헤더 최상단 바 (전화번호, SNS, 로그인, 회원가입) -->
     <div class="top_bar">
         <div class="container">
@@ -25,12 +24,12 @@
                                     <a href="<c:url value="/login/register"/> ">회원가입</a>
                                 </div>
                                 <div class="user_box_login theme-switch">
-                                    <label class="theme-toggle">
+                                    <label class="theme-toggle" title="다크 모드 전환">
                                         <input type="checkbox" id="theme-toggle-guest" class="theme-toggle">
-                                        <span class="slider round">
-                                            <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
-                                            <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
-                                        </span>
+                                        <span class="slider">
+                                        <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
+                                    </span>
                                     </label>
                                 </div>
                             </div>
@@ -44,20 +43,20 @@
                                     <a href="<c:url value="/cart?name=${sessionScope.user.name}"/> ">Cart</a>
                                 </div>
                                 <div class="user_box_login user_box_link">
-                                    <a href="<c:url value="/auth/logout"/> ">logout</a></div>
+                                    <a href="<c:url value="/auth/logout"/> ">logout</a>
+                                </div>
                                 <div class="user_box_login theme-switch">
-                                    <label class="theme-toggle">
+                                    <label class="theme-toggle" title="다크 모드 전환">
                                         <input type="checkbox" id="theme-toggle-user" class="theme-toggle">
-                                        <span class="slider round">
-                                <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
-                                <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
-                             </span>
+                                        <span class="slider">
+                                        <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
+                                    </span>
                                     </label>
                                 </div>
                             </div>
                         </c:otherwise>
                     </c:choose>
-
                 </div>
             </div>
         </div>
@@ -86,6 +85,5 @@
                     </div>
                 </div>
             </div>
-        </div>
     </nav>
 </header>
