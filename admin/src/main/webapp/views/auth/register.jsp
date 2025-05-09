@@ -189,7 +189,7 @@
     </form>
 
     <%--login page swap--%>
-    <div class="mt-3">
+    <div class="mt-3" style="font-size: 13px;">
       <a href="<c:url value="/auth/login"/>" class="text-muted">이미 계정이 있으신가요? 로그인</a>
     </div>
   </div>

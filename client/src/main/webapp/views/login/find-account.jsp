@@ -90,7 +90,7 @@
 <body>
 <div class="find-container">
   <a href="/">
-    <img src="<c:url value='/imgs/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
+    <img src="<c:url value='/images/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
   </a>
 
   <h6><strong>이메일 주소로 계정 찾기</strong></h6>
@@ -108,13 +108,13 @@
       <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
       <label for="email">이메일</label>
     </div>
-    <button id="findBtn" type="button" class="btn btn-find">ID/PW 찾기</button>
+    <button id="findBtn" class="btn btn-find">ID/PW 찾기</button>
   </form>
 
   <div class="footer-links mt-3">
-    <a href="<c:url value="/auth/register"/>">회원가입</a>
+    <a href="<c:url value="/login/register"/>">회원가입</a>
     <span class="divider-pipe">|</span>
-    <a href="<c:url value="/auth/login"/>">로그인</a>
+    <a href="<c:url value="/login"/>">로그인</a>
   </div>
 
 </div>
@@ -139,7 +139,7 @@
               .html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 메일 전송 중...');
 
       $.ajax({
-        url: '<c:url value="/find-account-impl"/>' + '?email=' + inputVal,
+        url: '<c:url value="/login/find-account-impl"/>' + '?email=' + inputVal,
         type: 'POST',
         success: function (resp) {
           $findBtn.hide(); // 성공 시 버튼 숨기기
@@ -155,7 +155,7 @@
       });
     }
 
-    // 버튼 클릭 시
+    // ID/PW 찾기 버튼 클릭시
     $findBtn.on("click", handleFind);
 
     // 이메일 input에서 엔터키 눌렀을 때 버튼 클릭과 같은 동작

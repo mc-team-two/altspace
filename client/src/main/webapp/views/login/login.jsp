@@ -146,26 +146,26 @@
             </div>
         </c:if>
 
-        <a href="/auth/kakao/authorize" class="btn btn-social btn-kakao">
+        <a href="<c:url value="/auth/kakao/authorize"/>" class="btn btn-social btn-kakao">
             <img src="<c:url value='/images/social_kakao_icon.svg'/>" width="24">카카오 계정으로 로그인
         </a>
-        <a href="/auth/naver/authorize" class="btn btn-social btn-naver">
+        <a href="<c:url value="/auth/naver/authorize"/>" class="btn btn-social btn-naver">
             <img src="<c:url value='/images/social_naver_icon.svg'/>" width="24">네이버 계정으로 로그인
         </a>
-        <a href="/auth/google/authorize" class="btn btn-social btn-google">
+        <a href="<c:url value="/auth/google/authorize"/>" class="btn btn-social btn-google">
             <img src="<c:url value='/images/social_google_icon.svg'/>" width="24">구글 계정으로 로그인
         </a>
 
         <div class="divider">또는</div>
 
-        <form method="post" action="/auth/loginimpl" class="text-left">
+        <form method="post" action="<c:url value="/auth/loginimpl"/>" class="text-left">
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required>
+                <input type="email" id="email" name="email" class="form-control" value="guest01@example.com" placeholder="이메일을 입력해 주세요" required>
             </div>
             <div class="form-group">
                 <label for="password">비밀번호</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력해 주세요" required>
+                <input type="password" id="password" name="password" class="form-control" value="password123!!" placeholder="비밀번호를 입력해 주세요" required>
             </div>
             <button id="login-btn" type="submit" class="btn btn-block login-btn">로그인</button>
         </form>
@@ -173,9 +173,7 @@
         <div class="footer-links mt-3">
             <a href="<c:url value="/login/register"/>">회원가입</a>
             <span class="divider-pipe">|</span>
-            <a href="<c:url value="/login/find-id"/>">아이디 찾기</a>
-            <span class="divider-pipe">|</span>
-            <a href="<c:url value="/login/find-password"/>">비밀번호 찾기</a>
+            <a href="<c:url value="/login/find-account"/>">ID/PW 찾기</a>
         </div>
 
     </div>
@@ -183,10 +181,10 @@
 <!-- 정책 메뉴는 화면 아래 고정 -->
 <footer class="mt-auto text-center py-3">
     <div class="footer-links">
-        <a href="/privacy" class="mx-2">개인정보처리방침</a>
-        <a href="/terms" class="mx-2">이용약관</a>
-        <a href="/youth-policy" class="mx-2">청소년 보호정책</a>
-        <a href="/location" class="mx-2">위치정보서비스 이용약관</a>
+        <a href="#" class="mx-2">개인정보처리방침</a>
+        <a href="#" class="mx-2">이용약관</a>
+        <a href="#" class="mx-2">청소년 보호정책</a>
+        <a href="#" class="mx-2">위치정보서비스 이용약관</a>
     </div>
 </footer>
 
