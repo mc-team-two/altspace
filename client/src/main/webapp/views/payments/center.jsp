@@ -13,6 +13,17 @@
     <link rel="stylesheet" href="/styles/payment_styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        .btn-custom-small {
+            padding: 15px 45px;
+            font-size: 1rem;
+            width: auto;
+            min-width: 0;
+            border-radius: 8px;
+            margin-left: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -325,10 +336,31 @@
         </div>
     </div>
 
-    <!-- 상세 설명 + 예약 박스 -->
+    <!-- 호스트 카드 + 상세 설명 -->
     <div class="row mb-4">
-        <!-- 숙소 설명 -->
         <div class="col-md-8 mb-4">
+            <!-- 호스트 카드 -->
+            <div class="card shadow-sm p-4 rounded-4 mb-4" style="border-left: 6px solid #007bff; background-color: #f8f9fa;">
+                <div class="d-flex align-items-center">
+                    <!-- 호스트 정보 -->
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-circle text-primary mr-3" style="font-size: 1.75rem;"></i>
+                        <div>
+                            <div class="font-weight-bold mb-1" style="font-size: 1rem;">호스트: ${accomm.hostId} 님</div>
+                            <div class="text-muted" style="font-size: 0.8rem;">신입호스트 · 호스팅 경력 6개월</div>
+                        </div>
+                    </div>
+                    <!-- 문의 버튼 -->
+                    <a href="#"
+                       onclick="window.open('<c:url value="/chat/${accomm.accommodationId}"/>', 'chatWindow', 'width=480,height=650'); return false;"
+                       class="btn btn-outline-primary btn-custom-small">
+                        <i class="bi bi-chat-left-dots mr-1"></i>
+                        <span>호스트에게 1:1 문의하기</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 숙소 설명 -->
             <div class="card shadow-sm p-4 rounded-4">
                 <div>${accomm.description}</div>
             </div>
@@ -338,20 +370,45 @@
             <div class="card shadow-sm p-4 rounded-4">
                 <c:choose>
                     <c:when test="${pyStatus == '완료'}">
+                        <h3 class="fw-bold text-center mb-4">예약 내역</h3>
+
                         <form id="data_del">
-                            <h5 class="fw-bold mb-4">예약 내역</h5>
                             <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
                             <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
                             <input type="hidden" name="impUid" value="${payInfo.impUid}">
                             <input type="hidden" name="paymentId" value="${payInfo.paymentId}">
-                            <p><i class="bi bi-calendar-check me-2"></i>체크인: <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd" /></p>
-                            <p><i class="bi bi-calendar-x me-2"></i>체크아웃: <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd" /></p>
-                            <p><i class="bi bi-wallet2 me-2"></i>결제 금액: <fmt:formatNumber value="${payInfo.payAmount}" type="number"/> 원</p>
+
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2">
+                                    <i class="bi bi-calendar-check me-2 text-success"></i>
+                                    <strong>체크인:</strong>
+                                    <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd" />
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-calendar-x me-2 text-danger"></i>
+                                    <strong>체크아웃:</strong>
+                                    <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd" />
+                                </li>
+                                <li>
+                                    <i class="bi bi-wallet2 me-2 text-warning"></i>
+                                    <strong>결제 금액:</strong>
+                                    <fmt:formatNumber value="${payInfo.payAmount}" type="number"/> 원
+                                </li>
+                            </ul>
                         </form>
 
-                        <div class="d-grid gap-2 mt-4">
-                            <button id="cancel_btn" class="btn btn-outline-danger rounded-pill">결제 취소</button>
-                            <button id="review_btn" class="btn btn-primary rounded-pill">리뷰 작성</button>
+                        <p class="text-danger small mt-3 mb-0">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                            체크인 날짜로부터 <strong>2일 전</strong>에는 예약 취소가 불가합니다.
+                        </p>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button id="review_btn" class="btn btn-primary rounded-pill w-50 fw-bold mr-2">
+                                리뷰 작성
+                            </button>
+                            <button id="cancel_btn" class="btn btn-danger rounded-pill w-50 fw-bold">
+                                예약 취소
+                            </button>
                         </div>
                     </c:when>
                     <c:otherwise>
@@ -389,9 +446,20 @@
                             </div>
                         </form>
 
-                        <div class="d-grid mt-3 mb-3">
-                            <button id="sales_add_btn" type="button" class="btn btn-primary btn-reserve rounded-pill">예약하기</button>
+                        <div class="d-flex mt-3 mb-3" style="gap: 0.4rem;">
+                            <!-- 찜 버튼 -->
+                            <button type="button" class="btn btn-outline-danger rounded-pill w-30"
+                                    style="flex: 3;">
+                                <i class="bi bi-heart"></i> 찜
+                            </button>
+
+                            <!-- 예약하기 버튼 -->
+                            <button id="sales_add_btn" type="button" class="btn btn-primary btn-reserve rounded-pill w-70"
+                                    style="flex: 7;">
+                                예약하기
+                            </button>
                         </div>
+
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -408,13 +476,26 @@
     <div id="reviewSection" class="card mt-3 shadow-sm p-4 rounded-4">
         <!-- 공통 폼 (id는 유일하게 하나만!) -->
         <form id="reviewForm"></form>
-        <div class="card-body">
-            <h5 class="card-title">리뷰 목록</h5>
-            <c:forEach var="rv" items="${review}">
-                <div class="border-bottom mb-3 pb-2">
-                    <!-- 이미지 슬라이더 영역 -->
+        <h5 class="card-title fw-bold mb-4">리뷰 목록</h5>
+        <c:forEach var="rv" items="${review}">
+            <div class="border-bottom mb-4 pb-4">
+                <div class="d-flex justify-content-between align-items-start flex-wrap">
+                    <!-- 왼쪽 : 작성자 및 별점 -->
+                    <div class="mb-2" style="flex: 0 0 150px;">
+                        <p class="mb-1 fw-semibold text-dark">👤 ${rv.guestId}</p>
+                        <p class="mb-1 text-warning" style="font-size: 0.95rem;">
+                            <c:forEach var="i" begin="1" end="5">
+                                <c:choose>
+                                    <c:when test="${i <= rv.grade}">★</c:when>
+                                    <c:otherwise>☆</c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <span class="text-secondary small">(${rv.grade})</span>
+                        </p>
+                    </div>
+                    <!-- 오른쪽 : 이미지 슬라이더 -->
                     <c:if test="${not empty rv.imageUrl}">
-                        <div class="review-slider-container">
+                        <div class="review-slider-container me-3" style="flex: 1 1 400px; max-width: 100%;">
                             <div class="review-slider-inner">
                                 <c:forEach var="img" items="${rv.imageUrl}">
                                     <div class="slider-image-wrapper">
@@ -424,16 +505,14 @@
                             </div>
                         </div>
                     </c:if>
-
-                    <p><strong>작성자:</strong> ${rv.guestId}</p>
-                    <p><strong>평점:</strong>★ ${rv.grade}</p>
-                    <p><strong>내용:</strong> ${rv.comment}</p>
                 </div>
-            </c:forEach>
-            <c:if test="${empty review}">
-                <p class="text-muted">아직 등록된 리뷰가 없습니다.</p>
-            </c:if>
-        </div>
+                <!-- 리뷰 내용 -->
+                <p class="mt-3 mb-0 text-body">${rv.comment}</p>
+            </div>
+        </c:forEach>
+        <c:if test="${empty review}">
+            <p class="text-muted">아직 등록된 리뷰가 없습니다.</p>
+        </c:if>
     </div>
 </div>
 

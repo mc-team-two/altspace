@@ -37,6 +37,12 @@
             border-radius: 12px;
         }
 
+        @media (min-width: 992px) {
+            .pl-lg-5 {
+                padding-left: 5rem !important;  /* 간격 확보 */
+            }
+        }
+
     </style>
 </head>
 
@@ -207,7 +213,7 @@
           </div>
 
           <!-- 사이드바 (오른쪽) -->
-          <div class="col-lg-4 sidebar_col">
+          <div class="col-lg-4 pl-lg-5">
               <div class="sidebar_archives">
                   <div class="sidebar_title">MENU</div>
                   <div class="sidebar_list">

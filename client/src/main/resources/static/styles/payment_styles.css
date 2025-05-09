@@ -20,6 +20,17 @@
 /* 사진 전체 보기 버튼 스타일 */
 .overlay-btn {
     position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 123, 255, 0.8);
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    opacity: 1;
+    transition: all 0.3s ease;
+    cursor: pointer; /* 손가락 커서 표시 */
+    /*position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -31,14 +42,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s;
-    cursor: pointer;
+    cursor: pointer;*/
 }
 
-/* 버튼은 hover시에만 나타남 */
-.image-hover:hover .overlay-btn {
-    opacity: 1;
+/* 마우스 올렸을 때 반응 효과 */
+.overlay-btn:hover {
+    background-color: rgba(0, 123, 255, 1); /* 배경 더 진하게 */
+    transform: scale(1.05); /* 살짝 커지게 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
 }
 
 /* 예약 박스 고정 스타일 */
