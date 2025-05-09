@@ -135,6 +135,17 @@
                     </a>
                 </li>
 
+                <!-- 리뷰 관리 -->
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">리뷰 관리</span>
+                </li>
+                <li class="menu-item">
+                    <a href='<c:url value="/review/list"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-chat"></i>
+                        <div>작성된 리뷰 조회</div>
+                    </a>
+                </li>
+
             </ul>
         </aside>
         <!-- / Menu -->
