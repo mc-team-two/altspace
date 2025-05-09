@@ -15,22 +15,7 @@
             <div class="row">
                 <div class="col d-flex flex-row">
                     <div class="phone">02-1234-5678</div>
-                    <div class="social">
-                        <ul class="social_list">
-                            <li class="social_list_item"><a href="#"><i class="fa fa-pinterest"
-                                                                        aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-facebook"
-                                                                        aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-twitter"
-                                                                        aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-dribbble"
-                                                                        aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-behance"
-                                                                        aria-hidden="true"></i></a></li>
-                            <li class="social_list_item"><a href="#"><i class="fa fa-linkedin"
-                                                                        aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
+
                     <c:choose>
                         <c:when test="${sessionScope.user.name == null}">
                             <div class="user_box ml-auto">
@@ -92,7 +77,7 @@
                             <ul class="main_nav_list">
                                 <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">FAQ</a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
                             </ul>
                         </div>

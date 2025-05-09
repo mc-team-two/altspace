@@ -45,13 +45,12 @@
                                 <img src="images/blog_1.jpg"> <!-- 실제 이미지 경로가 있다면 p.imagePath 등으로 수정 -->
                                 <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
                                     <div class="blog_post_day">${py.payStatus}</div>
-                                    <div class="blog_post_month">${py.checkIn}</div>
                                 </div>
                             </div>
                             <div class="blog_post_meta">
                                 <ul>
                                     <li class="blog_post_meta_item">
-                                        <a href="<c:url value="/detail?id=${py.accommodationId}"/>">숙소 정보</a>
+                                        <a>${py.checkIn} ~ ${py.checkOut}</a>
                                     </li>
                                     <li class="blog_post_meta_item">
                                         <a href="<c:url value="/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&paymentId=${py.paymentId}"/>">결제 정보</a>
