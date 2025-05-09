@@ -53,4 +53,21 @@ public class FileUploadUtil {
             throw e;
         }
     }
+
+    // 파일 저장 2
+    public static void saveFile(MultipartFile mf, String dir, String savedFilename) throws IOException {
+        byte [] data;
+
+        try {
+            data = mf.getBytes();
+            FileOutputStream fo =
+                    new FileOutputStream(dir+savedFilename);
+            fo.write(data);
+            fo.close();
+
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }
