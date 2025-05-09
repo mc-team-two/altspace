@@ -18,7 +18,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/altspace.png" />
+    <link rel="icon" type="image/x-icon" href="<c:url value="../assets/img/favicon/altspace.png"/>"/>
 
     <%--jQuery CDN--%>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -49,26 +49,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/fonts/boxicons.css' />" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/css/core.css' />" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/css/theme-default.css' />" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="<c:url value='../assets/css/demo.css' />" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' />" />
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/libs/apex-charts/apex-charts.css' />" />
 
     <!-- Page CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
 
     <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
+    <script src="<c:url value='../assets/vendor/js/helpers.js' />"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
+    <script src="<c:url value='../assets/js/config.js' />"></script>
 </head>
 
 <body>
@@ -132,6 +132,17 @@
                     <a href='<c:url value="/support/message"/>' class="menu-link">
                         <i class="menu-icon tf-icons bx bx-message-square-detail"></i>
                         <div>고객 메시지</div>
+                    </a>
+                </li>
+
+                <!-- 리뷰 관리 -->
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">리뷰 관리</span>
+                </li>
+                <li class="menu-item">
+                    <a href='<c:url value="/review/list"/>' class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-chat"></i>
+                        <div>작성된 리뷰 조회</div>
                     </a>
                 </li>
 
@@ -284,22 +295,22 @@
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
-<script src="../assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../assets/vendor/libs/popper/popper.js"></script>
-<script src="../assets/vendor/js/bootstrap.js"></script>
-<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="<c:url value='../assets/vendor/libs/jquery/jquery.js' />"></script>
+<script src="<c:url value='../assets/vendor/libs/popper/popper.js' />"></script>
+<script src="<c:url value='../assets/vendor/js/bootstrap.js' />"></script>
+<script src="<c:url value='../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' />"></script>
 
-<script src="../assets/vendor/js/menu.js"></script>
+<script src="<c:url value='../assets/vendor/js/menu.js' />"></script>
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="<c:url value='../assets/vendor/libs/apex-charts/apexcharts.js' />"></script>
 
 <!-- Main JS -->
-<script src="../assets/js/main.js"></script>
+<script src="<c:url value='../assets/js/main.js' />"></script>
 
 <!-- Page JS -->
-<script src="../assets/js/dashboards-analytics.js"></script>
+<script src="<c:url value='../assets/js/dashboards-analytics.js' />"></script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>

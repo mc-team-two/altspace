@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mc.app.repository.ReviewRepository">
+    <!-- Insert -->
+    <insert id="insert" parameterType="Reviews" useGeneratedKeys="true" keyProperty="reviewId">
+        INSERT INTO reviews (
+            guest_id,
+            accommodation_id,
+            grade,
+            comment,
+            create_day,
+            update_day
+        ) VALUES (
+             #{guestId},
+             #{accommodationId},
+             #{grade},
+             #{comment},
+             NOW(),
+             NOW()
+        )
+    </insert>
+
+    <!-- Update -->
+    <update id="update" parameterType="Reviews">
+        UPDATE reviews
+        SET
+            grade = #{grade},
+            comment = #{comment},
+            update_day = CURRENT_TIMESTAMP
+        WHERE review_id = #{reviewId}
+    </update>
+
+    <!-- Delete -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM reviews
+        WHERE review_id = #{reviewId}
+    </delete>
+
+    <!-- Select All -->
+    <select id="select" resultType="Reviews">
+        SELECT
+            review_id,
+            guest_id,
+            accommodation_id,
+            grade,
+            comment,
+            create_day,
+            update_day
+        FROM reviews
+        ORDER BY create_day DESC
+    </select>
+
+    <!-- Select One -->
+    <select id="selectOne" parameterType="int" resultType="Reviews">
+        SELECT
+            review_id,
+            guest_id,
+            accommodation_id,
+            grade,
+            comment,
+            create_day,
+            update_day
+        FROM reviews
+        WHERE review_id = #{reviewId}
+    </select>
+
+    <!-- 특정 숙박시설 리뷰 전체 조회 -->
+    <select id="selectReviewsAll" parameterType="int" resultType="Reviews">
+        SELECT
+            review_id,
+            guest_id,
+            accommodation_id,
+            grade,
+            comment,
+            create_day,
+            update_day
+        FROM reviews
+        WHERE accommodation_id=#{accommodationId}
+    </select>
+
+    <!-- userID로 내가 쓴 리뷰 전체보기 -->
+    <select id="getMyReviews" parameterType="Reviews" resultType="Reviews">
+        SELECT
+            r.review_id,
+            r.guest_id,
+            r.accommodation_id,
+            r.grade,
+            r.comment,
+            r.create_day,
+            a.name,
+            a.location
+        FROM reviews r JOIN accommodations a
+            ON r.accommodation_id = a.accommodation_id
+        WHERE r.guest_id = #{guestId}
+        ORDER BY r.create_day DESC
+    </select>
+
+    <!-- 리뷰 아이디로 조회해서 숙박 테이블 이름, 주소 조인해서 가져오기 -->
+    <select id="getMyReviewById" parameterType="int" resultType="Reviews">
+        SELECT
+            r.review_id,
+            r.guest_id,
+            r.accommodation_id,
+            r.grade,
+            r.comment,
+            r.create_day,
+            a.name,
+            a.location
+        FROM reviews r JOIN accommodations a
+            ON r.accommodation_id = a.accommodation_id
+        WHERE r.review_id = #{reviewId}
+    </select>
+
+    <!--호스트 Id로 리뷰 테이블 + 숙소 이름 가져오기-->
+    <select id="selectByHostId" parameterType="String" resultType="SimpReview">
+        select r.*
+        FROM reviews r
+                 JOIN accommodations a ON r.accommodation_id = a.accommodation_id
+        WHERE a.host_id = #{hostId}
+        ORDER BY r.create_day DESC;
+    </select>
+
+    <!--호스트 Id + 스페이스 id로 리뷰 테이블 + 숙소 이름 가져오기-->
+    <select id="selectByHostIdAndAccId" parameterType="map" resultType="SimpReview">
+        select r.*
+        FROM reviews r
+                 JOIN accommodations a ON r.accommodation_id = a.accommodation_id
+        WHERE a.host_id = #{hostId}
+          AND a.accommodation_id = #{accId}
+        ORDER BY r.create_day DESC;
+    </select>
+</mapper>
