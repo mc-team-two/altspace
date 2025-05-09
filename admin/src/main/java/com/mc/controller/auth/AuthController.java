@@ -121,7 +121,7 @@ public class AuthController {
         // #1. 유저가 없으면 -> 에러 처리
         if (dbUser == null) {
             model.addAttribute("msg", "이메일 혹은 비밀번호가 틀렸습니다");
-            return "auth/login";
+            return "redirect:/auth/login";
         }
 
         // 유저가 있으면 ->

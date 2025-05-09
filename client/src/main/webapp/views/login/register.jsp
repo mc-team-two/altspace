@@ -6,8 +6,10 @@
     <meta charset="UTF-8">
     <title>회원가입</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%--jQuery--%>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <%--bootstrap--%>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
@@ -70,6 +72,31 @@
             border: 1px solid #ccc;
             color: #444;
         }
+
+        /* 또는 */
+        .divider {
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            font-size: 14px;
+            color: #888;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: #ddd;
+        }
+        .divider::before {
+            left: 0;
+        }
+        .divider::after {
+            right: 0;
+        }
+
         .btn-register {
             background-color: #696cff;
             border-color: #696cff;
@@ -80,28 +107,25 @@
             font-weight: 500;
             width: 100%;
         }
-        .error-message {
-            color: red;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="register-container text-center">
+
+        <%--logo--%>
         <a href="/">
             <img src="<c:url value='/images/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
         </a>
-        <h4 class="font-weight-bold mb-3">회원가입</h4>
 
+        <%--error message--%>
         <c:if test="${msg != null}">
             <div class="alert alert-danger" role="alert">
                     ${msg}
             </div>
         </c:if>
 
-
+        <%--social login buttons--%>
         <a href="/auth/kakao/authorize" class="btn btn-social btn-kakao">
             <img src="<c:url value='/images/social_kakao_icon.svg'/>" width="24">카카오 계정으로 가입하기
         </a>
@@ -112,131 +136,219 @@
             <img src="<c:url value='/images/social_google_icon.svg'/>" width="24">구글 계정으로 가입하기
         </a>
 
+        <div class="divider">또는</div>
+
+        <%--register form--%>
         <form id="registrationForm" method="post" action="<c:url value='/login/registerimpl'/>" class="text-left">
-            <div class="form-group">
-                <input type="hidden" id="role" name="role" class="form-control" placeholder="롤을 입력해 주세요" value="게스트" required>
-            </div>
+            <%--role (using default value)--%>
+            <input type="hidden" name="role" class="form-control" value="호스트" required>
+
+            <%--email--%>
             <div class="form-group">
                 <label for="email">이메일</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required>
-                <p id="emailError" class="error-message"></p>
-            </div>
-            <div class="form-group">
-                <label for="password">비밀번호</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력해 주세요" required>
-                <p id="passwordError" class="error-message"></p>
+                <div class="input-group">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required value="host01@example.com">
+                    <div class="input-group-append">
+                        <span id="btn-chk-email" class="btn btn-dark">중복확인</span>
+                    </div>
+                </div>
+                <p id="email-feedback" style="font-size:12px;"></p>
             </div>
 
+            <%--pwd--%>
+            <div class="form-group">
+                <label for="pwd1">비밀번호</label>
+                <input type="password" id="pwd1" name="password" class="form-control"
+                       placeholder="비밀번호를 입력해 주세요" required value="pwd1234!!">
+                <p id="pwd1-feedback" style="font-size:12px;"></p>
+            </div>
+            <div class="form-group">
+                <label for="pwd2">비밀번호 확인</label>
+                <input type="password" id="pwd2" class="form-control"
+                       placeholder="비밀번호를 입력해 주세요" required value="pwd1234!!">
+                <p id="pwd2-feedback" style="font-size:12px;"></p>
+            </div>
+
+            <%--name--%>
             <div class="form-group">
                 <label for="name">이름</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="이름을 입력해 주세요" required>
-                <div id="nameError" class="error-message"></div>
+                <input type="text" id="name" name="name" class="form-control"
+                       placeholder="이름을 입력해 주세요" required value="이말숙">
+                <p id="name-feedback" style="font-size:12px;"></p>
             </div>
+
+            <%--phone--%>
             <div class="form-group">
                 <label for="phone">전화번호</label>
-                <input type="text" id="phone" name="phone" class="form-control" placeholder="전화번호를 입력해 주세요 (010-xxxx-xxxx)" required>
-                <div id="phoneError" class="error-message"></div>
+                <input type="text" id="phone" name="phone" maxlength="13" class="form-control"
+                       placeholder="전화번호를 입력해 주세요" required value="010-1234-5678">
+                <p id="phone-feedback" style="font-size:12px;"></p>
             </div>
-            <button type="submit" class="btn btn-block btn-register">회원가입</button>
+
+            <button id="btn-register" type="submit" class="btn btn-block btn-register">회원가입</button>
         </form>
 
-        <c:if test="${not empty msg}">
-            <p style="color: red;">${msg}</p>
-        </c:if>
-
-        <div class="mt-3">
+        <%--login page swap--%>
+        <div class="mt-3" style="font-size: 13px;">
             <a href="<c:url value="/login"/>" class="text-muted">이미 계정이 있으신가요? 로그인</a>
         </div>
     </div>
 </div>
 
 <script>
-    const form = document.getElementById('registrationForm');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-    const nameInput = document.getElementById('name');
-    const phoneInput = document.getElementById('phone');
-    const nameError = document.getElementById('nameError');
-    const phoneError = document.getElementById('phoneError');
+    const registerPage = {
+        isEmailDuplicateChecked : false,
+        init:function(){
+            // 이메일 중복 확인 버튼
+            $('#btn-chk-email').click(() => {
+                const val = $('#email').val().trim();
+                if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                    this.checkFormValidity();
+                    return;
+                }
 
+                $('#btn-chk-email').prop('disabled', true);
+                $.ajax({
+                    url: "<c:url value='/login/check-email'/>",
+                    type: 'POST',
+                    data: { email: val },
+                    success: (resp) => {
+                        $('#email-feedback').text(resp).css('color', 'green');
+                        $('#email').addClass('is-valid').removeClass('is-invalid');
+                        isEmailDuplicateChecked = true;
+                        $('#btn-chk-email').removeClass('btn-dark').addClass('btn-outline-secondary');
+                        this.checkFormValidity();
+                    },
+                    error: (xhr) => {
+                        $('#email-feedback').text(xhr.responseText).css('color', 'red');
+                        $('#email').addClass('is-invalid').removeClass('is-valid');
+                        isEmailDuplicateChecked = false;
+                        $('#btn-chk-email').prop('disabled', false);
+                        this.checkFormValidity();
+                    }
+                });
+            });
 
-    emailInput.addEventListener('blur', function() {
-        if (!this.value.trim()) {
-            displayError(emailError, '이메일은 필수 입력 항목입니다.');
-        } else if (!isValidEmail(this.value.trim())) {
-            displayError(emailError, '유효한 이메일 주소 형식이 아닙니다.');
-        } else {
-            clearError(emailError);
+            // 이메일 입력 시 실시간 감지
+            $('#email').on('input', () => {
+                $('#email').removeClass('is-valid');
+                this.isEmailDuplicateChecked = false;
+                $('#btn-chk-email').prop('disabled', false)
+                    .removeClass('btn-outline-secondary')
+                    .addClass('btn-dark');
+                this.checkFormValidity();
+            });
+
+            $('#email').on('keyup blur', ()=>{
+                this.validateEmailFormatOnly();
+            })
+
+            // 비밀번호 유효성 검사
+            $('#pwd1').on('input blur', function () {
+                const val = $(this).val().trim();
+                if (!val) {
+                    $('#pwd1-feedback').text('비밀번호는 공백이 될 수 없습니다.').css('color', 'red');
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (val.length < 8 || val.length > 20 || !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(val)) {
+                    $('#pwd1-feedback').text('비밀번호는 8~20자의 영문자, 숫자, 특수문자를 포함해야 합니다.').css('color', 'red');
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else {
+                    $('#pwd1-feedback').text('');
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+                registerPage.checkFormValidity();
+            });
+
+            // 비밀번호 확인
+            $('#pwd2').on('input blur', function () {
+                const val = $(this).val().trim();
+                if (val !== $('#pwd1').val().trim()) {
+                    $('#pwd2-feedback').text('입력한 비밀번호가 다릅니다.').css('color', 'red');
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else {
+                    $('#pwd2-feedback').text('');
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+                registerPage.checkFormValidity();
+            });
+
+            // 이름 유효성 검사
+            $('#name').on('input blur', function () {
+                const val = $(this).val().trim();
+                if (!val) {
+                    $('#name-feedback').text('이름 값은 공백이 될 수 없습니다.').css('color', 'red');
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else if (!/^[가-힣]{2,10}$/.test(val)) {
+                    $('#name-feedback').text('이름은 2~10자의 한글로만 구성되어야 합니다.').css('color', 'red');
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else {
+                    $('#name-feedback').text('');
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+                registerPage.checkFormValidity();
+            });
+
+            // 전화번호 입력 자동 하이픈
+            $('#phone').on('input', function () {
+                let raw = $(this).val().replace(/\D/g, '');
+                if (raw.length > 11) raw = raw.slice(0, 11);
+
+                let formatted = '';
+                if (raw.length <= 3) {
+                    formatted = raw;
+                    if (raw.length === 3) formatted += '-';
+                } else if (raw.length <= 7) {
+                    formatted = raw.slice(0, 3) + '-' + raw.slice(3);
+                    if (raw.length === 7) formatted += '-';
+                } else {
+                    formatted = raw.slice(0, 3) + '-' + raw.slice(3, 7) + '-' + raw.slice(7);
+                }
+
+                $(this).val(formatted);
+            });
+
+            // 전화번호 유효성 검사
+            $('#phone').on('blur keyup', function () {
+                const val = $(this).val().trim();
+                if (!/^01(?:0|1|[6-9])-\d{3,4}-\d{4}$/.test(val)) {
+                    $('#phone-feedback').text('유효한 전화번호 형식이 아닙니다.').css('color', 'red');
+                    $(this).addClass('is-invalid').removeClass('is-valid');
+                } else {
+                    $('#phone-feedback').text('');
+                    $(this).addClass('is-valid').removeClass('is-invalid');
+                }
+                registerPage.checkFormValidity();
+            });
+        },
+        validateEmailFormatOnly:function(){
+            const val = $('#email').val().trim();
+            if (!val) {
+                $('#email-feedback').text('이메일 값은 공백이 될 수 없습니다.').css('color', 'red');
+                $('#email').addClass('is-invalid').removeClass('is-valid');
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                $('#email-feedback').text('유효한 이메일 형식이 아닙니다.').css('color', 'red');
+                $('#email').addClass('is-invalid').removeClass('is-valid');
+            } else {
+                $('#email-feedback').text('중복 확인을 눌러주세요.').css('color', 'orange');
+                $('#email').addClass('is-invalid').removeClass('is-valid');
+            }
+            registerPage.isEmailDuplicateChecked = false;
+            registerPage.checkFormValidity();
+        },
+        checkFormValidity: function() {
+            const fields = ['#email', '#pwd1', '#pwd2', '#name', '#phone'];
+            const allValid = fields.every(field => $(field).hasClass('is-valid'));
+
+            $('#btn-register').prop('disabled', !allValid);
         }
+    };
+    $(function(){
+        registerPage.init();
+        registerPage.checkFormValidity();
     });
-
-    emailInput.addEventListener('focus', function() {
-        clearError(emailError);
-    });
-
-    passwordInput.addEventListener('blur', function() {
-        if (!this.value) {
-            displayError(passwordError, '비밀번호는 필수 입력 항목입니다.');
-        } else if (this.value.length < 8 || this.value.length > 20 || !/(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(this.value)) {
-            displayError(passwordError, '비밀번호는 8~20자의 영문자, 숫자, 특수문자를 포함해야 합니다.');
-        } else {
-            clearError(passwordError);
-        }
-    });
-
-    passwordInput.addEventListener('focus', function() {
-        clearError(passwordError);
-    });
-
-    form.addEventListener('submit', function(event) {
-        let isValid = true;
-        if (emailError.textContent || passwordError.textContent) {
-            isValid = false;
-            event.preventDefault();
-        }
-        // 추가적인 전체 폼 유효성 검사 로직 (선택 사항)
-
-    // 이름 유효성 검사
-    if (!nameInput.value.trim()) {
-        displayError(nameError, '이름은 필수 입력 항목입니다.');
-        isValid = false;
-    } else if (!/^[가-힣]{2,10}$/.test(nameInput.value.trim())) {
-        displayError(nameError, '이름은 2~10자의 한글로만 구성되어야 합니다.');
-        isValid = false;
-    } else {
-        clearError(nameError);
-    }
-
-    // 전화번호 유효성 검사
-    if (!phoneInput.value.trim()) {
-        displayError(phoneError, '전화번호는 필수 입력 항목입니다.');
-        isValid = false;
-    } else if (!/^01(?:0|1|[6-9])-\d{3,4}-\d{4}$/.test(phoneInput.value.trim())) {
-        displayError(phoneError, '유효한 전화번호 형식이 아닙니다.');
-        isValid = false;
-    } else {
-        clearError(phoneError);
-    }
-
-        if (!isValid) {
-            event.preventDefault(); // 유효성 검사 실패 시 폼 제출 방지
-        }
-    });
-
-    function displayError(element, message) {
-        element.textContent = message;
-    }
-
-    function clearError(element) {
-        element.textContent = '';
-    }
-
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
 </script>
+
+
+
 </body>
 </html>

@@ -14,11 +14,21 @@ spring:
       suffix: .jsp
     pathmatch:
       matching-strategy: ant_path_matcher # Spring Boot 2.6 이상에서는 ant_path_matcher 또는 경로 패턴 매칭 전략을 명시적으로 설정해야 합니다.
-
   datasource:
     url: ENC(QNchFVJLPg19xTYyjbM2WCRVIiAAZFJqQL3epsD9GufJl3yx6KwkqsfagKyplY1LLS63UY6pdpZX/xCy16073C+CYEgVVirlIoh/61th75Y=)
     username: ENC(x0MI4+flphCUA9uwSe5E1YjQR1RqZwbW)
     password: ENC(nnfXWWddf2J6fomi4HX+gw==)
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ENC(fcbXljrvHYVXH8a7JdHTwIGaekY73TAe) # SMTP 서버 로그인 아이디
+    password: ENC(pdKdKoikGgInBKZ+QYgCZ5U0jPurgi1rnx3rzbAanDU=) # SMTP 서버 로그인 앱 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true            # 사용자 인증 시도 여부
+          starttls:
+            enable: true        # starttls 활성화 여부
 
 # 3. MyBatis
 mybatis:
