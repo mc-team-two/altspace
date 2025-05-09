@@ -51,6 +51,7 @@ app:
     googleApiSecretKey: ENC(wqRdJ0edAHlyzC1s2qTfgPRTOdXdX/L2v342Vs7NTifnbaqOHuIAIH6Iu2B1CDed)
     naverApiKey: ENC(W21CWi5vucRAWCqK4GMx1P+L27Q66k3kJRU/e0BOyxs=)
     naverApiSecretKey: ENC(P7kspdfWVZVOh9kr3DG+ogt3pyebrCLy)
+    weatherApiKey: ENC(SSunAfg3V0q/sLi1vc8uOYLMRDt3kfqteXoiUlZ7m0LhtKHhx1vieNgmeLGfPDcZ)
     algo: PBEWithMD5AndDES
     skey: mykey
   dir:
