@@ -1,38 +1,49 @@
-// popper 1.12.5 버전에 맞춰 작성
+$(document).ready(function() {
+    function initPoppers() {
+        const popperTriggers = document.querySelectorAll('[data-popper-content]'); // data-popper-content 속성을 가진 모든 요소 선택
 
-document.addEventListener('DOMContentLoaded', () => {
-    const tooltipTriggers = document.querySelectorAll('.offers_icons_item');
+        popperTriggers.forEach(trigger => {
+            const popperContent = trigger.dataset.popperContent;
+            const popperElement = document.createElement('div');
+            popperElement.classList.add('popper-tooltip'); // 공통 스타일 클래스
+            popperElement.textContent = popperContent;
+            document.body.appendChild(popperElement);
 
-    tooltipTriggers.forEach(trigger => {
-        const tooltip = document.createElement('div');
-        tooltip.classList.add('popper-tooltip');
-        tooltip.textContent = trigger.dataset.popperContent;
+            const popperInstance = new Popper(trigger, popperElement, {
+                placement: 'top', // 기본 위치
+                modifiers: [
+                    {
+                        name: 'offset',
+                        options: {
+                            offset: [0, 8],
+                        },
+                    },
+                    {
+                        name: 'arrow',
+                        options: {
+                            element: '.popper-arrow', // 공통 화살표 클래스 (선택 사항)
+                        },
+                    },
+                ],
+            });
 
-        // 1.x 버전의 Popper 사용
-        const popperInstance = new Popper(trigger, tooltip, {
-            placement: 'top',
-            modifiers: {
-                offset: {
-                    offset: '0, 8',
-                },
-                arrow: {
-                    element: '.popper-arrow',
-                },
-            },
+            const showEvents = ['mouseenter', 'focus'];
+            const hideEvents = ['mouseleave', 'blur'];
+
+            showEvents.forEach(event => {
+                trigger.addEventListener(event, () => {
+                    popperElement.classList.add('active');
+                    popperInstance.update();
+                });
+            });
+
+            hideEvents.forEach(event => {
+                trigger.addEventListener(event, () => {
+                    popperElement.classList.remove('active');
+                });
+            });
         });
+    }
 
-        trigger.addEventListener('mouseenter', () => {
-            tooltip.classList.add('active');
-        });
-
-        trigger.addEventListener('mouseleave', () => {
-            tooltip.classList.remove('active');
-        });
-
-        document.body.appendChild(tooltip);
-
-        trigger.addEventListener('beforeunload', () => {
-            popperInstance.destroy();
-        });
-    });
+    initPoppers(); // 페이지 로드 시 모든 popper 기능 초기화
 });
