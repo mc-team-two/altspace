@@ -106,10 +106,6 @@
                                 </div>
                                 <button type="button" class="button search_button" id="searchAccommodationBtn">
                                     검색하기<span></span><span></span><span></span></button>
-
-                                <%--Geolocation 세션 저장을 위한 버튼.--%>
-                                <button type="button" class="button search_button" id="geolocationBtn">내 위치
-                                    검색<span></span><span></span><span></span></button>
                             </form>
                         </div>
 
@@ -309,6 +305,8 @@
                             </ul>
                         </li>
                     </ul>
+                    <button id="geolocationBtn" data-popper-content="현재 위치를 기준으로 검색">
+                        <i class="fa fa-crosshairs" aria-hidden="true"></i></button>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -362,7 +360,6 @@
                                                         <i class="fa fa-tint" aria-hidden="true" title="수영장"></i>
                                                     </li>
                                                 </c:if>
-                                            </ul>
                                             </ul>
                                         </div>
                                         <div class="button book_button"><a

@@ -1357,6 +1357,48 @@ section
 	margin-left: 71px;
 }
 
+#geolocationBtn {
+	/* 기본적인 버튼 스타일 */
+	padding: 8px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#geolocationBtn i,
+#geolocationBtn span {
+	font-size: 1.2em; /* 아이콘 크기 조절 */
+	color: #333; /* 아이콘 색상 */
+}
+
+#geolocationBtn:hover {
+	background-color: #f0f0f0;
+}
+
+/* (선택 사항) 마우스 오버 시 아이콘 색상 변경 */
+#geolocationBtn:hover i,
+#geolocationBtn:hover span {
+	color: #fd7e14;
+}
+
+.geolocation-caption {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	padding: 8px 12px;
+	border-radius: 4px;
+	font-size: 0.9em;
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease-in-out;
+	z-index: 1000;
+}
+
+.geolocation-caption.active {
+	opacity: 1;
+	visibility: visible;
+}
+
 /*********************************
 9.2 Offers Grid
 *********************************/
