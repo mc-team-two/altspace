@@ -6,6 +6,15 @@
     <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
     <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+
+    <style>
+        /* blog_styles.css 혹은 내부 style 태그에 추가 */
+        @media (min-width: 992px) {
+            .pl-lg-5 {
+                padding-left: 5rem !important;  /* 간격 확보 */
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -23,7 +32,6 @@
     </div>
 </div>
 <!-- 홈 -->
-
 <div class="home">
     <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
     <div class="home_content">
@@ -34,59 +42,55 @@
 <!-- 센터 -->
 <div class="blog">
     <div class="container">
-        <div class="row">
-
+        <div class="row align-items-start" style="min-height: 100vh;">
             <!-- 예약 내역 -->
             <div class="col-lg-8">
-                <div class="blog_post_container">
+                <div class="row">
                     <c:forEach var="py" items="${paymentList}">
-                        <div class="blog_post">
-                            <div class="blog_post_image">
-                                <img src="images/blog_1.jpg"> <!-- 실제 이미지 경로가 있다면 p.imagePath 등으로 수정 -->
-                                <div class="blog_post_date d-flex flex-column align-items-center justify-content-center">
-                                    <div class="blog_post_day">${py.payStatus}</div>
-                                    <div class="blog_post_month">${py.checkIn}</div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow-sm h-100">
+                                <!-- 숙박 이름 -->
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">${py.name}</h5>
                                 </div>
-                            </div>
-                            <div class="blog_post_meta">
-                                <ul>
-                                    <li class="blog_post_meta_item">
-                                        <a href="<c:url value="/detail?id=${py.accommodationId}"/>">숙소 정보</a>
-                                    </li>
-                                    <li class="blog_post_meta_item">
-                                        <a href="<c:url value="/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&paymentId=${py.paymentId}"/>">결제 정보</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="blog_post_title">
-                                <a href="#">${py.name}</a> <!-- p.accommodationName 은 테이블 join or 따로 세팅 필요 -->
-                                <p></p>
+
+                                <!-- 이미지 + 체크인 정보 -->
+                                <img src="images/blog_1.jpg" class="card-img-top" alt="숙소 이미지" style="height: 200px; object-fit: cover;">
+
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="badge bg-info text-dark">상태: ${py.payStatus}</span>
+                                        <span class="text-muted small">체크인: ${py.checkIn}</span>
+                                    </div>
+
+                                    <!-- 링크들 -->
+                                    <div class="d-flex flex-column gap-1">
+                                        <a class="btn btn-outline-secondary btn-sm" href="<c:url value='/detail?id=${py.accommodationId}'/>">숙소 정보</a>
+                                        <a class="btn btn-outline-primary btn-sm" href="<c:url value='/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&paymentId=${py.paymentId}'/>">결제 정보</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
-                <div class="blog_navigation">
-                    <ul>
-                        <li class="blog_dot active"><div></div>01</li>
-                        <li class="blog_dot"><div></div>02</li>
-                    </ul>
-                </div>
             </div>
 
             <!-- 사이드바 -->
-            <div class="col-lg-4 sidebar_col">
-
-                <!-- 사이드바 메뉴 -->
-                <div class="sidebar_archives">
-                    <div class="sidebar_title">MENU</div>
-                    <div class="sidebar_list">
-                        <ul>
-                            <li><a href="<c:url value="/details"/> ">나의 예약</a></li>
-                            <li><a href="<c:url value="/review"/> ">나의 리뷰</a></li>
-                        </ul>
+            <div class="col-lg-4 pl-lg-5">
+                <div class="position-sticky" style="top: 100px; z-index: 10;">
+                    <!-- 사이드바 메뉴 -->
+                    <div class="sidebar_archives">
+                        <div class="sidebar_title">MENU</div>
+                        <div class="sidebar_list">
+                            <ul>
+                                <li><a href="<c:url value="/details"/> ">나의 예약</a></li>
+                                <li><a href="<c:url value="/review"/> ">나의 리뷰</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
