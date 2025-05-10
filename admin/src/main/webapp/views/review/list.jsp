@@ -1,8 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <style>
     .list-group .list-group-item {
         cursor: pointer;
+    }
+    #replyText {
+        resize:none;
+        border-radius: 15px;
     }
 </style>
 
@@ -34,10 +41,7 @@
                 <div class="card">
                     <div class="card-body" style="text-align: center">
                         <p>아직 리뷰를 남긴 게스트가 없어요.</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-emoji-dizzy" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                            <path d="M9.146 5.146a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708m-5 0a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 1 1 .708.708l-.647.646.647.646a.5.5 0 1 1-.708.708L5.5 7.207l-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708M10 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0"/>
-                        </svg>
+                        <i class="bi bi-three-dots"></i>
                     </div>
                 </div>
             </c:if>
@@ -45,30 +49,54 @@
             <c:forEach var="item" items="${rvList}">
                 <div class="card mb-3">
                     <div class="card-body">
-                            <%--유저 프로필--%>
+                        <%--유저 프로필--%>
                         <div class="d-flex align-items-center mb-2">
                             <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
                             <h5 class="mb-0">${item.guestId}</h5>
                         </div>
-                            <%--평점--%>
+
+                        <%--별 + 평점--%>
                         <div class="mb-2">
-                        <span class="text-warning">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </span>
+                            <span class="text-warning">
+                                <c:forEach var="i" begin="1" end="5">
+                                    <c:choose>
+                                        <c:when test="${i <= item.grade}">
+                                            <i class="bi bi-star-fill"></i>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <i class="bi bi-star"></i>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </span>
                             <span class="ms-2">평점: ${item.grade}</span>
                         </div>
-                            <%--커멘트--%>
-                        <p class="my-3" style="color: #555;">${item.comment}</p>
 
-                            <%--리뷰 등록/수정일--%>
+                        <%--숙소 이름--%>
+                        <div class="mb-2">${item.accommodationName}</div>
+
+                        <%--커멘트--%>
+                        <p class="mb-3" style="color: #555;">${item.comment}</p>
+
+                        <%--리뷰 등록/수정일--%>
                         <div class="text-muted small">
-                            <p class="mb-1"><i class="fas fa-calendar-alt me-1"></i>리뷰 등록일: ${item.createDay}</p>
-                            <p class="mb-0"><i class="fas fa-edit me-0"></i>리뷰 수정일: ${item.updateDay}</p>
+                            <p class="mb-1">
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                리뷰 등록일:
+                                <ftm:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${item.createDay}"/>
+                            </p>
+                            <p class="mb-0">
+                                <i class="fas fa-edit me-0"></i>
+                                리뷰 수정일:
+                                <ftm:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${item.updateDay}"/>
+                            </p>
                         </div>
+                    </div>
+
+                    <%--호스트 답글--%>
+                    <div class="d-flex px-3 mb-3">
+                        <textarea class="flex-grow-1" rows="2" style="padding:10px;resize:none; border-radius:15px;"></textarea>
+                        <button class="btn btn-primary ms-2" style="resize:none; border-radius:10px;">등록</button>
                     </div>
                 </div>
             </c:forEach>
@@ -86,6 +114,14 @@
             $accList.find(".list-group-item").removeClass("active");
             // 클릭된 아이템에 active 클래스 추가
             $(this).addClass("active");
+        });
+
+        $(".auto-resize").each(function () {
+            this.style.height = "48px"; // 초기 높이
+            this.style.overflowY = "hidden";
+        }).on("input", function () {
+            this.style.height = "48px"; // 최소 높이
+            this.style.height = (this.scrollHeight) + "px";
         });
     });
 </script>

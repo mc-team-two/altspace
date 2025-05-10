@@ -60,6 +60,9 @@ public class ReviewController {
         // 현재 로그인한 호스트의 숙소 목록 조회
         List<Accommodations> accList = accomService.getByHostId(user.getUserId());
 
+        log.info("rvList--------------------------------");
+        log.info(rvList.toString());
+
         model.addAttribute("accList", accList);
         model.addAttribute("rvList", rvList);
         model.addAttribute("center", dir + "list");

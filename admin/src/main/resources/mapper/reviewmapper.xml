@@ -115,7 +115,7 @@
 
     <!--호스트 Id로 리뷰 테이블 + 숙소 이름 가져오기-->
     <select id="selectByHostId" parameterType="String" resultType="SimpReview">
-        select r.*
+        select r.*, a.name AS accommodationName
         FROM reviews r
                  JOIN accommodations a ON r.accommodation_id = a.accommodation_id
         WHERE a.host_id = #{hostId}
@@ -124,7 +124,7 @@
 
     <!--호스트 Id + 스페이스 id로 리뷰 테이블 + 숙소 이름 가져오기-->
     <select id="selectByHostIdAndAccId" parameterType="map" resultType="SimpReview">
-        select r.*
+        select r.*, a.name AS accommodationName
         FROM reviews r
                  JOIN accommodations a ON r.accommodation_id = a.accommodation_id
         WHERE a.host_id = #{hostId}
