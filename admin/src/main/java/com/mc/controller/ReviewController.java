@@ -75,11 +75,7 @@ public class ReviewController {
         Map<SimpReview, List<ReviewReplies>> reviewMap =
                 ReviewUtil.mapReviewsWithReplies(rvList, replyList);
 
-        log.info(reviewMap.toString());
-
         model.addAttribute("reviewMap", reviewMap);
-
-        //model.addAttribute("replyList", replyList);
         model.addAttribute("rvList", rvList);
         model.addAttribute("accList", accList);
         model.addAttribute("center", dir + "list");
@@ -103,6 +99,19 @@ public class ReviewController {
             e.printStackTrace();
             msg = "오류가 발생했습니다. 관리자에게 문의해주세요.";
             return ResponseEntity.internalServerError().body(msg + e.getMessage());
+        }
+    }
+
+    @PostMapping("/del-reply")
+    public ResponseEntity<?> delReply(@RequestParam("replyId") int replyId) {
+        log.info("Received replyId: {}", replyId);
+        try {
+            reviewRepliesService.del(replyId);
+            return ResponseEntity.ok("성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("오류가 발생했습니다. 관리자에게 문의해주세요.");
         }
     }
 }

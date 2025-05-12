@@ -15,7 +15,7 @@
     </p>
     <div class="row">
         <%--host가 소유한 acc 목록 (사이드바)--%>
-        <div class="col-sm-3">
+        <div class="col-sm-3 mb-3">
             <ul class="list-group" id="accList">
                 <a href="<c:url value='/review/list'/>" class="list-group-item ${param.accId == null ? 'active' : ''}" data-id="all">
                     전체보기
@@ -34,7 +34,7 @@
         <%--작성한 리뷰 목록 (컨텐츠) --%>
         <div class="col-sm-9">
             <c:if test="${empty reviewMap}">
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-body" style="text-align: center">
                         <p>아직 리뷰를 남긴 게스트가 없어요.</p>
                         <i class="bi bi-three-dots"></i>
@@ -81,12 +81,18 @@
                                 <c:otherwise>
                                     <div class="reply-list">
                                         <c:forEach var="reply" items="${entry.value}">
-                                            <div class="reply-item mb-2">
-                                                <strong>내가 남긴 답글: &nbsp;</strong>
-                                                <span>${reply.comment}</span>
-                                                <small class="text-muted">
-                                                    (<fmt:formatDate value="${reply.createDay}" pattern="yyyy-MM-dd HH:mm:ss"/>)
-                                                </small>
+                                            <div class="reply-item mb-3 p-3 rounded shadow-sm">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <div class="left">
+                                                        <img src="<c:url value="/imgs/avatar.png"/>" alt class="w-px-30 h-auto rounded-circle" />
+                                                        <strong>${sessionScope.user.name}</strong>
+                                                    </div>
+                                                    <div class="text-muted small right">
+                                                        <fmt:formatDate value="${reply.createDay}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                                    </div>
+                                                </div>
+                                                <p>${reply.comment}</p>
+                                                <a href="javascript:void(0);" data-review-id="${reply.replyId}" class="deleteReplyBtn">삭제</a>
                                             </div>
                                         </c:forEach>
                                     </div>
@@ -99,7 +105,9 @@
                             <input type="hidden" class="reviewId" value="${entry.key.reviewId}">
                             <input type="hidden" class="userId" value="${sessionScope.user.userId}">
                             <textarea class="comment form-control me-2" rows="2" required></textarea>
-                            <button class="addReplyBtn btn btn-primary" data-review-id="${entry.key.reviewId}">등록</button>
+                            <button class="addReplyBtn btn btn-primary" data-review-id="${entry.key.reviewId}">
+                                <i class="bi bi-send"></i>
+                            </button>
                         </div>
 
                     </div>
@@ -110,7 +118,7 @@
 <script>
     const reviewPage = {
         init: function () {
-            // 리뷰 등록
+            // 답글 등록
             $(document).on('click', '.addReplyBtn', function () {
                 let reviewId = $(this).data('review-id');
                 let comment = $(this).siblings('.comment').val().trim();
@@ -135,6 +143,14 @@
                 reviewPage.addReply(replyData);
             });
 
+            // 답글 삭제
+            $(document).on("click", ".deleteReplyBtn", function (e) {
+                const replyId = $(this).data("review-id");
+                if (confirm("정말로 삭제하시겠습니까?")) {
+                    reviewPage.delReply(replyId);
+                }
+            });
+
             // 사이드바 핸들러
             $("#accList").on("click", ".list-group-item", function () {
                 $("#accList").find(".list-group-item").removeClass("active");
@@ -149,6 +165,19 @@
                 data: JSON.stringify(replyData),
                 success: function (response) {
                     alert(response);  // 성공 메시지
+                    location.reload();  // 페이지 새로고침
+                },
+                error: function (xhr) {
+                    alert('error: ' + xhr.responseText);
+                }
+            });
+        },
+        delReply: function(replyId){
+            $.ajax({
+                url: "/review/del-reply?replyId=" + replyId,
+                type: "POST",
+                success: function (response) {
+                    alert(response); // 성공 메시지
                     location.reload();  // 페이지 새로고침
                 },
                 error: function (xhr) {
