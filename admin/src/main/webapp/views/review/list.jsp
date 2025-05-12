@@ -16,7 +16,7 @@
     <div class="row">
         <%--host가 소유한 acc 목록 (사이드바)--%>
         <div class="col-sm-3 mb-3">
-            <ul class="list-group" id="accList">
+            <ul class="list-group bg-light" id="accList">
                 <a href="<c:url value='/review/list'/>" class="list-group-item ${param.accId == null ? 'active' : ''}" data-id="all">
                     전체보기
                 </a>
