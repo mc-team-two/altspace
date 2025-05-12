@@ -25,7 +25,6 @@
         }
     </style>
 </head>
-
 <body>
 <script>
     const change = {
@@ -102,6 +101,9 @@
             });
             $('#review_btn').click(()=>{
                 this.review();
+            });
+            $('.wishlist-btn').click(()=>{
+               this.wishlistToggle();
             });
         },
         reqPay:function(){
@@ -197,8 +199,76 @@
                 position: markerPosition
             });
             this.marker.setMap(this.map);
-        }
+        },
+        wishlistToggle: function(){
+            const accommId = parseInt("${accomm.accommodationId}");
+            const wishlistIdStr = $(".wishlist-btn").data("wishlist-id"); // data-wishlist-id 값 가져오기
+            const wishlistId = wishlistIdStr ? parseInt(wishlistIdStr) : null;
 
+            const isWished = $(".wishlist-btn").hasClass("btn-danger"); // 이미 찜한 상태인지 확인
+
+            if(isWished){
+                // 찜 삭제 요청
+                if (!wishlistId) {
+                    alert("찜 ID 정보가 없습니다. 다시 시도해주세요.");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/wishlist/delete",
+                    data: {
+                        wishlistId: wishlistId
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert("찜 목록에서 취소되었습니다.");
+                            $(".wishlist-btn")
+                                .removeClass("btn-danger")
+                                .addClass("btn-outline-danger")
+                                .html('<i class="bi bi-heart"></i> 찜');
+                            location.reload(); // 페이지 새로고침
+
+                            /*// 데이터 갱신: 버튼에서 data-wishlist-id를 삭제
+                            $(".wishlist-btn").removeData("wishlist-id");*/
+                        } else {
+                            alert("찜 삭제에 실패했습니다.");
+                        }
+                    },
+                    error: function() {
+                        alert("서버 오류로 찜 삭제에 실패했습니다.");
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/wishlist/add",
+                    data: {
+                        accommodationId:accommId
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert("찜 목록에 추가되었습니다!");
+                            // 버튼 UI 변경
+                            $(".wishlist-btn")
+                                .removeClass("btn-outline-danger")
+                                .addClass("btn-danger")
+                                .html('<i class="bi bi-heart-fill"></i> 찜함');
+                            location.reload(); // 페이지 새로고침
+
+                            /*// 새로 생성된 wishlistId 값 갱신 (서버에서 response로 받은 wishlistId)
+                            $(".wishlist-btn").data("wishlist-id", response.wishlistId);*/
+                        } else {
+                            alert("이미 찜한 숙소입니다.");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert("찜 추가에 실패했습니다. 다시 시도해주세요.");
+                        console.error("Error:", error);
+                    }
+                });
+            }
+        }
     };
 
     $(document).ready(function() {
@@ -448,9 +518,16 @@
 
                         <div class="d-flex mt-3 mb-3" style="gap: 0.4rem;">
                             <!-- 찜 버튼 -->
-                            <button type="button" class="btn btn-outline-danger rounded-pill w-30"
-                                    style="flex: 3;">
-                                <i class="bi bi-heart"></i> 찜
+                            <c:if test="${not empty resultWishlist}">
+                                <c:set var="wishlistId" value="${resultWishlist.wishlistId}" />
+                            </c:if>
+                            <button
+                                class="btn rounded-pill w-30 wishlist-btn
+                                    ${not empty resultWishlist ? 'btn-danger' : 'btn-outline-danger'}"
+                                style="flex: 3;"
+                                data-wishlist-id="${not empty resultWishlist ? resultWishlist.wishlistId : ''}">
+                                <i class="bi ${not empty resultWishlist ? 'bi-heart-fill' : 'bi-heart'}"></i>
+                                ${not empty resultWishlist ? '찜함' : '찜'}
                             </button>
 
                             <!-- 예약하기 버튼 -->
@@ -459,7 +536,6 @@
                                 예약하기
                             </button>
                         </div>
-
                     </c:otherwise>
                 </c:choose>
             </div>

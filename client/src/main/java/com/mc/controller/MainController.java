@@ -3,10 +3,8 @@ package com.mc.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.*;
-import com.mc.app.service.AccomService;
-import com.mc.app.service.PaymentService;
-import com.mc.app.service.ReviewService;
-import com.mc.app.service.UserService;
+import com.mc.app.service.*;
+
 import java.sql.Date;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,7 +26,7 @@ public class MainController {
     @Value("${app.url.webSocketUrl}")
     String webSocketUrl;
 
-    private final UserService userService;
+    final WishlistService wishlistService;
     final AccomService accomService;
     final PaymentService paymentService;
     final ReviewService reviewService;
@@ -75,10 +73,32 @@ public class MainController {
     public String detail(Model model,
                          @RequestParam("id") int id,
                          @RequestParam(value = "pyStatus", required = false) String pyStatus,
-                         @RequestParam(value = "paymentId", required = false) Integer paymentId) throws Exception {
+                         @RequestParam(value = "paymentId", required = false) Integer paymentId,
+                         HttpSession httpSession) throws Exception {
 
         Accommodations accomm = accomService.get(id);
         model.addAttribute("accomm", accomm);
+
+        // 로그인 사용자 정보 가져오기
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            String userId = user.getUserId();
+            // DB 조회용 객체 생성
+            Wishlist wishlist = new Wishlist();
+            wishlist.setUserId(userId);
+            wishlist.setAccommodationId(id);
+
+            // 숙소 ID와 유저 ID로 찜 여부 확인
+            Wishlist resultWishlist  = wishlistService.wishlistSelect(wishlist);
+
+            if (resultWishlist != null) {
+                model.addAttribute("resultWishlist", resultWishlist);
+            } else {
+                model.addAttribute("resultWishlist", null);
+            }
+        } else {
+            model.addAttribute("resultWishlist", null); // 비로그인 상태일 경우
+        }
 
         List<Payments> chInChOut =  paymentService.selectCheckInCheckOut(id);
         model.addAttribute("chInChOut", chInChOut);
