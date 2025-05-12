@@ -19,4 +19,5 @@ public class SimpReview {
     private String comment;         // 내용
     private Timestamp createDay;
     private Timestamp updateDay;
+    private String accommodationName;            // acc 테이블에서 조인해서 가져오는 값
 }

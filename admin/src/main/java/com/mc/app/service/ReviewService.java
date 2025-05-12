@@ -177,10 +177,16 @@ public class ReviewService implements MCService<Reviews, Integer> {
     }
 
     // admin 모듈 추가
+    // 호스트의 특정 숙소에 대한 리뷰
     public List<SimpReview> getByHostIdAndAccId(Map<String, Object> params) throws Exception{
         return reviewRepository.selectByHostIdAndAccId(params);
     }
+
+    // 호스트의 모든 숙소에 대한 리뷰
     public List<SimpReview> getByHostId(String hostId) throws Exception {
         return reviewRepository.selectByHostId(hostId);
     }
+
+    // 호스트의 모든 숙소에 대한 리뷰 + 리뷰 답글
+
 }
