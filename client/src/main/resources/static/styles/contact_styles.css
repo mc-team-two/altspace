@@ -1056,8 +1056,8 @@ section
 .footer
 {
 	width: 100%;
-	padding-top: 113px;
-	padding-bottom: 104px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	background: #31124b;
 }
 .footer_title
@@ -1074,7 +1074,7 @@ section
 
 .footer_about
 {
-	padding-top: 67px;
+	padding-top: 20px;
 }
 .footer_logo
 {
@@ -1236,11 +1236,11 @@ section
 
 .contact_info_list
 {
-	margin-top: 40px;
+	margin-top: 20px;
 }
 .contact_info_item
 {
-	margin-bottom: 22px;
+	margin-bottom: 7px;
 }
 .contact_info_icon
 {

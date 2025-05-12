@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-
-<body>
-
 <!-- 푸터 -->
 
 <footer class="footer">
@@ -13,7 +10,7 @@
     <div class="row">
 
       <!-- 회사 정보 -->
-      <div class="col-lg-3 footer_column">
+      <div class="col-lg-12 footer_column">
         <div class="footer_col">
           <div class="footer_content footer_about">
             <div class="logo_container footer_logo">
@@ -25,66 +22,9 @@
         </div>
       </div>
 
-      <!-- Footer Column -->
-      <div class="col-lg-3 footer_column">
-        <div class="footer_col">
-          <div class="footer_title">blog posts</div>
-          <div class="footer_content footer_blog">
-
-            <!-- Footer blog item -->
-            <div class="footer_blog_item clearfix">
-              <div class="footer_blog_image"><img src="images/footer_blog_1.jpg" alt="https://unsplash.com/@avidenov"></div>
-              <div class="footer_blog_content">
-                <div class="footer_blog_title"><a href="blog.html">Travel with us this year</a></div>
-                <div class="footer_blog_date">Nov 29, 2017</div>
-              </div>
-            </div>
-
-            <!-- Footer blog item -->
-            <div class="footer_blog_item clearfix">
-              <div class="footer_blog_image"><img src="images/footer_blog_2.jpg" alt="https://unsplash.com/@deannaritchie"></div>
-              <div class="footer_blog_content">
-                <div class="footer_blog_title"><a href="blog.html">New destinations for you</a></div>
-                <div class="footer_blog_date">Nov 29, 2017</div>
-              </div>
-            </div>
-
-            <!-- Footer blog item -->
-            <div class="footer_blog_item clearfix">
-              <div class="footer_blog_image"><img src="images/footer_blog_3.jpg" alt="https://unsplash.com/@bergeryap87"></div>
-              <div class="footer_blog_content">
-                <div class="footer_blog_title"><a href="blog.html">Travel with us this year</a></div>
-                <div class="footer_blog_date">Nov 29, 2017</div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- 태그 -->
-      <div class="col-lg-3 footer_column">
-        <div class="footer_col">
-          <div class="footer_title">태그</div>
-          <div class="footer_content footer_tags">
-            <ul class="tags_list clearfix">
-              <li class="tag_item"><a href="#">바캉스</a></li>
-              <li class="tag_item"><a href="#">호캉스</a></li>
-              <li class="tag_item"><a href="#">페스티벌</a></li>
-              <li class="tag_item"><a href="#">파티</a></li>
-              <li class="tag_item"><a href="#">프라이빗</a></li>
-              <li class="tag_item"><a href="#">마운틴뷰</a></li>
-              <li class="tag_item"><a href="#">시티뷰</a></li>
-              <li class="tag_item"><a href="#">오션뷰</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       <!-- 연락처 -->
-      <div class="col-lg-3 footer_column">
+      <div class="col-lg-12 footer_column">
         <div class="footer_col">
-          <div class="footer_title">연락처</div>
           <div class="footer_content footer_contact">
             <ul class="contact_info_list">
               <li class="contact_info_item d-flex flex-row">
@@ -112,21 +52,6 @@
   </div>
 </footer>
 
-<!-- Copyright -->
-
-<div class="copyright">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3 order-lg-1 order-2  ">
-        <div class="copyright_content d-flex flex-row align-items-center">
-          <div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved </a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
@@ -135,6 +60,3 @@
 <script src="plugins/easing/easing.js"></script>
 <script src="js/custom.js"></script>
 
-</body>
-
-</html>
