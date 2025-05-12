@@ -41,7 +41,7 @@
         }
 
         .hotel_image img {
-            width: 100%;
+            width: 150px;
             border-radius: 8px;
             margin-bottom: 20px;
         }
@@ -118,7 +118,7 @@
                         </div>
 
                         <div class="hotel_image">
-                            <img src="/images/user_profile.jpg" alt="User Profile">
+                            <img src="/images/avatar.png" alt="User Profile">
                         </div>
                     </div>
                 </div>
