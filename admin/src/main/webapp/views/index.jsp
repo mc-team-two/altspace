@@ -23,10 +23,6 @@
     <%--jQuery CDN--%>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!-- Bootstrap CSS (index.jsp의 head에 있으면 중복 불필요) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
     <%-- Web Socket Lib    --%>
     <script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
     <script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
@@ -175,57 +171,48 @@
                     <!-- 오른쪽: 사용자 메뉴 -->
                     <div class="d-flex align-items-center">
 
-                        <!-- 사용자 메뉴 (로그인 상태에 따라 달라짐) -->
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
-
-                                <!-- 로그인 상태일 경우 -->
-                                <c:if test="${not empty sessionScope.user}">
-                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                        <div class="d-flex align-items-center">
-                                            <div class="me-2 text-end d-none d-md-block">
-                                                <div class="fw-bold">${sessionScope.user.name} 호스트님</div>
-                                                <small class="text-muted">환영합니다!</small>
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="<c:url value="/imgs/avatar.png"/>" alt class="w-px-40 h-auto rounded-circle" />
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="<c:url value="/imgs/avatar.png"/>" alt class="w-px-40 h-auto rounded-circle" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <span class="fw-semibold d-block">${sessionScope.user.name}</span>
+                                                    <small class="text-muted">호스트</small>
+                                                </div>
                                             </div>
-                                            <div class="avatar avatar-online">
-                                                <img src="<c:url value="/imgs/avatar.png"/>" class="w-px-40 h-auto rounded-circle" alt="User" />
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" href="<c:url value='/mypage'/>">
-                                                <i class="bx bx-user me-2"></i> 마이페이지
-                                            </a>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <a class="dropdown-item" href="#" id="theme-toggle-dropdown">
-                                                <i class="bx bx-moon me-2"></i> 테마 설정
-                                            </a>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <a class="dropdown-item" href="<c:url value='/auth/logout'/>">
-                                                <i class="bx bx-power-off me-2"></i> <strong>로그아웃</strong>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </c:if>
-
-                                <!-- 로그인 안 된 상태일 경우 -->
-                                <c:if test="${empty sessionScope.user}">
-                                    <a class="nav-link" href="<c:url value='/auth/login'/>">
-                                        <div class="d-flex align-items-center">
-                                            <span class="me-2 text-muted">로그인</span>
-                                            <div class="avatar">
-                                                <img src="/images/default-profile.svg" class="w-px-40 h-auto rounded-circle" alt="Login" />
-                                            </div>
-                                        </div>
-                                    </a>
-                                </c:if>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="<c:url value="/mypage"/>">
+                                            <i class="bx bx-user me-2"></i>
+                                            <span class="align-middle">마이페이지</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="<c:url value="/auth/logout"/>">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">로그아웃</span>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
+
                     </div>
                 </div>
             </nav>
