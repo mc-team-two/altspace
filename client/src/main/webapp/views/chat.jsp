@@ -176,6 +176,7 @@
     init:function(){
       this.id = $('#adm_id').text();
       this.connect(); // 채팅방 접속시 바로 connect
+
       // 보내기
       $('#sendto').click(()=>{
         // 메시지 컨텐츠
@@ -202,6 +203,13 @@
         $(".chatArea").scrollTop($(".chatArea")[0].scrollHeight);  // 최신 메시지로 스크롤
 
         $('#totext').val('');  // 입력창 초기화
+      });
+      // 입력창에서 엔터키 -> 보내기
+      $('#totext').on('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault(); // 기본 엔터키 동작 방지
+          $('#sendto').click();
+        }
       });
     },
     connect:function(){
@@ -238,12 +246,15 @@
       let parsedMsg = JSON.parse(msg);
       const isMine = parsedMsg.sendid === this.id;
 
+      // 줄바꿈을 <br>로 변환
+      const formattedContent = parsedMsg.content1.replace(/\n/g, '<br>');
+
       let bubble = "";
       bubble += `<div class="bubbleArea `;
       bubble += isMine ? "myMsg" : "";
       bubble += `">`;
       bubble += `<div class="bubbleMsg">`;
-      bubble += parsedMsg.content1;
+      bubble += formattedContent;
       bubble += `</div>`;
       bubble += `<div class="bubbleDate">`;
       bubble += this.formatTime(parsedMsg.sentAt);
