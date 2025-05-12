@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mc.app.repository.ReviewRepliesRepository">
+    <!-- Insert -->
+    <insert id="insert" parameterType="ReviewReplies">
+        INSERT INTO review_replies (
+            review_id,
+            user_id,
+            comment,
+            create_day,
+            update_day
+        ) VALUES (
+             #{reviewId},
+             #{userId},
+             #{comment},
+             NOW(),
+             null
+        )
+    </insert>
+
+    <!-- Update -->
+    <update id="update" parameterType="ReviewReplies">
+        UPDATE review_replies
+        SET
+            comment = #{comment},
+            update_day = CURRENT_TIMESTAMP
+        WHERE reply_id = #{replyId}
+    </update>
+
+    <!-- Delete -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM review_replies
+        WHERE reply_id = #{replyId}
+    </delete>
+
+    <!-- Select All -->
+    <select id="select" resultType="ReviewReplies">
+        SELECT *
+        FROM review_replies
+        ORDER BY create_day DESC
+    </select>
+
+    <!-- Select One -->
+    <select id="selectOne" parameterType="int" resultType="ReviewReplies">
+        SELECT *
+        FROM review_replies
+        WHERE reply_id = #{replyId}
+    </select>
+
+</mapper>
