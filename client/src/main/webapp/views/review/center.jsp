@@ -213,13 +213,14 @@
           </div>
 
           <!-- 사이드바 (오른쪽) -->
-          <div class="col-lg-4 pl-lg-5">
-              <div class="sidebar_archives">
+          <div class="col-lg-4">
+              <div class="sidebar_archives" style="margin-left: 100px;">
                   <div class="sidebar_title">MENU</div>
                   <div class="sidebar_list">
                       <ul>
                           <li><a href="<c:url value='/details'/>">나의 예약</a></li>
                           <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
+                          <li><a href="<c:url value="/wishlist"/> ">찜 목록</a></li>
                       </ul>
                   </div>
               </div>

@@ -363,7 +363,6 @@
                                                     </li>
                                                 </c:if>
                                             </ul>
-                                            </ul>
                                         </div>
                                         <div class="button book_button"><a
                                                 href="<c:url value="/detail?id=${a.accommodationId}"/>">상세보기<span></span><span></span><span></span></a>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mc.app.repository.WishlistRepository">
+
+    <!-- 찜 목록 조회 -->
+    <select id="getMyWishlists" resultType="Wishlist">
+        SELECT
+            w.wishlist_id,
+            w.user_id,
+            w.accommodation_id,
+            w.create_day,
+            a.name,
+            a.price_night,
+            a.description,
+            a.image1_name,
+            a.breakfast,
+            a.pool,
+            a.barbecue,
+            a.pet,
+            IFNULL(ROUND(AVG(r.grade), 1), 0) AS average_rating
+        FROM wishlists w JOIN accommodations a
+            ON w.accommodation_id = a.accommodation_id
+            LEFT JOIN reviews r ON r.accommodation_id = a.accommodation_id
+        WHERE w.user_id = #{userId}
+        GROUP BY w.wishlist_id
+    </select>
+
+    <select id="wishlistSelect" parameterType="Wishlist" resultType="Wishlist">
+        SELECT *
+        FROM wishlists
+        WHERE user_id = #{userId}
+          AND accommodation_id = #{accommodationId}
+            LIMIT 1
+    </select>
+
+    <!-- 위시리스트 추가 -->
+    <insert id="wishlistInsert" parameterType="Wishlist">
+        INSERT INTO wishlists (
+        user_id,
+        accommodation_id,
+        create_day
+        ) VALUES (
+        #{userId},
+        #{accommodationId},
+        NOW()
+        )
+        <selectKey resultType="int" keyProperty="wishlistId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- Delete -->
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM wishlists
+        WHERE wishlist_id = #{wishlistId}
+    </delete>
+
+</mapper>

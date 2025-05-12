@@ -45,7 +45,6 @@ public class ReviewController {
 
         // 실제 DB 조회(여러 건 가져올 수 있음)
         List<Reviews> ReviewList = reviewService.getMyReviews(reviews);
-        log.info("ReviewList.........." + ReviewList);
 
         model.addAttribute("ReviewList", ReviewList);
         model.addAttribute("headers", dir + "headers");
