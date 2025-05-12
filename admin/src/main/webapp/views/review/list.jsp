@@ -59,11 +59,11 @@
                                     </c:choose>
                                 </c:forEach>
                             </p>
-                            <p class="d-flex align-items-center">
+                            <div class="d-flex align-items-center mb-2">
                                 <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
                                 <span style="font-size:18px; font-weight:bold">${entry.key.guestId}</span>
-                                <span>('${entry.key.accommodationName}'를 이용한 고객)</span>
-                            </p>
+                            </div>
+                            <small>[${entry.key.accommodationName}]</small>
                             <p>${entry.key.comment}</p>
                             <small class="text-muted">
                                 작성일:<fmt:formatDate value="${entry.key.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/><br>
