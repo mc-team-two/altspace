@@ -63,9 +63,6 @@
                     <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                   </div>
                   <div class="user_box_login user_box_link">
-                    <a href="<c:url value="/cart?name=${sessionScope.user.name}"/> ">Cart</a>
-                  </div>
-                  <div class="user_box_login user_box_link">
                     <a href="<c:url value="/auth/logout"/> ">logout</a></div>
                 </div>
               </c:otherwise>
