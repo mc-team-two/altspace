@@ -7,10 +7,6 @@
     .list-group .list-group-item {
         cursor: pointer;
     }
-    #replyText {
-        resize:none;
-        border-radius: 15px;
-    }
 </style>
 
 <div class="container">
@@ -18,7 +14,7 @@
         리뷰 관리 &nbsp;&nbsp;>&nbsp;&nbsp; <strong>작성된 리뷰 조회</strong>
     </p>
     <div class="row">
-        <%--host가 소유한 acc 목록--%>
+        <%--host가 소유한 acc 목록 (사이드바)--%>
         <div class="col-sm-3">
             <ul class="list-group" id="accList">
                 <a href="<c:url value='/review/list'/>" class="list-group-item ${param.accId == null ? 'active' : ''}" data-id="all">
@@ -35,9 +31,9 @@
             </ul>
         </div>
 
-        <%--리뷰 부분--%>
+        <%--작성한 리뷰 목록 (컨텐츠) --%>
         <div class="col-sm-9">
-            <c:if test="${empty rvList}">
+            <c:if test="${empty reviewMap}">
                 <div class="card">
                     <div class="card-body" style="text-align: center">
                         <p>아직 리뷰를 남긴 게스트가 없어요.</p>
@@ -45,22 +41,16 @@
                     </div>
                 </div>
             </c:if>
-
-            <c:forEach var="item" items="${rvList}">
+            <c:forEach var="entry" items="${reviewMap}">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <%--유저 프로필--%>
-                        <div class="d-flex align-items-center mb-2">
-                            <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
-                            <h5 class="mb-0">${item.guestId}</h5>
-                        </div>
 
-                        <%--별 + 평점--%>
+                        <!-- 리뷰 정보 출력 -->
                         <div class="mb-2">
-                            <span class="text-warning">
+                            <p class="text-warning">
                                 <c:forEach var="i" begin="1" end="5">
                                     <c:choose>
-                                        <c:when test="${i <= item.grade}">
+                                        <c:when test="${i <= entry.key.grade}">
                                             <i class="bi bi-star-fill"></i>
                                         </c:when>
                                         <c:otherwise>
@@ -68,60 +58,108 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
-                            </span>
-                            <span class="ms-2">평점: ${item.grade}</span>
+                            </p>
+                            <p class="d-flex align-items-center">
+                                <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
+                                <span style="font-size:18px; font-weight:bold">${entry.key.guestId}</span>
+                                <span>('${entry.key.accommodationName}'를 이용한 고객)</span>
+                            </p>
+                            <p>${entry.key.comment}</p>
+                            <small class="text-muted">
+                                작성일:<fmt:formatDate value="${entry.key.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/><br>
+                                수정일:<fmt:formatDate value="${entry.key.updateDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
+                            </small>
                         </div>
 
-                        <%--숙소 이름--%>
-                        <div class="mb-2">${item.accommodationName}</div>
-
-                        <%--커멘트--%>
-                        <p class="mb-3" style="color: #555;">${item.comment}</p>
-
-                        <%--리뷰 등록/수정일--%>
-                        <div class="text-muted small">
-                            <p class="mb-1">
-                                <i class="fas fa-calendar-alt me-1"></i>
-                                리뷰 등록일:
-                                <ftm:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${item.createDay}"/>
-                            </p>
-                            <p class="mb-0">
-                                <i class="fas fa-edit me-0"></i>
-                                리뷰 수정일:
-                                <ftm:formatDate pattern="yyyy년 MM월 dd일 HH:mm:ss" value="${item.updateDay}"/>
-                            </p>
+                        <!-- 답글 리스트 출력 -->
+                        <hr>
+                        <div class="mt-3">
+                            <c:choose>
+                                <c:when test="${empty entry.value}">
+                                    <p class="text-muted">호스트 님의 답글을 남겨주세요. 😍</p>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="reply-list">
+                                        <c:forEach var="reply" items="${entry.value}">
+                                            <div class="reply-item mb-2">
+                                                <strong>내가 남긴 답글: &nbsp;</strong>
+                                                <span>${reply.comment}</span>
+                                                <small class="text-muted">
+                                                    (<fmt:formatDate value="${reply.createDay}" pattern="yyyy-MM-dd HH:mm:ss"/>)
+                                                </small>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
-                    </div>
 
-                    <%--호스트 답글--%>
-                    <div class="d-flex px-3 mb-3">
-                        <textarea class="flex-grow-1" rows="2" style="padding:10px;resize:none; border-radius:15px;"></textarea>
-                        <button class="btn btn-primary ms-2" style="resize:none; border-radius:10px;">등록</button>
+                        <!-- 답글 작성 폼 -->
+                        <div class="d-flex mt-3">
+                            <input type="hidden" class="reviewId" value="${entry.key.reviewId}">
+                            <input type="hidden" class="userId" value="${sessionScope.user.userId}">
+                            <textarea class="comment form-control me-2" rows="2" required></textarea>
+                            <button class="addReplyBtn btn btn-primary" data-review-id="${entry.key.reviewId}">등록</button>
+                        </div>
+
                     </div>
                 </div>
             </c:forEach>
         </div>
-    </div>
-</div>
 
 <script>
+    const reviewPage = {
+        init: function () {
+            // 리뷰 등록
+            $(document).on('click', '.addReplyBtn', function () {
+                let reviewId = $(this).data('review-id');
+                let comment = $(this).siblings('.comment').val().trim();
+                let userId = $(this).siblings('.userId').val();
+
+                if (!userId) {
+                    alert("로그인이 필요한 기능입니다.");
+                    return;
+                }
+
+                if (!comment) {
+                    alert("답글은 공백일 수 없습니다.");
+                    return;
+                }
+
+                let replyData = {
+                    reviewId: reviewId,
+                    userId: userId,
+                    comment: comment
+                };
+
+                reviewPage.addReply(replyData);
+            });
+
+            // 사이드바 핸들러
+            $("#accList").on("click", ".list-group-item", function () {
+                $("#accList").find(".list-group-item").removeClass("active");
+                $(this).addClass("active");
+            });
+        },
+        addReply: function (replyData) {
+            $.ajax({
+                url: "<c:url value='/review/add-reply'/>",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(replyData),
+                success: function (response) {
+                    alert(response);  // 성공 메시지
+                    location.reload();  // 페이지 새로고침
+                },
+                error: function (xhr) {
+                    alert('error: ' + xhr.responseText);
+                }
+            });
+        }
+    };
+
     $(function () {
-        // 리스트 그룹 핸들러 (선택한 아이템 강조)
-        const $accList = $("#accList");
-
-        $accList.on("click", ".list-group-item", function () {
-            // 모든 아이템에서 active 클래스 제거
-            $accList.find(".list-group-item").removeClass("active");
-            // 클릭된 아이템에 active 클래스 추가
-            $(this).addClass("active");
-        });
-
-        $(".auto-resize").each(function () {
-            this.style.height = "48px"; // 초기 높이
-            this.style.overflowY = "hidden";
-        }).on("input", function () {
-            this.style.height = "48px"; // 최소 높이
-            this.style.height = (this.scrollHeight) + "px";
-        });
+        reviewPage.init();
     });
 </script>
+

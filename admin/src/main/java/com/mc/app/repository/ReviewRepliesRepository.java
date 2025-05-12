@@ -13,4 +13,5 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface ReviewRepliesRepository extends MCRepository<ReviewReplies,Integer> {
+    List<ReviewReplies> selectByHostId(String hostId);
 }

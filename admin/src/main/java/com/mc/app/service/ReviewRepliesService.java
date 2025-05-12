@@ -51,4 +51,8 @@ public class ReviewRepliesService implements MCService<ReviewReplies, Integer> {
         return reviewRepliesRepository.select();
     }
 
+    public List<ReviewReplies> getByHostId(String hostId) throws Exception {
+        return reviewRepliesRepository.selectByHostId(hostId);
+    }
+
 }

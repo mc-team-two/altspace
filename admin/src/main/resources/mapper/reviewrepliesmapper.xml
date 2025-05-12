@@ -49,4 +49,11 @@
         WHERE reply_id = #{replyId}
     </select>
 
+    <!--호스트가 쓴 답글 모두 가져오기-->
+    <select id="selectByHostId" parameterType="String" resultType="ReviewReplies">
+        SELECT *
+        FROM review_replies
+        WHERE user_id = #{userId}
+    </select>
+
 </mapper>
