@@ -88,7 +88,7 @@
                   <ul>
                     <li><a href="<c:url value="/contacts"/> ">홈</a></li>
                     <li><a href="<c:url value="/contacts2"/> ">예약</a></li>
-                    <li><a href="<c:url value="/review"/> ">결제</a></li>
+                    <li><a href="<c:url value="/contacts3"/> ">기타</a></li>
                   </ul>
                 </div>
               </div>

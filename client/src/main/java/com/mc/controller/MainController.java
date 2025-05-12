@@ -79,6 +79,14 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping("/contacts3")
+    public String contacts3(Model model){
+        model.addAttribute("headers", "contacts3/headers");
+        model.addAttribute("center", "contacts3/center");
+        model.addAttribute("footer", "contacts3/footer");
+        return "index";
+    }
+
     @RequestMapping("/detail")
     public String detail(Model model,
                          @RequestParam("id") int id,

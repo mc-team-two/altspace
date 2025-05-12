@@ -72,8 +72,8 @@
                         <ul class="main_nav_list">
                             <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
                             <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                            <li class="main_nav_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
+                            <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">FAQ</a></li>
+                            <li class="main_nav_item"><a href="<c:url value="/details"/> ">마이페이지</a></li>
                         </ul>
                     </div>
                     <div class="content_search ml-lg-0 ml-auto">
