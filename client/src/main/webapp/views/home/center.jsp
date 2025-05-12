@@ -3,9 +3,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
-</head>
 
 <div class="menu trans_500">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
@@ -58,11 +55,13 @@
                                 </div>
                                 <div class="search_item">
                                     <div>체크인</div>
-                                    <input type="text" class="check_in search_input" id="checkInInput" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="check_in search_input" id="checkInInput"
+                                           placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="search_item">
                                     <div>체크아웃</div>
-                                    <input type="text" class="check_out search_input" id="checkOutInput" placeholder="YYYY-MM-DD">
+                                    <input type="text" class="check_out search_input" id="checkOutInput"
+                                           placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="search_item">
                                     <div>인원</div>
@@ -324,7 +323,8 @@
                                 <div class="col-lg-1 temp_col"></div>
                                 <div class="col-lg-3 col-1680-4">
                                     <div class="offers_image_container">
-                                        <div class="offers_image_background" style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
+                                        <div class="offers_image_background"
+                                             style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
                                         <div class="offer_name"><a
                                                 href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a>
                                         </div>
@@ -405,8 +405,24 @@
                         </div>
                     </div>
                 </div>
+                <div id="chatbot" class="chatbot">
+                    <div id="chat-icon" class="chat-icon">
+                        <i class="fa fa-comment" aria-hidden="true"></i>
+                    </div>
+                    <div id="chat-window" class="chat-window">
+                        <div class="chat-header">
+                            <span>Chat with us</span>
+                            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+                        </div>
+                        <div class="chat-messages" id="chat-messages">
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="chat-input" placeholder="Type your message...">
+                            <button id="chat-send-btn">Send</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<script src="js/darkmode.js"></script>

@@ -51,9 +51,7 @@ public class MainController {
         model.addAttribute("accomm", allAccomm);
         model.addAttribute("pageInfo", pageInfo);
 
-        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
-        model.addAttribute("footer", dir + "footer");
 
         List<AccomodationsWithRating> accommodationsWithRatingList = accomService.getAccommodationsWithRating(pageInfo.getList());
         model.addAttribute("accommodationsWithRatingList", accommodationsWithRatingList);
@@ -136,9 +134,7 @@ public class MainController {
         }
 
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
-        model.addAttribute("headers", "payments/headers");
         model.addAttribute("center", "payments/center");
-        model.addAttribute("footer", "payments/footer");
 
         return "index";
     }

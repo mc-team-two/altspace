@@ -45,9 +45,7 @@ public class DetailsController {
         List<Payments> paymentList = paymentService.selectPyAll(payments);
 
         model.addAttribute("paymentList", paymentList);
-        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
-        model.addAttribute("footer", dir + "footer");
         return "index";
     }
 }

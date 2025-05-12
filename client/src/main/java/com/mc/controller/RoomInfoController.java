@@ -12,9 +12,7 @@ public class RoomInfoController {
 
     @RequestMapping("")
     public String roomInfo(Model model) {
-        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
-        model.addAttribute("footer", dir + "footer");
         return "index";
     }
 }

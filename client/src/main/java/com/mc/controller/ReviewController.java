@@ -47,9 +47,7 @@ public class ReviewController {
         List<Reviews> ReviewList = reviewService.getMyReviews(reviews);
 
         model.addAttribute("ReviewList", ReviewList);
-        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
-        model.addAttribute("footer", dir + "footer");
         return "index";
     }
 

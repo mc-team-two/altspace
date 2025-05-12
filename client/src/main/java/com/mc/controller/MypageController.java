@@ -21,9 +21,7 @@ public class MypageController {
 
         if (loggedInUser != null) {
             model.addAttribute("user", loggedInUser);
-            model.addAttribute("headers", dir + "headers");
             model.addAttribute("center", dir + "center");
-            model.addAttribute("footer", dir + "footer");
             return "index";
         } else {
             session.setAttribute("previousUrl", "/mypage"); // 로그인 페이지로 리다이렉트되기 전에 이전 URL 저장

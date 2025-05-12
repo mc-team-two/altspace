@@ -48,9 +48,7 @@ public class WishListController {
         List<Wishlist> wishlists = wishlistService.getMyWishlists(wishlist);
 
         model.addAttribute("wishlists", wishlists);
-        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
-        model.addAttribute("footer", dir + "footer");
         return "index";
     }
 
