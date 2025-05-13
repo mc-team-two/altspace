@@ -30,10 +30,10 @@ public class AuthController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final StandardPBEStringEncryptor standardPBEStringEncryptor;
 
-
     @PostMapping("/loginimpl")
     public String loginimpl(@RequestParam("email") String email,
                             @RequestParam("password") String password,
+                            @RequestParam(value = "chatbot_id", required = false) String guestId, // 로컬에서 보낸 chatbot_id 추가
                             Model model, HttpSession httpSession) {
 
         // DB 접근 #1 - email 사용자가 있는지 확인
@@ -52,6 +52,13 @@ public class AuthController {
             dbUser.setName(standardPBEStringEncryptor.decrypt(dbUser.getName()));
             dbUser.setPhone(standardPBEStringEncryptor.decrypt(dbUser.getPhone()));
             httpSession.setAttribute("user", dbUser);
+
+            // 로그인 전 챗봇 ID가 있을 경우, guestId를 userId로 세션에 매핑 저장
+            if (guestId != null && !guestId.isEmpty()) {
+                httpSession.setAttribute("guestId", guestId); // 세션에 guestId 저장
+                httpSession.setAttribute("userId", dbUser.getUserId()); // 세션에 userId 저장
+            }
+
             return "redirect:/";
         } else if (!bCryptPasswordEncoder.matches(password, dbUser.getPassword())) {
             model.addAttribute("msg", "비밀번호가 틀렸습니다");

@@ -167,6 +167,10 @@
                 <label for="password">비밀번호</label>
                 <input type="password" id="password" name="password" class="form-control" value="password123!!" placeholder="비밀번호를 입력해 주세요" required>
             </div>
+            <div class="form-hidden">
+                <labet for="hidden"><!-- 로그인 전 / 로그인 후 채팅 아이디 일관성을 위한 히든 폼 --></labet>
+                <input type="hidden" name="chatbot_id" id="chatbot_id">
+            </div>
             <button id="login-btn" type="submit" class="btn btn-block login-btn">로그인</button>
         </form>
 
@@ -190,3 +194,4 @@
 
 </body>
 </html>
+<script>document.getElementById("chatbot_id").value = localStorage.getItem("chatbot_id");</script>

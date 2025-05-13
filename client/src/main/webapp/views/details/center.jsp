@@ -3,9 +3,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_styles.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_responsive.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
+</head>
 
     <style>
         /* blog_styles.css 혹은 내부 style 태그에 추가 */
@@ -80,6 +82,24 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <div id="chatbot" class="chatbot">
+                        <div id="chat-icon" class="chat-icon">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                        </div>
+                        <div id="chat-window" class="chat-window">
+                            <div class="chat-header">
+                                <span>챗봇과 대화하기</span>
+                                <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+                            </div>
+                            <div class="chat-messages" id="chat-messages">
+
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+                                <button id="chat-send-btn">보내기</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -94,6 +114,7 @@
                                 <li><a href="<c:url value="/details"/> ">나의 예약</a></li>
                                 <li><a href="<c:url value="/review"/> ">나의 리뷰</a></li>
                                 <li><a href="<c:url value="/wishlist"/> ">찜 목록</a></li>
+                                <li><a href="<c:url value="mypage"/>">나의 정보</a></li>
                             </ul>
                         </div>
                     </div>
@@ -104,12 +125,14 @@
     </div>
 </div>
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/offers_custom.js"></script>
-
-<script src="js/darkmode.js"></script>
+<script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
+<script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
+<script src="<c:url value="styles/bootstrap4/bootstrap.min.js"/>"></script>
+<script src="<c:url value="plugins/Isotope/isotope.pkgd.min.js"/>"></script>
+<script src="<c:url value="plugins/easing/easing.js"/>"></script>
+<script src="<c:url value="plugins/parallax-js-master/parallax.min.js"/>"></script>
+<script src="<c:url value="js/offers_custom.js"/>"></script>
+<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
+<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
+<script src="<c:url value="js/chatbot.js"/>"></script>
+<script src="<c:url value="js/darkmode.js"/>"></script>

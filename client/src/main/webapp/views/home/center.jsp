@@ -306,6 +306,7 @@
                     </ul>
                     <button id="geolocationBtn" data-popper-content="현재 위치를 기준으로 검색">
                         <i class="fa fa-crosshairs" aria-hidden="true"></i></button>
+                    <div class="popper-arrow"></div>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -344,21 +345,25 @@
                                                     <li class="offers_icons_item" data-popper-content="바베큐 시설 안내">
                                                         <i class="fa fa-fire" aria-hidden="true" title="바베큐"></i>
                                                     </li>
+                                                    <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.breakfast}">
                                                     <li class="offers_icons_item" data-popper-content="맛있는 조식 제공">
                                                         <i class="fa fa-coffee" aria-hidden="true" title="조식"></i>
                                                     </li>
+                                                    <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.pet}">
                                                     <li class="offers_icons_item" data-popper-content="반려동물 동반">
                                                         <i class="fa fa-paw" aria-hidden="true" title="반려동물"></i>
                                                     </li>
+                                                    <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.pool}">
                                                     <li class="offers_icons_item" data-popper-content="시원한 수영장">
                                                         <i class="fa fa-tint" aria-hidden="true" title="수영장"></i>
                                                     </li>
+                                                    <div class="popper-arrow"></div>
                                                 </c:if>
                                             </ul>
                                         </div>
@@ -395,8 +400,7 @@
                                 <c:forEach var="i" begin="${pageInfo.navigateFirstPage}"
                                            end="${pageInfo.navigateLastPage}">
                                     <li class="blog_page_item">
-                                        <a href="?pageNum=${i}"
-                                           class="blog_dot ${i == pageInfo.pageNum ? 'active' : ''}">
+                                        <a href="?pageNum=${i}" class="blog_dot ${i == pageInfo.pageNum ? 'active' : ''}">
                                             <fmt:formatNumber value="${i}" pattern="0"/>
                                         </a>
                                     </li>
@@ -411,14 +415,15 @@
                     </div>
                     <div id="chat-window" class="chat-window">
                         <div class="chat-header">
-                            <span>Chat with us</span>
+                            <span>챗봇과 대화하기</span>
                             <button id="chat-close-btn" class="chat-close-btn">&times;</button>
                         </div>
                         <div class="chat-messages" id="chat-messages">
+
                         </div>
                         <div class="chat-input">
-                            <input type="text" id="chat-input" placeholder="Type your message...">
-                            <button id="chat-send-btn">Send</button>
+                            <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+                            <button id="chat-send-btn">보내기</button>
                         </div>
                     </div>
                 </div>

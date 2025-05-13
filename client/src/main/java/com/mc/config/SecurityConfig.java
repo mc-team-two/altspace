@@ -35,21 +35,22 @@ public class SecurityConfig  {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        //CSRF, CORS
-        http.csrf(AbstractHttpConfigurer::disable);
-        //http.cors(Customizer.withDefaults());
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin(CorsConfiguration.ALL);
-        configuration.addAllowedMethod(CorsConfiguration.ALL);
-        configuration.addAllowedHeader(CorsConfiguration.ALL);
+        configuration.addAllowedOriginPattern("*"); // 또는 정확한 origin
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true); // 중요: 세션 쿠키 전송 가능하게
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**,/chbot", configuration);
-        // 권한 규칙 작성
-        http.authorizeHttpRequests(authorize -> authorize
-                        //@PreAuthrization을 사용할 것이기 때문에 모든 경로에 대한 인증처리는 Pass
+        source.registerCorsConfiguration("/**", configuration);
+
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(source))
+                .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll()
-//                        .anyRequest().authenticated()
-        );
+                );
+
         return http.build();
     }
 

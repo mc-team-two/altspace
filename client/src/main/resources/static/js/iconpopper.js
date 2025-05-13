@@ -11,23 +11,17 @@ $(document).ready(function() {
 
             const popperInstance = new Popper(trigger, popperElement, {
                 placement: 'top',
-                modifiers: [
-                    {
-                        name: 'keepTogether',
+                modifiers: {
+                    keepTogether: {
+                        enabled: true
                     },
-                    {
-                        name: 'offset',
-                        options: {
-                            offset: [0, 8],
-                        },
+                    offset: {
+                        offset: '0,8'
                     },
-                    {
-                        name: 'arrow',
-                        options: {
-                            element: '.popper-arrow',
-                        },
-                    },
-                ],
+                    arrow: {
+                        element: '.popper-arrow'
+                    }
+                }
             });
 
             const showEvents = ['mouseenter', 'focus'];

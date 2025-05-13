@@ -5,9 +5,9 @@
 <!-- jQuery 라이브러리 CDN 추가 (반드시 먼저 위치시켜야 함) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
-  <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
-  <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-  <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+  <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_styles.css"/>">
+  <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_responsive.css"/>">
+  <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
 
     <style>
         .review-slider-container {
@@ -229,4 +229,7 @@
   </div>
 </div>
 
-<script src="js/darkmode.js"></script>
+<script src="<c:url value="js/darkmode.js"/>"></script>
+<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
+<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
+<script src="<c:url value="js/chatbot.js"/>"></script>

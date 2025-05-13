@@ -7,13 +7,17 @@
 <!doctype html>
 <html lang="ko">
 <head>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
-    <link rel="stylesheet" href="/styles/payment_styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_styles.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_responsive.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_styles.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_responsive.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/payment_styles.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 
     <style>
         .btn-custom-small {
@@ -59,7 +63,7 @@
         init: function () {
             const reservedRanges = [
                 <c:forEach var="r" items="${chInChOut}" varStatus="status">
-                ["${r.checkIn}", "${r.checkOut}"]<c:if test="${!status.last}">,</c:if>
+                ["${r.checkIn}", "${r.checkOut}"]<c:if test="${!status.last}">, </c:if>
                 </c:forEach>                        // Status.last : 마지막 반복일 때만 true
             ];
 
@@ -79,7 +83,7 @@
                 autoApply: true,
                 minDate: moment().add(1, 'days'),
                 autoUpdateInput: false,
-                isInvalidDate: function(date) {
+                isInvalidDate: function (date) {
                     return bookedDates.includes(date.format('YYYY-MM-DD'));
                 },
                 locale: {
@@ -93,7 +97,7 @@
                 },
             });
 
-            $('input[name="dates"]').on('apply.daterangepicker', function(ev,picker) {
+            $('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
                 // 수동으로 input에 세팅해야 함!(autoUpdateInput: false 이거 때문에)
                 $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
 
@@ -121,23 +125,23 @@
             });
             this.displayMap();
 
-            $('#sales_add_btn').click(()=>{
+            $('#sales_add_btn').click(() => {
                 this.reqPay();
             });
-            $('#cancel_btn').click(()=>{
+            $('#cancel_btn').click(() => {
                 this.cancel();
             });
-            $('#review_btn').click(()=>{
+            $('#review_btn').click(() => {
                 this.review();
             });
-            $('.wishlist-btn').click(()=>{
-               this.wishlistToggle();
+            $('.wishlist-btn').click(() => {
+                this.wishlistToggle();
             });
             $('.translate-btn').click(function() {
                 change.translate.call(this); // 버튼 this를 전달
             });
         },
-        reqPay:function(){
+        reqPay: function () {
             var IMP = window.IMP;
             IMP.init("imp35658175"); // 가맹점 식별코드로 Iamport 초기화
 
@@ -150,7 +154,7 @@
                 buyer_email: "${sessionScope.user.email}",
                 buyer_name: "${sessionScope.user.name}",
                 buyer_tel: "${sessionScope.user.phone}"
-            }, function(rsp) {
+            }, function (rsp) {
                 if (rsp.success) {
                     $('#imp_hidden').val(rsp.imp_uid);  // 결제 완료 후 imp_uid input에 저장
                     // 실제 결제 정보 검증
@@ -158,7 +162,7 @@
                         type: 'POST',
                         url: '/payment/verify/' + rsp.imp_uid,
                         data: $('#data_add').serialize(),  // ← form 전체를 직렬화해서 같이 보냄
-                    }).done(function(data) {
+                    }).done(function (data) {
                         if (data.response && rsp.paid_amount === data.response.amount) {
                             // 결제 성공 및 금액 검증 완료 => 서버로 데이터 전송
                             alert(data.message || "결제 성공");
@@ -174,7 +178,7 @@
                 }
             });
         },
-        cancel:function(){
+        cancel: function () {
             let impUid = "${payInfo.impUid}"; // 저장된 imp_uid 가져오기
 
             if (!impUid) {
@@ -187,11 +191,11 @@
                 url: "/payment/cancel/" + impUid,
                 data: $('#data_del').serialize(),
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                success: function(res) {
+                success: function (res) {
                     alert(res.message);
                     location.reload(); // 취소 후 새로고침
                 },
-                error: function(err) {
+                error: function (err) {
                     try {              // err는 실패한 응답이라 자동 파싱 x
                         const errorMsg = JSON.parse(err.responseText).message;
                         alert("취소 실패: " + errorMsg);
@@ -201,14 +205,14 @@
                 }
             });
         },
-        review:function(){
+        review: function () {
             $('#data_del').attr({
                 'method':'post',
                 'action':'<c:url value="/reviewAdd?id=${accomm.accommodationId}"/>'
             });
             $('#data_del').submit();
         },
-        displayMap: function(){
+        displayMap: function () {
             var mapContainer = document.getElementById('kaoMap');
             var mapOption = {
                 center: new kakao.maps.LatLng(${accomm.latitude}, ${accomm.longitude}),
@@ -231,14 +235,14 @@
             });
             this.marker.setMap(this.map);
         },
-        wishlistToggle: function(){
+        wishlistToggle: function () {
             const accommId = parseInt("${accomm.accommodationId}");
             const wishlistIdStr = $(".wishlist-btn").data("wishlist-id"); // data-wishlist-id 값 가져오기
             const wishlistId = wishlistIdStr ? parseInt(wishlistIdStr) : null;
 
             const isWished = $(".wishlist-btn").hasClass("btn-danger"); // 이미 찜한 상태인지 확인
 
-            if(isWished){
+            if (isWished) {
                 // 찜 삭제 요청
                 if (!wishlistId) {
                     alert("찜 ID 정보가 없습니다. 다시 시도해주세요.");
@@ -251,7 +255,7 @@
                     data: {
                         wishlistId: wishlistId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             alert("찜 목록에서 취소되었습니다.");
                             $(".wishlist-btn")
@@ -266,7 +270,7 @@
                             alert("찜 삭제에 실패했습니다.");
                         }
                     },
-                    error: function() {
+                    error: function () {
                         alert("서버 오류로 찜 삭제에 실패했습니다.");
                     }
                 });
@@ -275,9 +279,9 @@
                     type: "POST",
                     url: "/wishlist/add",
                     data: {
-                        accommodationId:accommId
+                        accommodationId: accommId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             alert("찜 목록에 추가되었습니다!");
                             // 버튼 UI 변경
@@ -293,7 +297,7 @@
                             alert("이미 찜한 숙소입니다.");
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         alert("찜 추가에 실패했습니다. 다시 시도해주세요.");
                         console.error("Error:", error);
                     }
@@ -332,14 +336,16 @@
         }
     };
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         change.init();
     });
 </script>
 
 <div class="menu trans_500">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-        <div class="menu_close_container"><div class="menu_close"></div></div>
+        <div class="menu_close_container">
+            <div class="menu_close"></div>
+        </div>
         <div class="logo menu_logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
         <ul>
             <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
@@ -351,7 +357,8 @@
 </div>
 <!-- 홈 -->
 <div class="home">
-    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
+    <div class="home_background parallax-window" data-parallax="scroll"
+         data-image-src="images/offer_background.jpg"></div>
     <div class="home_content">
         <div class="home_title">여행의 시작, 이곳에서</div>
     </div>
@@ -458,7 +465,7 @@
                             <i class="fa fa-paw text-info" style="font-size: 1.25rem;"></i><br/>
                             <small>반려동물</small>
                         </div>
-                  </c:if>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -476,7 +483,8 @@
     <div class="row mb-4">
         <div class="col-md-8 mb-4">
             <!-- 호스트 카드 -->
-            <div class="card shadow-sm p-4 rounded-4 mb-4" style="border-left: 6px solid #007bff; background-color: #f8f9fa;">
+            <div class="card shadow-sm p-4 rounded-4 mb-4"
+                 style="border-left: 6px solid #007bff; background-color: #f8f9fa;">
                 <div class="d-flex align-items-center">
                     <!-- 호스트 정보 -->
                     <div class="d-flex align-items-center">
@@ -488,7 +496,8 @@
                     </div>
                     <!-- 문의 버튼 -->
                     <a href="#"
-                       onclick="window.open('<c:url value="/chat/${accomm.accommodationId}"/>', 'chatWindow', 'width=480,height=650'); return false;"
+                       onclick="window.open('<c:url
+                               value="/chat/${accomm.accommodationId}"/>', 'chatWindow', 'width=480,height=650'); return false;"
                        class="btn btn-outline-primary btn-custom-small">
                         <i class="bi bi-chat-left-dots mr-1"></i>
                         <span>호스트에게 1:1 문의하기</span>
@@ -518,12 +527,12 @@
                                 <li class="mb-2">
                                     <i class="bi bi-calendar-check me-2 text-success"></i>
                                     <strong>체크인:</strong>
-                                    <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd"/>
                                 </li>
                                 <li class="mb-2">
                                     <i class="bi bi-calendar-x me-2 text-danger"></i>
                                     <strong>체크아웃:</strong>
-                                    <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd"/>
                                 </li>
                                 <li>
                                     <i class="bi bi-wallet2 me-2 text-warning"></i>
@@ -549,7 +558,8 @@
                     </c:when>
                     <c:otherwise>
                         <div class="price-per-night mb-3">
-                            <span class="price-amount">₩<fmt:formatNumber value="${accomm.priceNight}" type="number"/></span> /박
+                            <span class="price-amount">₩<fmt:formatNumber value="${accomm.priceNight}"
+                                                                          type="number"/></span> /박
                         </div>
 
                         <form id="data_add">
@@ -562,12 +572,14 @@
                             <input type="hidden" name="payStatus" value="완료"/>
 
                             <div class="form-group mb-3">
-                                <input type="text" name="dates" class="form-control text-center datepicker-input" id="dates" readonly placeholder="체크인 - 체크아웃">
+                                <input type="text" name="dates" class="form-control text-center datepicker-input"
+                                       id="dates" readonly placeholder="체크인 - 체크아웃">
                             </div>
 
                             <div class="price-box">
                                 <div class="d-flex justify-content-between mb-2">
-                                    <span><fmt:formatNumber value="${accomm.priceNight}" type="number"/> × <span id="nightsCount">0</span>박</span>
+                                    <span><fmt:formatNumber value="${accomm.priceNight}" type="number"/> × <span
+                                            id="nightsCount">0</span>박</span>
                                     <span id="totalPrices">₩0</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
@@ -585,19 +597,20 @@
                         <div class="d-flex mt-3 mb-3" style="gap: 0.4rem;">
                             <!-- 찜 버튼 -->
                             <c:if test="${not empty resultWishlist}">
-                                <c:set var="wishlistId" value="${resultWishlist.wishlistId}" />
+                                <c:set var="wishlistId" value="${resultWishlist.wishlistId}"/>
                             </c:if>
                             <button
-                                class="btn rounded-pill w-30 wishlist-btn
+                                    class="btn rounded-pill w-30 wishlist-btn
                                     ${not empty resultWishlist ? 'btn-danger' : 'btn-outline-danger'}"
-                                style="flex: 3;"
-                                data-wishlist-id="${not empty resultWishlist ? resultWishlist.wishlistId : ''}">
+                                    style="flex: 3;"
+                                    data-wishlist-id="${not empty resultWishlist ? resultWishlist.wishlistId : ''}">
                                 <i class="bi ${not empty resultWishlist ? 'bi-heart-fill' : 'bi-heart'}"></i>
                                 ${not empty resultWishlist ? '찜' : '찜'}
                             </button>
 
                             <!-- 예약하기 버튼 -->
-                            <button id="sales_add_btn" type="button" class="btn btn-primary btn-reserve rounded-pill w-70"
+                            <button id="sales_add_btn" type="button"
+                                    class="btn btn-primary btn-reserve rounded-pill w-70"
                                     style="flex: 7;">
                                 예약하기
                             </button>
@@ -641,7 +654,7 @@
                             <div class="review-slider-inner">
                                 <c:forEach var="img" items="${rv.imageUrl}">
                                     <div class="slider-image-wrapper">
-                                        <img src="/imgs/${img}" class="slider-image" />
+                                        <img src="/imgs/${img}" class="slider-image"/>
                                     </div>
                                 </c:forEach>
                             </div>
@@ -669,7 +682,8 @@
 </div>
 
 <!-- 사진 전체 보기 모달 -->
-<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
+<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -691,10 +705,16 @@
 </body>
 </html>
 
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/offers_custom.js"></script>
-<script src="js/darkmode.js"></script>
+
+<script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
+<script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
+<script src="<c:url value="styles/bootstrap4/bootstrap.min.js"/>"></script>
+<script src="<c:url value="plugins/Isotope/isotope.pkgd.min.js"/>"></script>
+<script src="<c:url value="plugins/easing/easing.js"/>"></script>
+<script src="<c:url value="plugins/parallax-js-master/parallax.min.js"/>"></script>
+<script src="<c:url value="js/offers_custom.js"/>"></script>
+<script src="<c:url value="js/darkmode.js"/>"></script>
+<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/>"></script>
+<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/>"></script>
+<script src="<c:url value="js/chatbot.js"/>"></script>
+
