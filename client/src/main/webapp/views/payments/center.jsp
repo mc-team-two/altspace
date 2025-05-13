@@ -173,7 +173,7 @@
         review:function(){
             $('#data_del').attr({
                 'method':'post',
-                'action':'<c:url value="/review/dtadd?id=${accomm.accommodationId}"/>'
+                'action':'<c:url value="/reviewAdd?id=${accomm.accommodationId}"/>'
             });
             $('#data_del').submit();
         },
@@ -253,7 +253,7 @@
                             $(".wishlist-btn")
                                 .removeClass("btn-outline-danger")
                                 .addClass("btn-danger")
-                                .html('<i class="bi bi-heart-fill"></i> 찜함');
+                                .html('<i class="bi bi-heart-fill"></i> 찜');
                             location.reload(); // 페이지 새로고침
 
                             /*// 새로 생성된 wishlistId 값 갱신 (서버에서 response로 받은 wishlistId)
@@ -527,7 +527,7 @@
                                 style="flex: 3;"
                                 data-wishlist-id="${not empty resultWishlist ? resultWishlist.wishlistId : ''}">
                                 <i class="bi ${not empty resultWishlist ? 'bi-heart-fill' : 'bi-heart'}"></i>
-                                ${not empty resultWishlist ? '찜함' : '찜'}
+                                ${not empty resultWishlist ? '찜' : '찜'}
                             </button>
 
                             <!-- 예약하기 버튼 -->
@@ -548,7 +548,7 @@
         <div class="map-footer">주소: ${accomm.location}</div>
     </div>
 
-    <!-- 리뷰 작성 및 목록 -->
+    <!-- 리뷰 목록 -->
     <div id="reviewSection" class="card mt-3 shadow-sm p-4 rounded-4">
         <!-- 공통 폼 (id는 유일하게 하나만!) -->
         <form id="reviewForm"></form>

@@ -183,15 +183,15 @@
 
 </div>
 
-<script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
-<script type="text/javascript" src="<c:url value="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"/>"></script>
-<!-- iamport.payment.js -->
-<script src="<c:url value="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"/>"></script>
+<!-- jQuery (필수: Bootstrap은 jQuery에 의존함) -->
+<script src="<c:url value='js/jquery-3.2.1.min.js'/>"></script>
 <!-- moment.js -->
-<script src="<c:url value="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value='https://cdn.jsdelivr.net/momentjs/latest/moment.min.js'/>"></script>
 <!-- daterangepicker.js + CSS -->
 <script src="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>"></script>
 <link rel="stylesheet" href="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>">
+<!-- iamport.payment.js -->
+<script src="<c:url value="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"/>"></script>
 <!-- Bootstrap 4.6.2 JS (bundle 포함 = popper.js 포함) -->
 <script src="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"/>"></script>
 <%-- kakao map library --%>
@@ -207,13 +207,15 @@
 <script src="<c:url value="js/offers_custom.js"/>"></script>
 <script src="<c:url value="js/darkmode.js"/>"></script>
 <script src="<c:url value="js/iconpopper.js"/>"></script>
+
 <script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
 <script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
 <script src="<c:url value="js/chatbot.js"/>"></script>
 
 <script type="text/javascript" src="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>"></script>
+
 <script type="text/javascript" src="<c:url value="js/weather_API.js"/>"></script>
-<link rel="stylesheet" type="text/css" href="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />">
+
 </body>
 
 </html>

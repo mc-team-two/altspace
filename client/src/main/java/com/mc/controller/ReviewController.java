@@ -51,15 +51,6 @@ public class ReviewController {
         return "index";
     }
 
-    /* 리뷰 작성 페이지 이동 */
-    @RequestMapping("/dtadd")
-    public String dtadd(Model model, @RequestParam("id") int id) throws Exception {
-
-        Accommodations accomm = accomService.get(id);
-        model.addAttribute("accomm", accomm);
-        return "review";
-    }
-
     /* 리뷰 수정 */
     @RequestMapping("/update")
     public String update(Reviews reviews) throws Exception {
