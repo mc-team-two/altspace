@@ -19,60 +19,53 @@ public class ChatBotUtil {
     public static String getMsg(String apiUrl, String secretKey, String msg) throws Exception {
         URL url = new URL(apiUrl);
         String chatMessage = msg;
-        String message =  getReqMessage(chatMessage);
+        String message = getReqMessage(chatMessage);
         String encodeBase64String = makeSignature(message, secretKey);
-//        System.out.println(message);
-//        System.out.println(encodeBase64String);
-        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        String jsonString = "";
+
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json;UTF-8");
         con.setRequestProperty("X-NCP-CHATBOT_SIGNATURE", encodeBase64String);
-
         con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 
-        wr.write(message.getBytes("UTF-8"));
-        wr.flush();
-        wr.close();
+        try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+            wr.write(message.getBytes("UTF-8"));
+            wr.flush();
+        }
+
         int responseCode = con.getResponseCode();
-//        System.out.println("responseCode:"+responseCode);
+        System.out.println("responseCode: " + responseCode);
 
-        BufferedReader br;
-
-        if(responseCode==200) { // 정상 호출
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(
-                            con.getInputStream()));
-            String decodedString;
-            String jsonString = "";
-            while ((decodedString = in.readLine()) != null) {
-                jsonString = decodedString;
+        if (responseCode == 200) {
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+                String decodedString;
+                while ((decodedString = in.readLine()) != null) {
+                    jsonString = decodedString;
+                }
             }
-            //chatbotMessage = decodedString;
+
+            System.out.println("응답 본문: " + jsonString); // 여기로 옮김
 
             JSONParser jsonparser = new JSONParser();
             try {
-
-                JSONObject json = (JSONObject)jsonparser.parse(jsonString);
-                JSONArray bubblesArray = (JSONArray)json.get("bubbles");
-                JSONObject bubbles = (JSONObject)bubblesArray.get(0);
-                JSONObject data = (JSONObject)bubbles.get("data");
-                String description = "";
-                description = (String)data.get("description");
+                JSONObject json = (JSONObject) jsonparser.parse(jsonString);
+                JSONArray bubblesArray = (JSONArray) json.get("bubbles");
+                JSONObject bubbles = (JSONObject) bubblesArray.get(0);
+                JSONObject data = (JSONObject) bubbles.get("data");
+                String description = (String) data.get("description");
                 chatMessage = description;
             } catch (Exception e) {
-                System.out.println("error");
+                System.out.println("JSON 파싱 에러");
                 e.printStackTrace();
             }
 
-            in.close();
-
-        } else {  // 에러 발생
-            System.out.println("Error");
-
+            System.out.println("응답 메시지: " + chatMessage); // 여기로 옮김
+        } else {
+            System.out.println("Error: 응답 코드 " + responseCode);
             chatMessage = con.getResponseMessage();
         }
+
         return chatMessage;
     }
 

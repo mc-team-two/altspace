@@ -1,0 +1,22 @@
+@media (max-width: 600px) {
+    .chat-window {
+        width: 100%;
+        height: 60vh;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+
+    }
+    .chat-icon {
+        bottom: 1rem;
+        right: 1rem; /* 또는 left: 1rem; */
+    }
+    #chat-input {
+        flex-grow: 1; /* 남은 공간을 최대한 차지 */
+    }
+
+    #chat-send-btn {
+        width: auto; /* 내용에 따라 너비 자동 조정 */
+        padding: 0.5rem 1rem; /* 패딩 유지 */
+    }
+}

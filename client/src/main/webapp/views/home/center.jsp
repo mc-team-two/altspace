@@ -416,14 +416,15 @@
                     </div>
                     <div id="chat-window" class="chat-window">
                         <div class="chat-header">
-                            <span>Chat with us</span>
+                            <span>챗봇과 대화하기</span>
                             <button id="chat-close-btn" class="chat-close-btn">&times;</button>
                         </div>
                         <div class="chat-messages" id="chat-messages">
+
                         </div>
                         <div class="chat-input">
-                            <input type="text" id="chat-input" placeholder="Type your message...">
-                            <button id="chat-send-btn">Send</button>
+                            <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+                            <button id="chat-send-btn">보내기</button>
                         </div>
                     </div>
                 </div>
