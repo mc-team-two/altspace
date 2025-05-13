@@ -3,7 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_styles.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_responsive.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
     <style>
         /* --- Basic Layout --- */
         .listing {
@@ -163,14 +166,36 @@
 
             </div>
         </div>
+        <div id="chatbot" class="chatbot">
+            <div id="chat-icon" class="chat-icon">
+                <i class="fa fa-comment" aria-hidden="true"></i>
+            </div>
+            <div id="chat-window" class="chat-window">
+                <div class="chat-header">
+                    <span>챗봇과 대화하기</span>
+                    <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+                    <button id="chat-send-btn">보내기</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/offers_custom.js"></script>
-<script src="js/darkmode.js"></script>
+<script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
+<script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
+<script src="<c:url value="styles/bootstrap4/bootstrap.min.js"/>"></script>
+<script src="<c:url value="plugins/Isotope/isotope.pkgd.min.js"/>"></script>
+<script src="<c:url value="plugins/easing/easing.js"/>"></script>
+<script src="<c:url value="plugins/parallax-js-master/parallax.min.js"/>"></script>
+<script src="<c:url value="js/offers_custom.js"/>"></script>
+
+<script src="<c:url value="js/darkmode.js"/>"></script>
+<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
+<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
+<script src="<c:url value="js/chatbot.js"/>"></script>

@@ -2,9 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <head>
-    <link rel="stylesheet" type="text/css" href="styles/about_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
-    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_styles.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_responsive.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
 </head>
 
 <div class="menu trans_500">
@@ -55,8 +56,27 @@
             </div>
         </div>
     </div>
+    <div id="chatbot" class="chatbot">
+        <div id="chat-icon" class="chat-icon">
+            <i class="fa fa-comment" aria-hidden="true"></i>
+        </div>
+        <div id="chat-window" class="chat-window">
+            <div class="chat-header">
+                <span>챗봇과 대화하기</span>
+                <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+                <button id="chat-send-btn">보내기</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-
-<script src="js/darkmode.js"></script>
+<script src="<c:url value="js/darkmode.js"/>"></script>
+<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
+<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
+<script src="<c:url value="js/chatbot.js"/>"></script>
