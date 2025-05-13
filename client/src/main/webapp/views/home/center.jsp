@@ -400,8 +400,7 @@
                                 <c:forEach var="i" begin="${pageInfo.navigateFirstPage}"
                                            end="${pageInfo.navigateLastPage}">
                                     <li class="blog_page_item">
-                                        <a href="?pageNum=${i}"
-                                           class="blog_dot ${i == pageInfo.pageNum ? 'active' : ''}">
+                                        <a href="?pageNum=${i}" class="blog_dot ${i == pageInfo.pageNum ? 'active' : ''}">
                                             <fmt:formatNumber value="${i}" pattern="0"/>
                                         </a>
                                     </li>
