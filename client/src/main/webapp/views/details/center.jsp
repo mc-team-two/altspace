@@ -57,13 +57,21 @@
                                 </div>
 
                                 <!-- 이미지 + 체크인 정보 -->
-                                <img src="images/blog_1.jpg" class="card-img-top" alt="숙소 이미지" style="height: 200px; object-fit: cover;">
+                                <img src="${pageContext.request.contextPath}/images/${py.image1Name}"
+                                     class="card-img-top"
+                                     alt="숙소 이미지"
+                                     style="height: 200px; object-fit: cover;">
 
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <span class="badge bg-info text-dark">상태: ${py.payStatus}</span>
-                                        <span class="text-muted small">체크인: ${py.checkIn}</span>
+                                    <div class="d-flex justify-content-between mb-2" style="margin-top: -5px;">
+                                        <span class="badge bg-info text-dark" style="font-size: 0.85rem;">
+                                            결제 상태: ${py.payStatus}
+                                        </span>
+                                        <span style="font-size: 0.85rem; color: black;">
+                                            체크인: ${py.checkIn}
+                                        </span>
                                     </div>
+
 
                                     <!-- 링크들 -->
                                     <div class="d-flex flex-column gap-1">

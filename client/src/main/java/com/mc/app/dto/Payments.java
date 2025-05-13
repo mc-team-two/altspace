@@ -29,4 +29,5 @@ public class Payments {
     private String name;                 // 숙소 이름(조인해서 가져오는 데이터)
     private String location;             // 숙소 주소(조인해서 가져오는 데이터)
     private Timestamp createDay;
+    private String image1Name;
 }

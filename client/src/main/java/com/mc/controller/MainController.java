@@ -75,6 +75,7 @@ public class MainController {
                          HttpSession httpSession) throws Exception {
 
         Accommodations accomm = accomService.get(id);
+        log.info("accomm:............" + accomm);
         model.addAttribute("accomm", accomm);
 
         // 로그인 사용자 정보 가져오기
