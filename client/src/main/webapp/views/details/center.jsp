@@ -86,6 +86,7 @@
                                 <li><a href="<c:url value="/details"/> ">나의 예약</a></li>
                                 <li><a href="<c:url value="/review"/> ">나의 리뷰</a></li>
                                 <li><a href="<c:url value="/wishlist"/> ">찜 목록</a></li>
+                                <li><a href="<c:url value="mypage"/>">나의 정보</a></li>
                             </ul>
                         </div>
                     </div>
