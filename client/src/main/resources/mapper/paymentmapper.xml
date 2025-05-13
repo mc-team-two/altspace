@@ -52,11 +52,13 @@
         SELECT
             p.*,
             a.name,
-            a.location
+            a.location,
+            a.image1_name
         FROM payments p JOIN accommodations a
             ON p.accommodation_id = a.accommodation_id
         WHERE p.guest_id = #{guestId}
           AND p.pay_status = '완료'
+        ORDER BY p.create_day DESC
     </select>
 
     <select id="selectPayment" parameterType="int" resultType="payments">
