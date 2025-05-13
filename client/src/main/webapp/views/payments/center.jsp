@@ -7,6 +7,7 @@
 <!doctype html>
 <html lang="ko">
 <head>
+    <script src="js/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
     <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
     <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
@@ -22,6 +23,33 @@
             min-width: 0;
             border-radius: 8px;
             margin-left: auto;
+        }
+
+        /* 기본 상태 (흰 배경, 파란 글자) */
+        .translate-btn {
+            background-color: white;
+            color: #0d6efd; /* Bootstrap primary */
+            border: 1px solid #0d6efd;
+            transition: all 0.2s ease;
+        }
+
+        /* hover 상태 (파란 배경, 흰 글자) */
+        .translate-btn:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        /* 번역된 상태: 항상 파란 배경과 흰 글자 유지 */
+        .translate-btn.translated {
+            background-color: #0d6efd;
+            color: white;
+            border-color: #0d6efd;
+        }
+
+        /* 번역된 상태에서도 hover는 유지되도록 (시각적으로 동일하게) */
+        .translate-btn.translated:hover {
+            background-color: #0b5ed7; /* 조금 더 진한 파랑으로 효과 */
+            color: white;
         }
     </style>
 </head>
@@ -104,6 +132,9 @@
             });
             $('.wishlist-btn').click(()=>{
                this.wishlistToggle();
+            });
+            $('.translate-btn').click(function() {
+                change.translate.call(this); // 버튼 this를 전달
             });
         },
         reqPay:function(){
@@ -268,6 +299,36 @@
                     }
                 });
             }
+        },
+        translate: function(){
+            const $btn = $(this);
+            const reviewId = $btn.data('review-id');
+            const originalText = $btn.data('original');
+            const $comment = $('.review-comment[data-review-id="' + reviewId + '"]');
+
+            // 이미 번역 상태인지 확인
+            if ($btn.data('translated')) {
+                // 원문으로 복원
+                $comment.text(originalText);
+                $btn.data('translated', false);
+                $btn.removeClass('translated');
+            } else {
+                // 서버에 번역 요청
+                $.ajax({
+                    type: 'POST',
+                    url: '/review/translate',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ msg: originalText, target: 'en' }),
+                    success: function (translatedText) {
+                        $comment.text(translatedText);
+                        $btn.data('translated', true);
+                        $btn.addClass('translated');
+                    },
+                    error: function () {
+                        alert('번역 중 오류가 발생했습니다.');
+                    }
+                });
+            }
         }
     };
 
@@ -303,7 +364,8 @@
         <!-- 대표 이미지 -->
         <div class="col-md-7 pr-md-1 mb-2">
             <div class="image-hover" style="height: 400px;">
-                <img src="images/blog_1.jpg" alt="대표 이미지">
+                <img src="${pageContext.request.contextPath}/images/${accomm.image1Name}" alt="대표 이미지"
+                     style="width: 100%; height: 100%; object-fit: cover;">
             </div>
         </div>
 
@@ -312,22 +374,26 @@
             <div class="row no-gutters">
                 <div class="col-6 pl-md-1 pr-1 mb-2">
                     <div class="image-hover" style="height: 195px;">
-                        <img src="images/blog_1.jpg" alt="서브 이미지1">
+                        <img src="${pageContext.request.contextPath}/images/${accomm.image2Name}" alt="서브 이미지1"
+                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-6 pl-1 mb-2">
                     <div class="image-hover" style="height: 195px;">
-                        <img src="images/blog_1.jpg" alt="서브 이미지2">
+                        <img src="${pageContext.request.contextPath}/images/${accomm.image3Name}" alt="서브 이미지2"
+                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-6 pl-md-1 pr-1">
                     <div class="image-hover" style="height: 195px;">
-                        <img src="images/blog_1.jpg" alt="서브 이미지3">
+                        <img src="${pageContext.request.contextPath}/images/${accomm.image4Name}" alt="서브 이미지3"
+                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-6 pl-1 position-relative">
                     <div class="image-hover" style="height: 195px;">
-                        <img src="images/blog_1.jpg" alt="서브 이미지4">
+                        <img src="${pageContext.request.contextPath}/images/${accomm.image5Name}" alt="서브 이미지4"
+                             style="width: 100%; height: 100%; object-fit: cover;">
                         <!-- 모두 보기 버튼 -->
                         <div class="overlay-btn" data-toggle="modal" data-target="#photoModal">
                             사진 전체 보기
@@ -582,8 +648,18 @@
                         </div>
                     </c:if>
                 </div>
+                <div class="d-flex justify-content-end w-100 mb-1">
+                    <button type="button"
+                            class="btn btn-outline-primary btn-sm rounded-pill translate-btn me-2"
+                            style="font-size: 1rem; padding: 8px 15px; line-height: 1; width: auto; min-width: 0; margin-top: 8px"
+                            data-review-id="${rv.reviewId}"
+                            data-original="${rv.comment}">
+                        <i class="fa fa-globe mr-1" aria-hidden="true"></i> Aa
+                    </button>
+                </div>
+
                 <!-- 리뷰 내용 -->
-                <p class="mt-3 mb-0 text-body">${rv.comment}</p>
+                <p class="mt-2 mb-0 text-body review-comment" data-review-id="${rv.reviewId}">${rv.comment}</p>
             </div>
         </c:forEach>
         <c:if test="${empty review}">
@@ -603,11 +679,11 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img src="images/blog_1.jpg" class="img-fluid mb-3" alt="전체 대표 이미지">
-                <img src="images/blog_1.jpg" class="img-fluid mb-3" alt="전체 서브 이미지1">
-                <img src="images/blog_1.jpg" class="img-fluid mb-3" alt="전체 서브 이미지2">
-                <img src="images/blog_1.jpg" class="img-fluid mb-3" alt="전체 서브 이미지3">
-                <img src="images/blog_1.jpg" class="img-fluid mb-3" alt="전체 서브 이미지4">
+                <img src="${pageContext.request.contextPath}/images/${accomm.image1Name}" class="img-fluid mb-3" alt="전체 대표 이미지">
+                <img src="${pageContext.request.contextPath}/images/${accomm.image2Name}" class="img-fluid mb-3" alt="전체 서브 이미지1">
+                <img src="${pageContext.request.contextPath}/images/${accomm.image3Name}" class="img-fluid mb-3" alt="전체 서브 이미지2">
+                <img src="${pageContext.request.contextPath}/images/${accomm.image4Name}" class="img-fluid mb-3" alt="전체 서브 이미지3">
+                <img src="${pageContext.request.contextPath}/images/${accomm.image5Name}" class="img-fluid mb-3" alt="전체 서브 이미지4">
             </div>
         </div>
     </div>
@@ -615,7 +691,6 @@
 </body>
 </html>
 
-<script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
 <script src="plugins/Isotope/isotope.pkgd.min.js"></script>

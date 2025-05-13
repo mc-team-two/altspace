@@ -6,9 +6,12 @@ import com.mc.app.dto.Reviews;
 import com.mc.app.dto.User;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.ReviewService;
+import com.mc.util.PapagoUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,11 @@ public class ReviewController {
     final AccomService accomService;
     final ReviewService reviewService;
     String dir ="review/";
+
+    @Value("${ncp.papago.id}")
+    String papagoId;
+    @Value("${ncp.papago.key}")
+    String papagoKey;
 
     @RequestMapping("")
     public String review(Model model, HttpSession httpSession) throws Exception {
@@ -73,5 +81,18 @@ public class ReviewController {
 
         reviewService.add(reviews);
         return "redirect:/review";
+    }
+
+    /* 리뷰 번역 */
+    @PostMapping("/translate")
+    public ResponseEntity<String> translate(@RequestBody Map<String, String> body) {
+        String msg = body.get("msg");
+        String target = body.get("target");
+
+        log.info(msg);
+        log.info(target);
+
+        String translatedText = PapagoUtil.getMsg(papagoId, papagoKey, msg, target);
+        return ResponseEntity.ok(translatedText);
     }
 }
