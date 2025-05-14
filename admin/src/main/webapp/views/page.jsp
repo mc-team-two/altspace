@@ -10,7 +10,7 @@
     <c:choose>
       <c:when test="${cpage.getPrePage() != 0}">
         <li class="page-item">
-          <a  class="page-link"  href="<c:url value="${target}/get?pageNo=1" />">&lt;&lt;</a>
+          <a  class="page-link"  href="<c:url value="${target}/list?pageNo=1" />">&lt;&lt;</a>
         </li>
       </c:when>
       <c:otherwise>
@@ -23,7 +23,7 @@
     <c:choose>
       <c:when test="${cpage.getPrePage() != 0}">
         <li class="page-item">
-          <a  class="page-link"  href="<c:url value="${target}/get?pageNo=${cpage.getPrePage()}" />">&lt;</a>
+          <a  class="page-link"  href="<c:url value="${target}/list?pageNo=${cpage.getPrePage()}" />">&lt;</a>
         </li>
       </c:when>
       <c:otherwise>
@@ -38,12 +38,12 @@
       <c:choose>
         <c:when test="${cpage.getPageNum() == page}">
           <li class="page-item active">
-            <a class="page-link"  href="<c:url value="${target}/get?pageNo=${page}" />">${page }</a>
+            <a class="page-link"  href="<c:url value="${target}/list?pageNo=${page}" />">${page }</a>
           </li>
         </c:when>
         <c:otherwise>
           <li class="page-item">
-            <a class="page-link"  href="<c:url value="${target}/get?pageNo=${page}" />">${page }</a>
+            <a class="page-link"  href="<c:url value="${target}/list?pageNo=${page}" />">${page }</a>
           </li>
         </c:otherwise>
       </c:choose>
@@ -53,7 +53,7 @@
     <c:choose>
       <c:when test="${cpage.getNextPage() != 0}">
         <li class="page-item">
-          <a class="page-link"  href="<c:url value="${target}/get?pageNo=${cpage.getNextPage()}" />">&gt;</a>
+          <a class="page-link"  href="<c:url value="${target}/list?pageNo=${cpage.getNextPage()}" />">&gt;</a>
         </li>
       </c:when>
       <c:otherwise>
@@ -67,7 +67,7 @@
     <c:choose>
         <c:when test="${cpage.getNextPage() != 0}">
           <li class="page-item">
-            <a class="page-link"  href="<c:url value="${target}/get?pageNo=${cpage.getPages()}" />">&gt;&gt;</a>
+            <a class="page-link"  href="<c:url value="${target}/list?pageNo=${cpage.getPages()}" />">&gt;&gt;</a>
           </li>
         </c:when>
         <c:otherwise>
