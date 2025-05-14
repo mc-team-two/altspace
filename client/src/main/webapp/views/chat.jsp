@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <title>${acc.name} | 알트스페이스</title>
   <meta charset="UTF-8">
@@ -150,7 +150,7 @@
     <a href="#" onclick="window.close()">
       <i class="bi bi-x-lg"></i>
     </a>
-    <span class="ml-2">${acc.name}</span>
+    <span class="ml-2" id="accName">${acc.name}</span>
   </div>
   <div id="status">
     Status
@@ -190,9 +190,10 @@
         const sentAt = kstDate.toISOString().replace("Z", "+09:00");  // KST로 전송
 
         const msg = JSON.stringify({
-          'sendid' : this.id,
-          'receiveid' : $('#target').text(),
-          'content1' : content,
+          'senderId' : this.id,
+          'receiverId' : $('#target').text(),
+          'accName' : $('#accName').text()  ,
+          'content' : content,
           'sentAt' : sentAt
         });
         this.stompClient.send('/pub/receiveto', {}, msg);
@@ -204,6 +205,7 @@
 
         $('#totext').val('');  // 입력창 초기화
       });
+
       // 입력창에서 엔터키 -> 보내기
       $('#totext').on('keydown', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -244,10 +246,10 @@
     },
     makeBubble:function(msg) {
       let parsedMsg = JSON.parse(msg);
-      const isMine = parsedMsg.sendid === this.id;
+      const isMine = parsedMsg.senderId === this.id;
 
       // 줄바꿈을 <br>로 변환
-      const formattedContent = parsedMsg.content1.replace(/\n/g, '<br>');
+      const formattedContent = parsedMsg.content.replace(/\n/g, '<br>');
 
       let bubble = "";
       bubble += `<div class="bubbleArea `;
