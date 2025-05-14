@@ -52,6 +52,9 @@ app:
     naverApiKey: ENC(W21CWi5vucRAWCqK4GMx1P+L27Q66k3kJRU/e0BOyxs=)
     naverApiSecretKey: ENC(P7kspdfWVZVOh9kr3DG+ogt3pyebrCLy)
     weatherApiKey: ENC(SSunAfg3V0q/sLi1vc8uOYLMRDt3kfqteXoiUlZ7m0LhtKHhx1vieNgmeLGfPDcZ)
+    geminiProjectId: ENC(jZr+JCgwjLL903BWJWMZbxOn81vZNien)
+    credentialsFilePath: ENC(UNij73C3qj4cZI2jeZ8UufA5dlkxYx1JC5VFDum9W1xAqn3+JhxsNoOKwDU/X+IwljKdCD5qSXA=)
+    geminiKey: ENC(S2wV6R49GAcOPcwBhZlQodbdEX3doNitFfS1r28FAidZVFuhDpGQNmgkZFUo/rnZ)
     algo: PBEWithMD5AndDES
     skey: mykey
   dir:

@@ -99,6 +99,12 @@ dependencies {
     implementation 'org.webjars:sockjs-client:1.0.2'
     implementation 'org.webjars:stomp-websocket:2.3.3'
     implementation 'org.webjars:bootstrap:3.3.7'
+
+    // gemini
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation("com.google.cloud:google-cloud-vertexai:1.22.0")
+    // 터미널에서  $env:GOOGLE_APPLICATION_CREDENTIALS="resources/gemini-altspace-7f0144b9490c.json" 입력
+    // echo $env:GOOGLE_APPLICATION_CREDENTIALS <- 이걸로 확인.
 }
 
 tasks.named('test') {

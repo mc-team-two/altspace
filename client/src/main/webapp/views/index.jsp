@@ -211,6 +211,7 @@
 <script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
 <script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
 <script src="<c:url value="js/chatbot.js"/>"></script>
+<script src="<c:url value="js/GeminiChatbot.js"/>"></script>
 
 <script type="text/javascript" src="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>"></script>
 
