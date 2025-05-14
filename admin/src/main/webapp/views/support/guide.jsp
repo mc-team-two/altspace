@@ -83,7 +83,7 @@
                     <c:forEach var="g" items="${guides}">
                         <tr class="guide-header" data-bs-toggle="collapse" data-bs-target="#content${g.guideNumber}" aria-expanded="false" aria-controls="content${g.guideNumber}" style="cursor: pointer;">
                             <td>${g.guideNumber}</td>
-                            <td>
+                            <td class="flex-nowrap" style="white-space: nowrap;">
                                 <c:choose>
                                     <c:when test="${g.guideCategory == '운영'}"><i class="bx bx-cog me-1"></i> 운영</c:when>
                                     <c:when test="${g.guideCategory == '예약'}"><i class="bx bx-calendar me-1"></i> 예약</c:when>
