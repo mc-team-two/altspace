@@ -41,7 +41,7 @@
 </style>
 
 <div class="container">
-    <p class="text-muted">결제/예약 조회 > 공간별 예약 내역</p>
+    <p class="text-muted">스페이스 관리 > <strong>일정 확인</strong></p>
     <div class="row">
         <c:forEach var="pay" items="${payments}">
             <div class="col-md-6 col-lg-4 mb-4">

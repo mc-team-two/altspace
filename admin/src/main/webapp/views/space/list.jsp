@@ -34,7 +34,7 @@
 </script>
 
 <div class="container-fluid">
-    <p class="text-muted">공간 관리 > 내 공간 관리</p>
+    <p class="text-muted">스페이스 관리 > <strong>내 스페이스</strong></p>
     <div class="card shadow mb-4">
         <div class="card-body">
             <%--contents 시작--%>
