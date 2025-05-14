@@ -7,7 +7,7 @@
         SELECT p.*, a.name, a.location, a.image1_name AS image1Name
         FROM payments p
                  INNER JOIN accommodations a ON p.accommodation_id = a.accommodation_id
-        WHERE a.host_id = #{hostId};
+        WHERE a.host_id = #{hostId}
     </select>
 
     <insert id="insert" parameterType="payments">

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/payment")
@@ -25,9 +27,14 @@ public class PaymentController {
     @RequestMapping("/pay")
     public String pay(Model model, HttpSession httpSession) throws Exception {
         User user = (User) httpSession.getAttribute("user");
-        List<Payments> payments = paymentService.getByHostId(user.getUserId());
 
+        List<Payments> payments = paymentService.getByHostId(user.getUserId());
         model.addAttribute("payments", payments);
+
+        // 통계 데이터 생성 (상태별 건수)
+        Map<String, Long> statusCounts = payments.stream()
+                .collect(Collectors.groupingBy(Payments::getPayStatus, Collectors.counting()));
+        model.addAttribute("statusCounts", statusCounts);
         model.addAttribute("center", dir+"pay");
         model.addAttribute("index", dir+"index");
         return "index";

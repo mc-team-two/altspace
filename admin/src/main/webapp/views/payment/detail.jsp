@@ -69,6 +69,6 @@
 
 <div class="container my-4">
     <h3 class="mb-4">${payments[0].name} 예약 내역</h3>
-    <a href="<c:url value='/payment/booking'/>" class="btn btn-outline-secondary btn-sm mb-3">내 스페이스 목록</a>
+    <a href="<c:url value='/space/booking'/>" class="btn btn-outline-secondary btn-sm mb-3">내 스페이스 목록</a>
     <div id="calendar"></div>
 </div>
