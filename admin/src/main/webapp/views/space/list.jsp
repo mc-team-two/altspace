@@ -59,7 +59,7 @@
                                 <p class="card-text">${item.location}</p>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#acc_${item.accommodationId}">더보기</button>
                                 <button class="btn btn-dark btn-sm" onclick="space_get.modSpace(${item.accommodationId})">수정</button>
-                                <button class="btn btn-secondary btn-sm" onclick="space_get.showDeleteModal(${item.accommodationId})">삭제</button>
+                                <button class="btn btn-secondary btn-sm" onclick="space_get.delSpace(${item.accommodationId})">삭제</button>
 
                                 <div id="acc_${item.accommodationId}" class="collapse">
                                     <hr>
