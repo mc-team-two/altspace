@@ -152,8 +152,8 @@
     </a>
     <span class="ml-2" id="accName">${acc.name}</span>
   </div>
-  <div id="status">
-    Status
+  <div id="status" style="font-size: 14px;">
+    접속대기중
   </div>
 </div>
 <div class="chatArea">
@@ -239,9 +239,9 @@
     },
     setConnected:function(connected){
       if (connected) {
-        $("#status").text("Connected").css('color', 'green');
+        $("#status").text("수신대기중").css('color', 'green');
       } else {
-        $("#status").text("Disconnected").css('color', 'red');
+        $("#status").text("연결끊김").css('color', 'red');
       }
     },
     makeBubble:function(msg) {

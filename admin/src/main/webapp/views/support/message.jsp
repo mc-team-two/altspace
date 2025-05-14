@@ -163,7 +163,7 @@
         <img class="mx-2" height="30px" src="<c:url value="/imgs/Altspace_lightmode_Horizontal.png"/>" alt="Logo">
     </div>
     <div id="status" style="font-size: 14px;">
-        채팅방 연결이 되지 않음
+        접속대기중
     </div>
 </div>
 <div class="chatArea">
