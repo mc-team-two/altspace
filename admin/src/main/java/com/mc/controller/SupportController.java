@@ -38,9 +38,7 @@ public class SupportController {
     @RequestMapping("/message")
     public String message(Model model){
         model.addAttribute("serverUrl", serverUrl);
-        model.addAttribute("center", dir+"message");
-        model.addAttribute("index", dir+"index");
-        return "index";
+        return dir+"message";
     }
     
 }

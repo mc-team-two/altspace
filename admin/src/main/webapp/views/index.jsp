@@ -123,7 +123,9 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href='<c:url value="/support/message"/>' class="menu-link">
+                    <a href="#"
+                       onclick="window.open('<c:url value="/support/message"/>', 'chatWindow', 'width=480,height=650'); return false;"
+                       class="menu-link">
                         <i class="menu-icon tf-icons bx bx-message-square-detail"></i>
                         <div>고객 메시지</div>
                     </a>
@@ -161,8 +163,11 @@
                     </div>
 
                     <!-- 가운데: 페이지 제목 -->
-                    <div class="position-absolute start-50 translate-middle-x">
-                        <h5 class="mb-0 text-muted fw-semibold">빠르고 간편하게, Alt space</h5>
+                    <div class="position-absolute start-50 translate-middle-x text-center">
+                        <!-- 큰 화면에서만 보임 -->
+                        <h5 class="mb-0 text-muted fw-semibold d-none d-sm-inline">빠르고 간편하게, </h5>
+                        <!-- 항상 보임 -->
+                        <h5 class="mb-0 text-muted fw-semibold d-inline">Alt space</h5>
                     </div>
 
                     <!-- 오른쪽: 사용자 메뉴 -->

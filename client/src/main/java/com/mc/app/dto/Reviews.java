@@ -26,4 +26,10 @@ public class Reviews {
     private List<MultipartFile> images; // 파일 업로드용 (폼에서 들어오는 다중 파일)
     private List<String> imageUrl;  // 이미지 URL 리스트 추가
     private double rating;
+    // 답글 정보 추가
+    private Integer replyId;
+    private String userId;
+    private String replyComment;
+    private Timestamp replyCreateDay;
+    private Timestamp replyUpdateDay;
 }

@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class Msg {
-    private String sendid;
-    private String receiveid;
-    private String content1;
+    private String senderId;
+    private String receiverId;
+    private String accName;
+    private String content;
     private String sentAt;
 }

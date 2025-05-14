@@ -75,7 +75,6 @@ public class MainController {
                          HttpSession httpSession) throws Exception {
 
         Accommodations accomm = accomService.get(id);
-        log.info("accomm:............" + accomm);
         model.addAttribute("accomm", accomm);
 
         // 로그인 사용자 정보 가져오기
@@ -103,6 +102,7 @@ public class MainController {
         model.addAttribute("chInChOut", chInChOut);
 
         List<Reviews> review = reviewService.selectReviewsAll(id);
+        log.info("review:........." + review);
         model.addAttribute("review", review);
 
         // 총 리뷰 수

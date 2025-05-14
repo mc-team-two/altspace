@@ -114,6 +114,8 @@
                 </div>
             </c:forEach>
         </div>
+    </div>
+</div>
 
 <script>
     const reviewPage = {

@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container">
-    <p class="text-muted">결제 내역 > 결제 내역 조회</p>
+    <p class="text-muted">결제 내역 > <strong>결제 내역 조회</strong></p>
 
     <!-- ✅ 상단 요약 박스 -->
     <div class="row text-center mb-4">

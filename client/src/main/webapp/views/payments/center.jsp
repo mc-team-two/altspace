@@ -670,9 +670,27 @@
                         <i class="fa fa-globe mr-1" aria-hidden="true"></i> Aa
                     </button>
                 </div>
-
                 <!-- 리뷰 내용 -->
                 <p class="mt-2 mb-0 text-body review-comment" data-review-id="${rv.reviewId}">${rv.comment}</p>
+
+                <!-- 답글이 있는 경우 표시 -->
+                <c:if test="${not empty rv.replyComment}">
+                    <div class="mt-3 p-3 bg-light border rounded">
+                        <div class="d-flex align-items-center mb-1">
+                            <span class="text-secondary small">
+                                <strong>🏠 호스트의 답글</strong>
+                                <span class="ml-1">(${rv.userId})님</span>
+                            </span>
+                            <!-- 작성 시각을 가장 오른쪽으로 -->
+                            <span class="text-muted small ml-auto">
+                                <fmt:formatDate value="${rv.replyCreateDay}" pattern="yyyy-MM-dd HH:mm:ss" />
+                            </span>
+                        </div>
+                        <!-- 답글 본문 -->
+                        <p class="mb-0">${rv.replyComment}</p>
+                    </div>
+                </c:if>
+
             </div>
         </c:forEach>
         <c:if test="${empty review}">
