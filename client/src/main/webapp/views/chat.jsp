@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <title>${acc.name} | 알트스페이스</title>
   <meta charset="UTF-8">
@@ -150,10 +150,10 @@
     <a href="#" onclick="window.close()">
       <i class="bi bi-x-lg"></i>
     </a>
-    <span class="ml-2">${acc.name}</span>
+    <span class="ml-2" id="accName">${acc.name}</span>
   </div>
-  <div id="status">
-    Status
+  <div id="status" style="font-size: 14px;">
+    접속대기중
   </div>
 </div>
 <div class="chatArea">
@@ -176,6 +176,7 @@
     init:function(){
       this.id = $('#adm_id').text();
       this.connect(); // 채팅방 접속시 바로 connect
+
       // 보내기
       $('#sendto').click(()=>{
         // 메시지 컨텐츠
@@ -189,9 +190,10 @@
         const sentAt = kstDate.toISOString().replace("Z", "+09:00");  // KST로 전송
 
         const msg = JSON.stringify({
-          'sendid' : this.id,
-          'receiveid' : $('#target').text(),
-          'content1' : content,
+          'senderId' : this.id,
+          'receiverId' : $('#target').text(),
+          'accName' : $('#accName').text()  ,
+          'content' : content,
           'sentAt' : sentAt
         });
         this.stompClient.send('/pub/receiveto', {}, msg);
@@ -202,6 +204,14 @@
         $(".chatArea").scrollTop($(".chatArea")[0].scrollHeight);  // 최신 메시지로 스크롤
 
         $('#totext').val('');  // 입력창 초기화
+      });
+
+      // 입력창에서 엔터키 -> 보내기
+      $('#totext').on('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault(); // 기본 엔터키 동작 방지
+          $('#sendto').click();
+        }
       });
     },
     connect:function(){
@@ -229,21 +239,24 @@
     },
     setConnected:function(connected){
       if (connected) {
-        $("#status").text("Connected").css('color', 'green');
+        $("#status").text("수신대기중").css('color', 'green');
       } else {
-        $("#status").text("Disconnected").css('color', 'red');
+        $("#status").text("연결끊김").css('color', 'red');
       }
     },
     makeBubble:function(msg) {
       let parsedMsg = JSON.parse(msg);
-      const isMine = parsedMsg.sendid === this.id;
+      const isMine = parsedMsg.senderId === this.id;
+
+      // 줄바꿈을 <br>로 변환
+      const formattedContent = parsedMsg.content.replace(/\n/g, '<br>');
 
       let bubble = "";
       bubble += `<div class="bubbleArea `;
       bubble += isMine ? "myMsg" : "";
       bubble += `">`;
       bubble += `<div class="bubbleMsg">`;
-      bubble += parsedMsg.content1;
+      bubble += formattedContent;
       bubble += `</div>`;
       bubble += `<div class="bubbleDate">`;
       bubble += this.formatTime(parsedMsg.sentAt);
