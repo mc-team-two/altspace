@@ -18,9 +18,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="<c:url value="../assets/img/favicon/altspace.png"/>"/>
+    <link rel="icon" type="image/x-icon" href="<c:url value='../assets/img/favicon/altspace.png'/>"/>
 
-    <%--jQuery CDN--%>
+    <!-- DataTables (CSS 먼저, JS 나중) -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+
+    <!-- Boxicons (메뉴 아이콘 표시용) -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+
+    <!-- Query 라이브러리 CDN 링크 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <%-- Web Socket Lib    --%>
@@ -30,42 +39,30 @@
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
-    <%-- kakao map library --%>
+    <!-- ✅ Kakao Map -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"></script>
 
-    <!-- Fonts -->
+    <!-- ✅ Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="<c:url value='../assets/vendor/fonts/boxicons.css' />" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+    <!-- ✅ Core / Theme CSS -->
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/css/core.css'/>" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/css/theme-default.css'/>" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="<c:url value='../assets/css/demo.css'/>" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="<c:url value='../assets/vendor/css/core.css' />" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="<c:url value='../assets/vendor/css/theme-default.css' />" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="<c:url value='../assets/css/demo.css' />" />
+    <!-- ✅ Vendors CSS -->
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css'/>" />
+    <link rel="stylesheet" href="<c:url value='../assets/vendor/libs/apex-charts/apex-charts.css'/>" />
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="<c:url value='../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' />" />
-    <link rel="stylesheet" href="<c:url value='../assets/vendor/libs/apex-charts/apex-charts.css' />" />
-
-    <!-- Page CSS -->
+    <!-- ✅ FullCalendar -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
 
-    <!-- Helpers -->
-    <script src="<c:url value='../assets/vendor/js/helpers.js' />"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="<c:url value='../assets/js/config.js' />"></script>
+    <!-- ✅ Helpers / Config -->
+    <script src="<c:url value='../assets/vendor/js/helpers.js'/>"></script>
+    <script src="<c:url value='../assets/js/config.js'/>"></script>
 </head>
 
 <body>
@@ -287,6 +284,7 @@
 <script src="<c:url value='../assets/vendor/libs/popper/popper.js' />"></script>
 <script src="<c:url value='../assets/vendor/js/bootstrap.js' />"></script>
 <script src="<c:url value='../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' />"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script src="<c:url value='../assets/vendor/js/menu.js' />"></script>
 <!-- endbuild -->
