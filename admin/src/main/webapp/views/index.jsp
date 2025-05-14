@@ -166,8 +166,11 @@
                     </div>
 
                     <!-- 가운데: 페이지 제목 -->
-                    <div class="position-absolute start-50 translate-middle-x">
-                        <h5 class="mb-0 text-muted fw-semibold">빠르고 간편하게, Alt space</h5>
+                    <div class="position-absolute start-50 translate-middle-x text-center">
+                        <!-- 큰 화면에서만 보임 -->
+                        <h5 class="mb-0 text-muted fw-semibold d-none d-sm-inline">빠르고 간편하게, </h5>
+                        <!-- 항상 보임 -->
+                        <h5 class="mb-0 text-muted fw-semibold d-inline">Alt space</h5>
                     </div>
 
                     <!-- 오른쪽: 사용자 메뉴 -->
