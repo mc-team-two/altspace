@@ -69,15 +69,23 @@
     <!-- 특정 숙박시설 리뷰 전체 조회 -->
     <select id="selectReviewsAll" parameterType="int" resultType="Reviews">
         SELECT
-            review_id,
-            guest_id,
-            accommodation_id,
-            grade,
-            comment,
-            create_day,
-            update_day
-        FROM reviews
-        WHERE accommodation_id=#{accommodationId}
+            r.review_id,
+            r.guest_id,
+            r.accommodation_id,
+            r.grade,
+            r.comment,
+            r.create_day,
+            r.update_day,
+
+            rr.reply_id,
+            rr.user_id,
+            rr.comment AS reply_comment,
+            rr.create_day AS reply_create_day,
+            rr.update_day AS reply_update_day
+        FROM reviews r LEFT JOIN review_replies rr
+            ON r.review_id = rr.review_id
+        WHERE r.accommodation_id = #{accommodationId}
+        ORDER BY r.create_day DESC
     </select>
 
     <!-- userID로 내가 쓴 리뷰 전체보기 -->
@@ -90,9 +98,16 @@
             r.comment,
             r.create_day,
             a.name,
-            a.location
+            a.location,
+
+            rr.reply_id,
+            rr.user_id,
+            rr.comment AS reply_comment,
+            rr.create_day AS reply_create_day,
+            rr.update_day AS reply_update_day
         FROM reviews r JOIN accommodations a
             ON r.accommodation_id = a.accommodation_id
+            LEFT JOIN review_replies rr ON r.review_id = rr.review_id
         WHERE r.guest_id = #{guestId}
         ORDER BY r.create_day DESC
     </select>

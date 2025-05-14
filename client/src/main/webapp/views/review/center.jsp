@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- jQuery 라이브러리 CDN 추가 (반드시 먼저 위치시켜야 함) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -207,7 +208,22 @@
                       </div>
 
                       <!-- 작성일 -->
-                      <small class="text-muted">${rv.createDay}</small>
+                      <small class="text-muted"><fmt:formatDate value="${rv.createDay}" pattern="yyyy-MM-dd HH:mm:ss" /></small>
+
+                      <!-- 호스트 답글 영역 -->
+                      <c:if test="${not empty rv.replyComment}">
+                          <div class="mt-3 p-3 bg-light rounded border">
+                              <div class="d-flex justify-content-between align-items-center mb-1">
+                                  <span class="text-secondary">
+                                      <strong style="font-size: 0.85rem;">🏠 호스트의 답글</strong>
+                                      <span class="ml-1" style="font-size: 0.85rem;">(${rv.userId})님</span>
+                                  </span>
+                                  <small class="text-muted"><fmt:formatDate value="${rv.replyCreateDay}" pattern="yyyy-MM-dd HH:mm:ss" /></small>
+                              </div>
+                              <p class="mb-0 text-dark">${rv.replyComment}</p>
+                          </div>
+                      </c:if>
+
                   </div>
               </c:forEach>
           </div>
