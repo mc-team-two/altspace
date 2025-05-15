@@ -314,4 +314,13 @@
             )
         </if>
     </select>
+
+    <!--클릭시 조회수 업데이트-->
+    <update id="updateAccommodationViews" parameterType="Integer">
+        UPDATE Accommodations
+        SET
+            views = views + 1
+        WHERE
+            accommodation_id = #{accommodationId}
+    </update>
 </mapper>

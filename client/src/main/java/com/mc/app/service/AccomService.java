@@ -92,4 +92,8 @@ public class AccomService implements MCService<Accommodations, Integer> {
             return accommodationsWithRatingList;
         }
     }
+
+    public void updateAccommodationViews(int accId) {
+        accomRepository.updateAccommodationViews(accId);
+    }
 }
