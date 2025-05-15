@@ -18,8 +18,8 @@
         ) VALUES (
              #{guestId},
              #{accommodationId},
-             #{checkIn},
-             #{checkOut},
+             CONCAT(#{checkIn}, ' 11:00:00'),
+             CONCAT(#{checkOut}, ' 14:00:00'),
              #{payAmount},
              #{payStatus},
              #{payMeans},
