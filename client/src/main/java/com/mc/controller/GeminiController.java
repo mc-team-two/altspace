@@ -27,9 +27,9 @@ public class GeminiController {
             String reply = geminiUtil.askGemini(msg.getContent());
             msg.setContent(reply);
             template.convertAndSend("/sub/gemini", msg);
-        } catch (IOException e) { // InterruptedException 제거
-            log.error("Gemini 응답 실패 (IOException)", e);
-            msg.setContent("[Gemini 응답 실패 - I/O 오류]");
+        } catch (Exception e) { // Exception으로 변경하여 askGemini에서 던지는 예외를 모두 처리
+            log.error("Gemini 응답 실패", e);
+            msg.setContent("[Gemini 응답 실패]");
             template.convertAndSend("/sub/gemini", msg);
         }
     }
