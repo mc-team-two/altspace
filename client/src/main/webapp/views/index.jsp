@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Altspace | 가장 빠른 공간대여 알트스페이스</title>
+    <title><spring:message code="title"/></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Altspace Project">
@@ -40,24 +40,43 @@
                         <div class="col d-flex flex-row">
                             <div class="weather"></div>
                             <c:choose>
-                                <c:when test="${sessionScope.user.name == null}">
-                                    <div class="user_box ml-auto">
-                                        <div class="user_box_login user_box_link">
-                                            <a href="<c:url value="/login"/> ">로그인</a>
-                                        </div>
-                                        <div class="user_box_login user_box_link">
-                                            <a href="<c:url value="/login/register"/> ">회원가입</a>
-                                        </div>
-                                        <div class="user_box_login theme-switch">
-                                            <label class="theme-toggle" title="다크 모드 전환">
-                                                <input type="checkbox" id="theme-toggle-guest" class="theme-toggle">
-                                                <span class="slider">
+                            <c:when test="${sessionScope.user.name == null}">
+                            <div class="user_box ml-auto">
+                                <div class="user_box_login user_box_link">
+                                    <a href="<c:url value="/login"/> "><spring:message code="login"/></a>
+                                </div>
+                                <div class="user_box_login user_box_link">
+                                    <a href="<c:url value="/login/register"/> "><spring:message code="register"/></a>
+                                </div>
+                                <div class="user_box_login theme-switch">
+                                    <label class="theme-toggle" title="다크 모드 전환">
+                                        <input type="checkbox" id="theme-toggle-guest" class="theme-toggle">
+                                        <span class="slider">
                                         <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
                                         <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
                                     </span>
-                                            </label>
-                                        </div>
-                                    </div>
+                                    </label>
+                                </div>
+                                <div class="user_box_login dropdown">
+                                    <form id="languageForm" action="/" method="get">
+                                        <c:forEach var="param" items="${param}">
+                                            <c:if test="${param.key ne 'lang'}">
+                                                <input type="hidden" name="${param.key}" value="${param.value}"/>
+                                            </c:if>
+                                        </c:forEach>
+                                        <select name="lang" onchange="document.getElementById('languageForm').submit()">
+                                            <option value="ko" ${param.lang == 'ko' || (empty param.lang && sessionScope.currentLocale == 'ko') ? 'selected' : ''}>
+                                                <spring:message code="dropdownko"/>
+                                            </option>
+                                            <option value="en" ${param.lang == 'en' || (empty param.lang && sessionScope.currentLocale == 'en') ? 'selected' : ''}>
+                                                <spring:message code="dropdownen"/>
+                                            </option>
+                                            <option value="ja" ${param.lang == 'ja' || (empty param.lang && sessionScope.currentLocale == 'ja') ? 'selected' : ''}>
+                                                <spring:message code="dropdownjp"/>
+                                            </option>
+                                        </select>
+                                    </form>
+                                </div>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="user_box ml-auto">
@@ -65,7 +84,7 @@
                                             <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                                         </div>
                                         <div class="user_box_login user_box_link">
-                                            <a href="<c:url value="/auth/logout"/> ">logout</a>
+                                            <a href="<c:url value="/auth/logout"/> "><spring:message code="logout"/></a>
                                         </div>
                                         <div class="user_box_login theme-switch">
                                             <label class="theme-toggle" title="다크 모드 전환">
@@ -76,14 +95,34 @@
                                     </span>
                                             </label>
                                         </div>
+                                        <div class="user_box_login dropdown">
+                                            <form id="languageForm" action="/" method="get">
+                                                <c:forEach var="param" items="${param}">
+                                                    <c:if test="${param.key ne 'lang'}">
+                                                        <input type="hidden" name="${param.key}" value="${param.value}"/>
+                                                    </c:if>
+                                                </c:forEach>
+                                                <select name="lang" onchange="document.getElementById('languageForm').submit()">
+                                                    <option value="ko" ${param.lang == 'ko' || (empty param.lang && sessionScope.currentLocale == 'ko') ? 'selected' : ''}>
+                                                        <spring:message code="dropdownko"/>
+                                                    </option>
+                                                    <option value="en" ${param.lang == 'en' || (empty param.lang && sessionScope.currentLocale == 'en') ? 'selected' : ''}>
+                                                        <spring:message code="dropdownen"/>
+                                                    </option>
+                                                    <option value="ja" ${param.lang == 'ja' || (empty param.lang && sessionScope.currentLocale == 'ja') ? 'selected' : ''}>
+                                                        <spring:message code="dropdownjp"/>
+                                                    </option>
+                                                </select>
+                                            </form>
+                                        </div>
                                     </div>
                                 </c:otherwise>
-                            </c:choose>
+                                </c:choose>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터, 마이페이지) -->
 
             <nav class="main_nav">
@@ -91,14 +130,19 @@
                     <div class="row">
                         <div class="col main_nav_col d-flex flex-row align-items-center justify-content-start">
                             <div class="logo_container">
-                                <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png" alt=""></a></div>
+                                <div class="logo"><a href="<c:url value="/" />"><img src="images/logo.png"
+                                                                                     alt=""></a></div>
                             </div>
                             <div class="main_nav_container ml-auto">
                                 <ul class="main_nav_list">
-                                    <li class="main_nav_item"><a href="<c:url value="/"/> ">홈</a></li>
-                                    <li class="main_nav_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-                                    <li class="main_nav_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-                                    <li class="main_nav_item"><a href="<c:url value="/details"/> ">마이페이지</a></li>
+                                    <li class="main_nav_item"><a href="<c:url value="/"/> "><spring:message
+                                            code="home"/></a></li>
+                                    <li class="main_nav_item"><a href="<c:url value="/about"/> "><spring:message
+                                            code="about"/></a></li>
+                                    <li class="main_nav_item"><a href="<c:url value="/contacts"/> "><spring:message
+                                            code="contacts"/></a></li>
+                                    <li class="main_nav_item"><a href="<c:url value="/details"/> "><spring:message
+                                            code="details"/></a></li>
                                 </ul>
                             </div>
                             <div class="hamburger">
@@ -112,7 +156,7 @@
     </div>
 
     <div class="main_content">
-        <jsp:include page="${center}.jsp" />
+        <jsp:include page="${center}.jsp"/>
     </div>
 
     <div class="main_content">
@@ -129,8 +173,10 @@
                                 <div class="logo_container footer_logo">
                                     <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
                                 </div>
-                                <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고: 2025-서울영등포-0001 |
-                                    관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자: (주)알트스페이스그룹</p>
+                                <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고:
+                                    2025-서울영등포-0001 |
+                                    관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자:
+                                    (주)알트스페이스그룹</p>
                             </div>
                         </div>
                     </div>
@@ -141,20 +187,34 @@
                             <div class="footer_content footer_contact">
                                 <ul class="contact_info_list">
                                     <li class="contact_info_item d-flex flex-row">
-                                        <div><div class="contact_info_icon"><img src="images/placeholder.svg" alt=""></div></div>
+                                        <div>
+                                            <div class="contact_info_icon"><img src="images/placeholder.svg" alt="">
+                                            </div>
+                                        </div>
                                         <div class="contact_info_text">서울 영등포구 여의동로 330 (여의도동, 알트타워)</div>
                                     </li>
                                     <li class="contact_info_item d-flex flex-row">
-                                        <div><div class="contact_info_icon"><img src="images/phone-call.svg" alt=""></div></div>
+                                        <div>
+                                            <div class="contact_info_icon"><img src="images/phone-call.svg" alt="">
+                                            </div>
+                                        </div>
                                         <div class="contact_info_text">02-1234-5678 / 1588-1588</div>
                                     </li>
                                     <li class="contact_info_item d-flex flex-row">
-                                        <div><div class="contact_info_icon"><img src="images/message.svg" alt=""></div></div>
-                                        <div class="contact_info_text"><a href="mailto:biz.altspace@gmail.com?Subject=Hello" target="_top">biz.altspace@gmail.com</a></div>
+                                        <div>
+                                            <div class="contact_info_icon"><img src="images/message.svg" alt=""></div>
+                                        </div>
+                                        <div class="contact_info_text"><a
+                                                href="mailto:biz.altspace@gmail.com?Subject=Hello" target="_top">biz.altspace@gmail.com</a>
+                                        </div>
                                     </li>
                                     <li class="contact_info_item d-flex flex-row">
-                                        <div><div class="contact_info_icon"><img src="images/planet-earth.svg" alt=""></div></div>
-                                        <div class="contact_info_text"><a href="https://altspace.com/help">www.altspace.com/help</a></div>
+                                        <div>
+                                            <div class="contact_info_icon"><img src="images/planet-earth.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="contact_info_text"><a href="https://altspace.com/help">www.altspace.com/help</a>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -180,7 +240,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <!-- jQuery (필수: Bootstrap은 jQuery에 의존함) -->
@@ -196,7 +255,8 @@
 <script src="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"/>"></script>
 <%-- kakao map library --%>
 <script src="<c:url value="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"/>"></script>
-<script type="text/javascript" src="<c:url value="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"/>"></script>
+<script type="text/javascript"
+        src="<c:url value="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"/>"></script>
 
 
 <script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
@@ -213,7 +273,8 @@
 <script src="<c:url value="js/chatbot.js"/>"></script>
 <script src="<c:url value="js/GeminiChatbot.js"/>"></script>
 
-<script type="text/javascript" src="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>"></script>
+<script type="text/javascript"
+        src="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>"></script>
 
 <script type="text/javascript" src="<c:url value="js/weather_API.js"/>"></script>
 

@@ -29,6 +29,11 @@ spring:
           auth: true            # 사용자 인증 시도 여부
           starttls:
             enable: true        # starttls 활성화 여부
+  messages:
+    basename: messages/messages
+    encoding: utf-8
+    cache-duration: 10
+    fallback-to-system-locale: false
 
 # 3. MyBatis
 mybatis:

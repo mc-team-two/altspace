@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 
 <div class="menu trans_500">
@@ -25,7 +24,9 @@
     <div class="home_background parallax-window" data-parallax="scroll"
          data-image-src="images/offer_background.jpg"></div>
     <div class="home_content">
-        <div class="home_title">빠르고 간편하게, Altspace</div>
+        <div class="home_title">
+            <spring:message code="hometitle"/>
+        </div>
     </div>
 </div>
 
