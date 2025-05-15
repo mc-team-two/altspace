@@ -85,3 +85,8 @@ jasypt:
     password: space
     algorithm: PBEWithMD5AndDES
 
+# 9. gemini
+google:
+  gemini:
+    key: AIzaSyD_5fXtNxyNdlko79KiDJOk7iBXs4AfLkc
+
