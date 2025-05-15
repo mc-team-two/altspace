@@ -6,10 +6,9 @@ import com.mc.app.frame.MCService;
 import com.mc.app.repository.ReviewImageRepository;
 import com.mc.app.repository.ReviewRepository;
 import com.mc.util.FileUploadUtil;
-import com.mc.util.GeminiUtil;
+import com.mc.util.ReviewGeminiUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -173,7 +172,7 @@ public class ReviewService implements MCService<Reviews, Integer> {
             }
         }
         // 요약 요청 (유틸 사용)
-        String reviewSummary = GeminiUtil.summarizeText(geminiKey, reviewText.toString());
+        String reviewSummary = ReviewGeminiUtil.summarizeText(geminiKey, reviewText.toString());
         return reviewSummary;
     }
 
