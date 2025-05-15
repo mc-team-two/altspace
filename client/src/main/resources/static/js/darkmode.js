@@ -40,4 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
+    // if (initialTheme === 'dark') {
+    //     const mainNav = document.querySelector('.main_nav');
+    //     if (mainNav) {
+    //         mainNav.style.setProperty('background-color', 'rgba(54, 19, 84, 0.6)', 'important');
+    //     }
+    // }
 });

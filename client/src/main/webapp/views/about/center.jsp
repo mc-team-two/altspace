@@ -80,8 +80,19 @@
         </div>
     </div>
 </div>
-
-<script src="<c:url value="js/darkmode.js"/>"></script>
-<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
-<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
-<script src="<c:url value="js/chatbot.js"/>"></script>
+<div id="gemini-chatbot" class="chatbot chatbot-gemini">
+    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+        <i class="fa fa-android" aria-hidden="true"></i>
+    </div>
+    <div id="gemini-chat-window" class="chat-window gemini-window">
+        <div class="chat-header gemini-header">
+            <span>Gemini 챗봇</span>
+            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+        </div>
+        <div class="chat-messages" id="gemini-chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="gemini-chat-input" placeholder="Gemini에게 물어보세요">
+            <button id="gemini-chat-send-btn">보내기</button>
+        </div>
+    </div>
+</div>

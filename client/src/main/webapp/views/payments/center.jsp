@@ -699,6 +699,41 @@
     </div>
 </div>
 
+<div id="chatbot" class="chatbot">
+    <div id="chat-icon" class="chat-icon">
+        <i class="fa fa-comment" aria-hidden="true"></i>
+    </div>
+    <div id="chat-window" class="chat-window">
+        <div class="chat-header">
+            <span>챗봇과 대화하기</span>
+            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+            <button id="chat-send-btn">보내기</button>
+        </div>
+    </div>
+</div>
+<div id="gemini-chatbot" class="chatbot chatbot-gemini">
+    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+        <i class="fa fa-android" aria-hidden="true"></i>
+    </div>
+    <div id="gemini-chat-window" class="chat-window gemini-window">
+        <div class="chat-header gemini-header">
+            <span>Gemini 챗봇</span>
+            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+        </div>
+        <div class="chat-messages" id="gemini-chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="gemini-chat-input" placeholder="Gemini에게 물어보세요">
+            <button id="gemini-chat-send-btn">보내기</button>
+        </div>
+    </div>
+</div>
+
 <!-- 사진 전체 보기 모달 -->
 <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
      aria-hidden="true">
@@ -731,8 +766,5 @@
 <script src="<c:url value="plugins/easing/easing.js"/>"></script>
 <script src="<c:url value="plugins/parallax-js-master/parallax.min.js"/>"></script>
 <script src="<c:url value="js/offers_custom.js"/>"></script>
-<script src="<c:url value="js/darkmode.js"/>"></script>
-<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/>"></script>
-<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/>"></script>
-<script src="<c:url value="js/chatbot.js"/>"></script>
+
 

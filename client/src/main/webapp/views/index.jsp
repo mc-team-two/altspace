@@ -173,10 +173,8 @@
                                 <div class="logo_container footer_logo">
                                     <div class="logo"><a href="#"><img src="images/logo.png" alt=""></a></div>
                                 </div>
-                                <p class="footer_about_text">(주)알트스페이스 | 대표이사: 이예진 | 사업자 등록번호: 123-81-45678 | 통신판매업신고:
-                                    2025-서울영등포-0001 |
-                                    관광사업자 등록번호: 제2025-00001호 | 주소: 서울 영등포구 여의동로 330 (여의도동, 알트타워) | 호스팅 서비스 제공자:
-                                    (주)알트스페이스그룹</p>
+                                <p class="footer_about_text"><spring:message code="footer-name"/> | <spring:message code="footer-boss"/> | <spring:message code="footer-lisence"/> | <spring:message code="footer-onlinemerchundise-registered"/> |
+                                    <spring:message code="footer-tourism-registerd"/> | <spring:message code="footer-address"/> | <spring:message code="footer-hosting"/></p>
                             </div>
                         </div>
                     </div>
@@ -191,7 +189,7 @@
                                             <div class="contact_info_icon"><img src="images/placeholder.svg" alt="">
                                             </div>
                                         </div>
-                                        <div class="contact_info_text">서울 영등포구 여의동로 330 (여의도동, 알트타워)</div>
+                                        <div class="contact_info_text"><spring:message code="footer-address2"/></div>
                                     </li>
                                     <li class="contact_info_item d-flex flex-row">
                                         <div>
@@ -247,36 +245,36 @@
 <!-- moment.js -->
 <script type="text/javascript" src="<c:url value='https://cdn.jsdelivr.net/momentjs/latest/moment.min.js'/>"></script>
 <!-- daterangepicker.js + CSS -->
-<script src="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>"></script>
-<link rel="stylesheet" href="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>">
+<script src="<c:url value='https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js'/>"></script>
+<link rel="stylesheet" href="<c:url value='https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css'/>">
 <!-- iamport.payment.js -->
-<script src="<c:url value="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"/>"></script>
+<script src="<c:url value='https://cdn.iamport.kr/js/iamport.payment-1.2.0.js'/>"></script>
 <!-- Bootstrap 4.6.2 JS (bundle 포함 = popper.js 포함) -->
-<script src="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"/>"></script>
+<script src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'/>"></script>
 <%-- kakao map library --%>
-<script src="<c:url value="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"/>"></script>
+<script src="<c:url value='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'/>"></script>
 <script type="text/javascript"
-        src="<c:url value="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"/>"></script>
+        src="<c:url value='//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services'/>"></script>
 
 
-<script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
-<script src="<c:url value="styles/bootstrap4/bootstrap.min.js"/>"></script>
-<script src="<c:url value="plugins/Isotope/isotope.pkgd.min.js"/>"></script>
-<script src="<c:url value="plugins/easing/easing.js"/>"></script>
-<script src="<c:url value="plugins/parallax-js-master/parallax.min.js"/>"></script>
-<script src="<c:url value="js/offers_custom.js"/>"></script>
-<script src="<c:url value="js/darkmode.js"/>"></script>
-<script src="<c:url value="js/iconpopper.js"/>"></script>
+<script src="<c:url value='styles/bootstrap4/popper.js'/>"></script>
+<script src="<c:url value='styles/bootstrap4/bootstrap.min.js'/>"></script>
+<script src="<c:url value='plugins/Isotope/isotope.pkgd.min.js'/>"></script>
+<script src="<c:url value='plugins/easing/easing.js'/>"></script>
+<script src="<c:url value='plugins/parallax-js-master/parallax.min.js'/>"></script>
+<script src="<c:url value='js/offers_custom.js'/>"></script>
+<script defer src="<c:url value='js/darkmode.js'/>"></script>
+<script src="<c:url value='js/iconpopper.js'/>"></script>
 
-<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
-<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
-<script src="<c:url value="js/chatbot.js"/>"></script>
-<script src="<c:url value="js/GeminiChatbot.js"/>"></script>
+<script src="<c:url value='/webjars/sockjs-client/sockjs.min.js'/> "></script>
+<script src="<c:url value='/webjars/stomp-websocket/stomp.min.js'/> "></script>
+<script defer src="<c:url value='js/chatbot.js'/>"></script>
+<script src="<c:url value='js/GeminiChatbot.js'/>"></script>
 
 <script type="text/javascript"
-        src="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"/>"></script>
+        src="<c:url value='https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js'/>"></script>
 
-<script type="text/javascript" src="<c:url value="js/weather_API.js"/>"></script>
+<script type="text/javascript" src="<c:url value='js/weather_API.js'/>"></script>
 
 </body>
 
