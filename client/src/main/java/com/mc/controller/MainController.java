@@ -61,9 +61,7 @@ public class MainController {
 
     @RequestMapping("/contacts")
     public String contacts(Model model){
-        model.addAttribute("headers", "contacts/headers");
         model.addAttribute("center", "contacts/center");
-        model.addAttribute("footer", "contacts/footer");
         return "index";
     }
 
