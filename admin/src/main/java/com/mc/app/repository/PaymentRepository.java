@@ -26,6 +26,9 @@ public interface PaymentRepository extends MCRepository<Payments,Integer> {
     // 오늘 체크인 예약 건수 조회
     int countTodayCheckIn() throws Exception;
 
+    // 내일 체크인 예약 건수 조회
+    int countTomorrowCheckIn() throws Exception;
+
     // 오늘부터 7일 이내의 다가오는 예약 목록
     List<Payments> selectUpcoming7DaysReservations() throws Exception;
 

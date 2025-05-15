@@ -93,10 +93,19 @@
         AND check_in > CURDATE()  <!-- 내일 이후 -->
     </select>
 
+    <!-- 오늘 체크인 건수 조회 -->
     <select id="countTodayCheckIn" resultType="int">
         SELECT COUNT(*)
         FROM payments
         WHERE DATE(check_in) = CURRENT_DATE
+          AND pay_status = '완료'
+    </select>
+
+    <!-- 내일 체크인 건수 조회 -->
+    <select id="countTomorrowCheckIn" resultType="int">
+        SELECT COUNT(*)
+        FROM payments
+        WHERE DATE(check_in) = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
           AND pay_status = '완료'
     </select>
 
