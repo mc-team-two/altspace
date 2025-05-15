@@ -102,7 +102,6 @@ public class MainController {
         model.addAttribute("chInChOut", chInChOut);
 
         List<Reviews> review = reviewService.selectReviewsAll(id);
-        log.info("review:........." + review);
         model.addAttribute("review", review);
 
         // 총 리뷰 수

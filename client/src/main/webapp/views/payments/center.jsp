@@ -7,9 +7,10 @@
 <!doctype html>
 <html lang="ko">
 <head>
+    <script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_styles.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_responsive.css"/>">
-    <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_styles.css"/>">
+    <%--<link rel="stylesheet" type="text/css" href="<c:url value="styles/about_styles.css"/>">--%>
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_responsive.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
@@ -139,6 +140,9 @@
             });
             $('.translate-btn').click(function() {
                 change.translate.call(this); // 버튼 this를 전달
+            });
+            $('#summaryBtn').click(function() {
+                change.reviewSummary.call(this); // 버튼 this를 전달
             });
         },
         reqPay: function () {
@@ -333,6 +337,35 @@
                     }
                 });
             }
+        },
+        reviewSummary: function(){
+            const btn = document.getElementById("summaryBtn");
+            const summaryBox = document.getElementById("summaryContent");
+
+            // 버튼 숨기고 로딩 문구 보여주기
+            btn.style.display = "none";
+            summaryBox.innerHTML = "<span class='text-muted'>🌀 AI가 요약 중입니다... 잠시만 기다려 주세요.</span>";
+
+            $.ajax({
+                url: `review/reviewSummary/${accomm.accommodationId}`,
+                method: "GET",
+                success: function(getResult) {
+                    summaryBox.innerHTML = ""; // 이전 내용 제거
+                    const lines = getResult.split('\n');
+
+                    lines.forEach(line => {
+                        const p = document.createElement("p");
+                        p.className = "text-dark mb-0";
+                        p.textContent = line;
+                        summaryBox.appendChild(p);
+                    });
+                },
+                error: function () {
+                    summaryBox.innerHTML = "<span class='text-danger'>요약 중 오류가 발생했습니다.</span>";
+                    // 버튼 다시 보이게 (선택 사항)
+                    btn.style.display = "inline-block";
+                }
+            });
         }
     };
 
@@ -627,6 +660,22 @@
         <div class="map-footer">주소: ${accomm.location}</div>
     </div>
 
+    <!-- AI 리뷰 요약 영역 -->
+    <div id="aiReviewSummary" class="card mt-3 shadow-sm p-4 rounded-4" style="min-height: 200px;">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <h5 class="mb-1 text-center w-100" style="font-size: 1rem;">AI가 도와주는 최근 3개월 리뷰 요약</h5>
+        </div>
+        <!-- 요약 결과, 버튼, 로딩 문구가 표시될 자리 -->
+        <div id="summaryContent" class="d-flex justify-content-center align-items-center text-secondary text-center" style="min-height: 120px;">
+            <button id="summaryBtn"
+                    class="btn btn-outline-primary btn-sm"
+                    style="width: 300px; font-size: 1rem;">
+                요약 리뷰 보기
+            </button>
+
+        </div>
+    </div>
+
     <!-- 리뷰 목록 -->
     <div id="reviewSection" class="card mt-3 shadow-sm p-4 rounded-4">
         <!-- 공통 폼 (id는 유일하게 하나만!) -->
@@ -723,8 +772,6 @@
 </body>
 </html>
 
-
-<script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
 <script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
 <script src="<c:url value="styles/bootstrap4/bootstrap.min.js"/>"></script>
 <script src="<c:url value="plugins/Isotope/isotope.pkgd.min.js"/>"></script>
