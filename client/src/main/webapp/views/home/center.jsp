@@ -323,7 +323,7 @@
                             <div class="row">
                                 <div class="col-lg-1 temp_col"></div>
                                 <div class="col-lg-3 col-1680-4">
-                                    <div class="offers_image_container" style="cursor:pointer;" onclick="location.href='${pageContext.request.contextPath}/detail?id=${a.accommodationId}'">
+                                    <div class="offers_image_container" style="cursor:pointer;" onclick="updateViewsAndGo(${a.accommodationId})">>
                                         <div class="offers_image_background"
                                              style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
                                         <div class="offer_name"><a
@@ -367,8 +367,10 @@
                                                 </c:if>
                                             </ul>
                                         </div>
-                                        <div class="button book_button"><a
-                                                href="<c:url value="/detail?id=${a.accommodationId}"/>">상세보기<span></span><span></span><span></span></a>
+                                        <div class="button book_button">
+                                            <a href="javascript:void(0);" onclick="updateViewsAndGo(${a.accommodationId})">
+                                                상세보기<span></span><span></span><span></span>
+                                            </a>
                                         </div>
                                         <div class="offer_reviews">
                                             <div class="offer_reviews_content">
@@ -431,3 +433,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    function updateViewsAndGo(accId) {
+        // 조회수 올리는 API 호출 (비동기, 실패해도 이동은 함)
+        fetch('${pageContext.request.contextPath}/api/update-views?accId=' + accId, {
+            method: 'GET'
+        }).catch(err => {
+            console.error('조회수 업데이트 실패', err);
+        }).finally(() => {
+            // API 호출 후 상세 페이지로 이동
+            location.href = '${pageContext.request.contextPath}/detail?id=' + accId;
+        });
+    }
+</script>
