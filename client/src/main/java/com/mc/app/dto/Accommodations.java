@@ -36,4 +36,5 @@ public class Accommodations {
     private String image5Name;    // 카멜 케이스로 변경
     private Timestamp createDay;         // 등록일
     private Timestamp updateDay;         // 수정일
+    private int views;                   // 조회수
 }

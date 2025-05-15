@@ -1,6 +1,8 @@
 package com.mc.controller.api;
 
+import com.mc.app.dto.AccStats;
 import com.mc.app.dto.Reservations;
+import com.mc.app.service.AccStatsService;
 import com.mc.app.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import java.util.Map;
 public class DashboardController {
 
     private final ReservationService reservationService;
+    private final AccStatsService accStatsService;
 
     @GetMapping("/reservations")
     public Map<String, Object> getReservations(@RequestParam("hostId") String hostId) {
@@ -50,6 +53,27 @@ public class DashboardController {
                 "count", hostingNow.size(),
                 "data", hostingNow
         ));
+
+        return response;
+    }
+
+    @GetMapping("/accommodations")
+    public Map<String, Object> getAccommodations(@RequestParam("hostId") String hostId) {
+        Map<String, Object> response = new LinkedHashMap<>();
+
+        List<AccStats> topViews = accStatsService.getTopViews(hostId);
+        List<AccStats> topReviews = accStatsService.getTopReviews(hostId);
+        List<AccStats> topWishlists = accStatsService.getTopWishlists(hostId);
+        List<AccStats> topBookingsThisMonth = accStatsService.getTopBookingsThisMonth(hostId);
+        List<AccStats> topSalesAllTime = accStatsService.getTopSalesAllTime(hostId);
+        List<AccStats> topSalesThisMonth = accStatsService.getTopSalesThisMonth(hostId);
+
+        response.put("topViews", topViews);
+        response.put("topReviews", topReviews);
+        response.put("topWishlists", topWishlists);
+        response.put("topBookingsThisMonth", topBookingsThisMonth);
+        response.put("topSalesAllTime", topSalesAllTime);
+        response.put("topSalesThisMonth", topSalesThisMonth);
 
         return response;
     }

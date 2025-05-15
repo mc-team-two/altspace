@@ -89,7 +89,7 @@ public class PaymentController {
 
                 // 성공한 결제 객체를 JSON으로 반환
                 return ResponseEntity.ok(Map.of(
-                        "message", "결제 성공",
+                        "message", "결제가 완료되었습니다.",
                         "response", payment
                 ));
             } else {
@@ -119,8 +119,6 @@ public class PaymentController {
         payments.setImpUid(impUid);
         payments.setAccommodationId(accommodationId);
         payments.setPaymentId(paymentId);
-
-        log.info("Payments" + payments);
 
         // DB 에서 찾아온 데이터
         Payments targetPayment = paymentService.getOneTwo(payments);
