@@ -53,8 +53,6 @@ public class ReviewController {
 
         // 실제 DB 조회(여러 건 가져올 수 있음)
         List<Reviews> ReviewList = reviewService.getMyReviews(reviews);
-        log.info("ReviewList:................" + ReviewList);
-
         model.addAttribute("ReviewList", ReviewList);
         model.addAttribute("center", dir + "center");
         return "index";
@@ -90,10 +88,17 @@ public class ReviewController {
         String msg = body.get("msg");
         String target = body.get("target");
 
-        log.info(msg);
-        log.info(target);
-
         String translatedText = PapagoUtil.getMsg(papagoId, papagoKey, msg, target);
         return ResponseEntity.ok(translatedText);
     }
+
+    /* 리뷰 요약 */
+    @ResponseBody
+    @GetMapping("reviewSummary/{id}")
+    public String getReviewSummary(Model model,
+                                   @PathVariable("id") int id) throws Exception {
+        String getResult = reviewService.getReviewSummary(id);
+        return getResult;
+    }
+
 }

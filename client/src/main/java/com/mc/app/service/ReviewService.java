@@ -6,8 +6,9 @@ import com.mc.app.frame.MCService;
 import com.mc.app.repository.ReviewImageRepository;
 import com.mc.app.repository.ReviewRepository;
 import com.mc.util.FileUploadUtil;
+import com.mc.util.ReviewGeminiUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReviewService implements MCService<Reviews, Integer> {
@@ -26,6 +28,9 @@ public class ReviewService implements MCService<Reviews, Integer> {
 
     @Value("${app.dir.uploadimgdir}")
     String uploadDir;
+
+    @Value("${google.gemini.key}")
+    String geminiKey;
 
     @Override
     public void add(Reviews reviews) throws Exception {
@@ -149,13 +154,26 @@ public class ReviewService implements MCService<Reviews, Integer> {
         List<Reviews> reviewList = reviewRepository.selectReviewsAll(integer);
         setImageUrls(reviewList);
         return reviewList;
-
     }
 
     public List<Reviews> getMyReviews(Reviews reviews) throws Exception {
         List<Reviews> reviewList = reviewRepository.getMyReviews(reviews);
         setImageUrls(reviewList);
         return reviewList;
+    }
+
+    public String getReviewSummary(Integer integer) throws Exception {
+        List<Reviews> reviewList = reviewRepository.getReviewSummary(integer);
+
+        StringBuilder reviewText = new StringBuilder();
+        for (Reviews review : reviewList) {
+            if (review.getGrade() >= 1) {
+                reviewText.append("- ").append(review.getComment()).append("\n");
+            }
+        }
+        // 요약 요청 (유틸 사용)
+        String reviewSummary = ReviewGeminiUtil.summarizeText(geminiKey, reviewText.toString());
+        return reviewSummary;
     }
 
     public Reviews getMyReviewById(Integer integer) throws Exception {

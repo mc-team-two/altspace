@@ -1,142 +1,178 @@
-/* Floating Chat Icon */
+/* ====== 공통 스타일 ====== */
+
+/* 공통 아이콘 */
 .chat-icon {
     position: fixed;
-    bottom: 1.25rem; /* 20px / 16px */
-    right: 1.25rem; /* 20px / 16px */
-    width: 3.75rem; /* 60px / 16px */
-    height: 3.75rem; /* 60px / 16px */
+    bottom: 6rem; !important;
+    right: 1.25rem;
+    width: 3.75rem;
+    height: 3.75rem;
     border-radius: 50%;
-    background-color: #0d6efd;
     color: white;
-    font-size: 1.5rem; /* 24px / 16px */
+    font-size: 1.5rem;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2); /* 4px / 16px, 12px / 16px */
+    background-color: #d4e157;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.2);
     z-index: 1000;
-    transition: transform 0.2s ease-in-out;
+    transition: bottom 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
-
 .chat-icon:hover {
     transform: scale(1.1);
 }
+#gemini-chat-icon.raised {
+    bottom: 37rem !important;
+}
 
-/* Chat Window */
-#chat-window {
-    display: none; !important;
-    flex-direction: column !important;
+/* 챗봇 패널 */
+.chat-window {
+    position: fixed;
+    right: 1.25rem;
     width: 100%;
     max-width: 20rem;
-    height: 50vh;
+    height: 60vh;
     max-height: 80vh;
-    background-color: #fff;
-    border: 0.0625rem solid #ccc; /* 1px / 16px */
-    border-radius: 0.3125rem; /* 0.5rem 유지 */
-    box-shadow: 0 0.15625rem 0.3125rem rgba(0, 0, 0, 0.1); /* 2.5px / 16px, 5px / 16px */
-    position: fixed;
-    bottom: 3.75rem;
-    right: 1.25rem;
-    z-index: 1000;
-    overflow: hidden;
-    display: none; /* 초기에는 숨김 */
-    justify-content: space-between;
-}
-
-.chat-header {
-    background: #0d6efd;
-    color: white;
-    padding: 0.75rem 1rem; /* 12px / 16px, 16px / 16px */
     display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.3125rem;
+    box-shadow: 0 0.15625rem 0.3125rem rgba(0, 0, 0, 0.1);
+    overflow: hidden;
     justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(1rem);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index:1000; !important;
+}
+.chat-window.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
-.chat-close-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.25rem; /* 20px / 16px */
-    cursor: pointer;
+/* 메시지 영역 */
+.chat-messages {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0.625rem;
+    overflow-y: auto;
+    width: 100%;
 }
-
-#chat-messages {
-    display: flex !important;
-    flex-direction: column !important;
-    flex: 1 1 25rem !important;
-    padding: 0.625rem !important;
-    overflow-y: auto !important;
-    width: 100%; /* 전체 너비 사용 */
-}
-
-/* Message Container */
 .message-container {
-    display: flex !important;
-    margin-bottom: 0.5rem; /* 8px / 16px */
-    align-items: flex-start;
-    width: 100%; /* 전체 너비 사용 */
+    display: flex;
+    margin-bottom: 0.5rem;
+    width: 100%;
 }
+.message-container.user { justify-content: flex-end; }
+.message-container.bot { justify-content: flex-start; }
 
-/* Align user vs bot */
-.message-container.user {
-    justify-content: flex-end !important;
-}
-
-.message-container.bot {
-    justify-content: flex-start !important;
-}
-
-/* Message Bubbles */
-.user-message, .bot-message {
-    height: auto !important;
-    min-height: auto !important;
-    width: auto !important;
+.user-message,
+.bot-message {
     max-width: 80%;
-    padding: 0.625rem 0.875rem; /* 10px / 16px, 14px / 16px */
-    border-radius: 1rem; /* 16px / 16px */
+    padding: 0.625rem 0.875rem;
+    border-radius: 1rem;
     line-height: 1.4;
     display: inline-block;
     word-break: break-word;
 }
 
-.user-message {
-    background-color:#9ec5fe;
-
-    border-bottom-right-radius: 0;
-}
-
-.bot-message {
-    background-color: #e2e3e5;
-    border-bottom-left-radius: 0;
-}
-
-/* Chat Input Area */
-.chat-input {
+/* 헤더 영역 */
+.chat-header {
+    padding: 0.75rem 1rem;
     display: flex;
-    padding: 0.625rem; /* 10px / 16px */
-    border-top: 0.0625rem solid #ddd; /* 1px / 16px */
-    background: white;
-    flex-shrink: 0; /* 줄어들지 않도록 설정 */
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: white;
 }
-
-#chat-input {
-    flex: 1;
-    padding: 0.3125rem; /* 5px / 16px */
-    border: 0.0625rem solid #ccc; /* 1px / 16px */
-    border-radius: 0.15625rem; /* 2.5px / 16px */
-}
-
-#chat-send-btn {
-    margin-left: 0.3125rem; /* 5px / 16px */
-    padding: 0.3125rem 0.625rem; /* 5px / 16px, 10px / 16px */
+.chat-close-btn {
+    background: transparent;
     border: none;
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 0.15625rem; /* 2.5px / 16px */
+    color: white;
+    font-size: 1.25rem;
     cursor: pointer;
 }
 
-#chat-send-btn:hover {
+/* 입력 영역 */
+.chat-input {
+    display: flex;
+    padding: 0.625rem;
+    border-top: 0.0625rem solid #ddd;
+    background: white;
+    flex-shrink: 0;
+}
+.chat-input input[type="text"] {
+    flex: 1;
+    padding: 0.3125rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.15625rem;
+}
+.chat-input button {
+    margin-left: 0.3125rem;
+    padding: 0.3125rem 0.625rem;
+    border: none;
+    border-radius: 0.15625rem;
+    cursor: pointer;
+}
+
+/* ====== 일반 챗봇 ====== */
+#chatbot .chat-icon {
+    bottom: 1.25rem;
+    background-color: #0d6efd;
+}
+#chatbot .chat-window {
+    bottom: 3.75rem;
+}
+#chatbot .chat-header {
+    background: #0d6efd;
+}
+#chatbot .user-message {
+    background-color: #9ec5fe;
+    border-bottom-right-radius: 0;
+}
+#chatbot .bot-message {
+    background-color: #e2e3e5;
+    border-bottom-left-radius: 0;
+}
+#chatbot .chat-input button {
+    background-color: #007bff;
+    color: #fff;
+}
+#chatbot .chat-input button:hover {
     background-color: #0b5ed7;
+}
+
+/* ====== Gemini 챗봇 ====== */
+#gemini-chatbot .chat-icon {
+    bottom: 6rem;
+    background-color: #d4e157;
+}
+#gemini-chatbot .chat-window {
+    bottom: 10rem;
+    border-color: #d4e157;
+    z-index: 1001;
+}
+#gemini-chatbot .chat-header {
+    background: #d4e157;
+}
+#gemini-chatbot .user-message {
+    background-color: #fff176;
+    color: black;
+    border-bottom-right-radius: 0;
+}
+#gemini-chatbot .bot-message {
+    background-color: #ede7f6;
+    border-bottom-left-radius: 0;
+}
+#gemini-chatbot .chat-input button {
+    background-color: #d4e157;
+    color: #000;
+}
+#gemini-chatbot .chat-input button:hover {
+    background-color: #c0ca33;
 }

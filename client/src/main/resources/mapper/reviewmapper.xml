@@ -88,6 +88,22 @@
         ORDER BY r.create_day DESC
     </select>
 
+    <!-- 리뷰 평균 구하기 -->
+    <select id="getReviewSummary" parameterType="int" resultType="Reviews">
+        SELECT
+            r.review_id,
+            r.guest_id,
+            r.accommodation_id,
+            r.grade,
+            r.comment,
+            r.create_day,
+            r.update_day
+        FROM reviews r
+        WHERE r.accommodation_id = #{accommodationId}
+          AND r.create_day >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+        ORDER BY r.create_day DESC
+    </select>
+
     <!-- userID로 내가 쓴 리뷰 전체보기 -->
     <select id="getMyReviews" parameterType="Reviews" resultType="Reviews">
         SELECT
@@ -127,7 +143,5 @@
             ON r.accommodation_id = a.accommodation_id
         WHERE r.review_id = #{reviewId}
     </select>
-
-
 
 </mapper>

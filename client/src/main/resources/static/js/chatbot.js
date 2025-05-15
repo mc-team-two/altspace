@@ -8,16 +8,15 @@ $(function () {
         chatCloseBtn: $('#chat-close-btn'),
 
         init: function () {
+            // ✅ 아이콘 클릭 시 챗봇 패널만 토글
             this.chatIcon.on('click', () => {
-                if (chatbotUI.chatWindow.css('display') === 'none') {
-                    chatbotUI.chatWindow.css('display', 'flex');
-                } else {
-                    chatbotUI.chatWindow.css('display', 'none');
-                }
+                const isVisible = this.chatWindow.hasClass('active');
+                this.chatWindow.toggleClass('active', !isVisible);
             });
 
+            // ✅ 닫기 버튼 클릭 시
             this.chatCloseBtn.on('click', () => {
-                this.chatWindow.hide();
+                this.chatWindow.removeClass('active');
             });
 
             this.chatSendBtn.on('click', () => chatbotClient.sendMessage());
@@ -58,7 +57,7 @@ $(function () {
         },
 
         connect: function () {
-            const socket = new SockJS('http://127.0.0.1:8080/chatbot', null, {
+            const socket = new SockJS('/chatbot', null, {
                 withCredentials: true
             });
             this.stompClient = Stomp.over(socket);
@@ -103,14 +102,6 @@ $(function () {
                 this.stompClient.send('/app/sendchatbot', {}, msgToSend);
                 chatbotUI.chatInput.val('');
             }
-        },
-
-        displayBotMessage: function (message) {
-            chatbotUI.displayMessage(message, 'bot');
-        },
-
-        displayUserMessage: function (message) {
-            chatbotUI.displayMessage(message, 'user');
         }
     };
 
