@@ -3,8 +3,10 @@ package com.mc.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.*;
-import com.mc.app.service.*;
-
+import com.mc.app.service.AccomService;
+import com.mc.app.service.PaymentService;
+import com.mc.app.service.ReviewService;
+import com.mc.app.service.UserService;
 import java.sql.Date;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,14 +28,14 @@ public class MainController {
     @Value("${app.url.webSocketUrl}")
     String webSocketUrl;
 
-    final WishlistService wishlistService;
+    private final UserService userService;
     final AccomService accomService;
     final PaymentService paymentService;
     final ReviewService reviewService;
 
     @Value("${app.key.kakaoJSApiKey}")
     String kakaoJSApiKey;
-  
+
     private static final int PAGE_SIZE = 10; // 한 페이지에 표시할 숙소 수
 
     String dir = "home/";
@@ -51,7 +53,9 @@ public class MainController {
         model.addAttribute("accomm", allAccomm);
         model.addAttribute("pageInfo", pageInfo);
 
+        model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
+        model.addAttribute("footer", dir + "footer");
 
         List<AccomodationsWithRating> accommodationsWithRatingList = accomService.getAccommodationsWithRating(pageInfo.getList());
         model.addAttribute("accommodationsWithRatingList", accommodationsWithRatingList);
@@ -67,42 +71,43 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping("/faq1")
+    public String faq1(Model model){
+        model.addAttribute("headers", "faq1/headers");
+        model.addAttribute("center", "faq1/center");
+        model.addAttribute("footer", "faq1/footer");
+        return "index";
+    }
+
+    @RequestMapping("/faq2")
+    public String faq2(Model model){
+        model.addAttribute("headers", "faq2/headers");
+        model.addAttribute("center", "faq2/center");
+        model.addAttribute("footer", "faq2/footer");
+        return "index";
+    }
+
+    @RequestMapping("/faq3")
+    public String faq3(Model model){
+        model.addAttribute("headers", "faq3/headers");
+        model.addAttribute("center", "faq3/center");
+        model.addAttribute("footer", "faq3/footer");
+        return "index";
+    }
+
     @RequestMapping("/detail")
     public String detail(Model model,
                          @RequestParam("id") int id,
                          @RequestParam(value = "pyStatus", required = false) String pyStatus,
-                         @RequestParam(value = "paymentId", required = false) Integer paymentId,
-                         HttpSession httpSession) throws Exception {
+                         @RequestParam(value = "paymentId", required = false) Integer paymentId) throws Exception {
 
         Accommodations accomm = accomService.get(id);
         model.addAttribute("accomm", accomm);
-
-        // 로그인 사용자 정보 가져오기
-        User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
-            String userId = user.getUserId();
-            // DB 조회용 객체 생성
-            Wishlist wishlist = new Wishlist();
-            wishlist.setUserId(userId);
-            wishlist.setAccommodationId(id);
-
-            // 숙소 ID와 유저 ID로 찜 여부 확인
-            Wishlist resultWishlist  = wishlistService.wishlistSelect(wishlist);
-
-            if (resultWishlist != null) {
-                model.addAttribute("resultWishlist", resultWishlist);
-            } else {
-                model.addAttribute("resultWishlist", null);
-            }
-        } else {
-            model.addAttribute("resultWishlist", null); // 비로그인 상태일 경우
-        }
 
         List<Payments> chInChOut =  paymentService.selectCheckInCheckOut(id);
         model.addAttribute("chInChOut", chInChOut);
 
         List<Reviews> review = reviewService.selectReviewsAll(id);
-        log.info("review:........." + review);
         model.addAttribute("review", review);
 
         // 총 리뷰 수
@@ -135,7 +140,9 @@ public class MainController {
         }
 
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
+        model.addAttribute("headers", "payments/headers");
         model.addAttribute("center", "payments/center");
+        model.addAttribute("footer", "payments/footer");
 
         return "index";
     }

@@ -3,19 +3,34 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="<c:url value="styles/contact_styles.css"/>">
-  <link rel="stylesheet" type="text/css" href="<c:url value="styles/contact_responsive.css"/>">
-  <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
+  <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
+  <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+  <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
 
   <style>
-    /* 문의 컨테이너 간격 */
-    .contact_form_container{
-      margin-bottom: 100px;
+    /* 이미지 반응형 및 가운데 정렬 스타일 */
+    .faq_etc_image img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* 이미지 컨테이너 간격 */
+    .faq_etc_image{
+      margin-top: 100px;
+      margin-bottom: 50px;
+    }
+
+    /* 각 FAQ 항목 사이의 간격 */
+    .faq_etc{
+      margin-bottom: 50px;
     }
   </style>
-
 </head>
+
+<body>
 
 <div class="menu trans_500">
   <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
@@ -25,37 +40,54 @@
       <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
       <li class="menu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
       <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터/FAQ</a></li>
-      <li class="menu_item"><a href="<c:url value="/details"/> ">마이페이지</a></li>
+      <li class="menu_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
     </ul>
   </div>
 </div>
 
-<!-- 홈 -->
+<!-- 배너 -->
 
 <div class="home">
-  <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/contact_background.jpg"></div>
+  <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
   <div class="home_content">
-    <div class="home_title">고객센터</div>
+    <div class="home_title">기타 FAQ</div>
   </div>
 </div>
 
-<!-- 문의하기 -->
+<!-- 예약 -->
 
-<div class="contact_form_section">
+<div class="faq">
   <div class="container">
     <div class="row">
-      <div class="col-lg-8">
 
-        <!-- Contact Form -->
-        <div class="contact_form_container">
-          <div class="contact_title text-center">고객센터 상담 요청</div>
-          <form action="#" id="contact_form" class="contact_form text-center">
-            <input type="text" id="contact_form_name" class="contact_form_name input_field" placeholder="이름" required="required" data-error="이름을 입력해주세요.">
-            <input type="text" id="contact_form_email" class="contact_form_email input_field" placeholder="전화번호 또는 이메일" required="required" data-error="전화번호 또는 이메일을 입력해주세요.">
-            <input type="text" id="contact_form_subject" class="contact_form_subject input_field" placeholder="제목" required="required" data-error="제목을 입력해주세요.">
-            <textarea id="contact_form_message" class="text_field contact_form_message" name="message" rows="4" placeholder="내용" required="required" data-error="내용을 입력해주세요."></textarea>
-            <button type="submit" id="form_submit_button" class="form_submit_button button">문의하기<span></span><span></span><span></span></button>
-          </form>
+      <!-- 예약 FAQ -->
+
+      <div class="col-lg-8">
+        <div class="faq_contents_area">
+
+          <!-- 질문 1 -->
+
+          <div class="faq_etc">
+            <div class="faq_etc_image">
+              <img src="images/faq_etc_1.JPG">
+            </div>
+            <div class="faq_etc_title"><h3>리뷰 작성을 하고 싶어요.</h3></div>
+            <div class="faq_etc_text">
+              <p>마이페이지 > 결제 정보 > 리뷰 작성을 통해 작성하실 수 있습니다. 이후 작성한 리뷰는 마이페이지 > 나의 리뷰 에서 확인하실 수 있습니다.</p>
+            </div>
+          </div>
+
+          <!-- 질문 2 -->
+
+          <div class="faq_etc">
+            <div class="faq_etc_image">
+              <img src="images/faq_etc_2.JPG">
+            </div>
+            <div class="faq_etc_title"><h3>자세한 문의 사항이나 분쟁 사항이 발생했어요.</h3></div>
+            <div class="faq_etc_text">
+              <p>상단 메뉴의 'Altspace란' 페이지에 접속하시면 다양한 연락 채널이 표기되어 있습니다.</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -90,7 +122,9 @@
             <div class="sidebar_list">
               <ul>
                 <li><a href="<c:url value="/contacts"/> ">고객센터 문의</a></li>
-                <li><a href="<c:url value="/faq1"/> ">FAQ</a></li>
+                <li><a href="<c:url value="/faq1"/> ">홈 FAQ</a></li>
+                <li><a href="<c:url value="/faq2"/> ">예약 FAQ</a></li>
+                <li><a href="<c:url value="/faq3"/> ">기타 FAQ</a></li>
               </ul>
             </div>
           </div>
@@ -100,12 +134,13 @@
   </div>
 </div>
 
-
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
 <script src="styles/bootstrap4/bootstrap.min.js"></script>
+<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="plugins/easing/easing.js"></script>
 <script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="js/contact_custom.js"></script>
+<script src="js/offers_custom.js"></script>
 <script src="js/darkmode.js"></script>
 <script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
 <script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
