@@ -38,13 +38,13 @@
       </div>
     </div>
 
-    <!-- 호스팅 중 숙소 -->
+    <!-- 호스팅 중 스페이스 -->
     <div class="col-12 col-sm-6 col-lg-4 col-xl">
       <div class="card shadow-sm h-100">
         <div class="card-body d-flex flex-column p-4">
-          <h6 class="card-title mb-2">🏨 호스팅 중 숙소</h6>
+          <h6 class="card-title mb-2">🏨 호스팅 중 스페이스</h6>
           <div class="flex-grow-1 d-flex align-items-center justify-content-center">
-            <h2 class="fw-bold mb-0 text-success">${hostingCount}개</h2>
+            <h2 class="fw-bold mb-0 text-success">${accommodationCount}개</h2>
           </div>
         </div>
       </div>
