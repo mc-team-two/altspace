@@ -41,6 +41,9 @@ public class MainController {
         // 오늘 체크인 예약 건수 가져오기
         Integer todayCheckInCount = paymentService.getTodayCheckInCount();
 
+        //  내일 체크인 예약 건수 가져오기
+        Integer tomorrowCheckInCount = paymentService.getTomorrowCheckInCount();
+
         // 다가오는 7일 이내의 예약 정보 가져오기
         List<Payments> upcoming7DaysReservations = paymentService.getUpcoming7DaysReservations();
 
@@ -57,6 +60,7 @@ public class MainController {
         model.addAttribute("reservationCount", reservationCount);
         model.addAttribute("monthTotal", formattedMonthTotal);
         model.addAttribute("todayCheckInCount", todayCheckInCount);
+        model.addAttribute("tomorrowCheckInCount", tomorrowCheckInCount);
         model.addAttribute("upcoming7DaysReservations", upcoming7DaysReservations);
         model.addAttribute("popularSpace", popularSpace);
         model.addAttribute("last6MonthsEarnings", earningsList);
