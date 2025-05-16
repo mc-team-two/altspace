@@ -24,6 +24,21 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
+
+    <style>
+        .footer_col{
+            margin-top: 50px;
+        }
+
+        .footer_content{
+            margin-bottom: 30px;
+        }
+
+        .weather {
+            display: flex;
+            font-size: clamp(0.3rem, 0.6vw, 0.5rem);
+        }
+</style>
 </head>
 
 <body>
@@ -38,10 +53,12 @@
                 <div class="container">
                     <div class="row">
                         <div class="col d-flex flex-row">
-                            <div class="weather"></div>
+                            <%-- Weather div를 user_box 내부로 이동 --%>
                             <c:choose>
                                 <c:when test="${sessionScope.user.name == null}">
                                     <div class="user_box ml-auto">
+                                            <%-- Weather div가 user_box 내부로 들어왔습니다. --%>
+                                        <div class="weather"></div>
                                         <div class="user_box_login user_box_link">
                                             <a href="<c:url value="/login"/> ">로그인</a>
                                         </div>
@@ -61,11 +78,13 @@
                                 </c:when>
                                 <c:otherwise>
                                     <div class="user_box ml-auto">
+                                            <%-- Weather div가 user_box 내부로 들어왔습니다. --%>
+                                        <div class="weather"></div>
                                         <div class="user_box_login user_box_link">
                                             <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                                         </div>
                                         <div class="user_box_login user_box_link">
-                                            <a href="<c:url value="/auth/logout"/> ">logout</a>
+                                            <a href="<c:url value="/auth/logout"/> ">로그아웃</a>
                                         </div>
                                         <div class="user_box_login theme-switch">
                                             <label class="theme-toggle" title="다크 모드 전환">
@@ -83,6 +102,7 @@
                     </div>
                 </div>
             </div>
+
 
             <!-- 헤더 메뉴 버튼 (홈, 어바웃, 예약, 고객센터, 마이페이지) -->
 
