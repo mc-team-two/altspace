@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/api")
+@RequestMapping("/api/dashboard")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class DashboardController {
+public class DashboardRestController {
 
     private final ReservationService reservationService;
     private final AccStatsService accStatsService;
