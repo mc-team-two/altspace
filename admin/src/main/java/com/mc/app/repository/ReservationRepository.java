@@ -15,4 +15,6 @@ public interface ReservationRepository extends MCRepository<Reservations,String>
     List<Reservations> selectUpcomingCheckIns(String hostId);
     List<Reservations> selectUpcomingCheckOuts(String hostId);
     List<Reservations> selectHostingNow(String hostId);
+    List<Reservations> selectFinishedReservations(String hostId);
+    List<Reservations> selectCanceledReservations(String hostId);
 }

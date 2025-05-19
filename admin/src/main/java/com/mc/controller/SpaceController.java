@@ -7,6 +7,7 @@ import com.mc.app.dto.Payments;
 import com.mc.app.dto.User;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.PaymentService;
+import com.mc.app.service.ReservationService;
 import com.mc.util.FileUploadUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +32,7 @@ public class SpaceController {
 
     final AccomService accomService;
     final PaymentService paymentService;
-
-    @Value("${app.dir.uploadimgdir}")
-    String uploadDir;
+    private final ReservationService reservationService;
 
     @Value("${app.key.kakaoJSApiKey}")
     String kakaoJSApiKey;
@@ -86,26 +85,9 @@ public class SpaceController {
     }
 
     @RequestMapping("/booking")
-    public String booking(Model model, HttpSession httpSession) throws Exception {
-        User user = (User) httpSession.getAttribute("user");
-        List<Payments> payments = paymentService.getByHostId(user.getUserId());
-
-        // accommodationId 기준으로 중복 제거 후 오름차순 정렬
-        List<Payments> distinctPayments = payments.stream()
-                .collect(Collectors.collectingAndThen(
-                        Collectors.toMap(Payments::getAccommodationId, p -> p, (p1, p2) -> p1),
-                        map -> map.values().stream()
-                                .sorted(Comparator.comparing(Payments::getAccommodationId)) // 오름차순 정렬
-                                .toList()
-                ));
-
-        List<Accommodations> accommodations = accomService.getByUserId(user.getUserId());
-
-        model.addAttribute("payments", distinctPayments); // 중복 제거된 리스트
-        model.addAttribute("accommodations", accommodations);
+    public String booking(Model model) {
         model.addAttribute("center", dir + "booking");
         model.addAttribute("index", dir + "index");
-
         return "index";
     }
 }
