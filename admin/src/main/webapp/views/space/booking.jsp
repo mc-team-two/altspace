@@ -48,6 +48,7 @@
                 success: (resp) => {
                     console.log(resp);
                     console.log(resp.canceled);
+                    bookingPage.bindCounts(resp);      // 이벤트 카운트 표시 (사이드바)
                     bookingPage.populateEvents(resp);  // 이벤트 푸시
                     bookingPage.renderCalendar();      // 캘린더 갱신
                     bookingPage.updateTimestamp();     // 데이터 기준일자 갱신
@@ -219,6 +220,14 @@
                 $('#all').prop('checked', allChecked);
                 bookingPage.filterEvents();
             });
+        },
+
+        // 사이드바 - 이벤트 카운트 표시
+        bindCounts: function(resp) {
+            $('#canceledLabel').append(" (" + resp.canceled.count + ")");
+            $('#upcomingLabel').append(" (" +resp.upcoming.count + ")");
+            $('#hostingNowLabel').append(" (" +resp.hostingNow.count + ")");
+            $('#finishedLabel').append(" (" +resp.finished.count + ")");
         }
     };
 
@@ -241,21 +250,21 @@
                             <input type="checkbox" class="form-check-input" id="all" checked>
                         </li>
                         <li class="list-group-item d-flex align-items-center justify-content-between">
-                            <label for="upcoming">
+                            <label for="upcoming" id="upcomingLabel">
                                 호스팅 예정된 예약
                             </label>
                             <input type="checkbox" class="form-check-input" id="upcoming" checked>
                         </li>
                         <li class="list-group-item d-flex align-items-center justify-content-between">
-                            <label for="finished">호스팅 완료된 예약</label>
+                            <label for="finished" id="finishedLabel">호스팅 완료된 예약</label>
                             <input type="checkbox" class="form-check-input" id="finished" checked>
                         </li>
                         <li class="list-group-item d-flex align-items-center justify-content-between">
-                            <label for="hostingNow">호스팅 진행중 예약</label>
+                            <label for="hostingNow" id="hostingNowLabel">호스팅 진행중 예약</label>
                             <input type="checkbox" class="form-check-input" id="hostingNow" checked>
                         </li>
                         <li class="list-group-item d-flex align-items-center justify-content-between">
-                            <label for="canceled">취소/환불된 예약</label>
+                            <label for="canceled" id="canceledLabel">취소/환불된 예약</label>
                             <input type="checkbox" class="form-check-input" id="canceled" checked>
                         </li>
                     </ul>
