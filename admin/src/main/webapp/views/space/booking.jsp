@@ -1,64 +1,89 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<!-- ✅ FullCalendar 스타일 -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
 <style>
-    .card {
-        position: relative;
-        background: linear-gradient(to bottom, #f7f8fa, #e1e6eb); /* 그라데이션 배경 */
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    #calendar {
+        max-width: 900px;
+        margin: 0 auto;
     }
 
-    .card:hover {
-        transform: translateY(-10px); /* 카드 호버시 살짝 위로 올라오는 효과 */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-    }
-
-    .card-img-top {
-        object-fit: cover;
-        height: 180px; /* 이미지 고정 크기 */
-    }
-
-    .card-title {
-        font-size: 1.1rem;
-        color: #333;
-    }
-
-    .card-text {
-        font-size: 0.9rem;
-        color: #ffffff;
-    }
-
-    .btn-primary {
-        background-color: #696cff;
-        border: none;
-        border-radius: 30px;
-    }
-
-    .btn-primary:hover {
-        background-color: #696cff;
+    /* 이벤트 박스를 크게 블럭형으로 */
+    .fc-daygrid-event {
+        display: block;
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 6px;
+        line-height: 1.6;
+        height: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>
 
-<div class="container">
-    <p class="text-muted">스페이스 관리 > <strong>일정 확인</strong></p>
-    <div class="row">
-        <c:forEach var="pay" items="${payments}">
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 shadow-sm border-0 rounded-lg overflow-hidden">
-                    <!-- 카드 상단 이미지 -->
-                    <img src="${pageContext.request.contextPath}/imgs/${pay.image1Name}"
-                         class="card-img-top" alt="${pay.name}">
-                    <div class="card-body text-center p-4">
-                        <h5 class="card-title font-weight-bold mb-3">${pay.name}</h5>
-                        <p class="card-text text-muted mb-3">${pay.location}</p>
-                        <a href="<c:url value='/payment/detail?accommodationId=${pay.accommodationId}'/>"
-                           class="btn btn-primary btn-block py-2 d-flex justify-content-center align-items-center">
-                            예약 내역 보기
-                        </a>
-                    </div>
+<!-- ✅ 캘린더 초기화 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const events = [
+            <c:forEach var="pay" items="${payments}" varStatus="loop">
+            <c:if test="${pay.payStatus eq '완료'}">
+            {
+                title: '[ID: ${pay.guestId}]님 예약 - ${pay.payAmount}원',
+                start: '${pay.checkIn}',
+                end: '${pay.checkOut}',
+                color: '#696cff',
+                guestId: '${pay.guestId}'
+            }<c:if test="${!loop.last}">,</c:if>
+            </c:if>
+            </c:forEach>
+        ];
+
+        const calendarEl = document.getElementById('calendar');
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'ko',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,listMonth'
+            },
+            eventDisplay: 'block',
+            events: events,
+            eventDidMount: function(info) {
+                // 툴팁에 전체 텍스트 표시
+                tippy(info.el, {
+                    content: info.event.title,
+                    theme: 'light',
+                    placement: 'top',
+                    delay: [200, 0]
+                });
+            }
+        });
+
+        calendar.render();
+    });
+</script>
+
+<div class="col-sm-12">
+    <p class="text-muted">스페이스 관리 > 내 스페이스 > <strong>예약 캘린더</strong></p>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item d-flex align-items-center justify-content-between">
+                            <span>전체보기</span>
+                            <input type="checkbox" class="form-check-input" checked>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-9">
+                    <div id="calendar" class="ms-0"></div>
                 </div>
             </div>
-        </c:forEach>
+        </div>
     </div>
 </div>
