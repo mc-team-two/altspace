@@ -26,44 +26,50 @@
 
 <!-- ✅ 캘린더 초기화 -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const events = [
-            <c:forEach var="pay" items="${payments}" varStatus="loop">
+    const bookingPage = {
+        init:function(){
+            this.makeCalendar();
+        },
+        makeCalendar:function(){
+            const events = [];
+
+            <c:forEach var="pay" items="${payments}">
             <c:if test="${pay.payStatus eq '완료'}">
-            {
+            events.push({
                 title: '[ID: ${pay.guestId}]님 예약 - ${pay.payAmount}원',
                 start: '${pay.checkIn}',
                 end: '${pay.checkOut}',
                 color: '#696cff',
                 guestId: '${pay.guestId}'
-            }<c:if test="${!loop.last}">,</c:if>
+            });
             </c:if>
             </c:forEach>
-        ];
 
-        const calendarEl = document.getElementById('calendar');
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            locale: 'ko',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,listMonth'
-            },
-            eventDisplay: 'block',
-            events: events,
-            eventDidMount: function(info) {
-                // 툴팁에 전체 텍스트 표시
-                tippy(info.el, {
-                    content: info.event.title,
-                    theme: 'light',
-                    placement: 'top',
-                    delay: [200, 0]
-                });
-            }
-        });
-
-        calendar.render();
+            const calendarEl = document.getElementById("calendar");
+            new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'ko',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,listMonth'
+                },
+                eventDisplay: 'block',
+                events: events,
+                eventDidMount: function (info) {
+                    // 툴팁에 전체 텍스트 표시
+                    tippy(info.el, {
+                        content: info.event.title,
+                        theme: 'light',
+                        placement: 'top',
+                        delay: [200, 0]
+                    });
+                }
+            }).render();
+        }
+    };
+    $(function(){
+        bookingPage.init();
     });
 </script>
 
@@ -81,7 +87,12 @@
                     </ul>
                 </div>
                 <div class="col-sm-9">
-                    <div id="calendar" class="ms-0"></div>
+                    <div id="calendar" class="ms-0">
+                        <div class="p-5 d-flex justify-content-center align-items-center flex-column">
+                            <span class="mb-2">예약 일정을 불러오는 중...</span>
+                            <p class="spinner-border text-primary mt-2"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
