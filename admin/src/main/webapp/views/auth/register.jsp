@@ -114,32 +114,25 @@
   <div class="register-container text-center">
 
     <%--logo--%>
-    <a href="/">
+    <a href="<c:url value="/"/>">
       <img src="<c:url value='/imgs/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
     </a>
 
-    <%--error message--%>
-    <c:if test="${msg != null}">
-      <div class="alert alert-danger" role="alert">
-          ${msg}
-      </div>
-    </c:if>
-
     <%--social login buttons--%>
-    <a href="/auth/kakao/authorize" class="btn btn-social btn-kakao">
-      <img src="<c:url value='/imgs/social_kakao_icon.svg'/>" width="24">카카오 계정으로 가입하기
+    <a href="<c:url value="/auth/kakao/authorize"/>" class="btn btn-social btn-kakao">
+      <img src="<c:url value='/imgs/social_kakao_icon.svg'/>" width="24" alt="">카카오 계정으로 로그인
     </a>
-    <a href="/auth/naver/authorize" class="btn btn-social btn-naver">
-      <img src="<c:url value='/imgs/social_naver_icon.svg'/>" width="24">네이버 계정으로 가입하기
+    <a href="<c:url value="/auth/naver/authorize"/>" class="btn btn-social btn-naver">
+      <img src="<c:url value='/imgs/social_naver_icon.svg'/>" width="24" alt="">네이버 계정으로 로그인
     </a>
-    <a href="/auth/google/authorize" class="btn btn-social btn-google">
-      <img src="<c:url value='/imgs/social_google_icon.svg'/>" width="24">구글 계정으로 가입하기
+    <a href="<c:url value="/auth/google/authorize"/>" class="btn btn-social btn-google">
+      <img src="<c:url value='/imgs/social_google_icon.svg'/>" width="24" alt="">구글 계정으로 로그인
     </a>
 
     <div class="divider">또는</div>
 
     <%--register form--%>
-    <form id="registrationForm" method="post" action="<c:url value='/auth/registerimpl'/>" class="text-left">
+    <form id="registrationForm" class="text-left">
       <%--role (using default value)--%>
       <input type="hidden" name="role" class="form-control" value="호스트" required>
 
@@ -201,32 +194,14 @@
         init:function(){
             // 이메일 중복 확인 버튼
             $('#btn-chk-email').click(() => {
-                const val = $('#email').val().trim();
-                if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                const emailVal = $('#email').val().trim();
+                if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
                     this.checkFormValidity();
                     return;
                 }
 
                 $('#btn-chk-email').prop('disabled', true);
-                $.ajax({
-                    url: "<c:url value='/auth/check-email'/>",
-                    type: 'POST',
-                    data: { email: val },
-                    success: (resp) => {
-                        $('#email-feedback').text(resp).css('color', 'green');
-                        $('#email').addClass('is-valid').removeClass('is-invalid');
-                        isEmailDuplicateChecked = true;
-                        $('#btn-chk-email').removeClass('btn-dark').addClass('btn-outline-secondary');
-                        this.checkFormValidity();
-                    },
-                    error: (xhr) => {
-                        $('#email-feedback').text(xhr.responseText).css('color', 'red');
-                        $('#email').addClass('is-invalid').removeClass('is-valid');
-                        isEmailDuplicateChecked = false;
-                        $('#btn-chk-email').prop('disabled', false);
-                        this.checkFormValidity();
-                    }
-                });
+                this.emailCheckImpl(emailVal);
             });
 
             // 이메일 입력 시 실시간 감지
@@ -238,7 +213,6 @@
                     .addClass('btn-dark');
                 this.checkFormValidity();
             });
-
             $('#email').on('keyup blur', ()=>{
                 this.validateEmailFormatOnly();
             })
@@ -319,6 +293,21 @@
                 }
                 registerPage.checkFormValidity();
             });
+
+            // 폼 제출
+            $("#registrationForm").on('submit', function(e) {
+              e.preventDefault();
+
+              const formData = {
+                role: $("input[name='role']").val(),
+                email: $("#email").val().trim(),
+                password: $("#pwd1").val().trim(),
+                name: $("#name").val().trim(),
+                phone: $("#phone").val().trim()
+              };
+
+              registerPage.registerImpl(formData);
+            });
         },
         validateEmailFormatOnly:function(){
             const val = $('#email').val().trim();
@@ -340,6 +329,46 @@
             const allValid = fields.every(field => $(field).hasClass('is-valid'));
 
             $('#btn-register').prop('disabled', !allValid);
+        },
+        registerImpl:function(formData){
+          $.ajax({
+            url: "<c:url value='/api/auth/register'/>",
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            data: formData,
+            beforeSend: function () {
+              $('#btn-register').prop('disabled', true).text('처리 중...');
+            },
+            success: function (response) {
+              console.log(response);
+              window.location.href = "<c:url value='/auth/login'/>";
+            },
+            error: function (xhr) {
+              console.log("" + xhr.status + ": " + xhr.responseText);
+              $('#btn-register').prop('disabled', false).text('회원가입');
+            }
+          });
+        },
+        emailCheckImpl:function(emailVal){
+          $.ajax({
+            url: "<c:url value='/api/auth/check-email'/>",
+            type: 'POST',
+            data: { email: emailVal },
+            success: (resp) => {
+              $('#email-feedback').text(resp).css('color', 'green');
+              $('#email').addClass('is-valid').removeClass('is-invalid');
+              this.isEmailDuplicateChecked = true;
+              $('#btn-chk-email').removeClass('btn-dark').addClass('btn-outline-secondary');
+              this.checkFormValidity();
+            },
+            error: (xhr) => {
+              $('#email-feedback').text(xhr.responseText).css('color', 'red');
+              $('#email').addClass('is-invalid').removeClass('is-valid');
+              this.isEmailDuplicateChecked = false;
+              $('#btn-chk-email').prop('disabled', false);
+              this.checkFormValidity();
+            }
+          });
         }
     };
     $(function(){

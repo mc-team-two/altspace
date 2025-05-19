@@ -14,7 +14,6 @@ public class AuthController {
 
     private String dir = "auth/";
 
-    // 페이지 연결
     @RequestMapping("/login")
     public String login(HttpSession httpSession) {
         // 로그인 세션이 존재하면 접근할 수 없음 (잘못된 접근)
@@ -22,6 +21,13 @@ public class AuthController {
             return "redirect:/";
         }
         return dir + "login";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.removeAttribute("user");
+        httpSession.invalidate();
+        return "redirect:/";
     }
 
     @RequestMapping("/register")
