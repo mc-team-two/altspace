@@ -139,10 +139,10 @@
                 this.wishlistToggle();
             });
             $('.translate-btn').click(function() {
-                change.translate.call(this); // 버튼 this를 전달
+                change.translate.call(this);
             });
             $('#summaryBtn').click(function() {
-                change.reviewSummary.call(this); // 버튼 this를 전달
+                change.reviewSummary.call(this);
             });
         },
         reqPay: function () {
@@ -227,17 +227,72 @@
             // 마우스 휠 확대/축소 막기 (정확한 메서드 사용)
             this.map.setZoomable(false);
 
+            // 지도 컨트롤
             var mapTypeControl = new kakao.maps.MapTypeControl();
             this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
             var zoomControl = new kakao.maps.ZoomControl();
             this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-            // 바로 마커 표시
+            // 숙소 마커 표시
             var markerPosition = new kakao.maps.LatLng(${accomm.latitude}, ${accomm.longitude});
             this.marker = new kakao.maps.Marker({
-                position: markerPosition
+                position: markerPosition,
+                image: new kakao.maps.MarkerImage(
+                    '/images/markers/accomMaker.png', // 집 아이콘
+                    new kakao.maps.Size(64, 64), // 큼직하게
+                    { offset: new kakao.maps.Point(32, 64) } // 중앙 하단 꼭짓점이 위치
+                )
             });
             this.marker.setMap(this.map);
+
+            // 장소 검색 서비스 사용
+            var ps = new kakao.maps.services.Places();
+
+            // 중심 좌표 기준 음식점 검색
+            var lat = ${accomm.latitude};
+            var lng = ${accomm.longitude};
+            var loc = new kakao.maps.LatLng(lat, lng);
+
+            ps.categorySearch('FD6', function (data, status, pagination) {
+                if (status === kakao.maps.services.Status.OK) {
+                    for (var i = 0; i < data.length; i++) {
+                        displayRestaurantMarker(data[i]);
+                    }
+                }
+            }, {
+                location: loc,
+                radius: 2000 // 2000미터 반경
+            });
+
+            const displayRestaurantMarker = (place) => {
+                // 마커 이미지 설정
+                const imageSrc = '/images/markers/RestaurantMaker.png'; // 음식점 아이콘
+                const imageSize = new kakao.maps.Size(48, 48); // 작게 표시
+                const imageOption = {
+                    offset: new kakao.maps.Point(20, 40) // 꼭짓점이 아래로 향하도록
+                };
+
+                const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+                const marker = new kakao.maps.Marker({
+                    map: this.map,
+                    position: new kakao.maps.LatLng(place.y, place.x),
+                    title: place.place_name,
+                    image: markerImage
+                });
+
+                // 마커에 간단한 인포윈도우 추가
+                const infowindow = new kakao.maps.InfoWindow({
+                    content: `<div style="padding:5px;font-size:12px;">${place.place_name}</div>`
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseover', function () {
+                    infowindow.open(this.map, marker);
+                });
+                kakao.maps.event.addListener(marker, 'mouseout', function () {
+                    infowindow.close();
+                });
+            }
         },
         wishlistToggle: function () {
             const accommId = parseInt("${accomm.accommodationId}");
