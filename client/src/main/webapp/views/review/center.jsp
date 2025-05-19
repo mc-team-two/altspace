@@ -11,37 +11,86 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
 
     <style>
+        .review-slider-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
         .review-slider-container {
-            overflow-x: auto;
-            white-space: nowrap;
-            padding-bottom: 8px;
+            overflow: hidden;
         }
 
         .review-slider-inner {
             display: flex;
             gap: 10px;
-            padding: 4px;
+            transition: scroll-left 0.4s ease-in-out;
+            scroll-behavior: smooth;
         }
 
         .slider-image-wrapper {
             flex: 0 0 auto;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .slider-image {
             height: 180px;
-            width: auto;
             display: block;
             object-fit: cover;
             border-radius: 12px;
         }
 
-        @media (min-width: 992px) {
-            .pl-lg-5 {
-                padding-left: 5rem !important;  /* 간격 확보 */
-            }
+        /* 버튼 기본 숨김 처리 */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.2); /* 더 투명하게 */
+            border: none;
+            color: rgba(255, 255, 255, 0.5);       /* 글자도 흐리게 */
+            font-size: 20px;
+            padding: 8px 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            display: none;                         /* 기본적으로 숨김 */
+            transition: all 0.3s ease;
+        }
+
+        .arrow:hover {
+            background-color: rgba(0, 0, 0, 0.6);  /* hover 시 더 진한 배경 */
+            color: rgba(255, 255, 255, 0.95);      /* hover 시 글자 색 선명 */
+        }
+
+        .left-arrow {
+            left: 10px;
+        }
+
+        .right-arrow {
+            right: 10px;
+        }
+
+        .slider-fade {
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+            display: none; /* 기본은 숨김 */
+        }
+
+        .left-fade {
+            left: 0;
+            background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+        }
+
+        .right-fade {
+            right: 0;
+            background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
         }
 
     </style>
@@ -67,6 +116,9 @@
                 const id = $(this).data('review-id');
                 reviewEdit.toggleForm(id);
             });
+
+            // 슬라이더 버튼 기능 초기화
+            reviewEdit.initSlider();
         },
 
         toggleForm: function (id) {
@@ -92,8 +144,67 @@
                 'action': '<c:url value="/review/update"/>'
             });
             $('#editForm-' + id + '-form').submit();
-        }
+        },
 
+        initSlider: function () {
+            $('.review-slider-wrapper').each(function () {
+                const $wrapper   = $(this);
+                const $container = $wrapper.find('.review-slider-container');
+                const $leftBtn   = $wrapper.find('.left-arrow');
+                const $rightBtn  = $wrapper.find('.right-arrow');
+                const $leftFade  = $wrapper.find('.left-fade');
+                const $rightFade = $wrapper.find('.right-fade');
+
+                // 스크롤 위치를 보고 fade & 버튼을 토글하는 함수
+                const updateFade = () => {
+                    const scrollLeft    = $container.scrollLeft();
+                    const maxScrollLeft = $container[0].scrollWidth - $container.outerWidth();
+
+                    // 왼쪽
+                    if (scrollLeft > 5) {
+                        $leftFade.fadeIn();   // fade 효과 보이기
+                        $leftBtn.fadeIn();    // 버튼 보이기
+                    } else {
+                        $leftFade.fadeOut();  // fade 효과 숨기기
+                        $leftBtn.fadeOut();   // 버튼 숨기기
+                    }
+
+                    // 오른쪽
+                    if (scrollLeft < maxScrollLeft - 5) {
+                        $rightFade.fadeIn();
+                        $rightBtn.fadeIn();
+                    } else {
+                        $rightFade.fadeOut();
+                        $rightBtn.fadeOut();
+                    }
+                };
+
+                // 1) 초기 상태에서 한 번 실행
+                updateFade();
+
+                // 2) 버튼 클릭 시 스크롤 + 상태 업데이트
+                $leftBtn.on('click', function () {
+                    $container.animate(
+                        { scrollLeft: '-=300' },
+                        400,
+                        updateFade
+                    );
+                });
+                $rightBtn.on('click', function () {
+                    $container.animate(
+                        { scrollLeft: '+=300' },
+                        400,
+                        updateFade
+                    );
+                });
+
+                // 3) 사용자가 직접 스크롤해도 상태 업데이트
+                $container.on('scroll', updateFade);
+
+                // 4) 창 크기 바뀌어도 상태 업데이트
+                $(window).on('resize', updateFade);
+            });
+        }
     };
 
     $(document).ready(function () {
@@ -166,14 +277,22 @@
 
                       <!-- 이미지 슬라이더 영역 -->
                       <c:if test="${not empty rv.imageUrl}">
-                          <div class="review-slider-container">
-                              <div class="review-slider-inner">
-                                  <c:forEach var="img" items="${rv.imageUrl}">
-                                      <div class="slider-image-wrapper">
-                                          <img src="/imgs/${img}" class="slider-image" />
-                                      </div>
-                                  </c:forEach>
+                          <div class="review-slider-wrapper">
+                              <div class="slider-fade left-fade"></div>
+                              <button class="arrow left-arrow">&#10094;</button>
+
+                              <div class="review-slider-container">
+                                  <div class="review-slider-inner">
+                                      <c:forEach var="img" items="${rv.imageUrl}">
+                                          <div class="slider-image-wrapper">
+                                              <img src="/imgs/${img}" class="slider-image" />
+                                          </div>
+                                      </c:forEach>
+                                  </div>
                               </div>
+
+                              <div class="slider-fade right-fade"></div>
+                              <button class="arrow right-arrow">&#10095;</button>
                           </div>
                       </c:if>
 

@@ -10,7 +10,6 @@
     <script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_styles.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_responsive.css"/>">
-    <%--<link rel="stylesheet" type="text/css" href="<c:url value="styles/about_styles.css"/>">--%>
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_responsive.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
@@ -29,38 +28,99 @@
             border-radius: 8px;
             margin-left: auto;
         }
+        .translate-select-wrapper {
+            /*width: auto;
+            min-width: 110px;
+            position: relative;
+            margin-left: auto;
+            margin-top: 8px;*/
+            display: inline-block; /* 혹은 flex-container 안이면 flex로 설정 */
+            position: relative;
+            margin-left: auto;
+            margin-top: 8px;
+            text-align: right; /* 오른쪽 정렬 */
+        }
 
-        /* 기본 상태 (흰 배경, 파란 글자) */
-        .translate-btn {
-            background-color: white;
-            color: #0d6efd; /* Bootstrap primary */
+        .translate-lang-select {
+            display: inline-block;
+
+            font-size: 0.9rem;
+            padding: 8px 10px 8px 28px;
             border: 1px solid #0d6efd;
+            color: #0d6efd;
+            border-radius: 50rem;
+            background-color: white;
             transition: all 0.2s ease;
+            box-shadow: 0 0 5px rgba(13, 110, 253, 0.15);
+            background-position: right 12px center; /* 화살표 위치 */
         }
 
-        /* hover 상태 (파란 배경, 흰 글자) */
-        .translate-btn:hover {
-            background-color: #0d6efd;
-            color: white;
+        .translate-lang-select:focus {
+            border-color: #0b5ed7;
+            box-shadow: 0 0 6px rgba(13, 110, 253, 0.35);
         }
 
-        /* 번역된 상태: 항상 파란 배경과 흰 글자 유지 */
-        .translate-btn.translated {
-            background-color: #0d6efd;
-            color: white;
-            border-color: #0d6efd;
+        .translate-lang-select:hover {
+            background-color: #f0f8ff;
         }
 
-        /* 번역된 상태에서도 hover는 유지되도록 (시각적으로 동일하게) */
-        .translate-btn.translated:hover {
-            background-color: #0b5ed7; /* 조금 더 진한 파랑으로 효과 */
-            color: white;
+        .translate-icon {
+            position: absolute;
+            top: 50%;
+            left: 12px;
+            transform: translateY(-50%);
+            color: #0d6efd;
+            font-size: 0.9rem;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 <script>
+    const translateOptionsText = {
+        "ko": {
+            placeholder: "번역",
+            ko: "한국어",
+            en: "영어",
+            "zh-CN": "중국어",
+            ja: "일본어"
+        },
+        "en": {
+            placeholder: "Translate",
+            ko: "Korean",
+            en: "English",
+            "zh-CN": "Chinese",
+            ja: "Japanese"
+        },
+        "zh-CN": {
+            placeholder: "翻译",
+            ko: "韩语",
+            en: "英语",
+            "zh-CN": "中文",
+            ja: "日语"
+        },
+        "ja": {
+            placeholder: "翻訳",
+            ko: "韓国語",
+            en: "英語",
+            "zh-CN": "中国語",
+            ja: "日本語"
+        }
+    };
     const change = {
+        updateSelectOptionsText: function ($select, lang) {
+            const labels = translateOptionsText[lang];
+            if (!labels) return;
+
+            $select.find('option').each(function () {
+                const val = $(this).val();
+                if (!val) {
+                    $(this).text(labels.placeholder);
+                } else {
+                    $(this).text(labels[val] || val);
+                }
+            });
+        },
         init: function () {
             const reservedRanges = [
                 <c:forEach var="r" items="${chInChOut}" varStatus="status">
@@ -138,8 +198,12 @@
             $('.wishlist-btn').click(() => {
                 this.wishlistToggle();
             });
-            $('.translate-btn').click(function() {
-                change.translate.call(this);
+            $('.translate-lang-select').change(function() {
+                const $select = $(this);
+                const selectedLang = $select.val();
+
+                change.translate.call(this); // 번역 실행
+                change.updateSelectOptionsText($select, selectedLang); // 옵션 텍스트도 변경
             });
             $('#summaryBtn').click(function() {
                 change.reviewSummary.call(this);
@@ -364,34 +428,29 @@
             }
         },
         translate: function(){
-            const $btn = $(this);
-            const reviewId = $btn.data('review-id');
-            const originalText = $btn.data('original');
+            const $select = $(this);
+            const reviewId = $select.data('review-id');
+            const selectedLang = $select.val();
+            const originalText = $select.data('original');
             const $comment = $('.review-comment[data-review-id="' + reviewId + '"]');
 
-            // 이미 번역 상태인지 확인
-            if ($btn.data('translated')) {
-                // 원문으로 복원
+            if (selectedLang === 'ko') {
                 $comment.text(originalText);
-                $btn.data('translated', false);
-                $btn.removeClass('translated');
-            } else {
-                // 서버에 번역 요청
-                $.ajax({
-                    type: 'POST',
-                    url: '/review/translate',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ msg: originalText, target: 'en' }),
-                    success: function (translatedText) {
-                        $comment.text(translatedText);
-                        $btn.data('translated', true);
-                        $btn.addClass('translated');
-                    },
-                    error: function () {
-                        alert('번역 중 오류가 발생했습니다.');
-                    }
-                });
+                return;
             }
+
+            $.ajax({
+                type: 'POST',
+                url: '/review/translate',
+                contentType: 'application/json',
+                data: JSON.stringify({ msg: originalText, target: selectedLang }),
+                success: function (translatedText) {
+                    $comment.text(translatedText);
+                },
+                error: function () {
+                    alert('번역 중 오류가 발생했습니다.');
+                }
+            });
         },
         reviewSummary: function(){
             const btn = document.getElementById("summaryBtn");
@@ -765,15 +824,23 @@
                         </div>
                     </c:if>
                 </div>
-                <div class="d-flex justify-content-end w-100 mb-1">
-                    <button type="button"
-                            class="btn btn-outline-primary btn-sm rounded-pill translate-btn me-2"
-                            style="font-size: 1rem; padding: 8px 15px; line-height: 1; width: auto; min-width: 0; margin-top: 8px"
-                            data-review-id="${rv.reviewId}"
-                            data-original="${rv.comment}">
-                        <i class="fa fa-globe mr-1" aria-hidden="true"></i> Aa
-                    </button>
+
+                <!-- 번역 셀렉트 -->
+                <div class="d-flex justify-content-end w-100 mb-2">
+                    <div class="translate-select-wrapper position-relative">
+                        <i class="fa fa-globe position-absolute translate-icon" aria-hidden="true"></i>
+                        <select class="form-select form-select-sm translate-lang-select"
+                                data-review-id="${rv.reviewId}"
+                                data-original="${rv.comment}">
+                            <option value="" selected disabled hidden>번역</option>
+                            <option value="ko">한국어</option>
+                            <option value="en">영어</option>
+                            <option value="zh-CN">중국어</option>
+                            <option value="ja">일본어</option>
+                        </select>
+                    </div>
                 </div>
+
                 <!-- 리뷰 내용 -->
                 <p class="mt-2 mb-0 text-body review-comment" data-review-id="${rv.reviewId}">${rv.comment}</p>
 
