@@ -18,29 +18,20 @@ public class ReviewRestController {
 
     private final ReviewRepliesService reviewRepliesService;
 
-
     @PostMapping("/add-reply")
     public ResponseEntity<?> addReply(@RequestBody ReviewReplies reply) {
-        // 날아오는 데이터 체크
-        log.info("Received reply data: {}", reply);
-
-        // 반환할 메시지
-        String msg = "";
-
         try {
             reviewRepliesService.add(reply);
-            msg = "성공적으로 등록되었습니다";
-            return ResponseEntity.ok(msg);
+            return ResponseEntity.ok("성공적으로 등록되었습니다");
         } catch (Exception e) {
-            e.printStackTrace();
-            msg = "오류가 발생했습니다. 관리자에게 문의해주세요.";
-            return ResponseEntity.internalServerError().body(msg + e.getMessage());
+            return ResponseEntity
+                    .internalServerError()
+                    .body("오류가 발생했습니다. 관리자에게 문의해주세요." + e.getMessage());
         }
     }
 
     @PostMapping("/del-reply")
     public ResponseEntity<?> delReply(@RequestParam("replyId") int replyId) {
-        log.info("Received replyId: {}", replyId);
         try {
             reviewRepliesService.del(replyId);
             return ResponseEntity.ok("성공적으로 삭제되었습니다.");
