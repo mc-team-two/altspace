@@ -3,6 +3,14 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<head>
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
+</head>
 
 <div class="menu trans_500">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
@@ -53,7 +61,7 @@
                                 <div class="search_item">
                                     <div><spring:message code="destination"/></div>
                                     <input type="text" id="searchInput" class="destination search_input"
-                                           placeholder=<spring:message code="destination_placeholder"/> required="required">
+                                           placeholder="<spring:message code="destination_placeholder"/>" required="required">
                                 </div>
                                 <div class="search_item">
                                     <div><spring:message code="checkin"/></div>
@@ -117,7 +125,7 @@
                                   class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                 <div class="search_item">
                                     <div><spring:message code="destination"/></div>
-                                    <input type="text" class="destination search_input" placeholder=<spring:message code="destination_placeholder"/>
+                                    <input type="text" class="destination search_input" placeholder="<spring:message code="destination_placeholder"/>"
                                            required="required">
                                 </div>
                                 <div class="search_item">
@@ -187,7 +195,7 @@
                                   class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                 <div class="search_item">
                                     <div><spring:message code="destination"/></div>
-                                    <input type="text" class="destination search_input" placeholder=<spring:message code="destination_placeholder"/>
+                                    <input type="text" class="destination search_input" placeholder="<spring:message code="destination_placeholder"/>"
                                            required="required">
                                 </div>
                                 <div class="search_item">
@@ -344,25 +352,25 @@
                                         <div class="offers_icons">
                                             <ul class="offers_icons_list">
                                                 <c:if test="${a.barbecue}">
-                                                    <li class="offers_icons_item" data-popper-content=<spring:message code="barbecue"/>>
+                                                    <li class="offers_icons_item" data-popper-content="<spring:message code="barbecue"/>">
                                                         <i class="fa fa-fire-alt text-warning" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.breakfast}">
-                                                    <li class="offers_icons_item" data-popper-content=<spring:message code="breakfast"/>>
+                                                    <li class="offers_icons_item" data-popper-content="<spring:message code="breakfast"/>">
                                                         <i class="fa fa-coffee text-danger" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.pet}">
-                                                    <li class="offers_icons_item" data-popper-content=<spring:message code="petfrendly"/>>
+                                                    <li class="offers_icons_item" data-popper-content="<spring:message code="petfrendly"/>">
                                                         <i class="fa fa-paw text-info" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.pool}">
-                                                    <li class="offers_icons_item" data-popper-content=<spring:message code="swimmingpool"/>>
+                                                    <li class="offers_icons_item" data-popper-content="<spring:message code="swimmingpool"/>">
                                                         <i class="fas fa-swimmer text-primary" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
@@ -413,7 +421,7 @@
                 </div>
                 <div id="chatbot" class="chatbot">
                     <div id="chat-icon" class="chat-icon">
-                        <i class="fa fa-comment" aria-hidden="true"></i>
+                        <i class="fas fa-comments" aria-hidden="true"></i>
                     </div>
                     <div id="chat-window" class="chat-window">
                         <div class="chat-header">
@@ -424,14 +432,14 @@
 
                         </div>
                         <div class="chat-input">
-                            <input type="text" id="chat-input" placeholder=<spring:message code="chat-input"/>>
+                            <input type="text" id="chat-input" placeholder="<spring:message code="chat-input"/>">
                             <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
                         </div>
                     </div>
                 </div>
                 <div id="gemini-chatbot" class="chatbot chatbot-gemini">
                     <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                        <i class="fa fa-android" aria-hidden="true"></i>
+                        <i class="fab fa-android" aria-hidden="true"></i>
                     </div>
                     <div id="gemini-chat-window" class="chat-window gemini-window">
                         <div class="chat-header gemini-header">
@@ -440,7 +448,7 @@
                         </div>
                         <div class="chat-messages" id="gemini-chat-messages"></div>
                         <div class="chat-input">
-                            <input type="text" id="gemini-chat-input" placeholder=<spring:message code="gemini-chat-input"/>>
+                            <input type="text" id="gemini-chat-input" placeholder="<spring:message code="gemini-chat-input"/>">
                             <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
                         </div>
                     </div>

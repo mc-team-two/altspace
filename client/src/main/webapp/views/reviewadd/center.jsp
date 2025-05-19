@@ -16,6 +16,10 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet"
+          href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 
     <style>
         .star-rating {
@@ -171,7 +175,7 @@
     </div>
     <div id="chatbot" class="chatbot">
         <div id="chat-icon" class="chat-icon">
-            <i class="fa fa-comment" aria-hidden="true"></i>
+            <i class="fas fa-comments" aria-hidden="true"></i>
         </div>
         <div id="chat-window" class="chat-window">
             <div class="chat-header">
@@ -190,7 +194,7 @@
 
     <div id="gemini-chatbot" class="chatbot chatbot-gemini">
         <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-            <i class="fa fa-android" aria-hidden="true"></i>
+            <i class="fab fa-android" aria-hidden="true"></i>
         </div>
         <div id="gemini-chat-window" class="chat-window gemini-window">
             <div class="chat-header gemini-header">

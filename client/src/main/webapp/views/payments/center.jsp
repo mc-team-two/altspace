@@ -872,7 +872,7 @@
 
 <div id="chatbot" class="chatbot">
     <div id="chat-icon" class="chat-icon">
-        <i class="fa fa-comment" aria-hidden="true"></i>
+        <i class="fas fa-comments" aria-hidden="true"></i>
     </div>
     <div id="chat-window" class="chat-window">
         <div class="chat-header">
@@ -890,7 +890,7 @@
 </div>
 <div id="gemini-chatbot" class="chatbot chatbot-gemini">
     <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-        <i class="fa fa-android" aria-hidden="true"></i>
+        <i class="fab fa-android" aria-hidden="true"></i>
     </div>
     <div id="gemini-chat-window" class="chat-window gemini-window">
         <div class="chat-header gemini-header">

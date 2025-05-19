@@ -406,6 +406,8 @@ $(document).ready(function () {
     function displayGeoSearchResults(accommodationsWithRating) {
         const offersGrid = $(".offers_grid");
         offersGrid.empty();
+        const pagination = $(".blog_navigation");
+        pagination.hide(); // Hide Pagenation when Geolocation serach loaded on page.
 
         if (accommodationsWithRating && accommodationsWithRating.length > 0) {
             $.each(accommodationsWithRating, function (index, item) {
@@ -597,6 +599,7 @@ $(document).ready(function () {
     function displaySearchResults(accommodationsWithRating) {
         const offersGrid = $(".offers_grid");
         offersGrid.empty();
+        pagination.hide();
 
         if (accommodationsWithRating && accommodationsWithRating.length > 0) {
             $.each(accommodationsWithRating, function (index, item) {

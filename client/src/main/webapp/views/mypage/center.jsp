@@ -7,6 +7,10 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='styles/blog_responsive.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='styles/darkmode.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='plugins/font-awesome-4.7.0/css/font-awesome.min.css'/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 </head>
 
 <!-- 메뉴 -->
@@ -50,26 +54,42 @@
 
                     <div class="hotel_info_text">
                         <c:if test="${errorMessage != null}">
-                            <p class="error-message" style="color:red; margin-bottom:15px;">${errorMessage}</p>
+                            <p class="error-message text-danger mb-3">${errorMessage}</p>
                         </c:if>
 
+                        <br>
+                        <br>
                         <c:if test="${not empty user}">
-                            <div class="user-info-item"><span class="user-info-label">이메일:</span><span class="user-info-value">${user.email}</span></div>
-                            <div class="user-info-item"><span class="user-info-label">이름:</span><span class="user-info-value">${user.name}</span></div>
-                            <div class="user-info-item"><span class="user-info-label">전화번호:</span><span class="user-info-value">${user.phone}</span></div>
-                            <div class="user-info-item"><span class="user-info-label">가입일:</span><span class="user-info-value">${user.createDay}</span></div>
-                            <div class="user-info-item">
-                                <span class="user-info-label">정보 수정일:</span>
-                                <span class="user-info-value">
-                                    <c:choose>
-                                        <c:when test="${user.updateDay == null}">
-                                            <span class="no-update-message" style="color:#777;">수정 기록 없음</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            ${user.updateDay}
-                                        </c:otherwise>
-                                    </c:choose>
-                                </span>
+                            <div class="user-info-list">
+                                <div class="user-info-item d-flex mb-2">
+                                    <span class="user-info-label flex-shrink-0 me-2 fw-bold">이메일:</span>
+                                    <span class="user-info-value">${user.email}</span>
+                                </div>
+                                <div class="user-info-item d-flex mb-2">
+                                    <span class="user-info-label flex-shrink-0 me-2 fw-bold">이름:</span>
+                                    <span class="user-info-value">${user.name}</span>
+                                </div>
+                                <div class="user-info-item d-flex mb-2">
+                                    <span class="user-info-label flex-shrink-0 me-2 fw-bold">전화번호:</span>
+                                    <span class="user-info-value">${user.phone}</span>
+                                </div>
+                                <div class="user-info-item d-flex mb-2">
+                                    <span class="user-info-label flex-shrink-0 me-2 fw-bold">가입일:</span>
+                                    <span class="user-info-value">${user.createDay}</span>
+                                </div>
+                                <div class="user-info-item d-flex mb-2">
+                                    <span class="user-info-label flex-shrink-0 me-2 fw-bold">정보 수정일:</span>
+                                    <span class="user-info-value">
+                    <c:choose>
+                        <c:when test="${user.updateDay == null}">
+                            <span class="text-muted">수정 기록 없음</span>
+                        </c:when>
+                        <c:otherwise>
+                            ${user.updateDay}
+                        </c:otherwise>
+                    </c:choose>
+                </span>
+                                </div>
                             </div>
                         </c:if>
                     </div>
@@ -79,7 +99,7 @@
 
                 <div id="chatbot" class="chatbot">
                     <div id="chat-icon" class="chat-icon">
-                        <i class="fa fa-comment" aria-hidden="true"></i>
+                        <i class="fas fa-comments" aria-hidden="true"></i>
                     </div>
                     <div id="chat-window" class="chat-window">
                         <div class="chat-header">
@@ -97,7 +117,7 @@
                 </div>
                 <div id="gemini-chatbot" class="chatbot chatbot-gemini">
                     <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                        <i class="fa fa-android" aria-hidden="true"></i>
+                        <i class="fab fa-android" aria-hidden="true"></i>
                     </div>
                     <div id="gemini-chat-window" class="chat-window gemini-window">
                         <div class="chat-header gemini-header">

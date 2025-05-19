@@ -8,7 +8,10 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="plugins/font-awesome-4.7.0/css/font-awesome.min.css"/>">
-
+    <link rel="stylesheet"
+          href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 <style>
     /* blog_styles.css 혹은 내부 style 태그에 추가 */
     @media (min-width: 992px) {
@@ -112,7 +115,7 @@
         </div> <!-- row 끝 -->
         <div id="chatbot" class="chatbot">
             <div id="chat-icon" class="chat-icon">
-                <i class="fa fa-comment" aria-hidden="true"></i>
+                <i class="fas fa-comments" aria-hidden="true"></i>
             </div>
             <div id="chat-window" class="chat-window">
                 <div class="chat-header">
@@ -130,7 +133,7 @@
         </div>
         <div id="gemini-chatbot" class="chatbot chatbot-gemini">
             <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                <i class="fa fa-android" aria-hidden="true"></i>
+                <i class="fab fa-android" aria-hidden="true"></i>
             </div>
             <div id="gemini-chat-window" class="chat-window gemini-window">
                 <div class="chat-header gemini-header">

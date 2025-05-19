@@ -7,6 +7,10 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='styles/blog_responsive.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='styles/darkmode.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="plugins/font-awesome-4.7.0/css/font-awesome.min.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
+    <link rel="stylesheet"
+          href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 </head>
 
 <body>
@@ -106,7 +110,7 @@
                 </div>
                 <div id="chatbot" class="chatbot">
                     <div id="chat-icon" class="chat-icon">
-                        <i class="fa fa-comment" aria-hidden="true"></i>
+                        <i class="fas fa-comments" aria-hidden="true"></i>
                     </div>
                     <div id="chat-window" class="chat-window">
                         <div class="chat-header">
@@ -117,14 +121,14 @@
 
                         </div>
                         <div class="chat-input">
-                            <input type="text" id="chat-input" placeholder=<spring:message code="chat-input"/>>
+                            <input type="text" id="chat-input" placeholder="<spring:message code="chat-input"/>">
                             <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
                         </div>
                     </div>
                 </div>
                 <div id="gemini-chatbot" class="chatbot chatbot-gemini">
                     <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                        <i class="fa fa-android" aria-hidden="true"></i>
+                        <i class="fab fa-android" aria-hidden="true"></i>
                     </div>
                     <div id="gemini-chat-window" class="chat-window gemini-window">
                         <div class="chat-header gemini-header">
@@ -133,7 +137,7 @@
                         </div>
                         <div class="chat-messages" id="gemini-chat-messages"></div>
                         <div class="chat-input">
-                            <input type="text" id="gemini-chat-input" placeholder=<spring:message code="gemini-chat-input"/>>
+                            <input type="text" id="gemini-chat-input" placeholder="<spring:message code="gemini-chat-input"/>">
                             <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
                         </div>
                     </div>

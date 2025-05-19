@@ -23,7 +23,7 @@
     transform: scale(1.1);
 }
 #gemini-chat-icon.raised {
-    bottom: 37rem !important;
+    bottom: 43rem !important;
 }
 
 /* 챗봇 패널 */
@@ -32,7 +32,7 @@
     right: 1.25rem;
     width: 100%;
     max-width: 20rem;
-    height: 40vh;
+    height: 60vh;
     max-height: 80vh;
     display: flex;
     flex-direction: column;
