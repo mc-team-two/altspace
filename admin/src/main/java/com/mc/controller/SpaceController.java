@@ -68,8 +68,8 @@ public class SpaceController {
     }
 
 
-    @RequestMapping("/detail")
-    public String detail(@RequestParam("id") Integer id,
+    @RequestMapping("/mod")
+    public String mod(@RequestParam("id") Integer id,
                          Model model){
         try {
             Accommodations data = accomService.get(id);
@@ -80,7 +80,7 @@ public class SpaceController {
         }
 
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
-        model.addAttribute("center", dir+"detail");
+        model.addAttribute("center", dir+"mod");
 
         return "index";
     }
