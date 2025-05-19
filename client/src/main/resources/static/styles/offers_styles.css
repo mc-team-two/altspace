@@ -1567,9 +1567,9 @@ section
 }
 
 
-.offers .offers_icons .offers_icons_list .offers_icons_item > i.fa {
-	color: #fd7e14 !important;
-}
+/*.offers .offers_icons .offers_icons_list .offers_icons_item > i.fa {*/
+/*	color: #fd7e14 !important;*/
+/*}*/
 .popper-tooltip {
 	background-color: rgba(0, 0, 0, 0.8);
 	color: white;

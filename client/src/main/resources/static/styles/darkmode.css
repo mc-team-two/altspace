@@ -63,6 +63,116 @@ body {
     color: white !important;
 }
 
+/* 사이드바 및 리뷰 카드 색상 */
+.items_4css .single_listing,
+.sidebar_list4css {
+    color: var(--text-color) !important;
+    background-color: var(--bg-color) !important;
+}
+
+[data-theme="dark"] .sidebar_list4css {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* 리뷰 없음 메시지 카드 스타일 */
+[data-theme="dark"] .item_none {
+    background-color: #3a3a3a;
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .item_none h5,
+[data-theme="dark"] .item_none p {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .item_none img {
+    filter: brightness(0.9);
+}
+
+/* 리뷰 카드 */
+[data-theme="dark"] .card {
+    background-color: #2e2e2e !important;
+    color: #f5f5f5 !important;
+    border-color: #444;
+}
+
+[data-theme="dark"] .card p,
+[data-theme="dark"] .card small {
+    color: #ccc;
+}
+
+/* 공통 텍스트 */
+[data-theme="dark"] .text-muted {
+    color: #bbb !important;
+}
+
+[data-theme="dark"] .font-weight-bold {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .text-primary {
+    color: #90caf9 !important;
+}
+
+/* 버튼 및 드롭다운 */
+[data-theme="dark"] .btn-light {
+    background-color: #444 !important;
+    color: #f5f5f5 !important;
+}
+
+[data-theme="dark"] .dropdown-menu {
+    background-color: #333;
+    color: #f5f5f5;
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background-color: #444;
+    color: #fa9e1b;
+}
+
+/* 리뷰 이미지 슬라이더 */
+[data-theme="dark"] .review-slider-container,
+[data-theme="dark"] .slider-image-wrapper {
+    background-color: #2e2e2e;
+}
+
+/* 개별 텍스트 요소 */
+[data-theme="dark"] .item_none h5.mb-1.font-weight-bold.text-dark,
+[data-theme="dark"] .text-muted.mb-0,
+[data-theme="dark"] .hotel_title {
+    color: var(--text-color) !important;
+}
+
+
+
+[data-theme="dark"] .offers_item {
+    background-color: #2e2e2e !important;
+    color: var(--text-color) !important;
+    border: 1px solid #444 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .offers_item p,
+[data-theme="dark"] .offers_item small {
+    color: #ccc !important;
+}
+
+[data-theme="dark"] .offers_icons_item i,
+[data-theme="dark"] .offer_reviews_title,
+[data-theme="dark"] .offer_reviews_subtitle {
+    color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .offer_reviews_rating {
+    background-color: #fa9e1b !important; /* 테마 포인트 컬러 유지 */
+    color: #fff !important;
+}
+
+[data-theme="dark"] .book_button {
+    background-color: #444 !important;
+    color: #fff !important;
+}
 /*==============================================================================*/
 /*==================== 개선된 다크모드 토글 스위치 스타일 =======================*/
 /*==============================================================================*/

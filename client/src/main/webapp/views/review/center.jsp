@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_styles.css"/>">
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_responsive.css"/>">
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
+  <link rel="stylesheet" type="text/css" href="<c:url value="plugins/font-awesome-4.7.0/css/font-awesome.min.css"/>">
 
     <style>
         .review-slider-container {
@@ -128,6 +129,15 @@
       <div class="row">
           <!-- 리뷰 리스트 (왼쪽) -->
           <div class="col-lg-8">
+              <c:choose>
+                  <c:when test="${empty ReviewList}">
+                      <div class="card mb-4 p-4 shadow-sm text-center item_none">
+                          <img src="images/avatar.png" alt="리뷰를 남겨주세요!" class="img-fluid mb-3" style="max-width: 120px;">
+                          <h5 class="mb-1 font-weight-bold text-dark">아직 리뷰를 하지 않았어요!</h5>
+                          <p class="text-muted mb-0">소중한 후기를 남겨주세요.</p>
+                      </div>
+                  </c:when>
+              <c:otherwise>
               <!-- 내가 작성한 리뷰 리스트 출력 -->
               <c:forEach var="rv" items="${ReviewList}">
                   <div class="card mb-4 p-3 shadow-sm">
@@ -226,10 +236,12 @@
 
                   </div>
               </c:forEach>
+              </c:otherwise>
+                  </c:choose>
           </div>
 
           <!-- 사이드바 (오른쪽) -->
-          <div class="col-lg-4">
+          <div class="col-lg-4 sidebar_list4css">
               <div class="sidebar_archives" style="margin-left: 100px;">
                   <div class="sidebar_title">MENU</div>
                   <div class="sidebar_list">
@@ -237,6 +249,7 @@
                           <li><a href="<c:url value='/details'/>">나의 예약</a></li>
                           <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
                           <li><a href="<c:url value="/wishlist"/> ">찜 목록</a></li>
+                          <li><a href="<c:url value="/mypage"/>">나의 정보</a></li>
                       </ul>
                   </div>
               </div>

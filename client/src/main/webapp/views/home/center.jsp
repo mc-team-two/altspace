@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 <div class="menu trans_500">
@@ -22,7 +23,7 @@
 
 <div class="home">
     <div class="home_background parallax-window" data-parallax="scroll"
-         data-image-src="images/offer_background.jpg"></div>
+         data-image-src="images/image20250516174110.gif"></div>
     <div class="home_content">
         <div class="home_title">
             <spring:message code="hometitle"/>
@@ -344,25 +345,25 @@
                                             <ul class="offers_icons_list">
                                                 <c:if test="${a.barbecue}">
                                                     <li class="offers_icons_item" data-popper-content=<spring:message code="barbecue"/>>
-                                                        <i class="fa fa-fire" aria-hidden="true" title="바베큐"></i>
+                                                        <i class="fa fa-fire-alt text-warning" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.breakfast}">
                                                     <li class="offers_icons_item" data-popper-content=<spring:message code="breakfast"/>>
-                                                        <i class="fa fa-coffee" aria-hidden="true" title="조식"></i>
+                                                        <i class="fa fa-coffee text-danger" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.pet}">
                                                     <li class="offers_icons_item" data-popper-content=<spring:message code="petfrendly"/>>
-                                                        <i class="fa fa-paw" aria-hidden="true" title="반려동물"></i>
+                                                        <i class="fa fa-paw text-info" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.pool}">
                                                     <li class="offers_icons_item" data-popper-content=<spring:message code="swimmingpool"/>>
-                                                        <i class="fa fa-tint" aria-hidden="true" title="수영장"></i>
+                                                        <i class="fas fa-swimmer text-primary" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>

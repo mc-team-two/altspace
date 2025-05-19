@@ -120,11 +120,11 @@ p a:hover::after
 }
 ::selection
 {
-	
+
 }
 p::selection
 {
-	
+
 }
 h1{font-size: 48px;}
 h2{font-size: 36px;}
@@ -138,14 +138,14 @@ h1, h2, h3, h4, h5, h6
 	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
-h1::selection, 
-h2::selection, 
-h3::selection, 
-h4::selection, 
-h5::selection, 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
 h6::selection
 {
-	
+
 }
 .form-control
 {
@@ -983,9 +983,53 @@ section
 	border: solid 2px #fa9e1c;
 }
 
+.offers_item {
+	background: #ffffff; /* 카드 배경 */
+	border: 1px solid #e5e7eb; /* 얇은 테두리 */
+	border-radius: 10px; /* 둥근 모서리 */
+	padding: 20px;
+	margin-bottom: 30px; /* 카드 간 간격 */
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); /* 부드러운 그림자 */
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.offers_item:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 호버 시 강조 */
+}
+
+.item_none {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem 1rem;
+	background-color: #f9f9f9;
+	border-radius: 10px;
+}
+
+.item_none h5 {
+	color: #2b2b2b;
+	font-size: 16px;
+	margin-bottom: 0.5rem;
+}
+
+.item_none p {
+	color: #888;
+	font-size: 14px;
+}
 /*********************************
 7. Sidebar
 *********************************/
+
+.sidebar_list4css{
+    position: relative;
+    background-color: #ffffff; /* 밝은 배경 (다크모드라면 #1e1e1e 등으로 조정) */
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1); /* 오른쪽 방향 부드러운 그림자 */
+    /*border-left: 2px solid #fa9e1b; !* 포인트 컬러로 강조된 좌측 선 *!*/
+}
 
 .sidebar_search
 {
@@ -1382,7 +1426,7 @@ section
 }
 .footer_nav
 {
-	
+
 }
 .footer_nav_list
 {

@@ -7,23 +7,23 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_responsive.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
-</head>
+    <link rel="stylesheet" type="text/css" href="<c:url value="plugins/font-awesome-4.7.0/css/font-awesome.min.css"/>">
 
-    <style>
-        /* blog_styles.css 혹은 내부 style 태그에 추가 */
-        @media (min-width: 992px) {
-            .pl-lg-5 {
-                padding-left: 5rem !important;  /* 간격 확보 */
-            }
+<style>
+    /* blog_styles.css 혹은 내부 style 태그에 추가 */
+    @media (min-width: 992px) {
+        .pl-lg-5 {
+            padding-left: 5rem !important; /* 간격 확보 */
         }
-    </style>
+    }
+</style>
 </head>
-
-<body>
 
 <div class="menu trans_500">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-        <div class="menu_close_container"><div class="menu_close"></div></div>
+        <div class="menu_close_container">
+            <div class="menu_close"></div>
+        </div>
         <div class="logo menu_logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
         <ul>
             <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
@@ -35,7 +35,8 @@
 </div>
 <!-- 홈 -->
 <div class="home">
-    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
+    <div class="home_background parallax-window" data-parallax="scroll"
+         data-image-src="images/offer_background.jpg"></div>
     <div class="home_content">
         <div class="home_title">나의 예약</div>
     </div>
@@ -45,84 +46,56 @@
 <div class="blog">
     <div class="container">
         <div class="row align-items-start" style="min-height: 100vh;">
-            <!-- 예약 내역 -->
+
+            <!-- 예약 내역 (왼쪽 8열) -->
             <div class="col-lg-8">
-                <div class="row">
-                    <c:forEach var="py" items="${paymentList}">
-                        <div class="col-md-6 mb-4">
-                            <div class="card shadow-sm h-100">
-                                <!-- 숙박 이름 -->
-                                <div class="card-header bg-primary text-white">
-                                    <h5 class="mb-0">${py.name}</h5>
-                                </div>
-
-                                <!-- 이미지 + 체크인 정보 -->
-                                <img src="${pageContext.request.contextPath}/images/${py.image1Name}"
-                                     class="card-img-top"
-                                     alt="숙소 이미지"
-                                     style="height: 200px; object-fit: cover;">
-
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between mb-2" style="margin-top: -5px;">
-                                        <span class="badge bg-info text-dark" style="font-size: 0.85rem;">
-                                            결제 상태: ${py.payStatus}
-                                        </span>
-                                        <span style="font-size: 0.85rem; color: black;">
-                                            체크인: ${py.checkIn}
-                                        </span>
+                <c:choose>
+                    <c:when test="${empty paymentList}">
+                        <div class="card mb-6 p-4 shadow-sm text-center item_none">
+                            <img src="images/avatar.png" alt="여행을 계획하러 가볼까요?" class="img-fluid mb-3"
+                                 style="max-width: 120px;">
+                            <h5 class="mb-1 font-weight-bold text-dark">아직 예약을 하지 않았어요!</h5>
+                            <p class="text-muted mb-0">여행을 계획하러 가볼까요?</p>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="row">
+                            <c:forEach var="py" items="${paymentList}">
+                                <div class="col-md-6 mb-4">
+                                    <div class="card shadow-sm h-100 offers_item">
+                                        <div class="card-header bg-primary text-white">
+                                            <h5 class="mb-0">${py.name}</h5>
+                                        </div>
+                                        <img src="${pageContext.request.contextPath}/images/${py.image1Name}"
+                                             class="card-img-top" alt="숙소 이미지"
+                                             style="height: 200px; object-fit: cover;">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between mb-2" style="margin-top: -5px;">
+                        <span class="badge bg-info text-dark" style="font-size: 0.85rem;">
+                          결제 상태: ${py.payStatus}
+                        </span>
+                                                <span style="font-size: 0.85rem; color: black;">
+                          체크인: ${py.checkIn}
+                        </span>
+                                            </div>
+                                            <div class="d-flex flex-column gap-1">
+                                                <a class="btn btn-outline-secondary btn-sm"
+                                                   href="<c:url value='/detail?id=${py.accommodationId}'/>">숙소 정보</a>
+                                                <a class="btn btn-outline-primary btn-sm"
+                                                   href="<c:url value='/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&paymentId=${py.paymentId}'/>">결제 정보</a>
+                                            </div>
+                                        </div>
                                     </div>
-
-
-                                    <!-- 링크들 -->
-                                    <div class="d-flex flex-column gap-1">
-                                        <a class="btn btn-outline-secondary btn-sm" href="<c:url value='/detail?id=${py.accommodationId}'/>">숙소 정보</a>
-                                        <a class="btn btn-outline-primary btn-sm" href="<c:url value='/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&paymentId=${py.paymentId}'/>">결제 정보</a>
-                                    </div>
                                 </div>
-                            </div>
+                            </c:forEach>
                         </div>
-                    </c:forEach>
-                    <div id="chatbot" class="chatbot">
-                        <div id="chat-icon" class="chat-icon">
-                            <i class="fa fa-comment" aria-hidden="true"></i>
-                        </div>
-                        <div id="chat-window" class="chat-window">
-                            <div class="chat-header">
-                                <span>챗봇과 대화하기</span>
-                                <button id="chat-close-btn" class="chat-close-btn">&times;</button>
-                            </div>
-                            <div class="chat-messages" id="chat-messages">
-
-                            </div>
-                            <div class="chat-input">
-                                <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
-                                <button id="chat-send-btn">보내기</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="gemini-chatbot" class="chatbot chatbot-gemini">
-                        <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                            <i class="fa fa-android" aria-hidden="true"></i>
-                        </div>
-                        <div id="gemini-chat-window" class="chat-window gemini-window">
-                            <div class="chat-header gemini-header">
-                                <span>Gemini 챗봇</span>
-                                <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
-                            </div>
-                            <div class="chat-messages" id="gemini-chat-messages"></div>
-                            <div class="chat-input">
-                                <input type="text" id="gemini-chat-input" placeholder="Gemini에게 물어보세요">
-                                <button id="gemini-chat-send-btn">보내기</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
-            <!-- 사이드바 -->
+            <!-- 사이드바 (오른쪽 4열) -->
             <div class="col-lg-4">
-                <div class="position-sticky" style="top: 100px; z-index: 10;">
-                    <!-- 사이드바 메뉴 -->
+                <div class="position-sticky sidebar_list4css" style="top: 100px; z-index: 10;">
                     <div class="sidebar_archives" style="margin-left: 100px;">
                         <div class="sidebar_title">MENU</div>
                         <div class="sidebar_list">
@@ -136,10 +109,44 @@
                     </div>
                 </div>
             </div>
+        </div> <!-- row 끝 -->
+        <div id="chatbot" class="chatbot">
+            <div id="chat-icon" class="chat-icon">
+                <i class="fa fa-comment" aria-hidden="true"></i>
+            </div>
+            <div id="chat-window" class="chat-window">
+                <div class="chat-header">
+                    <span>챗봇과 대화하기</span>
+                    <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+                </div>
+                <div class="chat-messages" id="chat-messages">
 
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+                    <button id="chat-send-btn">보내기</button>
+                </div>
+            </div>
+        </div>
+        <div id="gemini-chatbot" class="chatbot chatbot-gemini">
+            <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+                <i class="fa fa-android" aria-hidden="true"></i>
+            </div>
+            <div id="gemini-chat-window" class="chat-window gemini-window">
+                <div class="chat-header gemini-header">
+                    <span>Gemini 챗봇</span>
+                    <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+                </div>
+                <div class="chat-messages" id="gemini-chat-messages"></div>
+                <div class="chat-input">
+                    <input type="text" id="gemini-chat-input" placeholder="Gemini에게 물어보세요">
+                    <button id="gemini-chat-send-btn">보내기</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 <script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
 <script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
