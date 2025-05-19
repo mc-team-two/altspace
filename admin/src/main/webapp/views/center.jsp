@@ -7,6 +7,85 @@
   <!-- 1행: 요약 카드 -->
   <div class="row text-center mb-4">
 
+    <!-- 다가오는 예약 (오늘, 내일 체크인) -->
+    <div class="col-12 col-sm-6 col-lg-4 col-xl">
+      <div class="card shadow-sm h-100">
+        <div class="card-body p-4">
+          <h6 class="card-title mb-3 text-primary">📌 다가오는 예약</h6>
+          <div class="d-flex justify-content-around">
+            <div>
+              <div class="fw-bold text-muted">오늘</div>
+              <div class="text-primary fw-bold fs-4">${todayCheckInCount}건</div>
+            </div>
+            <div>
+              <div class="fw-bold text-muted">내일</div>
+              <div class="text-primary fw-bold fs-4">${tomorrowCheckInCount}건</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 현재 예약 건수 -->
+    <div class="col-12 col-sm-6 col-lg-4 col-xl">
+      <div class="card shadow-sm h-100">
+        <div class="card-body d-flex flex-column p-4">
+          <h6 class="card-title mb-2">📅 현재 예약 건수</h6>
+          <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+            <h2 class="fw-bold mb-0 text-info">${reservationCount}건</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 호스팅 중 스페이스 -->
+    <div class="col-12 col-sm-6 col-lg-4 col-xl">
+      <div class="card shadow-sm h-100">
+        <div class="card-body d-flex flex-column p-4">
+          <h6 class="card-title mb-2">🏨 호스팅 중 스페이스</h6>
+          <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+            <h2 class="fw-bold mb-0 text-success">${accommodationCount}개</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 체크아웃 예정 -->
+    <div class="col-12 col-sm-6 col-lg-4 col-xl">
+      <div class="card shadow-sm h-100">
+        <div class="card-body p-4">
+          <h6 class="card-title mb-3 text-danger">🚪 체크아웃 예정</h6>
+          <div class="d-flex justify-content-around">
+            <div>
+              <div class="fw-bold text-muted">오늘</div>
+              <div class="text-danger fw-bold fs-4">${todayCheckOutCount}건</div>
+            </div>
+            <div>
+              <div class="fw-bold text-muted">내일</div>
+              <div class="text-danger fw-bold fs-4">${tomorrowCheckOutCount}건</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 전체 예약 -->
+    <div class="col-12 col-sm-6 col-lg-4 col-xl">
+      <div class="card shadow-sm h-100">
+        <div class="card-body d-flex flex-column p-4">
+          <h6 class="card-title mb-2">📂 전체 예약</h6>
+          <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+            <h2 class="fw-bold mb-0 text-secondary">${totalReservationCount}건</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 2행: 요약 카드 -->
+  <div class="row text-center mb-4">
+
     <!-- 이번달 수익 카드-->
     <div class="col-md-3 mb-3">
       <div class="card shadow-sm h-100">
@@ -49,7 +128,7 @@
 
   </div>
 
-  <!-- 2행: 다가오는 예약, 인기 스페이스-->
+  <!-- 3행: 다가오는 예약, 인기 스페이스-->
   <div class="row">
 
     <!-- 다가오는 예약 -->
@@ -129,7 +208,7 @@
     </c:choose>
   </div>
 
-  <!-- 3행: 수익 차트 -->
+  <!-- 4행: 수익 차트 -->
   <div class="card shadow-sm mb-4">
     <div class="card-header bg-light fw-bold">📈 최근 6개월 수익 추이</div>
     <div class="card-body">
