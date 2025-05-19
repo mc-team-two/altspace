@@ -15,6 +15,7 @@
     }
     .fc-daygrid-event {
         margin-bottom: 5px;
+        opacity: 0.9;
 /*        display: block;
         padding: 8px;
         font-size: 16px;
