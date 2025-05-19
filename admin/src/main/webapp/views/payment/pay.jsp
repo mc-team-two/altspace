@@ -2,95 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="container">
-    <p class="text-muted">결제 내역 > <strong>결제 내역 조회</strong></p>
+<style>
+    .list-group-item:hover {
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>
 
-    <!-- ✅ 상단 요약 박스 -->
-    <div class="row text-center mb-4">
-        <div class="col">
-            <div class="border rounded py-3">
-                <strong>결제 완료</strong>
-                <div class="text-success fs-4">
-                    <c:out value="${statusCounts.완료}" default="0"/>건
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="border rounded py-3">
-                <strong>취소</strong>
-                <div class="text-warning fs-4">
-                    <c:out value="${statusCounts.취소}" default="0"/>건
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="border rounded py-3">
-                <strong>환불</strong>
-                <div class="text-danger fs-4">
-                    <c:out value="${statusCounts.환불}" default="0"/>건
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ✅ 필터 영역 -->
-    <div class="d-flex flex-wrap align-items-center mb-3 gap-2 justify-content-center">
-        <div class="btn-group">
-            <button class="btn btn-outline-primary date-btn" data-months="1">1개월</button>
-            <button class="btn btn-outline-primary date-btn" data-months="3">3개월</button>
-            <button class="btn btn-outline-primary date-btn" data-months="6">6개월</button>
-            <button class="btn btn-outline-primary date-btn" data-months="12">12개월</button>
-        </div>
-        <input type="date" id="startDate" class="form-control" style="width: 160px;" />
-        <span>~</span>
-        <input type="date" id="endDate" class="form-control" style="width: 160px;" />
-        <button id="searchBtn" class="btn btn-dark">조회 🔍</button>
-    </div>
-
-    <!-- ✅ 테이블 -->
-    <div class="card">
-        <div class="card-body table-responsive">
-            <table id="paymentsTable" class="table table-hover">
-                <thead>
-                <tr>
-                    <th>스페이스</th>
-                    <th>체크인</th>
-                    <th>체크아웃</th>
-                    <th>금액</th>
-                    <th>결제수단</th>
-                    <th>결제시각</th>
-                    <th>결제상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="it" items="${payments}">
-                    <tr>
-                        <td><a href="<c:url value='/space/detail?id=${it.accommodationId}'/>">${it.name}</a></td>
-                        <td>${it.checkIn}</td>
-                        <td>${it.checkOut}</td>
-                        <td data-order="${it.payAmount}">
-                            <fmt:formatNumber value="${it.payAmount}" type="number" groupingUsed="true"/>원
-                        </td>
-                        <td>${it.payMeans}</td>
-                        <td data-date="${it.createDay}"><small>${it.createDay}</small></td>
-                        <td data-status="${it.payStatus}">
-                                <span style="
-                                <c:choose>
-                                <c:when test='${it.payStatus == "완료"}'>color: green;</c:when>
-                                <c:when test='${it.payStatus == "취소"}'>color: orange;</c:when>
-                                <c:when test='${it.payStatus == "환불"}'>color: red;</c:when>
-                                </c:choose>
-                                        ">
-                                        ${it.payStatus}
-                                </span>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 <script>
     $(function () {
         let currentStatus = "전체";
@@ -223,3 +141,95 @@
     });
 
 </script>
+
+<div class="container">
+    <p class="text-muted">결제 내역 > <strong>결제 내역 조회</strong></p>
+
+    <!-- ✅ 상단 요약 박스 -->
+    <div class="row text-center mb-4">
+        <div class="col">
+            <div class="bg-light border rounded py-3">
+                <strong>결제 완료</strong>
+                <div class="text-success fs-4">
+                    <c:out value="${statusCounts.완료}" default="0"/>건
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="bg-light border rounded py-3">
+                <strong>취소</strong>
+                <div class="text-warning fs-4">
+                    <c:out value="${statusCounts.취소}" default="0"/>건
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="bg-light border rounded py-3">
+                <strong>환불</strong>
+                <div class="text-danger fs-4">
+                    <c:out value="${statusCounts.환불}" default="0"/>건
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ 필터 영역 -->
+    <div class="d-flex flex-wrap align-items-center mb-3 gap-2 justify-content-center">
+        <ul class="list-group list-group-horizontal bg-light">
+            <li class="list-group-item date-btn" data-months="1">1개월</li>
+            <li class="list-group-item date-btn" data-months="3">3개월</li>
+            <li class="list-group-item date-btn" data-months="6">6개월</li>
+            <li class="list-group-item date-btn" data-months="12">12개월</li>
+        </ul>
+        <input type="date" id="startDate" class="form-control" style="width: 160px;" />
+        <span>~</span>
+        <input type="date" id="endDate" class="form-control" style="width: 160px;" />
+        <button id="searchBtn" class="btn btn-dark">조회 🔍</button>
+    </div>
+
+    <!-- ✅ 테이블 -->
+    <div class="card">
+        <div class="card-body table-responsive">
+            <table id="paymentsTable" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>스페이스</th>
+                    <th>체크인</th>
+                    <th>체크아웃</th>
+                    <th>금액</th>
+                    <th>결제수단</th>
+                    <th>결제시각</th>
+                    <th>결제상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="it" items="${payments}">
+                    <tr>
+                        <td><a href="<c:url value='/space/detail?id=${it.accommodationId}'/>">${it.name}</a></td>
+                        <td>${it.checkIn}</td>
+                        <td>${it.checkOut}</td>
+                        <td data-order="${it.payAmount}">
+                            <fmt:formatNumber value="${it.payAmount}" type="number" groupingUsed="true"/>원
+                        </td>
+                        <td>${it.payMeans}</td>
+                        <td data-date="${it.createDay}"><small>${it.createDay}</small></td>
+                        <td data-status="${it.payStatus}">
+                                <span style="
+                                <c:choose>
+                                <c:when test='${it.payStatus == "완료"}'>color: green;</c:when>
+                                <c:when test='${it.payStatus == "취소"}'>color: orange;</c:when>
+                                <c:when test='${it.payStatus == "환불"}'>color: red;</c:when>
+                                </c:choose>
+                                        ">
+                                        ${it.payStatus}
+                                </span>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
