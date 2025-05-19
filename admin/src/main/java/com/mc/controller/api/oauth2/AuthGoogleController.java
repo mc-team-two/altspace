@@ -1,4 +1,4 @@
-package com.mc.controller.oauth2;
+package com.mc.controller.api.oauth2;
 
 import com.mc.app.dto.SocialUser;
 import com.mc.app.dto.User;
@@ -8,8 +8,11 @@ import com.mc.util.AuthUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,27 +27,29 @@ import org.springframework.web.client.RestTemplate;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class AuthNaverController {
+public class AuthGoogleController {
 
     private final SocialUserService socialUserService;
     private final UserService userService;
+    private final StandardPBEStringEncryptor standardPBEStringEncryptor;
 
-    @Value("${app.key.naverApiKey}")
-    String NAVER_CLIENT_ID;
+    @Value("${app.key.googleApiKey}")
+    String GOOGLE_CLIENT_ID;
 
-    @Value("${app.key.naverApiSecretKey}")
-    String NAVER_CLIENT_SECRET;
+    @Value("${app.key.googleApiSecretKey}")
+    String GOOGLE_CLIENT_SECRET;
 
-    @Value("${app.url.serverUrl}/auth/naver/token")
-    private String NAVER_REDIRECT_URI;
+    @Value("${app.url.serverUrl}/auth/google/token")
+    String GOOGLE_REDIRECT_URI;
 
-    @RequestMapping("/auth/naver/authorize")
-    public String naverAuthorize(HttpSession httpSession) {
-
+    @RequestMapping("/auth/google/authorize")
+    public String googleAuthorize(HttpSession httpSession) {
         // 랜덤 state 생성
         SecureRandom random = new SecureRandom();
         String state = new BigInteger(130, random).toString();
@@ -52,66 +57,95 @@ public class AuthNaverController {
         // state 세션에 저장
         httpSession.setAttribute("state", state);
 
-        String targetUrl = "https://nid.naver.com/oauth2.0/authorize";
-        targetUrl += "?client_id=" + NAVER_CLIENT_ID
-                + "&redirect_uri=" + NAVER_REDIRECT_URI
+        // Scope 설정
+        String scope = "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/user.phonenumbers.read";
+        
+        String targetUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+        targetUrl += "?client_id=" + GOOGLE_CLIENT_ID
+                + "&redirect_uri=" + GOOGLE_REDIRECT_URI
                 + "&response_type=code"
-                + "&state=" + state;
+                + "&state=" + state
+                + "&scope=" + scope;
 
         return "redirect:" + targetUrl;
     }
 
-    @RequestMapping("/auth/naver/token")
-    public String naverCallback(@RequestParam("code") String code, HttpSession httpSession) throws Exception {
+    @RequestMapping("/auth/google/token")
+    public String googleCallback(@RequestParam("code") String code) throws ParseException {
+        String targetUrl = "https://oauth2.googleapis.com/token";
 
-        String targetUrl = "https://nid.naver.com/oauth2.0/token";
-        targetUrl += "?grant_type=authorization_code";
-        targetUrl += "&client_id=" + NAVER_CLIENT_ID;
-        targetUrl += "&client_secret=" + NAVER_CLIENT_SECRET;
-        targetUrl += "&code=" + code;
-        targetUrl += "&state=" + httpSession.getAttribute("state");
+        // 헤더
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
 
-        // POST 요청 (동기)
+        // 바디
+        Map<String, String> body = new HashMap<>();
+        body.put("grant_type", "authorization_code");
+        body.put("client_id", GOOGLE_CLIENT_ID);
+        body.put("client_secret", GOOGLE_CLIENT_SECRET);
+        body.put("redirect_uri", GOOGLE_REDIRECT_URI);
+        body.put("code", code);
+
+        // HttpEntity 생성
+        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(body, headers);
+
+        // POST 요청 보내기
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.postForEntity(targetUrl, null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(targetUrl, HttpMethod.POST, requestEntity, String.class);
 
+        // 응답 처리
         String responseBody = response.getBody();
 
+        // Json으로 변환
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(responseBody);
 
+        // 토큰 추출
         String accessToken = (String) jsonObject.get("access_token");
 
-        return "redirect:/auth/naver/info?access_token=" + accessToken;
+        return "redirect:/auth/google/info?access_token=" + accessToken;
     }
 
-    @RequestMapping("/auth/naver/info")
-    public String naverInfo(@RequestParam("access_token") String token,
-                            HttpSession httpSession,
-                            Model model) throws Exception {
+    @RequestMapping("/auth/google/info")
+    public String googleInfo(@RequestParam("access_token") String token,
+                             HttpSession httpSession,
+                             Model model) throws Exception {
 
-        String targetUrl = "https://openapi.naver.com/v1/nid/me";
+        // 1. 프로필 기본 정보 요청
+        // RestTemplate
+        RestTemplate restTemplate = new RestTemplate();
 
+        // 헤더
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
 
+        // request 엔터티 생성
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
-        // GET 요청 (동기)
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(targetUrl, HttpMethod.GET, requestEntity, String.class);
+        // Get 요청 후 response 받기
+        String targetUrl = "https://www.googleapis.com/oauth2/v3/userinfo";
+        ResponseEntity<String> profileResponse = restTemplate.exchange(targetUrl, HttpMethod.GET, requestEntity, String.class);
 
-        String responseBody = response.getBody();
-
+        // 응답을 json으로 변환
         JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(responseBody);
+        JSONObject profileJson = (JSONObject) jsonParser.parse(profileResponse.getBody());
 
-        JSONObject naverAccount = (JSONObject) jsonObject.get("response");
-        String providerUserId = "naver" + naverAccount.get("id");
-        String name = (String) naverAccount.get("name");
-        String email = (String) naverAccount.get("email");
-        String phone = (String) naverAccount.get("mobile");
-        // 커넥트 시점이 안 넘어와서 직접 여기에서 초기화
+        String providerUserId = "google" + profileJson.get("sub");
+        String name = (String) profileJson.get("name");
+        String email = (String) profileJson.get("email");
+
+        // 2. 전화번호 정보 요청
+        String phoneUrl = "https://people.googleapis.com/v1/people/me?personFields=phoneNumbers";
+        ResponseEntity<String> phoneResponse = restTemplate.exchange(phoneUrl, HttpMethod.GET, requestEntity, String.class);
+        JSONObject phoneJson = (JSONObject) jsonParser.parse(phoneResponse.getBody());
+
+        String phone = "";
+        JSONArray phones = (JSONArray) phoneJson.get("phoneNumbers");
+        if (phones != null && !phones.isEmpty()) {
+            JSONObject phoneObject = (JSONObject) phones.get(0);
+            phone = (String) phoneObject.get("value");
+        }
+
         LocalDateTime connectedAt = LocalDateTime.now();
 
         // 분기점
@@ -120,6 +154,7 @@ public class AuthNaverController {
             // 기존 소셜 사용자 여부 확인
             User dbUser = socialUserService.getBySocialId(providerUserId);
             if (dbUser != null) {
+                dbUser.setName(standardPBEStringEncryptor.decrypt(dbUser.getName()));
                 httpSession.setAttribute("user", dbUser);
                 return "redirect:/";
             }
@@ -156,12 +191,13 @@ public class AuthNaverController {
 
             SocialUser newSocialUser = SocialUser.builder()
                     .userId(newUser.getUserId())
-                    .provider("naver")
+                    .provider("google")
                     .providerUserId(providerUserId)
                     .connectedAt(connectedAt)
                     .build();
             socialUserService.add(newSocialUser);
 
+            newUser.setName(standardPBEStringEncryptor.decrypt(newUser.getName()));
             httpSession.setAttribute("user", newUser);
             return "redirect:/";
 

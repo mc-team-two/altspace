@@ -15,4 +15,7 @@ public interface AccomRepository extends MCRepository<Accommodations,Integer> {
     List<Accommodations> selectByHostId(String hostId);
     void updateAccommodation(Accommodations accommodation);  // update 메서드 추가
     List<Accommodations> findByUserId(String userId);
+
+    // 호스트 ID에 해당하는 숙소 개수
+    int countByHostId(String hostId);
 }

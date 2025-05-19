@@ -161,7 +161,7 @@
         },
         addReply: function (replyData) {
             $.ajax({
-                url: "<c:url value='/review/add-reply'/>",
+                url: "<c:url value='/api/review/add-reply'/>",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(replyData),
@@ -176,7 +176,7 @@
         },
         delReply: function(replyId){
             $.ajax({
-                url: "/review/del-reply?replyId=" + replyId,
+                url: "/api/review/del-reply?replyId=" + replyId,
                 type: "POST",
                 success: function (response) {
                     alert(response); // 성공 메시지

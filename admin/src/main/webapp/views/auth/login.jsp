@@ -1,15 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
     <title>로그인</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%--jQuery--%>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <%--bootstrap--%>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
     <style>
         body {
             background-color: #f5f5f9;
@@ -135,29 +136,25 @@
 <div class="container">
     <div class="login-container text-center">
 
-        <a href="/">
+        <a href="<c:url value="/"/>">
             <img src="<c:url value='/imgs/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
         </a>
 
-        <c:if test="${msg != null}">
-            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                오류: ${msg}
-            </div>
-        </c:if>
-
-        <a href="/auth/kakao/authorize" class="btn btn-social btn-kakao">
-            <img src="<c:url value='/imgs/social_kakao_icon.svg'/>" width="24">카카오 계정으로 로그인
+        <a href="<c:url value="/auth/kakao/authorize"/>" class="btn btn-social btn-kakao">
+            <img src="<c:url value='/imgs/social_kakao_icon.svg'/>" width="24" alt="">카카오 계정으로 로그인
         </a>
-        <a href="/auth/naver/authorize" class="btn btn-social btn-naver">
-            <img src="<c:url value='/imgs/social_naver_icon.svg'/>" width="24">네이버 계정으로 로그인
+        <a href="<c:url value="/auth/naver/authorize"/>" class="btn btn-social btn-naver">
+            <img src="<c:url value='/imgs/social_naver_icon.svg'/>" width="24" alt="">네이버 계정으로 로그인
         </a>
-        <a href="/auth/google/authorize" class="btn btn-social btn-google">
-            <img src="<c:url value='/imgs/social_google_icon.svg'/>" width="24">구글 계정으로 로그인
+        <a href="<c:url value="/auth/google/authorize"/>" class="btn btn-social btn-google">
+            <img src="<c:url value='/imgs/social_google_icon.svg'/>" width="24" alt="">구글 계정으로 로그인
         </a>
 
         <div class="divider">또는</div>
 
-        <form method="post" action="/auth/loginimpl" class="text-left">
+        <div class="alert alert-danger" style="display:none;" id="login-alert"></div>
+
+        <form id="loginForm" method="post" action="<c:url value="/api/auth/login"/>" class="text-left">
             <div class="form-group">
                 <label for="email">이메일</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required value="host@example.com">
@@ -170,22 +167,55 @@
         </form>
 
         <div class="footer-links mt-3">
-            <a href="/auth/register">회원가입</a>
+            <a href="<c:url value="/auth/register"/>">회원가입</a>
             <span class="divider-pipe">|</span>
-            <a href="/auth/find-account">ID/PW 찾기</a>
+            <a href="<c:url value="/auth/find-account"/>">ID/PW 찾기</a>
         </div>
 
     </div>
 </div>
-<!-- 정책 메뉴는 화면 아래 고정 -->
-<footer class="mt-auto text-center py-3">
-    <div class="footer-links">
-        <a href="/privacy" class="mx-2">개인정보처리방침</a>
-        <a href="/terms" class="mx-2">이용약관</a>
-        <a href="/youth-policy" class="mx-2">청소년 보호정책</a>
-        <a href="/location" class="mx-2">위치정보서비스 이용약관</a>
-    </div>
-</footer>
+<script>
+    const loginPage = {
+        init:function(){
+            $('#email').on('focus', function(){
+                $('#login-alert').fadeOut(300); // 300ms 동안 서서히 사라짐
+            });
 
+            $('#password').on('focus', function(){
+                $('#login-alert').fadeOut(300);
+            });
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+                const formData = {
+                    "email": $("#email").val(),
+                    "password": $("#password").val()
+                };
+                loginPage.loginImpl(formData);
+            })
+        },
+        loginImpl:function(formData){
+            $.ajax({
+                url: "<c:url value='/api/auth/login'/>",
+                type: "POST",
+                contentType: "application/x-www-form-urlencoded",
+                data: formData,
+                beforeSend: function () {
+                    $('#login-btn').prop('disabled', true).text('처리 중...');
+                },
+                success: function (response) {
+                    console.log(response);
+                    window.location.href = "<c:url value='/'/>";
+                },
+                error: function (xhr) {
+                    $('#login-alert').text(xhr.responseText).fadeIn(300);
+                    $('#login-btn').prop('disabled', false).text('로그인');
+                }
+            });
+        },
+    };
+    $(function(){
+        loginPage.init();
+    });
+</script>
 </body>
 </html>

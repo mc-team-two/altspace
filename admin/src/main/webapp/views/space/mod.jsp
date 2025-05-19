@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -74,11 +74,12 @@
 </style>
 
 <script>
-    const space_update = {
+    const spaceModPage = {
         map: null,
         geocoder: null,
         marker: null,
         init: function () {
+            // 인원 증감 버튼
             $('#plus-btn').click(() => {
                 let val = Number($('#personMax').val());
                 $('#personMax').val(val + 1);
@@ -89,28 +90,42 @@
                     $('#personMax').val(val - 1);
                 }
             });
-            $('#btn_update').click(() => {
-                if (this.validateForm()) {
-                    let c = confirm('스페이스 정보를 수정하시겠습니까?');
-                    if (c === true) {
-                        this.send();
+
+            // 지도 표시하는 버튼
+            $('#search-btn').on('click', function(){
+                this.displayMap();
+            });
+
+            // 수정(저장)
+            $('#spaceModForm').on('submit', (e) => {
+                e.preventDefault();
+                if (spaceModPage.validateForm()) {
+                    let c = confirm('수정하시겠습니까?');
+                    if (c === true ) {
+                        const formData = new FormData($('#spaceModForm')[0]);
+                        this.modImpl(formData);
                     }
                 }
             });
-            $('#search-btn').on('click', function(){
-                space_update.displayMap(); // 주소 검색 팝업은 이때만 뜰 수 있도록 함.
-            });
         },
         validateForm: function () {
-            // 1) 위치 체크
+            // 위치
             if (!$('#location').val().trim()) {
                 alert("위치를 입력해주세요.");
+                $('#location').focus();
                 return false;
             }
 
-            // 2) 대표 사진 체크: 신규 파일 선택 or 기존 이미지가 보여지고 있으면 OK
-            const mainInput  = document.getElementById("image1");
-            const preview1   = document.getElementById("preview1");
+            // 공간 명칭
+            if ($('#name').val().trim() === '') {
+                alert("스페이스 이름을 입력해주세요.");
+                $('#name').focus();
+                return false;
+            }
+
+            // 대표 사진 체크 (기존 이미지 체크)
+            const mainInput  = $("#image1")[0];
+            const preview1   = $("#preview1")[0];
             const hasNewFile = mainInput.files && mainInput.files.length > 0;
             const hasOldImg  = preview1.querySelector("img") !== null;
 
@@ -122,12 +137,27 @@
 
             return true;
         },
+        modImpl: function (formData) {
+            $.ajax({
+                url: "<c:url value="/api/space/mod"/>",
+                type: "POST",
+                data: formData, // FormData 객체를 직접 전송
+                processData: false, // jQuery가 데이터를 쿼리 문자열로 변환하지 않도록 설정
+                contentType: false, // jQuery가 Content-Type 헤더를 설정하지 않도록 설정 (브라우저가 multipart/form-data로 자동 설정)
+                success:function(resp) {
+                    alert(resp);
+                    location.href="<c:url value="/space/list"/>";
+                },
+                error: function(xhr) {
+                    alert(xhr.responseText);
+                }
+            });
+        },
         initMap: function(){
             $('#map').css({
                 width: '100%',
                 height: '300px'
-            });
-            $('#map').show();
+            }).show();
 
             let container = $('#map').get(0);   // DOM
             let option = {
@@ -185,21 +215,12 @@
                     });
                 }
             }).open();
-        },
-        send: function () {
-            $('#space_update_form').attr({
-                'method': 'post',
-                'enctype': 'multipart/form-data',
-                'action': '<c:url value="/space/updatespace"/>'
-            });
-            $('#space_update_form').submit();
-            alert("스페이스 정보가 수정되었습니다.")
         }
     };
 
     $(function(){
-        space_update.init();
-        space_update.initMap(); // 지도만 미리 보여주기 (팝업 없이)
+        spaceModPage.init();
+        spaceModPage.initMap(); // 지도만 미리 보여주기 (팝업 없이)
 
         // 기존 미리보기 이미지 위에만 '제거' 버튼 추가
         for (let i = 1; i <= 5; i++) {
@@ -231,6 +252,7 @@
         }
     }
 
+    // 기존의 이미지 불러오기 함수
     function renderPreview(src, previewContainer, input) {
         const img = document.createElement("img");
         img.src = src;
@@ -269,25 +291,14 @@
         }
     }
 
-    // 폼 검증 함수
-    function validateForm() {
-        const mainImage = document.getElementById("image1");
-        if (!mainImage.files || mainImage.files.length === 0) {
-            alert("대표 사진은 필수입니다.");
-            mainImage.focus();
-            return false;
-        }
-        return true;
-    }
-
 </script>
 
 <div class="container">
-    <p class="text-muted">공간 관리 > <a href="<c:url value="/space/get"/>">내 공간 관리</a> > 스페이스 수정</p>
+    <p class="text-muted">스페이스 관리 > 내 스페이스 > <strong>수정</strong></p>
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <form action="/space/updatespace" method="post" enctype="multipart/form-data" id="space_update_form" style="overflow-x:hidden">
+                <form id="spaceModForm" style="overflow-x:hidden">
                     <h1 class="h3 mb-2 text-gray-800">기본 정보</h1>
                     <div class="row">
 
@@ -296,8 +307,8 @@
 
                     <%--category--%>
                     <div class="form-group col-sm-4">
-                        <label for="category">
-                            <h6 class="m-0 font-weight-bold text-primary">건물 유형</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="category">
+                            건물 유형
                         </label>
                         <select class="form-control" id="category" name="category">
                             <option value="아파트" <c:if test="${data.category eq '아파트'}">selected</c:if>>아파트</option>
@@ -308,8 +319,8 @@
                     </div>
                     <%--roomType--%>
                     <div class="form-group col-sm-4">
-                        <label for="roomType">
-                            <h6 class="m-0 font-weight-bold text-primary">공간 유형</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="roomType">
+                            공간 유형
                         </label>
                         <select class="form-control" id="roomType" name="roomType">
                             <option value="공간 전체" <c:if test="${data.roomType eq '공간 전체'}">selected</c:if>>
@@ -326,8 +337,8 @@
 
                     <%--personMax--%>
                     <div class="form-group col-sm-4">
-                        <label for="personMax">
-                            <h6 class="m-0 font-weight-bold text-primary">최대 수용 인원 (최소 2인)</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="personMax">
+                            최대 수용 인원 (최소 2인)
                         </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -363,8 +374,8 @@
                     </div>
                     <%--location--%>
                     <div class="form-group">
-                        <label for="location">
-                            <h6 class="m-0 font-weight-bold text-primary">위치</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="location">
+                            위치
                         </label>
                         <div class="input-group" style="border: 1px solid #ccc; border-radius: 5px; padding: 0;">
                             <div style="margin-left:10px; background-color: transparent; display: flex; align-items: center; justify-content: center;">
@@ -391,7 +402,9 @@
 
                         <%-- 대표 사진 --%>
                         <div class="form-group border p-3 rounded mb-4">
-                            <label for="image1"><h6 class="text-primary">대표 사진 (필수)</h6></label>
+                            <label class="mb-1 font-weight-bold text-primary" for="image1">
+                                대표 사진 (필수)
+                            </label>
                             <input type="file" class="form-control mb-2"
                                    id="image1"
                                    name="image1"
@@ -410,7 +423,9 @@
 
                         <%-- 상세 사진 --%>
                         <div class="form-group border p-3 rounded">
-                            <label><h6 class="text-secondary">상세 사진 (선택, 최대 4장)</h6></label>
+                            <label class="mb-1 font-weight-bold text-secondary" for="image1">
+                                상세 사진 (선택, 최대 4장)
+                            </label>
                             <div class="d-flex flex-wrap gap-3">
 
                                 <!-- 이미지 2 -->
@@ -494,15 +509,15 @@
 
                     <%--name--%>
                     <div class="form-group">
-                        <label for="name">
-                            <h6 class="m-0 font-weight-bold text-primary">스페이스 이름</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="name">
+                            스페이스 이름
                         </label>
                         <input type="text" class="form-control" id="name" placeholder="스페이스 이름은 필수입니다." value="${data.name}" name="name">
                     </div>
                     <%--description--%>
                     <div class="form-group">
-                        <label for="description">
-                            <h6 class="m-0 font-weight-bold text-primary">스페이스 소개</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="description">
+                            스페이스 소개글
                         </label>
                         <textarea class="form-control" name="description" id="description" style="resize: none !important;">${data.description}</textarea>
                     </div>
@@ -550,10 +565,9 @@
                     <h1 class="h3 mb-2 text-gray-800">가격 설정</h1>
                     <%--priceNight--%>
                     <div class="form-group">
-                        <label for="priceNight">
-                            <h6 class="m-0 font-weight-bold text-primary">1박당 가격</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="priceNight">
+                            1박당 가격
                         </label>
-
                         <div class="d-flex align-items-center">
                             <input
                                     type="number"
@@ -580,11 +594,10 @@
                             >
                         </div>
                     </div>
+                    <button id="btn_update" type="submit" class="btn btn-primary mt-3">
+                        스페이스 수정하기
+                    </button>
                 </form>
-
-                <button id="btn_update" type="button" class="btn btn-primary mt-3">
-                    스페이스 수정하기
-                </button>
             </div>
         </div>
 

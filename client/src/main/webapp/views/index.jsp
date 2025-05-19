@@ -29,6 +29,21 @@
           href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
     <link rel="stylesheet"
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
+
+    <style>
+        .footer_col{
+            margin-top: 50px;
+        }
+
+        .footer_content{
+            margin-bottom: 30px;
+        }
+
+        .weather {
+            display: flex;
+            font-size: clamp(0.3rem, 0.6vw, 0.5rem);
+        }
+</style>
 </head>
 
 <body>
@@ -42,10 +57,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        <div class="weather"></div>
                         <c:choose>
                             <c:when test="${sessionScope.user.name == null}">
                                 <div class="user_box ml-auto">
+                                    <div class="weather"></div>
                                     <div class="user_box_login user_box_link">
                                         <a href="<c:url value="/login"/> "><spring:message code="login"/></a>
                                     </div>
@@ -87,6 +102,7 @@
                             </c:when>
                             <c:otherwise>
                                 <div class="user_box ml-auto">
+                                   <div class="weather"></div>
                                     <div class="user_box_login user_box_link">
                                         <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                                     </div>

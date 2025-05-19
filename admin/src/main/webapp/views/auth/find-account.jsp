@@ -89,7 +89,7 @@
 </head>
 <body>
 <div class="find-container">
-  <a href="/">
+  <a href="<c:url value="/"/>">
     <img src="<c:url value='/imgs/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
   </a>
 
@@ -120,52 +120,77 @@
 </div>
 
 <script>
-  $(function () {
-    const $findBtn = $("#findBtn");
-    const $email = $("#email");
+  const findAccountPage = {
+    $findBtn : $("#findBtn"),
+    $email : $("#email"),
 
-    function handleFind() {
-      let inputVal = $email.val().trim();
+    init: function() {
+      // ID/PW 찾기 버튼 클릭 -> 핸들러
+      this.$findBtn.click(() => {
+        this.handleFind();
+      });
 
-      // 입력값 유효성 검사
+      // 이메일 input에서 엔터키 눌렀을 때 -> 핸들러
+      this.$email.on("keypress", (e) => {
+        if (e.which === 13) {
+          e.preventDefault(); // form 제출 방지
+          this.handleFind();
+        }
+      });
+
+      // msg가 표시된 상태에서 입력칸에 포커스 -> msg 지우기, 버튼 보이기
+      this.$email.on('focus', function(){
+        $('#msg').fadeOut(300);
+        findAccountPage.$findBtn
+                .prop("disabled", false)
+                .html('ID/PW 찾기')
+                .show();
+      })
+    },
+    handleFind: function() {
+      // 입력값 유효성 체크
+      let inputVal = this.$email.val().trim();
       if (!inputVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputVal)) {
         alert('올바른 형식의 이메일이 아닙니다.');
         return;
       }
 
-      // 버튼을 스피너로 변경하고 비활성화
-      $findBtn
-              .prop("disabled", true)
-              .html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 메일 전송 중...');
-
+      // findAccountImpl 호출
+      this.findAccountImpl(inputVal);
+    },
+    findAccountImpl: function(emailVal) {
       $.ajax({
-        url: '<c:url value="/find-account-impl"/>' + '?email=' + inputVal,
+        url: "<c:url value='/api/auth/find-account'/>",
         type: 'POST',
-        success: function (resp) {
-          $findBtn.hide(); // 성공 시 버튼 숨기기
+        contentType: 'application/x-www-form-urlencoded',
+        data: { email: emailVal },
+        beforeSend: function () {
+          // 버튼을 스피너로 변경
+          findAccountPage.$findBtn
+                  .prop('disabled', true)
+                  .html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 메일 전송 중...');
+        },
+        success: function(resp) {
+          // 성공 시 버튼 숨기기
+          findAccountPage.$findBtn.hide();
           $('#msg').html(resp.replace(/\n/g, '<br>')).fadeIn();
         },
-        error: function (xhr) {
-          alert(xhr.responseText);
+        error: function(xhr) {
+          $('#msg').html(xhr.responseText.replace(/\n/g, '<br>')).fadeIn();
+
           // 오류 발생 시 버튼 원래대로 복구
-          $findBtn
+          findAccountPage.$findBtn
                   .prop("disabled", false)
                   .html('ID/PW 찾기');
         }
       });
     }
+  };
 
-    // 버튼 클릭 시
-    $findBtn.on("click", handleFind);
-
-    // 이메일 input에서 엔터키 눌렀을 때 버튼 클릭과 같은 동작
-    $email.on("keypress", function (e) {
-      if (e.which === 13) {
-        e.preventDefault(); // form 제출 방지
-        handleFind();
-      }
-    });
+  $(function () {
+    findAccountPage.init();
   });
+
 </script>
 
 </body>
