@@ -69,4 +69,18 @@ public class ReservationService implements MCService<Reservations,String> {
     public List<Reservations> getHostingNow(String hostId) {
         return reservationRepository.selectHostingNow(hostId);
     }
+
+    /**
+     * 취소된 예약
+     */
+    public List<Reservations> getCanceledReservations(String hostId) {
+        return reservationRepository.selectCanceledReservations(hostId);
+    }
+
+    /**
+     * 호스팅 종료된 예약
+     */
+    public List<Reservations> getFinishedReservations(String hostId) {
+        return reservationRepository.selectFinishedReservations(hostId);
+    }
 }

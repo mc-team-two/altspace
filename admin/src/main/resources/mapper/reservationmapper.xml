@@ -21,6 +21,25 @@
         WHERE a.host_id = #{hostId}
     </select>
 
+    <!-- 캔슬된 예약 -->
+    <select id="selectCanceledReservations" resultType="Reservations" parameterType="string">
+        SELECT j.*, a.host_id, a.name AS accommodationName, a.location
+        FROM (
+                 SELECT
+                     p.payment_id,
+                     p.guest_id,
+                     u.name AS guestName,
+                     p.check_in,
+                     p.check_out,
+                     p.accommodation_id
+                 FROM payments p
+                          LEFT JOIN users u ON p.guest_id = u.user_id
+                 WHERE p.pay_status = '취소'
+             ) j
+                 LEFT JOIN accommodations a ON j.accommodation_id = a.accommodation_id
+        WHERE a.host_id = #{hostId}
+    </select>
+
     <!-- 체크인 예정 (오늘/내일) -->
     <select id="selectUpcomingCheckIns" resultType="Reservations" parameterType="string">
         SELECT j.*, a.host_id, a.name AS accommodationName, a.location
@@ -80,6 +99,26 @@
         WHERE a.host_id = #{hostId}
           AND j.check_in &lt; NOW()
           AND j.check_out &gt; NOW()
+    </select>
+
+    <!-- 호스팅 종료된 예약 -->
+    <select id="selectFinishedReservations" resultType="Reservations" parameterType="string">
+        SELECT j.*, a.host_id, a.name AS accommodationName, a.location
+        FROM (
+        SELECT
+        p.payment_id,
+        p.guest_id,
+        u.name AS guestName,
+        p.check_in,
+        p.check_out,
+        p.accommodation_id
+        FROM payments p
+        LEFT JOIN users u ON p.guest_id = u.user_id
+        WHERE p.pay_status = '완료'
+        ) j
+        LEFT JOIN accommodations a ON j.accommodation_id = a.accommodation_id
+        WHERE a.host_id = #{hostId}
+          AND j.check_out &lt; NOW()
     </select>
 
 </mapper>

@@ -97,7 +97,7 @@
                 <li class="menu-item">
                     <a href='<c:url value="/space/booking"/>' class="menu-link">
                         <i class="menu-icon tf-icons bx bx-calendar-event"></i>
-                        <div>일정 확인</div>
+                        <div>예약 캘린더</div>
                     </a>
                 </li>
 
