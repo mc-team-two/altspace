@@ -1,4 +1,4 @@
-package com.mc.controller.oauth2;
+package com.mc.controller.api.oauth2;
 
 import com.mc.app.dto.SocialUser;
 import com.mc.app.dto.User;
@@ -19,13 +19,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @Slf4j

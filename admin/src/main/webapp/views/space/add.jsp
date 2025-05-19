@@ -1,13 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
     .form-group {
         margin-bottom: 15px;
-    }
-    .button {
-        margin-top: 10px; /* 원하는 간격으로 조정 */
     }
 
     #map{
@@ -66,11 +63,12 @@
 </style>
 
 <script>
-    const space_add = {
+    const spaceAddPage = {
         map: null,
         geocoder: null,
         marker: null,
         init: function () {
+            // 인원 증감 버튼
             $('#plus-btn').click(() => {
                 let val = Number($('#personMax').val());
                 $('#personMax').val(val + 1);
@@ -81,47 +79,70 @@
                     $('#personMax').val(val - 1);
                 }
             });
-            $('#btn_add').click(() => {
-                if (this.validateForm()) {
-                    let c = confirm('저장하시겠습니까?');
-                    if (c === true) {
-                        this.send();
-                    }
-                }
-            });
+
+            // 지도 표시하는 버튼
             $('#search-btn').click(()=>{
                 this.displayMap();
             })
+
+            // 저장(등록)
+            $('#spaceAddForm').on('submit', (e) => {
+                e.preventDefault();
+                if (spaceAddPage.validateForm()) {
+                    let c = confirm('저장하시겠습니까?');
+                    if (c === true ) {
+                        const formData = new FormData($('#spaceAddForm')[0]);
+                        this.addImpl(formData);
+                    }
+                }
+            });
         },
         validateForm: function () {
-            let isValid = true;
-
-            // 공간 명칭 체크
+            // 위치
             if ($('#location').val() === '') {
                 alert("위치를 입력해주세요.");
-                isValid = false;
+                $('#location').focus();
+                return false;
             }
 
-            // 이미지 체크 (대표 사진)
-            if ($('#image1').val() === '') {
-                alert("대표 사진을 업로드해주세요.");
-                isValid = false;
-            }
-
-            // 스페이스 명칭 체크
+            // 공간 명칭
             if ($('#name').val().trim() === '') {
                 alert("스페이스 이름을 입력해주세요.");
-                isValid = false;
+                $('#name').focus();
+                return false;
             }
 
-            return isValid;
+            // 대표 사진 체크
+            const mainImage = $("#image1");
+            if (!mainImage.files || mainImage.files.length === 0) {
+                alert("대표 사진은 필수입니다.");
+                mainImage.focus();
+                return false;
+            }
+
+            return true;
+        },
+        addImpl: function (formData) {
+            $.ajax({
+                url: "<c:url value="/api/space/add"/>",
+                type: "POST",
+                data: formData, // FormData 객체를 직접 전송
+                processData: false, // jQuery가 데이터를 쿼리 문자열로 변환하지 않도록 설정
+                contentType: false, // jQuery가 Content-Type 헤더를 설정하지 않도록 설정 (브라우저가 multipart/form-data로 자동 설정)
+                success:function(resp) {
+                    alert(resp);
+                    location.href="<c:url value="/space/list"/>";
+                },
+                error: function(xhr) {
+                    alert(xhr.responseText);
+                }
+            });
         },
         initMap: function(){
             $('#map').css({
                 width: '100%',
                 height: '300px'
-            });
-            $('#map').show();
+            }).show();
 
             let container = $('#map').get(0);   // DOM
             let option = {
@@ -139,7 +160,7 @@
                 map: this.map
             });
         },
-        displayMap: function () {
+        displayMap: function() {
             this.initMap();
 
             let map = this.map;
@@ -179,20 +200,11 @@
                     });
                 }
             }).open();
-        },
-        send: function () {
-            $('#space_add_form').attr({
-                'method': 'post',
-                'enctype': 'multipart/form-data',
-                'action': '<c:url value="/space/addimpl"/>'
-            });
-            $('#space_add_form').submit();
         }
     };
     $(function(){
-        space_add.init();
+        spaceAddPage.init();
     });
-
     function previewImage(input, previewId) {
         const previewContainer = document.getElementById(previewId);
         previewContainer.innerHTML = "";
@@ -221,7 +233,6 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-
     function limitDetailImages(currentInput) {
         const detailInputs = document.querySelectorAll('input[id^="image"]:not(#image1)');
         let count = 0;
@@ -237,31 +248,20 @@
             document.getElementById(previewId).innerHTML = "";
         }
     }
-
-    function validateForm() {
-        const mainImage = document.getElementById("image1");
-        if (!mainImage.files || mainImage.files.length === 0) {
-            alert("대표 사진은 필수입니다.");
-            mainImage.focus();
-            return false;
-        }
-        return true;
-    }
-
 </script>
 
 <div class="container">
-    <p class="text-muted">공간 관리 > 공간 추가</p>
+    <p class="text-muted">스페이스 관리 > 내 스페이스 > <strong>새 공간 추가</strong></p>
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
-                <form id="space_add_form" style="overflow-x:hidden">
+                <form id="spaceAddForm" style="overflow-x:hidden">
                     <h1 class="h3 mb-2 text-gray-800">기본 정보</h1>
                     <div class="row">
                     <%--category--%>
                     <div class="form-group col-sm-4">
-                        <label for="category">
-                            <h6 class="m-0 font-weight-bold text-primary">건물 유형</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="category">
+                            건물 유형
                         </label>
                         <select class="form-control" id="category" name="category">
                             <option value="아파트">아파트</option>
@@ -272,8 +272,8 @@
                     </div>
                     <%--roomType--%>
                     <div class="form-group col-sm-4">
-                        <label for="roomType">
-                            <h6 class="m-0 font-weight-bold text-primary">공간 유형</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="roomType">
+                            공간 유형
                         </label>
                         <select class="form-control" id="roomType" name="roomType">
                             <option value="공간 전체">공간 전체: 게스트가 숙소 전체 단독으로 사용</option>
@@ -284,8 +284,8 @@
 
                     <%--personMax--%>
                     <div class="form-group col-sm-4">
-                        <label for="personMax">
-                            <h6 class="m-0 font-weight-bold text-primary">최대 수용 인원 (최소 2인)</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="personMax">
+                            최대 수용 인원 (최소 2인)
                         </label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -317,8 +317,8 @@
                     </div>
                     <%--location--%>
                     <div class="form-group">
-                        <label for="location">
-                            <h6 class="m-0 font-weight-bold text-primary">위치</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="location">
+                            위치
                         </label>
                         <div class="input-group" style="border: 1px solid #ccc; border-radius: 5px; padding: 0;">
                             <div style="margin-left:10px; background-color: transparent; display: flex; align-items: center; justify-content: center;">
@@ -345,15 +345,17 @@
                     <h1 class="h3 mb-2 text-gray-800">상세 정보</h1>
                     <%--image1--%>
                     <div class="form-group border p-3 rounded mb-4">
-                        <label for="image1"><h6 class="text-primary">대표 사진 (필수)</h6></label>
+                        <label for="image1" class="mb-2 font-weight-bold text-primary">
+                            대표 사진 (필수)
+                        </label>
                         <input type="file" class="form-control mb-2" id="image1" name="image1" accept="image/*" onchange="previewImage(this, 'preview1')">
                         <div id="preview1" class="image-preview" style="max-width: 300px;"></div>
                     </div>
 
                     <%--detail image--%>
                     <div class="form-group border p-3 rounded">
-                        <label>
-                            <h6 class="text-secondary">상세 사진 (선택, 최대 4장)</h6>
+                        <label class="mb-2 font-weight-bold text-secondary" for="location">
+                            상세 사진 (선택, 최대 4장)
                         </label>
                         <div class="d-flex flex-wrap gap-3">
                             <c:forEach var="i" begin="2" end="5">
@@ -368,15 +370,15 @@
 
                     <%--name--%>
                     <div class="form-group">
-                        <label for="name">
-                            <h6 class="m-0 font-weight-bold text-primary">스페이스 이름</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="name">
+                            스페이스 이름
                         </label>
                         <input type="text" class="form-control" id="name" placeholder="스페이스 이름은 필수입니다." value="진만이네 별장" name="name">
                     </div>
                     <%--description--%>
                     <div class="form-group">
-                        <label for="description">
-                            <h6 class="m-0 font-weight-bold text-primary">스페이스 소개</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="description">
+                            스페이스 소개글
                         </label>
                         <textarea class="form-control" name="description" id="description" style="resize: none !important;">해변 근처의 Chill한 별장</textarea>
                     </div>
@@ -420,8 +422,8 @@
                     <h1 class="h3 mb-2 text-gray-800">가격 설정</h1>
                     <%--priceNight--%>
                     <div class="form-group">
-                        <label for="priceNight">
-                            <h6 class="m-0 font-weight-bold text-primary">1박당 가격</h6>
+                        <label class="mb-1 font-weight-bold text-primary" for="priceNight">
+                            1박당 가격
                         </label>
 
                         <div class="d-flex align-items-center">
@@ -450,15 +452,11 @@
                             >
                         </div>
                     </div>
+                    <button id="btn_add" type="submit" class="btn btn-primary mt-3">
+                        스페이스 등록하기
+                    </button>
                 </form>
-
-                <button id="btn_add" type="button" class="btn btn-primary mt-3">
-                    스페이스 등록하기
-                </button>
             </div>
         </div>
-
     </div>
-
 </div>
-

@@ -17,15 +17,13 @@
         init:function(){
         },
         modSpace:function(accId){
-            // detail 페이지로 이동
-            window.location.href=
-                "/space/detail?id=" + accId;
+            location.href = "<c:url value="/space/mod?id="/>" + accId;
         },
         delSpace:function(accId){
             let c = confirm('정말 삭제하시겠습니까?\n복구할 수 없습니다.');
             if (c) {
                 $.ajax({
-                    url: "<c:url value='/space/del'/>?id=" + accId,
+                    url: "<c:url value='/api/space/del'/>?id=" + accId,
                     type: "POST",
                     success: (response) => {
                         alert(response);
