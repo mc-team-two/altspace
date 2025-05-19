@@ -8,6 +8,7 @@ import com.mc.util.AuthUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -36,6 +37,7 @@ public class AuthGoogleController {
 
     private final SocialUserService socialUserService;
     private final UserService userService;
+    private final StandardPBEStringEncryptor standardPBEStringEncryptor;
 
     @Value("${app.key.googleApiKey}")
     String GOOGLE_CLIENT_ID;
@@ -152,6 +154,7 @@ public class AuthGoogleController {
             // 기존 소셜 사용자 여부 확인
             User dbUser = socialUserService.getBySocialId(providerUserId);
             if (dbUser != null) {
+                dbUser.setName(standardPBEStringEncryptor.decrypt(dbUser.getName()));
                 httpSession.setAttribute("user", dbUser);
                 return "redirect:/";
             }
@@ -194,6 +197,7 @@ public class AuthGoogleController {
                     .build();
             socialUserService.add(newSocialUser);
 
+            newUser.setName(standardPBEStringEncryptor.decrypt(newUser.getName()));
             httpSession.setAttribute("user", newUser);
             return "redirect:/";
 

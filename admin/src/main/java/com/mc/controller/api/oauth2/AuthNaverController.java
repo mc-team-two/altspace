@@ -8,6 +8,7 @@ import com.mc.util.AuthUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,7 @@ public class AuthNaverController {
 
     private final SocialUserService socialUserService;
     private final UserService userService;
+    private final StandardPBEStringEncryptor standardPBEStringEncryptor;
 
     @Value("${app.key.naverApiKey}")
     String NAVER_CLIENT_ID;
@@ -120,6 +122,7 @@ public class AuthNaverController {
             // 기존 소셜 사용자 여부 확인
             User dbUser = socialUserService.getBySocialId(providerUserId);
             if (dbUser != null) {
+                dbUser.setName(standardPBEStringEncryptor.decrypt(dbUser.getName()));
                 httpSession.setAttribute("user", dbUser);
                 return "redirect:/";
             }
@@ -162,6 +165,7 @@ public class AuthNaverController {
                     .build();
             socialUserService.add(newSocialUser);
 
+            newUser.setName(standardPBEStringEncryptor.decrypt(newUser.getName()));
             httpSession.setAttribute("user", newUser);
             return "redirect:/";
 
