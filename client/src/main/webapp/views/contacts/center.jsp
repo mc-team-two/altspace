@@ -7,6 +7,14 @@
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/contact_responsive.css"/>">
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
+
+  <style>
+    /* 문의 컨테이너 간격 */
+    .contact_form_container{
+      margin-bottom: 100px;
+    }
+  </style>
+
 </head>
 
 <div class="menu trans_500">
@@ -16,7 +24,7 @@
     <ul>
       <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
       <li class="menu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-      <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
+      <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터/FAQ</a></li>
       <li class="menu_item"><a href="<c:url value="/details"/> ">마이페이지</a></li>
     </ul>
   </div>
@@ -36,7 +44,7 @@
 <div class="contact_form_section">
   <div class="container">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-8">
 
         <!-- Contact Form -->
         <div class="contact_form_container">
@@ -49,21 +57,41 @@
             <button type="submit" id="form_submit_button" class="form_submit_button button">문의하기<span></span><span></span><span></span></button>
           </form>
         </div>
-        <div id="chatbot" class="chatbot">
-          <div id="chat-icon" class="chat-icon">
-            <i class="fa fa-comment" aria-hidden="true"></i>
-          </div>
-          <div id="chat-window" class="chat-window">
-            <div class="chat-header">
-              <span>챗봇과 대화하기</span>
-              <button id="chat-close-btn" class="chat-close-btn">&times;</button>
-            </div>
-            <div class="chat-messages" id="chat-messages">
+      </div>
 
-            </div>
-            <div class="chat-input">
-              <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
-              <button id="chat-send-btn">보내기</button>
+      <!-- 챗봇 -->
+
+      <div id="chatbot" class="chatbot">
+        <div id="chat-icon" class="chat-icon">
+          <i class="fa fa-comment" aria-hidden="true"></i>
+        </div>
+        <div id="chat-window" class="chat-window">
+          <div class="chat-header">
+            <span>챗봇과 대화하기</span>
+            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+          </div>
+          <div class="chat-messages" id="chat-messages">
+
+          </div>
+          <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+            <button id="chat-send-btn">보내기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 사이드바 -->
+
+      <div class="col-lg-4 sidebar_col">
+        <div class="position-sticky" style="top: 100px; z-index: 10;">
+          <!-- 사이드바 메뉴 -->
+          <div class="sidebar_archives" style="margin-left: 100px;">
+            <div class="sidebar_title">MENU</div>
+            <div class="sidebar_list">
+              <ul>
+                <li><a href="<c:url value="/contacts"/> ">고객센터 문의</a></li>
+                <li><a href="<c:url value="/faq1"/> ">FAQ</a></li>
+              </ul>
             </div>
           </div>
         </div>
