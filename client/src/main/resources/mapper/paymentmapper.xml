@@ -18,8 +18,8 @@
         ) VALUES (
              #{guestId},
              #{accommodationId},
-             #{checkIn},
-             #{checkOut},
+             CONCAT(#{checkIn}, ' 11:00:00'),
+             CONCAT(#{checkOut}, ' 14:00:00'),
              #{payAmount},
              #{payStatus},
              #{payMeans},
@@ -44,8 +44,8 @@
         SET pay_status = #{payStatus}
         WHERE guest_id = #{guestId}
           AND accommodation_id = #{accommodationId}
-          AND check_in = #{checkIn}
-          AND check_out = #{checkOut}
+          AND check_in = CONCAT(#{checkIn}, ' 11:00:00')
+          AND check_out = CONCAT(#{checkOut}, ' 14:00:00')
     </update>
 
     <select id="selectPyAll" resultType="Payments" parameterType="Payments">

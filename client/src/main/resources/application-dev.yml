@@ -29,6 +29,11 @@ spring:
           auth: true            # 사용자 인증 시도 여부
           starttls:
             enable: true        # starttls 활성화 여부
+  messages:
+    basename: messages/messages
+    encoding: utf-8
+    cache-duration: 10
+    fallback-to-system-locale: false
 
 # 3. MyBatis
 mybatis:
@@ -52,6 +57,7 @@ app:
     naverApiKey: ENC(W21CWi5vucRAWCqK4GMx1P+L27Q66k3kJRU/e0BOyxs=)
     naverApiSecretKey: ENC(P7kspdfWVZVOh9kr3DG+ogt3pyebrCLy)
     weatherApiKey: ENC(SSunAfg3V0q/sLi1vc8uOYLMRDt3kfqteXoiUlZ7m0LhtKHhx1vieNgmeLGfPDcZ)
+    geminiKey: ENC(S2wV6R49GAcOPcwBhZlQodbdEX3doNitFfS1r28FAidZVFuhDpGQNmgkZFUo/rnZ)
     algo: PBEWithMD5AndDES
     skey: mykey
   dir:
@@ -84,4 +90,9 @@ jasypt:
   encryptor:
     password: space
     algorithm: PBEWithMD5AndDES
+
+# 9. gemini
+google:
+  gemini:
+    key: AIzaSyD_5fXtNxyNdlko79KiDJOk7iBXs4AfLkc
 

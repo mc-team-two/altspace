@@ -82,4 +82,12 @@
         <if test="pet != null">pet = #{pet},</if>
         update_day = NOW() WHERE accommodation_id = #{accommodationId}
     </update>
+
+    <!--     호스팅 중인 숙소 개수  -->
+    <select id="countByHostId" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM accommodations
+        WHERE host_id = #{hostId}
+          AND status = '활성'
+    </select>
 </mapper>

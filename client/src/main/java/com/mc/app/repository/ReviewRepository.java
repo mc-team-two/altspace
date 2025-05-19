@@ -13,5 +13,6 @@ public interface ReviewRepository extends MCRepository<Reviews,Integer> {
     Reviews getMyReviewById(Integer integer);
     List<Reviews> selectReviewsAll(Integer integer);
     List<Reviews> getMyReviews(Reviews reviews);
+    List<Reviews> getReviewSummary(Integer integer);
 
 }

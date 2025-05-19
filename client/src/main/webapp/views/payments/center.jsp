@@ -7,9 +7,10 @@
 <!doctype html>
 <html lang="ko">
 <head>
+    <script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_styles.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/blog_responsive.css"/>">
-    <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_styles.css"/>">
+    <%--<link rel="stylesheet" type="text/css" href="<c:url value="styles/about_styles.css"/>">--%>
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/about_responsive.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
@@ -138,7 +139,10 @@
                 this.wishlistToggle();
             });
             $('.translate-btn').click(function() {
-                change.translate.call(this); // 버튼 this를 전달
+                change.translate.call(this);
+            });
+            $('#summaryBtn').click(function() {
+                change.reviewSummary.call(this);
             });
         },
         reqPay: function () {
@@ -223,17 +227,72 @@
             // 마우스 휠 확대/축소 막기 (정확한 메서드 사용)
             this.map.setZoomable(false);
 
+            // 지도 컨트롤
             var mapTypeControl = new kakao.maps.MapTypeControl();
             this.map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
             var zoomControl = new kakao.maps.ZoomControl();
             this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-            // 바로 마커 표시
+            // 숙소 마커 표시
             var markerPosition = new kakao.maps.LatLng(${accomm.latitude}, ${accomm.longitude});
             this.marker = new kakao.maps.Marker({
-                position: markerPosition
+                position: markerPosition,
+                image: new kakao.maps.MarkerImage(
+                    '/images/markers/accomMaker.png', // 집 아이콘
+                    new kakao.maps.Size(64, 64), // 큼직하게
+                    { offset: new kakao.maps.Point(32, 64) } // 중앙 하단 꼭짓점이 위치
+                )
             });
             this.marker.setMap(this.map);
+
+            // 장소 검색 서비스 사용
+            var ps = new kakao.maps.services.Places();
+
+            // 중심 좌표 기준 음식점 검색
+            var lat = ${accomm.latitude};
+            var lng = ${accomm.longitude};
+            var loc = new kakao.maps.LatLng(lat, lng);
+
+            ps.categorySearch('FD6', function (data, status, pagination) {
+                if (status === kakao.maps.services.Status.OK) {
+                    for (var i = 0; i < data.length; i++) {
+                        displayRestaurantMarker(data[i]);
+                    }
+                }
+            }, {
+                location: loc,
+                radius: 2000 // 2000미터 반경
+            });
+
+            const displayRestaurantMarker = (place) => {
+                // 마커 이미지 설정
+                const imageSrc = '/images/markers/RestaurantMaker.png'; // 음식점 아이콘
+                const imageSize = new kakao.maps.Size(48, 48); // 작게 표시
+                const imageOption = {
+                    offset: new kakao.maps.Point(20, 40) // 꼭짓점이 아래로 향하도록
+                };
+
+                const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+                const marker = new kakao.maps.Marker({
+                    map: this.map,
+                    position: new kakao.maps.LatLng(place.y, place.x),
+                    title: place.place_name,
+                    image: markerImage
+                });
+
+                // 마커에 간단한 인포윈도우 추가
+                const infowindow = new kakao.maps.InfoWindow({
+                    content: `<div style="padding:5px;font-size:12px;">${place.place_name}</div>`
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseover', function () {
+                    infowindow.open(this.map, marker);
+                });
+                kakao.maps.event.addListener(marker, 'mouseout', function () {
+                    infowindow.close();
+                });
+            }
         },
         wishlistToggle: function () {
             const accommId = parseInt("${accomm.accommodationId}");
@@ -333,6 +392,35 @@
                     }
                 });
             }
+        },
+        reviewSummary: function(){
+            const btn = document.getElementById("summaryBtn");
+            const summaryBox = document.getElementById("summaryContent");
+
+            // 버튼 숨기고 로딩 문구 보여주기
+            btn.style.display = "none";
+            summaryBox.innerHTML = "<span class='text-muted'>🌀 AI가 요약 중입니다... 잠시만 기다려 주세요.</span>";
+
+            $.ajax({
+                url: `review/reviewSummary/${accomm.accommodationId}`,
+                method: "GET",
+                success: function(getResult) {
+                    summaryBox.innerHTML = ""; // 이전 내용 제거
+                    const lines = getResult.split('\n');
+
+                    lines.forEach(line => {
+                        const p = document.createElement("p");
+                        p.className = "text-dark mb-0";
+                        p.textContent = line;
+                        summaryBox.appendChild(p);
+                    });
+                },
+                error: function () {
+                    summaryBox.innerHTML = "<span class='text-danger'>요약 중 오류가 발생했습니다.</span>";
+                    // 버튼 다시 보이게 (선택 사항)
+                    btn.style.display = "inline-block";
+                }
+            });
         }
     };
 
@@ -627,6 +715,22 @@
         <div class="map-footer">주소: ${accomm.location}</div>
     </div>
 
+    <!-- AI 리뷰 요약 영역 -->
+    <div id="aiReviewSummary" class="card mt-3 shadow-sm p-4 rounded-4" style="min-height: 200px;">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <h5 class="mb-1 text-center w-100" style="font-size: 1rem;">AI가 도와주는 최근 3개월 리뷰 요약</h5>
+        </div>
+        <!-- 요약 결과, 버튼, 로딩 문구가 표시될 자리 -->
+        <div id="summaryContent" class="d-flex justify-content-center align-items-center text-secondary text-center" style="min-height: 120px;">
+            <button id="summaryBtn"
+                    class="btn btn-outline-primary btn-sm"
+                    style="width: 300px; font-size: 1rem;">
+                요약 리뷰 보기
+            </button>
+
+        </div>
+    </div>
+
     <!-- 리뷰 목록 -->
     <div id="reviewSection" class="card mt-3 shadow-sm p-4 rounded-4">
         <!-- 공통 폼 (id는 유일하게 하나만!) -->
@@ -699,6 +803,41 @@
     </div>
 </div>
 
+<div id="chatbot" class="chatbot">
+    <div id="chat-icon" class="chat-icon">
+        <i class="fa fa-comment" aria-hidden="true"></i>
+    </div>
+    <div id="chat-window" class="chat-window">
+        <div class="chat-header">
+            <span>챗봇과 대화하기</span>
+            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+            <button id="chat-send-btn">보내기</button>
+        </div>
+    </div>
+</div>
+<div id="gemini-chatbot" class="chatbot chatbot-gemini">
+    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+        <i class="fa fa-android" aria-hidden="true"></i>
+    </div>
+    <div id="gemini-chat-window" class="chat-window gemini-window">
+        <div class="chat-header gemini-header">
+            <span>Gemini 챗봇</span>
+            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+        </div>
+        <div class="chat-messages" id="gemini-chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="gemini-chat-input" placeholder="Gemini에게 물어보세요">
+            <button id="gemini-chat-send-btn">보내기</button>
+        </div>
+    </div>
+</div>
+
 <!-- 사진 전체 보기 모달 -->
 <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel"
      aria-hidden="true">
@@ -723,16 +862,11 @@
 </body>
 </html>
 
-
-<script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
 <script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
 <script src="<c:url value="styles/bootstrap4/bootstrap.min.js"/>"></script>
 <script src="<c:url value="plugins/Isotope/isotope.pkgd.min.js"/>"></script>
 <script src="<c:url value="plugins/easing/easing.js"/>"></script>
 <script src="<c:url value="plugins/parallax-js-master/parallax.min.js"/>"></script>
 <script src="<c:url value="js/offers_custom.js"/>"></script>
-<script src="<c:url value="js/darkmode.js"/>"></script>
-<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/>"></script>
-<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/>"></script>
-<script src="<c:url value="js/chatbot.js"/>"></script>
+
 

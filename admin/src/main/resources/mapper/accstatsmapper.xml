@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mc.app.repository.AccStatsRepository">
+
+    <!-- 조회수 BEST 5 -->
+    <select id="selectTopViews" parameterType="String" resultType="AccStats">
+        SELECT
+        accommodation_id,
+        host_id,
+        name,
+        views
+        FROM
+        accommodations
+        <where>
+            <if test="hostId != null">
+                host_id = #{hostId}
+            </if>
+        </where>
+        ORDER BY
+        views DESC
+        LIMIT 5
+    </select>
+
+    <!-- 리뷰 TOP 5 -->
+    <select id="selectTopReviews" parameterType="String" resultType="AccStats">
+        SELECT
+        r.accommodation_id,
+        MAX(a.name) AS name,
+        MAX(a.host_id) AS hostId,
+        COUNT(r.review_id) AS reviewCount
+        FROM
+        reviews r
+        LEFT JOIN
+        accommodations a ON r.accommodation_id = a.accommodation_id
+        <where>
+            <if test="hostId != null">
+                a.host_id = #{hostId}
+            </if>
+        </where>
+        GROUP BY
+        r.accommodation_id
+        ORDER BY
+        reviewCount DESC
+        LIMIT 5
+    </select>
+
+    <!-- 찜 BEST 5 -->
+    <select id="selectTopWishlists" parameterType="String" resultType="AccStats">
+        SELECT
+        w.accommodation_id,
+        MAX(a.host_id) AS hostId,
+        MAX(a.name) AS name,
+        COUNT(w.wishlist_id) AS wishlistCount
+        FROM
+        wishlists w
+        LEFT JOIN
+        accommodations a ON w.accommodation_id = a.accommodation_id
+        <where>
+            <if test="hostId != null">
+                a.host_id = #{hostId}
+            </if>
+        </where>
+        GROUP BY
+        w.accommodation_id
+        ORDER BY
+        wishlistCount DESC
+        LIMIT 5
+    </select>
+
+    <!--이번달 최다 예약 BEST 5-->
+    <select id="getTopBookingsThisMonth" parameterType="String" resultType="AccStats">
+        SELECT
+            a.accommodation_id,
+            a.name,
+            a.host_id,
+            COUNT(p.payment_id) AS total_booking
+        FROM payments p
+                 LEFT JOIN accommodations a ON p.accommodation_id = a.accommodation_id
+        WHERE DATE_FORMAT(p.create_day, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
+          AND a.host_id = #{hostId}
+        GROUP BY a.accommodation_id, a.name, a.host_id
+        ORDER BY total_booking DESC
+            LIMIT 5;
+    </select>
+
+    <!-- 누적 최다 매출 숙소 (TOP 5) -->
+    <select id="selectTopSalesAllTime" parameterType="String" resultType="AccStats">
+        SELECT
+        p.accommodation_id,
+        MAX(a.name) AS name,
+        MAX(a.host_id) AS hostId,
+        SUM(p.pay_amount) AS totalSales
+        FROM
+        payments p
+        LEFT JOIN
+        accommodations a ON p.accommodation_id = a.accommodation_id
+        WHERE
+        p.pay_status = '완료'
+        <if test="hostId != null">
+            AND a.host_id = #{hostId}
+        </if>
+        GROUP BY
+        p.accommodation_id
+        ORDER BY
+        totalSales DESC
+        LIMIT 5
+    </select>
+
+    <!-- 이번달 최다 매출 숙소 -->
+    <select id="selectTopSalesThisMonth" parameterType="String" resultType="AccStats">
+        SELECT
+        p.accommodation_id,
+        MAX(a.name) AS name,
+        MAX(a.host_id) AS hostId,
+        SUM(p.pay_amount) AS totalSales
+        FROM
+        payments p
+        LEFT JOIN
+        accommodations a ON p.accommodation_id = a.accommodation_id
+        WHERE
+        p.pay_status = '완료'
+        AND p.create_day BETWEEN DATE_FORMAT(CURDATE(), '%Y-%m-01') AND LAST_DAY(CURDATE())
+        <if test="hostId != null">
+            AND a.host_id = #{hostId}
+        </if>
+        GROUP BY
+        p.accommodation_id
+        ORDER BY
+        totalSales DESC
+    </select>
+
+</mapper>

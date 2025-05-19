@@ -10,7 +10,9 @@
 
 <div class="menu trans_500">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-        <div class="menu_close_container"><div class="menu_close"></div></div>
+        <div class="menu_close_container">
+            <div class="menu_close"></div>
+        </div>
         <div class="logo menu_logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
         <ul>
             <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
@@ -24,7 +26,8 @@
 <!-- 홈 -->
 
 <div class="home">
-    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/about_background.jpg"></div>
+    <div class="home_background parallax-window" data-parallax="scroll"
+         data-image-src="images/about_background.jpg"></div>
     <div class="home_content">
         <div class="home_title">알트스페이스란</div>
     </div>
@@ -51,32 +54,45 @@
                     <p></p>
                         02-1234-5678 / 1588-1588 / biz.altspace@gmail.com
                     </div>
-                    <div class="button intro_button"><div class="button_bcg"></div><a href="/">예약하러 가기<span></span><span></span><span></span></a></div>
+                    <div class="button intro_button">
+                        <div class="button_bcg"></div>
+                        <a href="/">예약하러 가기<span></span><span></span><span></span></a></div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="chatbot" class="chatbot">
-        <div id="chat-icon" class="chat-icon">
-            <i class="fa fa-comment" aria-hidden="true"></i>
+</div>
+<div id="chatbot" class="chatbot">
+    <div id="chat-icon" class="chat-icon">
+        <i class="fa fa-comment" aria-hidden="true"></i>
+    </div>
+    <div id="chat-window" class="chat-window">
+        <div class="chat-header">
+            <span>챗봇과 대화하기</span>
+            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
         </div>
-        <div id="chat-window" class="chat-window">
-            <div class="chat-header">
-                <span>챗봇과 대화하기</span>
-                <button id="chat-close-btn" class="chat-close-btn">&times;</button>
-            </div>
-            <div class="chat-messages" id="chat-messages">
+        <div class="chat-messages" id="chat-messages">
 
-            </div>
-            <div class="chat-input">
-                <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
-                <button id="chat-send-btn">보내기</button>
-            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="메세지를 입력해주세요">
+            <button id="chat-send-btn">보내기</button>
         </div>
     </div>
 </div>
-
-<script src="<c:url value="js/darkmode.js"/>"></script>
-<script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
-<script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
-<script src="<c:url value="js/chatbot.js"/>"></script>
+<div id="gemini-chatbot" class="chatbot chatbot-gemini">
+    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+        <i class="fa fa-android" aria-hidden="true"></i>
+    </div>
+    <div id="gemini-chat-window" class="chat-window gemini-window">
+        <div class="chat-header gemini-header">
+            <span>Gemini 챗봇</span>
+            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+        </div>
+        <div class="chat-messages" id="gemini-chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="gemini-chat-input" placeholder="Gemini에게 물어보세요">
+            <button id="gemini-chat-send-btn">보내기</button>
+        </div>
+    </div>
+</div>
