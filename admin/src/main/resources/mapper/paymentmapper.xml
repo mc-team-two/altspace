@@ -109,6 +109,22 @@
           AND pay_status = '완료'
     </select>
 
+    <!-- 오늘 체크아웃 건수 조회 -->
+    <select id="countTodayCheckOut" resultType="int">
+        SELECT COUNT(*)
+        FROM payments
+        WHERE DATE(check_out) = CURRENT_DATE
+          AND pay_status = '완료'
+    </select>
+
+    <!-- 내일 체크아웃 건수 조회 -->
+    <select id="countTomorrowCheckOut" resultType="int">
+        SELECT COUNT(*)
+        FROM payments
+        WHERE DATE(check_out) = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+          AND pay_status = '완료'
+    </select>
+
     <select id="selectUpcoming7DaysReservations" resultType="Payments">
         SELECT
             p.*,
@@ -148,6 +164,13 @@
           AND check_in >= DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH)
         GROUP BY YEAR(check_in), MONTH(check_in)
         ORDER BY YEAR(check_in) ASC, MONTH(check_in) ASC;
+    </select>
+
+    <!-- 전체 예약 건수 조회 -->
+    <select id="countTotalReservations" resultType="int">
+        SELECT COUNT(*)
+        FROM payments
+        WHERE pay_status = '완료'
     </select>
 
 </mapper>

@@ -79,6 +79,21 @@ public class PaymentService implements MCService<Payments,Integer> {
         return paymentRepository.countTomorrowCheckIn();
     }
 
+    // 오늘 체크아웃 예약 건수 가져오기
+    public Integer getTodayCheckOutCount() throws Exception {
+        return paymentRepository.countTodayCheckOut();
+    }
+
+    // 내일 체크아웃 예약 건수 가져오기
+    public Integer getTomorrowCheckOutCount() throws Exception {
+        return paymentRepository.countTomorrowCheckOut();
+    }
+
+    // 전체 예약 건수
+    public Integer getTotalReservationCount() throws Exception {
+        return paymentRepository.countTotalReservations();
+    }
+
     public List<Payments> getUpcoming7DaysReservations() throws Exception {
         return paymentRepository.selectUpcoming7DaysReservations();
     }

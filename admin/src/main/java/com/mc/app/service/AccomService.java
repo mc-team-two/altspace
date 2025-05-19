@@ -129,4 +129,7 @@ public class AccomService implements MCService<Accommodations,Integer> {
         return accomRepository.selectPageByHostId(s);
     }
 
+    public int getAccommodationCountByHost(String hostId) {
+        return accomRepository.countByHostId(hostId);
+    }
 }

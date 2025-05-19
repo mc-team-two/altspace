@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mc.app.dto.Payments;
 import com.mc.app.dto.SocialUser;
 import com.mc.app.dto.User;
+import com.mc.app.service.AccomService;
 import com.mc.app.service.PaymentService;
 import com.mc.app.service.SocialUserService;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Map;
 
+import static net.sf.jsqlparser.util.validation.metadata.NamedObject.user;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ public class MainController {
 
     final SocialUserService socialUserService;
     final PaymentService paymentService;
+    final AccomService accomService;
 
     @RequestMapping("/")
     public String main(Model model, HttpSession httpSession) throws Exception {
@@ -30,6 +34,12 @@ public class MainController {
         if (httpSession.getAttribute("user") == null) {
             return "redirect:/auth/login";
         }
+
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            return "redirect:/auth/login";
+        }
+
         // 이번 달 총 결제 금액 가져오기
         Integer monthTotal = paymentService.getMonthTotal();
         String formattedMonthTotal = String.format("%,d", monthTotal);
@@ -38,11 +48,13 @@ public class MainController {
         List<Payments> upcomingReservations = paymentService.getUpcomingReservations();
         int reservationCount = upcomingReservations.size();
 
-        // 오늘 체크인 예약 건수 가져오기
+        // 오늘/내일 체크인 예약 건수 가져오기
         Integer todayCheckInCount = paymentService.getTodayCheckInCount();
-
-        //  내일 체크인 예약 건수 가져오기
         Integer tomorrowCheckInCount = paymentService.getTomorrowCheckInCount();
+
+        // 오늘/내일 체크아웃 예약 건수 가져오기
+        Integer todayCheckOutCount = paymentService.getTodayCheckOutCount();
+        Integer tomorrowCheckOutCount = paymentService.getTomorrowCheckOutCount();
 
         // 다가오는 7일 이내의 예약 정보 가져오기
         List<Payments> upcoming7DaysReservations = paymentService.getUpcoming7DaysReservations();
@@ -52,18 +64,27 @@ public class MainController {
 
         // 월별 수익 데이터 가져오기
         List<Map<String, Object>> earningsList = paymentService.getLast6MonthsEarnings();
-
-        // 수익 데이터 JSON 형식으로 변환하여 모델에 추가
         model.addAttribute("earningsDataJson", new ObjectMapper().writeValueAsString(earningsList));
+
+        // 호스트 숙소 수 조회
+        String hostId = user.getUserId();
+        int accommodationCount = accomService.getAccommodationCountByHost(hostId);
+
+        // 전체 예약 건수 가져오기
+        Integer totalReservationCount = paymentService.getTotalReservationCount();
 
         // 모델에 데이터 추가
         model.addAttribute("reservationCount", reservationCount);
         model.addAttribute("monthTotal", formattedMonthTotal);
         model.addAttribute("todayCheckInCount", todayCheckInCount);
         model.addAttribute("tomorrowCheckInCount", tomorrowCheckInCount);
+        model.addAttribute("todayCheckOutCount", todayCheckOutCount);
+        model.addAttribute("tomorrowCheckOutCount", tomorrowCheckOutCount);
         model.addAttribute("upcoming7DaysReservations", upcoming7DaysReservations);
         model.addAttribute("popularSpace", popularSpace);
         model.addAttribute("last6MonthsEarnings", earningsList);
+        model.addAttribute("accommodationCount", accommodationCount);
+        model.addAttribute("totalReservationCount", totalReservationCount);
         model.addAttribute("center","center");
 
         return "index";
