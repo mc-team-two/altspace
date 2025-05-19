@@ -3,9 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="styles/blog_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-    <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value='styles/blog_styles.css'/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value='styles/blog_responsive.css'/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value='styles/darkmode.css'/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value="plugins/font-awesome-4.7.0/css/font-awesome.min.css"/>">
 </head>
 
 <body>
@@ -34,7 +35,7 @@
     <div class="container">
         <div class="row">
             <!-- 센터 영역 (찜 목록) -->
-            <div class="col-lg-8">
+            <div class="col-lg-8 items_4css">
                 <div class="offers_grid" style="margin-top: 0 !important;">
                     <c:forEach var="w" items="${wishlists}">
                         <div class="offers_item">
@@ -57,22 +58,22 @@
                                             <ul class="offers_icons_list d-flex flex-row p-0" style="list-style: none; gap: 1px;">
                                                 <c:if test="${w.barbecue}">
                                                     <li class="offers_icons_item" data-popper-content="바베큐 시설 안내">
-                                                        <i class="fa fa-fire" aria-hidden="true"></i>
+                                                        <i class="fa fa-fire  text-warning" aria-hidden="true"></i>
                                                     </li>
                                                 </c:if>
                                                 <c:if test="${w.breakfast}">
                                                     <li class="offers_icons_item" data-popper-content="맛있는 조식 제공">
-                                                        <i class="fa fa-coffee" aria-hidden="true"></i>
+                                                        <i class="fa fa-coffee text-danger" aria-hidden="true"></i>
                                                     </li>
                                                 </c:if>
                                                 <c:if test="${w.pet}">
                                                     <li class="offers_icons_item" data-popper-content="반려동물 동반">
-                                                        <i class="fa fa-paw" aria-hidden="true"></i>
+                                                        <i class="fa fa-paw text-info" aria-hidden="true"></i>
                                                     </li>
                                                 </c:if>
                                                 <c:if test="${w.pool}">
                                                     <li class="offers_icons_item" data-popper-content="시원한 수영장">
-                                                        <i class="fa fa-tint" aria-hidden="true"></i>
+                                                        <i class="fa fa-swimmer text-primary" aria-hidden="true"></i>
                                                     </li>
                                                 </c:if>
                                             </ul>
@@ -103,10 +104,44 @@
                         </div>
                     </c:forEach>
                 </div>
+                <div id="chatbot" class="chatbot">
+                    <div id="chat-icon" class="chat-icon">
+                        <i class="fa fa-comment" aria-hidden="true"></i>
+                    </div>
+                    <div id="chat-window" class="chat-window">
+                        <div class="chat-header">
+                            <span><spring:message code="chat-header"/></span>
+                            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+                        </div>
+                        <div class="chat-messages" id="chat-messages">
+
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="chat-input" placeholder=<spring:message code="chat-input"/>>
+                            <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="gemini-chatbot" class="chatbot chatbot-gemini">
+                    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+                        <i class="fa fa-android" aria-hidden="true"></i>
+                    </div>
+                    <div id="gemini-chat-window" class="chat-window gemini-window">
+                        <div class="chat-header gemini-header">
+                            <span><spring:message code="gemini-header"/></span>
+                            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+                        </div>
+                        <div class="chat-messages" id="gemini-chat-messages"></div>
+                        <div class="chat-input">
+                            <input type="text" id="gemini-chat-input" placeholder=<spring:message code="gemini-chat-input"/>>
+                            <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- 사이드바 (오른쪽) -->
-            <div class="col-lg-4">
+            <div class="col-lg-4 sidebar_list4css">
                 <div class="sidebar_archives" style="margin-left: 100px;">
                     <div class="sidebar_title">MENU</div>
                     <div class="sidebar_list">
@@ -114,6 +149,7 @@
                             <li><a href="<c:url value='/details'/>">나의 예약</a></li>
                             <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
                             <li><a href="<c:url value="/wishlist"/> ">찜 목록</a></li>
+                            <li><a href="<c:url value="/mypage"/>">나의 정보</a></li>
                         </ul>
                     </div>
                 </div>

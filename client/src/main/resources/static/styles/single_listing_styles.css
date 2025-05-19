@@ -1267,6 +1267,7 @@ section
 	padding-top: 100px;
 	padding-bottom: 107px;
 	padding-left: 98px;
+	box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
 }
 .hotel_title
 {
