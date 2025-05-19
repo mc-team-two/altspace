@@ -1,10 +1,10 @@
 package com.mc.util;
 
+import com.mc.app.dto.AccomSuggestion;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,11 +20,18 @@ public class GeminiUtil {
 
     @Value("${app.key.geminiKey}")
     private String API_KEY;
+
     private static final String MODEL_NAME = "gemini-2.0-flash";
 
-    public String askGemini(String prompt) throws Exception {
-        String constrainedPrompt = prompt + ". 답변을 간결하게 (130자 내외) 요약해 주세요.";
-        // 130자로 요약해주세요 라고 했더니 '알겠습니다! 130자 내외로 간결하게 답변해 드리겠습니다.' 라는 답변으로 시작해서 표현을 변경
+    // 1. 상위 호출 메서드: 여행 제안 전용
+    public String askGeminiSuggestion(AccomSuggestion suggestion) throws Exception {
+        String prompt = buildSuggestionPrompt(suggestion);
+        return askGemini(prompt, "130자 이내로 간결하게 정리해서 말해줘.");
+    }
+
+    // 2. 공통 Gemini 호출 메서드
+    public String askGemini(String prompt, String suffixInstruction) throws Exception {
+        String constrainedPrompt = prompt + (suffixInstruction != null ? " " + suffixInstruction : "");
 
         String urlString = "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL_NAME + ":generateContent?key=" + API_KEY;
         URL url = new URL(urlString);
@@ -53,31 +60,26 @@ public class GeminiUtil {
                 }
 
                 JSONParser parser = new JSONParser();
-                try {
-                    JSONObject jsonResponse = (JSONObject) parser.parse(response.toString());
-                    if (jsonResponse.containsKey("candidates")) {
-                        JSONArray candidates = (JSONArray) jsonResponse.get("candidates");
-                        StringBuilder message = new StringBuilder();
-                        for (Object candidateObj : candidates) {
-                            JSONObject candidate = (JSONObject) candidateObj;
-                            JSONObject content = (JSONObject) candidate.get("content");
-                            JSONArray parts = (JSONArray) content.get("parts");
-                            for (Object partObj : parts) {
-                                JSONObject part = (JSONObject) partObj;
-                                message.append(part.get("text")).append("\n");
-                            }
+                JSONObject jsonResponse = (JSONObject) parser.parse(response.toString());
+                if (jsonResponse.containsKey("candidates")) {
+                    JSONArray candidates = (JSONArray) jsonResponse.get("candidates");
+                    StringBuilder message = new StringBuilder();
+                    for (Object candidateObj : candidates) {
+                        JSONObject candidate = (JSONObject) candidateObj;
+                        JSONObject content = (JSONObject) candidate.get("content");
+                        JSONArray parts = (JSONArray) content.get("parts");
+                        for (Object partObj : parts) {
+                            JSONObject part = (JSONObject) partObj;
+                            message.append(part.get("text")).append("\n");
                         }
-                        return message.toString().trim();
-                    } else {
-                        return "No candidates found in the response.";
                     }
-                } catch (ParseException e) {
-                    log.error("JSON 파싱 오류", e);
-                    return "Failed to parse response.";
+                    return message.toString().trim();
+                } else {
+                    return "No candidates found in the response.";
                 }
             }
         } else if (responseCode == 401) {
-            throw new RuntimeException("Failed : HTTP error code : 401 Unauthorized. Please check your API key and permissions.");
+            throw new RuntimeException("Unauthorized. Please check your API key.");
         } else if (responseCode == 400) {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"))) {
                 StringBuilder response = new StringBuilder();
@@ -85,10 +87,25 @@ public class GeminiUtil {
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }
-                throw new RuntimeException("Failed : HTTP error code : 400 Bad Request. Response: " + response.toString());
+                throw new RuntimeException("Bad Request: " + response);
             }
         } else {
-            throw new RuntimeException("Failed : HTTP error code : " + responseCode);
+            throw new RuntimeException("HTTP error code: " + responseCode);
         }
+    }
+
+    // 3. Prompt 생성 메서드 (여행용)
+    private String buildSuggestionPrompt(AccomSuggestion req) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("사용자가 여행 정보를 요청했습니다.\n");
+        sb.append("장소: ").append(req.getLocation()).append("\n");
+        sb.append("체크인: ").append(req.getCheckIn()).append("\n");
+        sb.append("체크아웃: ").append(req.getCheckOut()).append("\n");
+        sb.append("인원: ").append(req.getPersonnel()).append("명\n");
+        if (req.getExtras() != null && !req.getExtras().isEmpty()) {
+            sb.append("요청 옵션: ").append(String.join(", ", req.getExtras())).append("\n");
+        }
+        sb.append("200자 정도도 괜찮으니, 날씨, 옷차림, 지역 축제, 치안 정보 등 여행에 필요한 팁을 알려주세요.");
+        return sb.toString();
     }
 }

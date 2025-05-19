@@ -402,12 +402,17 @@ $(document).ready(function () {
         }
     }
 
+    // 검색 추천을 화면에 표시하는 함수
+    function displaySearchSuggestions(accomsuggestions) {
+        const SearchSuggestions = $("SearchSuggestions");
+
+    }
+
 // 검색 결과를 화면에 표시하는 함수
     function displayGeoSearchResults(accommodationsWithRating) {
         const offersGrid = $(".offers_grid");
         offersGrid.empty();
-        const pagination = $(".blog_navigation");
-        pagination.hide(); // Hide Pagenation when Geolocation serach loaded on page.
+        $(".blog_navigation").hide();
 
         if (accommodationsWithRating && accommodationsWithRating.length > 0) {
             $.each(accommodationsWithRating, function (index, item) {
@@ -574,6 +579,7 @@ $(document).ready(function () {
     });
 
     function searchAccommodationsByLocation(location, checkIn, checkOut, personnel, extras) {
+        // 검색결과를 db에서 받아오기 위한 요청
         $.ajax({
             url: "/search-accommodations",
             type: "GET",
@@ -594,12 +600,35 @@ $(document).ready(function () {
                 console.error(error);
             }
         });
+
+        // 검색 버튼을 누름과 동시에 요청을 보내, 제미나이로부터 데이터를 받아오기 위한 요청
+        $.ajax({
+            url: "/search-accomsuggestions",
+            type: "POST",
+            contentType: "application/json", // JSON 형식 명시
+            data: JSON.stringify({
+
+                //목적지, 체크인 날짜, 체크아웃 날짜, 인원, 기타 조건들.
+                location: location,
+                checkIn: checkIn,
+                checkOut: checkOut,
+                personnel: parseInt(personnel) || 1, // empty 안들어가게 최소 1명 고정.
+                extras: extras
+            }),
+            success: function (accomsuggestions) {
+                displaySearchSuggestions(accomsuggestions);
+            },
+            error: function (error) {
+                alert("AI 답변을 가져오는 데에 실패했습니다.");
+                console.error(error);
+            }
+        });
     }
 
     function displaySearchResults(accommodationsWithRating) {
         const offersGrid = $(".offers_grid");
         offersGrid.empty();
-        pagination.hide();
+        $(".blog_navigation").hide(); // 대체 가능
 
         if (accommodationsWithRating && accommodationsWithRating.length > 0) {
             $.each(accommodationsWithRating, function (index, item) {
@@ -677,6 +706,102 @@ $(document).ready(function () {
         if (rating === 2) return "괜찮아요!";
         if (rating === 1) return "그저 그래요!";
         return "평가가 없어요";
+    }
+
+    let weatherChartInstance = null; // 차트 인스턴스 저장용
+
+// 제미나이 응답을 받아서 출력하는 함수
+    function displaySearchSuggestions(data) {
+        const container = $("#travel-insight-container");
+        const summaryBox = $("#travel-summary");
+        const insightItem = $("#travel-insight-item");
+        const tipsList = $("#travel-tips");
+
+        const rawLines = data.summary.split("\n");
+        const summaryText = rawLines[0]; // 첫 줄 요약
+        const tips = rawLines.filter(line => /^[0-9]+\./.test(line)); // 번호로 시작하는 줄만
+
+        // 보이게 만들기
+        container.removeClass("d-none");
+
+        // 요약 텍스트 (한 줄) 표시
+        summaryBox.html(`<p>${summaryText}</p>`);
+
+        // 전체 요약을 travel-insight-item에도 보여주기
+        insightItem.html(`<div class="alert alert-info">${data.summary.replace(/\n/g, "<br>")}</div>`);
+
+        // 리스트로 여행 팁 뿌리기
+        tipsList.empty();
+        tips.forEach(line => {
+            tipsList.append(`<li class="list-group-item">${line}</li>`);
+        });
+
+        // 차트는 여기서 호출
+        renderWeatherChart();
+    }
+
+    function renderWeatherChart() {
+        const canvas = document.getElementById("weatherChart");
+        if (!canvas) {
+            console.warn("weatherChart 캔버스가 존재하지 않습니다.");
+            return;
+        }
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+            console.warn("Canvas context를 가져올 수 없습니다.");
+            return;
+        }
+
+        // 기존 차트 제거 (있으면)
+        if (weatherChartInstance) {
+            weatherChartInstance.destroy();
+        }
+
+        weatherChartInstance = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: ["5/21", "5/22"],
+                datasets: [
+                    {
+                        label: "최고 기온",
+                        data: [25, 24],
+                        borderWidth: 2,
+                        fill: false,
+                    },
+                    {
+                        label: "최저 기온",
+                        data: [17, 16],
+                        borderWidth: 2,
+                        fill: false,
+                    },
+                ],
+            },
+            options: {
+                animation: {
+                    duration: 1500,
+                    easing: "easeOutQuart"
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: "°C"
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    },
+                    title: {
+                        display: true,
+                        text: "서울 5월 말 날씨 예측"
+                    }
+                }
+            }
+        });
     }
 
 // 팝업 기능을 초기화하는 함수

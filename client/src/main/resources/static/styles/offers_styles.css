@@ -1894,6 +1894,17 @@ section
 	color: #fa9e1b;
 }
 
+/* 여행 추천 chart.js 그래프를 위한 css*/
+#travel-insight-container {
+	background: #fefefe;
+	border-left: 4px solid #90caf9;
+	padding: 1.5rem;
+	border-radius: 12px;
+}
+#travel-tips li::before {
+	content: "💡 ";
+}
+
 /*********************************
 11. Copyright
 *********************************/

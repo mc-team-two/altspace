@@ -64,7 +64,7 @@
                                            placeholder="<spring:message code="destination_placeholder"/>" required="required">
                                 </div>
                                 <div class="search_item">
-                                    <div><spring:message code="checkin"/></div>
+                                    <div><spring:message code="checkIn"/></div>
                                     <input type="text" class="check_in search_input" id="checkInInput"
                                            placeholder="YYYY-MM-DD">
                                 </div>
@@ -260,6 +260,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="travel-insight-container" class="mb-5 d-none">
+        <div id="travel-insight-item"></div>
+        <canvas id="weatherChart" height="200"></canvas>
+        <ul id="travel-tips"></ul>
     </div>
 
     <!-- 예약 > 목록 -->

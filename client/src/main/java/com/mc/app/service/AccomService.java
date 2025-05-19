@@ -1,9 +1,11 @@
 package com.mc.app.service;
 
+import com.mc.app.dto.AccomSuggestion;
 import com.mc.app.dto.Accommodations;
 import com.mc.app.dto.AccomodationsWithRating;
 import com.mc.app.frame.MCService;
 import com.mc.app.repository.AccomRepository;
+import com.mc.util.GeminiUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class AccomService implements MCService<Accommodations, Integer> {
 
     private final AccomRepository accomRepository;
     private final ReviewService reviewService;
+    private final GeminiUtil geminiUtil;
 
     @Override
     public void add(Accommodations accommodations) throws Exception {
@@ -95,5 +98,14 @@ public class AccomService implements MCService<Accommodations, Integer> {
 
     public void updateAccommodationViews(int accId) {
         accomRepository.updateAccommodationViews(accId);
+    }
+
+    // 제미나이로부터 응답을 받아오는 메서드
+    public Map<String, Object> getSuggestions(AccomSuggestion request) throws Exception {
+        String response = geminiUtil.askGeminiSuggestion(request);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("summary", response);
+        return result;
     }
 }
