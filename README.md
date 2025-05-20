@@ -1,5 +1,6 @@
 # Alt Space 🕹🏠
-~여기에 대문 이미지~
+![readme](https://github.com/user-attachments/assets/7f5ecd20-02e3-46d3-a9ab-08acb17b5104)
+
 
 # 1. 개요
 ## 1.1 프로젝트 기간
