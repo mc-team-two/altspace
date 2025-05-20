@@ -77,14 +77,16 @@
                     // arg.el ==> <th> 요소
                     // arg.dow ==> 요일 (0: 일요일, 6: 토요일)
                     // arg.text ==> 포맷팅된 요일 텍스트 ("일요일")
+                    if (!arg.el) return;    // list 일 때 코드 작동 중지 방어용
 
                     const textElement = arg.el.querySelector('.fc-col-header-cell-cushion');
-                    if (arg.dow === 0) {
-                        textElement.style.color = '#dc3545'; // 일요일 글자색 빨강
-                    } else if (arg.dow === 6) {
-                        textElement.style.color = '#0d7af6'; // 토요일 글자색 파랑
+                    if (textElement) {
+                        if (arg.dow === 0) {
+                            textElement.style.color = '#dc3545'; // 일요일
+                        } else if (arg.dow === 6) {
+                            textElement.style.color = '#0d7af6'; // 토요일
+                        }
                     }
-
                 },
                 eventContent: function(arg) {
                     if (arg.view.type.startsWith('list')) {
