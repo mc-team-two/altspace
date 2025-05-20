@@ -187,7 +187,7 @@
                 </c:forEach>
             </div>
 
-        <jsp:include page="../page.jsp"/>
+        <jsp:include page="components/page.jsp"/>
         <div class="d-flex justify-content-center" style="padding-bottom:15px;">
             <small class="text-muted">${cpage.pageNum} - ${cpage.pages}</small>
         </div>
