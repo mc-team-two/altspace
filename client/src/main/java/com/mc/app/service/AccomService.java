@@ -1,10 +1,16 @@
 package com.mc.app.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.mc.app.dto.AccomSuggestion;
 import com.mc.app.dto.Accommodations;
 import com.mc.app.dto.AccomodationsWithRating;
+import com.mc.app.dto.TravelInsight;
 import com.mc.app.frame.MCService;
 import com.mc.app.repository.AccomRepository;
+import com.mc.util.GeminiUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,12 +18,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccomService implements MCService<Accommodations, Integer> {
 
     private final AccomRepository accomRepository;
     private final ReviewService reviewService;
+    private final GeminiUtil geminiUtil;
 
     @Override
     public void add(Accommodations accommodations) throws Exception {
@@ -95,5 +103,28 @@ public class AccomService implements MCService<Accommodations, Integer> {
 
     public void updateAccommodationViews(int accId) {
         accomRepository.updateAccommodationViews(accId);
+    }
+
+    // 제미나이로부터 응답을 받아오는 메서드
+    public TravelInsight getSuggestions(AccomSuggestion request) {
+
+        String jsonString = geminiUtil.askGeminiSuggestion(request).trim();
+
+// 👉 1. Markdown 래핑 제거 (` ```json\n` 혹은 ```만 제거)
+        if (jsonString.startsWith("```json") || jsonString.startsWith("```")) {
+            jsonString = jsonString.replaceAll("```json\\s*", "")
+                    .replaceAll("```", "")
+                    .trim();
+        }
+
+        log.info("🔍 최종 파싱 대상 JSON 문자열:\n{}", jsonString);
+
+// 👉 2. JSON 객체 파싱 시도
+        try {
+            return new Gson().fromJson(jsonString, TravelInsight.class);
+        } catch (JsonSyntaxException e) {
+            log.error("❌ Gemini 응답 JSON 파싱 실패: {}", jsonString, e);
+            throw new RuntimeException("Gemini JSON 파싱 실패", e);
+        }
     }
 }

@@ -302,6 +302,7 @@
         src="<c:url value='https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js'/>"></script>
 
 <script type="text/javascript" src="<c:url value='js/weather_API.js'/>"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 

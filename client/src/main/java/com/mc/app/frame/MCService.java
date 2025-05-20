@@ -1,5 +1,8 @@
 package com.mc.app.frame;
 
+import com.mc.app.dto.AccomSuggestion;
+import com.mc.app.dto.TravelInsight;
+
 import java.util.List;
 
 public interface MCService<V,K> {

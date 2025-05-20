@@ -1894,6 +1894,48 @@ section
 	color: #fa9e1b;
 }
 
+/* 여행 추천 chart.js 그래프를 위한 css */
+#travel-insight-container {
+	background: var(--bg-color);
+	padding: 1.5rem;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); /* 부드러운 그림자 */
+}
+
+/* 카드에 마우스를 올렸을 때 그림자 강조 */
+#travel-insight-container .card:hover {
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+	transform: translateY(-2px);
+	transition: all 0.3s ease;
+}
+
+#travel-insight-container .card:hover {
+	background-color: #f8f9fa;
+}
+
+#travel-tips li::before {
+	content: "💡 ";
+}
+
+/* 최고 / 최저 기온 강조 스타일 */
+#travel-insight-widgets .card .display-6 {
+	font-size: 2.5rem !important;
+	font-weight: bold !important;
+}
+
+#travel-insight-widgets .card-title {
+	font-size: 1.1rem !important;
+	margin-bottom: 0.5rem !important;
+}
+
+#travel-insight-widgets .card:nth-child(1) .display-6 {
+	color: #e53935 !important;
+}
+
+#travel-insight-widgets .card:nth-child(2) .display-6 {
+	color: #1e88e5 !important;
+}
+
 /*********************************
 11. Copyright
 *********************************/
