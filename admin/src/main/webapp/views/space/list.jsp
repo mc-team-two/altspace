@@ -10,6 +10,13 @@
         object-fit: contain;
         background-color: #eeeeee;
     }
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
 </style>
 
 <script>
@@ -43,11 +50,9 @@
 
 <div class="container-fluid">
     <p class="text-muted">스페이스 관리 > <strong>내 스페이스</strong></p>
-    <div class="card shadow mb-4">
-        <div class="card-body">
             <%--contents 시작--%>
             <div class="row py-3">
-                <div class="col d-flex justify-content-start">총 ${cpage.total}개의 스페이스</div>
+                <div class="col d-flex justify-content-start">총 <strong>${cpage.total}</strong>개의 스페이스</div>
                 <div class="col d-flex justify-content-end">
                     <a href="<c:url value="/space/add"/>"
                        class="btn btn-primary d-flex align-items-center flex-nowrap"
@@ -136,7 +141,7 @@
                                     </div>
 
                                     <%-- data --%>
-                                        <div class="card mt-4 p-3">
+                                        <div class="container-fluid mt-4 p-3 shadow-sm bg-white rounded">
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
                                                     <p><strong>건물 유형:</strong> ${item.category}</p>
@@ -181,11 +186,9 @@
                     </div>
                 </c:forEach>
             </div>
-        </div>
+
         <jsp:include page="../page.jsp"/>
         <div class="d-flex justify-content-center" style="padding-bottom:15px;">
             <small class="text-muted">${cpage.pageNum} - ${cpage.pages}</small>
         </div>
-
-    </div>
 </div>
