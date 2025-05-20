@@ -51,14 +51,16 @@
 <div class="container-fluid">
     <p class="text-muted">스페이스 관리 > <strong>내 스페이스</strong></p>
             <%--contents 시작--%>
-            <div class="row py-3">
-                <div class="col d-flex justify-content-start">총 <strong>${cpage.total}</strong>개의 스페이스</div>
-                <div class="col d-flex justify-content-end">
+            <div class="row my-3 mx-0 p-2 bg-primary rounded">
+                <div class="col px-0 d-flex justify-content-start align-items-center" style="color: #f5f5f9; font-size: 18px;">
+                    &nbsp;<strong>${cpage.total}</strong>개의 검색결과
+                </div>
+                <div class="col px-0 d-flex justify-content-end">
                     <a href="<c:url value="/space/add"/>"
-                       class="btn btn-primary d-flex align-items-center flex-nowrap"
+                       class="btn bg-white text-dark d-flex align-items-center flex-nowrap"
                        style="min-width: 130px; white-space: nowrap;">
                         <i class="bi bi-house-add me-2"></i>
-                        <span>새 공간 추가</span>
+                        <span>스페이스 등록</span>
                     </a>
                 </div>
             </div>

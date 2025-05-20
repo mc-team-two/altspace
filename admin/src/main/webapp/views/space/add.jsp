@@ -251,7 +251,7 @@
 </script>
 
 <div class="container">
-    <p class="text-muted">스페이스 관리 > 내 스페이스 > <strong>새 공간 추가</strong></p>
+    <p class="text-muted">스페이스 관리 > 내 스페이스 > <strong>스페이스 등록</strong></p>
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="table-responsive">
