@@ -46,18 +46,19 @@
 
         /* 버튼 기본 숨김 처리 */
         .arrow {
+            width: 36px;               /* 정사각형 너비 */
+            height: 36px;              /* 정사각형 높이 */
+            border-radius: 50%;        /* 완전한 원 */
+            font-size: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.5);
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.2); /* 더 투명하게 */
             border: none;
-            color: rgba(255, 255, 255, 0.5);       /* 글자도 흐리게 */
-            font-size: 20px;
-            padding: 8px 10px;
             cursor: pointer;
             z-index: 10;
-            border-radius: 50%;
-            display: none;                         /* 기본적으로 숨김 */
+            display: none;
             transition: all 0.3s ease;
         }
 
@@ -146,7 +147,6 @@
             });
             $('#editForm-' + id + '-form').submit();
         },
-
         initSlider: function () {
             $('.review-slider-wrapper').each(function () {
                 const $wrapper   = $(this);
