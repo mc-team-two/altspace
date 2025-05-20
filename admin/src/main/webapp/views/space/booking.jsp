@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!-- ✅ FullCalendar 스타일 -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
 
 <style>
@@ -15,16 +14,17 @@
     }
     .fc-daygrid-event {
         margin-bottom: 5px;
-        opacity: 0.9;
-/*        display: block;
-        padding: 8px;
-        font-size: 16px;
-        border-radius: 6px;
-        line-height: 1.6;
-        height: auto;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;*/
+        padding: 2px;
+    }
+    .event-count {
+        color: #6c757d;
+        font-weight: normal;
+    }
+    .fc-col-header-cell {
+        background-color: #e9ecef; /* Light grey background */
+    }
+    .fc-day-today .fc-daygrid-day-number {
+        color: black;
     }
 </style>
 
@@ -47,12 +47,9 @@
                 url: "<c:url value='/api/booking/reservations'/>",
                 data: { hostId: "${sessionScope.user.userId}" },
                 success: (resp) => {
-                    console.log(resp);
-                    console.log(resp.canceled);
-                    bookingPage.bindCounts(resp);      // 이벤트 카운트 표시 (사이드바)
-                    bookingPage.populateEvents(resp);  // 이벤트 푸시
-                    bookingPage.renderCalendar();      // 캘린더 갱신
-                    bookingPage.updateTimestamp();     // 데이터 기준일자 갱신
+                    bookingPage.bindCounts(resp);
+                    bookingPage.populateEvents(resp);
+                    bookingPage.updateTimestamp();
                 },
                 error: (xhr) => { alert(xhr.responseText); }
             });
@@ -72,30 +69,81 @@
                     right: 'dayGridMonth,listMonth'
                 },
                 eventDisplay: 'block',
-                events: [],  // 초기 빈 이벤트
-                eventDidMount: function (info) {
-                    // extendedProps에서 데이터 추출
-                    let ep = info.event.extendedProps;
-                    let guestName = ep.guestName;
-                    let location  = ep.location;
-                    let paymentId = ep.paymentId;
+                eventBackgroundColor: '#f8f9fa',
+                eventBorderColor: '#ced4da',
+                events: [],
+                dayHeaderFormat: { weekday: 'long' },
+                dayHeaderDidMount: function(arg) {
+                    // arg.el ==> <th> 요소
+                    // arg.dow ==> 요일 (0: 일요일, 6: 토요일)
+                    // arg.text ==> 포맷팅된 요일 텍스트 ("일요일")
+                    if (!arg.el) return;    // list 일 때 코드 작동 중지 방어용
 
-                    // 문자열 연결로 툴팁 HTML 구성
+                    const textElement = arg.el.querySelector('.fc-col-header-cell-cushion');
+                    if (textElement) {
+                        if (arg.dow === 0) {
+                            textElement.style.color = '#dc3545'; // 일요일
+                        } else if (arg.dow === 6) {
+                            textElement.style.color = '#0d7af6'; // 토요일
+                        }
+                    }
+                },
+                eventContent: function(arg) {
+                    if (arg.view.type.startsWith('list')) {
+                        return { html: (arg.event.title && arg.event.title.trim() !== '') ? arg.event.title : '&nbsp;' };
+                    }
+                    else if (arg.view.type === 'dayGridMonth') {
+                        const segmentDate = new Date(arg.date);
+                        segmentDate.setHours(0, 0, 0, 0);
+
+                        const eventStartDate = arg.event.start ? new Date(arg.event.start) : null;
+                        if (eventStartDate) {
+                            eventStartDate.setHours(0, 0, 0, 0);
+                        }
+
+                        const displayTitle = arg.isStart || (eventStartDate && segmentDate.getTime() === eventStartDate.getTime()) || !eventStartDate;
+
+                        if (displayTitle) {
+                            return { html: (arg.event.title && arg.event.title.trim() !== '') ? arg.event.title : '&nbsp;' };
+                        } else {
+                            return { html: '&nbsp;' };
+                        }
+                    }
+                    else {
+                        return { html: (arg.event.title && arg.event.title.trim() !== '') ? arg.event.title : '&nbsp;' };
+                    }
+                },
+                eventDidMount: function (info) {
+                    if (!info.el) {
+                        return;
+                    }
+
+                    let ep = info.event.extendedProps;
+                    let guestName = ep.guestName || '정보 없음';
+                    let location  = ep.location || '정보 없음';
+                    let paymentId = ep.paymentId || '정보 없음';
+
+                    let eventTitleForTooltip = (typeof info.event.title === 'string' && info.event.title.trim() !== '') ? info.event.title : '(제목 없음)';
+
                     let tooltipContent =
                         '<div style="font-weight:bold; margin-bottom:4px;">' +
-                            info.event.title +
+                        eventTitleForTooltip +
                         '</div>' +
                         '<div>게스트: ' + guestName + '</div>' +
                         '<div>위치: '   + location  + '</div>' +
                         '<div>결제ID: ' + paymentId + '</div>';
 
-                    tippy(info.el, {
-                        content: tooltipContent,
-                        allowHTML: true,
-                        theme: 'light-border',
-                        placement: 'top',
-                        delay: [200, 0]
-                    });
+                    try {
+                        tippy(info.el, {
+                            content: tooltipContent,
+                            allowHTML: true,
+                            theme: 'light-border',
+                            placement: 'top',
+                            delay: [200, 0]
+                        });
+                    } catch (e) {
+                        console.error("Error initializing tippy:", e, "for element:", info.el, "event:", info.event);
+                    }
                 }
             });
 
@@ -104,32 +152,30 @@
 
         // 이벤트 배열에 데이터 추가
         populateEvents: function (resp) {
-            const statusColors = {
-                upcoming: '#ffc107',
-                finished: '#696cff',
-                hostingNow: '#28a745',
-                canceled: '#dc3545'
-            };
+            const eventTextColor = '#212529';
 
-            const statusLabels = {
-                upcoming: '[예정]',
-                finished: '[완료]',
-                hostingNow: '[진행]',
-                canceled: '[취소]'
+            const statusInfo = {
+                upcoming:   { text: '예정', badgeClass: 'badge bg-warning text-dark' },
+                finished:   { text: '완료', badgeClass: 'badge bg-primary' },
+                hostingNow: { text: '진행', badgeClass: 'badge bg-success' },
+                canceled:   { text: '취소', badgeClass: 'badge bg-danger' }
             };
 
             const types = ['upcoming', 'finished', 'hostingNow', 'canceled'];
-
-            this.events = [];  // 기존 이벤트 초기화
+            this.events = [];
 
             types.forEach(type => {
                 const eventsForType = resp[type]?.data || [];
                 eventsForType.forEach(event => {
+                    const currentStatusInfo = statusInfo[type];
+                    const accommodationName = event.accommodationName || '';
                     this.events.push({
-                        title: statusLabels[type] + ' ' + event.accommodationName,
+                        title: '<span class="' + currentStatusInfo.badgeClass + '">'
+                            + currentStatusInfo.text + '</span> '
+                            + accommodationName + " #" + event.paymentId,
                         start: event.checkIn,
                         end: event.checkOut,
-                        color: statusColors[type],
+                        textColor: eventTextColor,
                         extendedProps: {
                             paymentId: event.paymentId,
                             guestId: event.guestId,
@@ -141,14 +187,12 @@
                     });
                 });
             });
-
-            // 데이터가 추가되면 필터링 함수 호출
-            this.filterEvents();
+            this.renderCalendar();
         },
 
         // 캘린더 갱신
         renderCalendar: function () {
-            this.filterEvents();  // 필터링된 이벤트로 렌더링
+            this.filterEvents();
         },
 
         // 필터링된 이벤트만 표시
@@ -161,14 +205,14 @@
             };
 
             const filteredEvents = this.events.filter(event => {
-                if (event.color === '#ffc107' && filters.upcoming) return true;
-                if (event.color === '#696cff' && filters.finished) return true;
-                if (event.color === '#28a745' && filters.hostingNow) return true;
-                if (event.color === '#dc3545' && filters.canceled) return true;
+                const status = event.extendedProps.status;
+                if (status === 'upcoming' && filters.upcoming) return true;
+                if (status === 'finished' && filters.finished) return true;
+                if (status === 'hostingNow' && filters.hostingNow) return true;
+                if (status === 'canceled' && filters.canceled) return true;
                 return false;
             });
 
-            // 캘린더에 필터링된 이벤트만 추가
             this.calendar.removeAllEvents();
             this.calendar.addEventSource(filteredEvents);
         },
@@ -188,7 +232,6 @@
                 agoText = diffH + '시간 전';
             }
 
-            // 날짜 포맷: YYYY-MM-DD 오전/오후 HH:MM
             const pad = n => n.toString().padStart(2,'0');
             const d = this.lastFetchTime;
             const Y = d.getFullYear();
@@ -225,10 +268,16 @@
 
         // 사이드바 - 이벤트 카운트 표시
         bindCounts: function(resp) {
-            $('#canceledLabel').append(" (" + resp.canceled.count + ")");
-            $('#upcomingLabel').append(" (" +resp.upcoming.count + ")");
-            $('#hostingNowLabel').append(" (" +resp.hostingNow.count + ")");
-            $('#finishedLabel').append(" (" +resp.finished.count + ")");
+            const updateLabelCount = function(labelId, count) {
+                const $label = $('#' + labelId);
+                $label.find('span.event-count').remove();
+                $label.append(' <span class="event-count">(' + count + ')</span>');
+            };
+
+            updateLabelCount('canceledLabel', resp.canceled.count);
+            updateLabelCount('upcomingLabel', resp.upcoming.count);
+            updateLabelCount('hostingNowLabel', resp.hostingNow.count);
+            updateLabelCount('finishedLabel', resp.finished.count);
         }
     };
 
@@ -236,7 +285,6 @@
         bookingPage.init();
     });
 </script>
-
 
 <div class="col-sm-12">
     <p class="text-muted">스페이스 관리 > 내 스페이스 > <strong>예약 캘린더</strong></p>
@@ -246,7 +294,7 @@
                 <div class="col-sm-3">
                     <ul class="list-group mb-3">
                         <li class="list-group-item d-flex align-items-center justify-content-between"
-                        style="background-color: #f5f5f9">
+                            style="background-color: #f5f5f9">
                             <label for="all"><strong>전체보기</strong></label>
                             <input type="checkbox" class="form-check-input" id="all" checked>
                         </li>
