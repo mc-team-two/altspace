@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!-- ✅ FullCalendar 스타일 -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
 
 <style>
@@ -16,20 +15,16 @@
     .fc-daygrid-event {
         margin-bottom: 5px;
         padding: 2px;
-
-/*        display: block;
-        padding: 8px;
-        font-size: 16px;
-        border-radius: 6px;
-        line-height: 1.6;
-        height: auto;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;*/
     }
     .event-count {
         color: #6c757d;
         font-weight: normal;
+    }
+    .fc-col-header-cell {
+        background-color: #e9ecef; /* Light grey background */
+    }
+    .fc-day-today .fc-daygrid-day-number {
+        color: black;
     }
 </style>
 
@@ -73,52 +68,64 @@
                     center: 'title',
                     right: 'dayGridMonth,listMonth'
                 },
-                eventDisplay: 'block', // Ensures events take up block space
-                eventBackgroundColor: '#f8f9fa', // 모든 이벤트의 기본 배경색 (bg-light)
-                eventBorderColor: '#ced4da',   // 모든 이벤트의 테두리 색상 (연한 회색)
-                events: [],  // 초기 빈 이벤트
-                eventContent: function(arg) {
-                    // 현재 렌더링되는 이벤트 세그먼트의 날짜 (시간 정보 제거)
-                    const segmentDate = new Date(arg.date);
-                    segmentDate.setHours(0, 0, 0, 0);
+                eventDisplay: 'block',
+                eventBackgroundColor: '#f8f9fa',
+                eventBorderColor: '#ced4da',
+                events: [],
+                dayHeaderFormat: { weekday: 'long' },
+                dayHeaderDidMount: function(arg) {
+                    // arg.el ==> <th> 요소
+                    // arg.dow ==> 요일 (0: 일요일, 6: 토요일)
+                    // arg.text ==> 포맷팅된 요일 텍스트 ("일요일")
 
-                    // 이벤트의 실제 시작 날짜 (시간 정보 제거)
-                    // arg.event.start가 null일 수 있으므로 방어 코드 추가
-                    const eventStartDate = arg.event.start ? new Date(arg.event.start) : null;
-                    if (eventStartDate) {
-                        eventStartDate.setHours(0, 0, 0, 0);
+                    const textElement = arg.el.querySelector('.fc-col-header-cell-cushion');
+                    if (arg.dow === 0) {
+                        textElement.style.color = '#dc3545'; // 일요일 글자색 빨강
+                    } else if (arg.dow === 6) {
+                        textElement.style.color = '#0d7af6'; // 토요일 글자색 파랑
                     }
 
-                    // 이벤트의 실제 시작일과 현재 세그먼트의 날짜가 동일하거나,
-                    // eventStartDate가 유효하지 않은 경우 (오류 방지 차원에서 일단 표시)
-                    // 또는 arg.isStart가 true인 경우 (FullCalendar v5+ 에서 제공) 제목 표시
-                    if (arg.isStart || (eventStartDate && segmentDate.getTime() === eventStartDate.getTime()) || !eventStartDate) {
-                        return { html: arg.event.title || '' }; // 원래 제목 HTML 반환 (null 방지)
-                    } else {
-                        // 그 외의 경우에는 빈 HTML을 반환하여 제목을 숨김
-                        // FullCalendar는 여전히 이벤트 블록의 배경색과 테두리를 렌더링함
-                        return { html: '&nbsp;' }; // 공간 유지 명시
+                },
+                eventContent: function(arg) {
+                    if (arg.view.type.startsWith('list')) {
+                        return { html: (arg.event.title && arg.event.title.trim() !== '') ? arg.event.title : '&nbsp;' };
+                    }
+                    else if (arg.view.type === 'dayGridMonth') {
+                        const segmentDate = new Date(arg.date);
+                        segmentDate.setHours(0, 0, 0, 0);
+
+                        const eventStartDate = arg.event.start ? new Date(arg.event.start) : null;
+                        if (eventStartDate) {
+                            eventStartDate.setHours(0, 0, 0, 0);
+                        }
+
+                        const displayTitle = arg.isStart || (eventStartDate && segmentDate.getTime() === eventStartDate.getTime()) || !eventStartDate;
+
+                        if (displayTitle) {
+                            return { html: (arg.event.title && arg.event.title.trim() !== '') ? arg.event.title : '&nbsp;' };
+                        } else {
+                            return { html: '&nbsp;' };
+                        }
+                    }
+                    else {
+                        return { html: (arg.event.title && arg.event.title.trim() !== '') ? arg.event.title : '&nbsp;' };
                     }
                 },
                 eventDidMount: function (info) {
-                    // info.el이 없으면 툴팁을 붙일 수 없으므로 반환
                     if (!info.el) {
-                        // console.error("Tippy: info.el is null for event", info.event);
                         return;
                     }
 
                     let ep = info.event.extendedProps;
-                    // extendedProps의 값들이 null/undefined일 경우 '정보 없음' 등으로 대체
                     let guestName = ep.guestName || '정보 없음';
                     let location  = ep.location || '정보 없음';
                     let paymentId = ep.paymentId || '정보 없음';
 
-                    // info.event.title이 문자열이 아니거나 비어있을 경우 대체 텍스트 사용
                     let eventTitleForTooltip = (typeof info.event.title === 'string' && info.event.title.trim() !== '') ? info.event.title : '(제목 없음)';
 
                     let tooltipContent =
                         '<div style="font-weight:bold; margin-bottom:4px;">' +
-                        eventTitleForTooltip + // 툴팁에는 항상 전체 제목 표시
+                        eventTitleForTooltip +
                         '</div>' +
                         '<div>게스트: ' + guestName + '</div>' +
                         '<div>위치: '   + location  + '</div>' +
@@ -133,7 +140,7 @@
                             delay: [200, 0]
                         });
                     } catch (e) {
-                        // console.error("Error initializing tippy:", e, "for element:", info.el, "event:", info.event);
+                        console.error("Error initializing tippy:", e, "for element:", info.el, "event:", info.event);
                     }
                 }
             });
@@ -143,8 +150,7 @@
 
         // 이벤트 배열에 데이터 추가
         populateEvents: function (resp) {
-            // const eventBackgroundColor = '#f8f9fa'; // makeCalendar에서 전역으로 설정했으므로 제거
-            const eventTextColor = '#212529'; // 뱃지가 아닌 텍스트 부분의 색상
+            const eventTextColor = '#212529';
 
             const statusInfo = {
                 upcoming:   { text: '예정', badgeClass: 'badge bg-warning text-dark' },
@@ -160,7 +166,6 @@
                 const eventsForType = resp[type]?.data || [];
                 eventsForType.forEach(event => {
                     const currentStatusInfo = statusInfo[type];
-                    // event.accommodationName이 null이나 undefined일 경우 빈 문자열로 대체
                     const accommodationName = event.accommodationName || '';
                     this.events.push({
                         title: '<span class="' + currentStatusInfo.badgeClass + '">'
@@ -168,8 +173,7 @@
                             + accommodationName + " #" + event.paymentId,
                         start: event.checkIn,
                         end: event.checkOut,
-                        // color: eventBackgroundColor, // 이 줄을 제거하여 전역 eventBackgroundColor 및 eventBorderColor 사용
-                        textColor: eventTextColor,   // 제목의 뱃지가 아닌 부분의 텍스트 색상
+                        textColor: eventTextColor,
                         extendedProps: {
                             paymentId: event.paymentId,
                             guestId: event.guestId,
@@ -288,7 +292,7 @@
                 <div class="col-sm-3">
                     <ul class="list-group mb-3">
                         <li class="list-group-item d-flex align-items-center justify-content-between"
-                        style="background-color: #f5f5f9">
+                            style="background-color: #f5f5f9">
                             <label for="all"><strong>전체보기</strong></label>
                             <input type="checkbox" class="form-check-input" id="all" checked>
                         </li>
