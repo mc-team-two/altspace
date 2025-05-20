@@ -145,33 +145,6 @@
     color: #555;
 }
 
-.review-slider-container {
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-bottom: 8px;
-}
-
-.review-slider-inner {
-    display: flex;
-    gap: 10px;
-    padding: 4px;
-}
-
-.slider-image-wrapper {
-    flex: 0 0 auto;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.slider-image {
-    height: 180px;
-    width: auto;
-    display: block;
-    object-fit: cover;
-    border-radius: 12px;
-}
-
 /* 카드 공통 스타일 */
 .card {
     border: none;

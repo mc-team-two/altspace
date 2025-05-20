@@ -20,6 +20,7 @@
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 
     <style>
+        /* 번역 버튼 */
         .btn-custom-small {
             padding: 15px 45px;
             font-size: 1rem;
@@ -28,12 +29,8 @@
             border-radius: 8px;
             margin-left: auto;
         }
+
         .translate-select-wrapper {
-            /*width: auto;
-            min-width: 110px;
-            position: relative;
-            margin-left: auto;
-            margin-top: 8px;*/
             display: inline-block; /* 혹은 flex-container 안이면 flex로 설정 */
             position: relative;
             margin-left: auto;
@@ -43,7 +40,6 @@
 
         .translate-lang-select {
             display: inline-block;
-
             font-size: 0.9rem;
             padding: 8px 10px 8px 28px;
             border: 1px solid #0d6efd;
@@ -73,13 +69,97 @@
             font-size: 0.9rem;
             pointer-events: none;
         }
+
+        /* 이미지 슬라이드 */
+        .review-slider-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .review-slider-container {
+            overflow: hidden;
+        }
+
+        .review-slider-inner {
+            display: flex;
+            gap: 10px;
+            transition: scroll-left 0.4s ease-in-out;
+            scroll-behavior: smooth;
+        }
+
+        .slider-image-wrapper {
+            flex: 0 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .slider-image {
+            height: 180px;
+            display: block;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* 버튼 기본 숨김 처리 */
+        .arrow {
+            width: 36px;               /* 정사각형 너비 */
+            height: 36px;              /* 정사각형 높이 */
+            border-radius: 50%;        /* 완전한 원 */
+            font-size: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: rgba(255, 255, 255, 0.5);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .arrow:hover {
+            background-color: rgba(0, 0, 0, 0.6);  /* hover 시 더 진한 배경 */
+            color: rgba(255, 255, 255, 0.95);      /* hover 시 글자 색 선명 */
+        }
+
+        .left-arrow {
+            left: 10px;
+        }
+
+        .right-arrow {
+            right: 10px;
+        }
+
+        .slider-fade {
+            position: absolute;
+            top: 0;
+            width: 50px;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+            display: none; /* 기본은 숨김 */
+        }
+
+        .left-fade {
+            left: 0;
+            background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+        }
+
+        .right-fade {
+            right: 0;
+            background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
+        }
     </style>
 </head>
 <body>
 <script>
     const translateOptionsText = {
         "ko": {
-            placeholder: "번역",
+             placeholder: "번역",
             ko: "한국어",
             en: "영어",
             "zh-CN": "중국어",
@@ -358,14 +438,14 @@
                 });
             }
         },
-        wishlistToggle: function () {
+        wishlistToggle: function() {
             const accommId = parseInt("${accomm.accommodationId}");
             const wishlistIdStr = $(".wishlist-btn").data("wishlist-id"); // data-wishlist-id 값 가져오기
             const wishlistId = wishlistIdStr ? parseInt(wishlistIdStr) : null;
 
             const isWished = $(".wishlist-btn").hasClass("btn-danger"); // 이미 찜한 상태인지 확인
 
-            if (isWished) {
+            if(isWished) {
                 // 찜 삭제 요청
                 if (!wishlistId) {
                     alert("찜 ID 정보가 없습니다. 다시 시도해주세요.");
@@ -378,7 +458,7 @@
                     data: {
                         wishlistId: wishlistId
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
                             alert("찜 목록에서 취소되었습니다.");
                             $(".wishlist-btn")
@@ -387,13 +467,11 @@
                                 .html('<i class="bi bi-heart"></i> 찜');
                             location.reload(); // 페이지 새로고침
 
-                            /*// 데이터 갱신: 버튼에서 data-wishlist-id를 삭제
-                            $(".wishlist-btn").removeData("wishlist-id");*/
                         } else {
                             alert("찜 삭제에 실패했습니다.");
                         }
                     },
-                    error: function () {
+                    error: function() {
                         alert("서버 오류로 찜 삭제에 실패했습니다.");
                     }
                 });
@@ -404,7 +482,7 @@
                     data: {
                         accommodationId: accommId
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
                             alert("찜 목록에 추가되었습니다!");
                             // 버튼 UI 변경
@@ -414,13 +492,11 @@
                                 .html('<i class="bi bi-heart-fill"></i> 찜');
                             location.reload(); // 페이지 새로고침
 
-                            /*// 새로 생성된 wishlistId 값 갱신 (서버에서 response로 받은 wishlistId)
-                            $(".wishlist-btn").data("wishlist-id", response.wishlistId);*/
                         } else {
                             alert("이미 찜한 숙소입니다.");
                         }
                     },
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         alert("찜 추가에 실패했습니다. 다시 시도해주세요.");
                         console.error("Error:", error);
                     }
@@ -482,9 +558,71 @@
             });
         }
     };
+    const rvImg = {
+        initSlider: function () {
+            $('.review-slider-wrapper').each(function () {
+                const $wrapper   = $(this);
+                const $container = $wrapper.find('.review-slider-container');
+                const $leftBtn   = $wrapper.find('.left-arrow');
+                const $rightBtn  = $wrapper.find('.right-arrow');
+                const $leftFade  = $wrapper.find('.left-fade');
+                const $rightFade = $wrapper.find('.right-fade');
+
+                // 스크롤 위치를 보고 fade & 버튼을 토글하는 함수
+                const updateFade = () => {
+                    const scrollLeft    = $container.scrollLeft();
+                    const maxScrollLeft = $container[0].scrollWidth - $container.outerWidth();
+
+                    // 왼쪽
+                    if (scrollLeft > 5) {
+                        $leftFade.fadeIn();   // fade 효과 보이기
+                        $leftBtn.fadeIn();    // 버튼 보이기
+                    } else {
+                        $leftFade.fadeOut();  // fade 효과 숨기기
+                        $leftBtn.fadeOut();   // 버튼 숨기기
+                    }
+
+                    // 오른쪽
+                    if (scrollLeft < maxScrollLeft - 5) {
+                        $rightFade.fadeIn();
+                        $rightBtn.fadeIn();
+                    } else {
+                        $rightFade.fadeOut();
+                        $rightBtn.fadeOut();
+                    }
+                };
+
+                // 1) 초기 상태에서 한 번 실행
+                updateFade();
+
+                // 2) 버튼 클릭 시 스크롤 + 상태 업데이트
+                $leftBtn.on('click', function () {
+                    $container.animate(
+                        { scrollLeft: '-=300' },
+                        400,
+                        updateFade
+                    );
+                });
+                $rightBtn.on('click', function () {
+                    $container.animate(
+                        { scrollLeft: '+=300' },
+                        400,
+                        updateFade
+                    );
+                });
+
+                // 3) 사용자가 직접 스크롤해도 상태 업데이트
+                $container.on('scroll', updateFade);
+
+                // 4) 창 크기 바뀌어도 상태 업데이트
+                $(window).on('resize', updateFade);
+            });
+        }
+    };
 
     $(document).ready(function () {
         change.init();
+        rvImg.initSlider();
     });
 </script>
 
@@ -747,10 +885,10 @@
                                 <c:set var="wishlistId" value="${resultWishlist.wishlistId}"/>
                             </c:if>
                             <button
-                                    class="btn rounded-pill w-30 wishlist-btn
+                                class="btn rounded-pill w-30 wishlist-btn
                                     ${not empty resultWishlist ? 'btn-danger' : 'btn-outline-danger'}"
-                                    style="flex: 3;"
-                                    data-wishlist-id="${not empty resultWishlist ? resultWishlist.wishlistId : ''}">
+                                style="flex: 3;"
+                                data-wishlist-id="${not empty resultWishlist ? resultWishlist.wishlistId : ''}">
                                 <i class="bi ${not empty resultWishlist ? 'bi-heart-fill' : 'bi-heart'}"></i>
                                 ${not empty resultWishlist ? '찜' : '찜'}
                             </button>
@@ -813,14 +951,23 @@
                     </div>
                     <!-- 오른쪽 : 이미지 슬라이더 -->
                     <c:if test="${not empty rv.imageUrl}">
-                        <div class="review-slider-container me-3" style="flex: 1 1 400px; max-width: 100%;">
-                            <div class="review-slider-inner">
-                                <c:forEach var="img" items="${rv.imageUrl}">
-                                    <div class="slider-image-wrapper">
-                                        <img src="/imgs/${img}" class="slider-image"/>
-                                    </div>
-                                </c:forEach>
+                        <div class="review-slider-wrapper me-3" style="flex: 1 1 400px; max-width: 100%;">
+                            <div class="slider-fade left-fade"></div>
+                            <button class="arrow left-arrow">&#10094;</button>
+
+                            <!-- 기존 컨테이너 -->
+                            <div class="review-slider-container">
+                                <div class="review-slider-inner">
+                                    <c:forEach var="img" items="${rv.imageUrl}">
+                                        <div class="slider-image-wrapper">
+                                            <img src="/imgs/${img}" class="slider-image"/>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                             </div>
+
+                            <div class="slider-fade right-fade"></div>
+                            <button class="arrow right-arrow">&#10095;</button>
                         </div>
                     </c:if>
                 </div>
