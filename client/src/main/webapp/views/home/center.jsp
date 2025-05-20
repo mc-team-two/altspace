@@ -61,7 +61,8 @@
                                 <div class="search_item">
                                     <div><spring:message code="destination"/></div>
                                     <input type="text" id="searchInput" class="destination search_input"
-                                           placeholder="<spring:message code="destination_placeholder"/>" required="required">
+                                           placeholder="<spring:message code="destination_placeholder"/>"
+                                           required="required">
                                 </div>
                                 <div class="search_item">
                                     <div><spring:message code="checkIn"/></div>
@@ -108,7 +109,8 @@
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_4" class="search_extras_cb">
-                                                <label for="search_extras_4"><spring:message code="swimmingpool"/></label>
+                                                <label for="search_extras_4"><spring:message
+                                                        code="swimmingpool"/></label>
                                             </div>
                                         </li>
                                     </ul>
@@ -125,7 +127,8 @@
                                   class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                 <div class="search_item">
                                     <div><spring:message code="destination"/></div>
-                                    <input type="text" class="destination search_input" placeholder="<spring:message code="destination_placeholder"/>"
+                                    <input type="text" class="destination search_input"
+                                           placeholder="<spring:message code="destination_placeholder"/>"
                                            required="required">
                                 </div>
                                 <div class="search_item">
@@ -171,19 +174,22 @@
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_9" class="search_extras_cb">
-                                                <label for="search_extras_9"><spring:message code="swimmingpool"/></label>
+                                                <label for="search_extras_9"><spring:message
+                                                        code="swimmingpool"/></label>
                                             </div>
                                         </li>
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_10" class="search_extras_cb">
-                                                <label for="search_extras_10"><spring:message code="swimmingpool"/></label>
+                                                <label for="search_extras_10"><spring:message
+                                                        code="swimmingpool"/></label>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
 
-                                <button class="button search_button"><spring:message code="searchBtn"/><span></span><span></span><span></span>
+                                <button class="button search_button"><spring:message
+                                        code="searchBtn"/><span></span><span></span><span></span>
                                 </button>
                             </form>
                         </div>
@@ -195,7 +201,8 @@
                                   class="search_panel_content d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-between justify-content-start">
                                 <div class="search_item">
                                     <div><spring:message code="destination"/></div>
-                                    <input type="text" class="destination search_input" placeholder="<spring:message code="destination_placeholder"/>"
+                                    <input type="text" class="destination search_input"
+                                           placeholder="<spring:message code="destination_placeholder"/>"
                                            required="required">
                                 </div>
                                 <div class="search_item">
@@ -229,7 +236,8 @@
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_12" class="search_extras_cb">
-                                                <label for="search_extras_12"><spring:message code="petfrendly"/></label>
+                                                <label for="search_extras_12"><spring:message
+                                                        code="petfrendly"/></label>
                                             </div>
                                         </li>
                                         <li class="search_extras_item">
@@ -241,18 +249,21 @@
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_14" class="search_extras_cb">
-                                                <label for="search_extras_14"><spring:message code="swimmingpool"/></label>
+                                                <label for="search_extras_14"><spring:message
+                                                        code="swimmingpool"/></label>
                                             </div>
                                         </li>
                                         <li class="search_extras_item">
                                             <div class="clearfix">
                                                 <input type="checkbox" id="search_extras_15" class="search_extras_cb">
-                                                <label for="search_extras_15"><spring:message code="swimmingpool"/></label>
+                                                <label for="search_extras_15"><spring:message
+                                                        code="swimmingpool"/></label>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                                <button class="button search_button"><spring:message code="searchBtn"/><span></span><span></span><span></span>
+                                <button class="button search_button"><spring:message
+                                        code="searchBtn"/><span></span><span></span><span></span>
                                 </button>
                             </form>
                         </div>
@@ -262,10 +273,10 @@
         </div>
     </div>
 
-    <div id="travel-insight-container" class="mb-5 d-none">
-        <div id="travel-insight-item"></div>
-        <canvas id="weatherChart" height="200"></canvas>
-        <ul id="travel-tips"></ul>
+    <div class="container">
+        <div id="travel-insight-container" class="mb-5 d-none">
+            <div class="row text-center" id="travel-insight-widgets"></div>
+        </div>
     </div>
 
     <!-- 예약 > 목록 -->
@@ -339,7 +350,8 @@
                             <div class="row">
                                 <div class="col-lg-1 temp_col"></div>
                                 <div class="col-lg-3 col-1680-4">
-                                    <div class="offers_image_container" style="cursor:pointer;" onclick="updateViewsAndGo(${a.accommodationId})">
+                                    <div class="offers_image_container" style="cursor:pointer;"
+                                         onclick="updateViewsAndGo(${a.accommodationId})">
                                         <div class="offers_image_background"
                                              style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
                                         <div class="offer_name"><a
@@ -349,7 +361,8 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="offers_content">
-                                        <div class="offers_price">₩${a.priceNight}<span><spring:message code="pernight"/></span></div>
+                                        <div class="offers_price">₩${a.priceNight}<span><spring:message
+                                                code="pernight"/></span></div>
                                         <div class="rating_r rating_r_${currentRating} offers_rating"
                                              data-rating="${currentRating}">
                                             <i></i><i></i><i></i><i></i><i></i>
@@ -358,45 +371,56 @@
                                         <div class="offers_icons">
                                             <ul class="offers_icons_list">
                                                 <c:if test="${a.barbecue}">
-                                                    <li class="offers_icons_item" data-popper-content="<spring:message code="barbecue"/>">
+                                                    <li class="offers_icons_item"
+                                                        data-popper-content="<spring:message code="barbecue"/>">
                                                         <i class="fa fa-fire-alt text-warning" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.breakfast}">
-                                                    <li class="offers_icons_item" data-popper-content="<spring:message code="breakfast"/>">
+                                                    <li class="offers_icons_item"
+                                                        data-popper-content="<spring:message code="breakfast"/>">
                                                         <i class="fa fa-coffee text-danger" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.pet}">
-                                                    <li class="offers_icons_item" data-popper-content="<spring:message code="petfrendly"/>">
+                                                    <li class="offers_icons_item"
+                                                        data-popper-content="<spring:message code="petfrendly"/>">
                                                         <i class="fa fa-paw text-info" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                                 <c:if test="${a.pool}">
-                                                    <li class="offers_icons_item" data-popper-content="<spring:message code="swimmingpool"/>">
+                                                    <li class="offers_icons_item"
+                                                        data-popper-content="<spring:message code="swimmingpool"/>">
                                                         <i class="fas fa-swimmer text-primary" aria-hidden="true"></i>
                                                     </li>
                                                     <div class="popper-arrow"></div>
                                                 </c:if>
                                             </ul>
                                         </div>
-                                        <div class="button book_button"><a href="javascript:void(0);" onclick="updateViewsAndGo(${a.accommodationId})"><spring:message code="book_button"/><span></span><span></span><span></span></a>
+                                        <div class="button book_button"><a href="javascript:void(0);"
+                                                                           onclick="updateViewsAndGo(${a.accommodationId})"><spring:message
+                                                code="book_button"/><span></span><span></span><span></span></a>
                                         </div>
                                         <div class="offer_reviews">
                                             <div class="offer_reviews_content">
                                                 <div class="offer_reviews_title">
                                                     <c:choose>
-                                                        <c:when test="${currentRating >= 4}"><spring:message code="score4"/></c:when>
-                                                        <c:when test="${currentRating == 3}"><spring:message code="score3"/></c:when>
-                                                        <c:when test="${currentRating == 2}"><spring:message code="score2"/></c:when>
-                                                        <c:when test="${currentRating == 1}"><spring:message code="score1"/></c:when>
+                                                        <c:when test="${currentRating >= 4}"><spring:message
+                                                                code="score4"/></c:when>
+                                                        <c:when test="${currentRating == 3}"><spring:message
+                                                                code="score3"/></c:when>
+                                                        <c:when test="${currentRating == 2}"><spring:message
+                                                                code="score2"/></c:when>
+                                                        <c:when test="${currentRating == 1}"><spring:message
+                                                                code="score1"/></c:when>
                                                         <c:otherwise><spring:message code="score0"/></c:otherwise>
                                                     </c:choose>
                                                 </div>
-                                                <div class="offer_reviews_subtitle"> <spring:message code="offer_reviews_subtitle"/></div>
+                                                <div class="offer_reviews_subtitle"><spring:message
+                                                        code="offer_reviews_subtitle"/></div>
                                             </div>
                                             <div class="offer_reviews_rating text-center">
                                                     ${currentRating}
@@ -454,7 +478,8 @@
                         </div>
                         <div class="chat-messages" id="gemini-chat-messages"></div>
                         <div class="chat-input">
-                            <input type="text" id="gemini-chat-input" placeholder="<spring:message code="gemini-chat-input"/>">
+                            <input type="text" id="gemini-chat-input"
+                                   placeholder="<spring:message code="gemini-chat-input"/>">
                             <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
                         </div>
                     </div>

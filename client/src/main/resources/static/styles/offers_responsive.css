@@ -388,7 +388,29 @@
 
 @media only screen and (max-width: 768px)
 {
-	
+
+	/************
+여행 추천 카드 반응형 - 768px 이하
+************/
+	@media only screen and (max-width: 768px) {
+		#travel-insight-widgets .col-md-3 {
+			flex: 0 0 100%;
+			max-width: 100%;
+			margin-bottom: 1rem;
+		}
+
+		#travel-insight-widgets .card {
+			padding: 1rem;
+		}
+
+		#travel-insight-widgets .card .display-6 {
+			font-size: 1.8rem !important;
+		}
+
+		#travel-insight-widgets .card-title {
+			font-size: 1rem !important;
+		}
+	}
 }
 
 /************
@@ -603,5 +625,7 @@
 
 @media only screen and (max-width: 400px)
 {
-	
+	#travel-insight-widgets .card .display-6 {
+		font-size: 1.5rem !important;
+	}
 }

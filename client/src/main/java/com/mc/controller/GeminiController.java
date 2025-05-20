@@ -1,6 +1,9 @@
 package com.mc.controller;
 
+import com.google.gson.Gson;
 import com.mc.app.dto.AccomSuggestion;
+import com.mc.app.dto.TravelInsight;
+import com.mc.app.service.AccomService;
 import com.mc.msg.GeminiMsg;
 import com.mc.util.GeminiUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ public class GeminiController {
 
     private final SimpMessagingTemplate template;
     private final GeminiUtil geminiUtil;
+    private final AccomService accomService;
 
     @MessageMapping("/geminichat")
     public void handleGemini(@Payload GeminiMsg msg) {
@@ -42,13 +46,7 @@ public class GeminiController {
     // 일반 검색과 동시에, 한번 더 검색 조건들을 서버에 전송, 제미나이를 통해 응답을 내려받는 컨트롤러.
     @PostMapping("/search-accomsuggestions")
     @ResponseBody
-    public Map<String, Object> getSuggestions(@RequestBody AccomSuggestion request) {
-        try {
-            String summary = geminiUtil.askGeminiSuggestion(request);
-            return Map.of("summary", summary);
-        } catch (Exception e) {
-            log.error("Gemini 응답 실패", e);
-            return Map.of("summary", "[Gemini 응답 실패]");
-        }
+    public TravelInsight getSuggestions(@RequestBody AccomSuggestion request) throws Exception {
+        return accomService.getSuggestions(request);
     }
 }

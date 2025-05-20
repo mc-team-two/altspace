@@ -374,7 +374,7 @@ $(document).ready(function () {
         $.ajax({
             url: url,
             type: "GET",
-            success: function (accommodationsWithRating) { 
+            success: function (accommodationsWithRating) {
                 displayGeoSearchResults(accommodationsWithRating);
             },
             error: function (error) {
@@ -405,6 +405,8 @@ $(document).ready(function () {
     // 검색 추천을 화면에 표시하는 함수
     function displaySearchSuggestions(accomsuggestions) {
         const SearchSuggestions = $("SearchSuggestions");
+        console.log("[📦 Gemini 응답 데이터]", data);
+
 
     }
 
@@ -642,10 +644,10 @@ $(document).ready(function () {
                     imageUrl = `/images/default.jpg`;
                 }
 
-                const barbecueIcon = accommodation.barbecue ? `<li class="offers_icons_item" data-popper-content="바베큐 시설 안내"><i class="fa fa-fire" aria-hidden="true" title="바베큐"></i></li>` : '';
-                const breakfastIcon = accommodation.breakfast ? `<li class="offers_icons_item" data-popper-content="맛있는 조식 제공"><i class="fa fa-coffee" aria-hidden="true" title="조식"></i></li>` : '';
-                const petIcon = accommodation.pet ? `<li class="offers_icons_item" data-popper-content="반려동물 동반 가능"><i class="fa fa-paw" aria-hidden="true" title="반려동물"></i></li>` : '';
-                const poolIcon = accommodation.pool ? `<li class="offers_icons_item" data-popper-content="시원한 수영장 이용"><i class="fa fa-tint" aria-hidden="true" title="수영장"></i></li>` : '';
+                const barbecueIcon = accommodation.barbecue ? `<li class="offers_icons_item" data-popper-content="바베큐 시설 안내"><i class="fa fa-fire-alt text-warning" aria-hidden="true"></i></li>` : '';
+                const breakfastIcon = accommodation.breakfast ? `<li class="offers_icons_item" data-popper-content="맛있는 조식 제공"><i class="fa fa-coffee text-danger" aria-hidden="true"></i></li>` : '';
+                const petIcon = accommodation.pet ? `<li class="offers_icons_item" data-popper-content="반려동물 동반 가능"><i class="fa fa-paw text-info" aria-hidden="true"></i></li>` : '';
+                const poolIcon = accommodation.pool ? `<li class="offers_icons_item" data-popper-content="시원한 수영장 이용"><i class="fas fa-swimmer text-primary" aria-hidden="true"></i></li>` : '';
 
                 const listItem = `
              <div class="offers_item ${ratingClass}">
@@ -713,95 +715,153 @@ $(document).ready(function () {
 // 제미나이 응답을 받아서 출력하는 함수
     function displaySearchSuggestions(data) {
         const container = $("#travel-insight-container");
+        container.removeClass("d-none").css("display", "block"); // ← 이 줄 반드시 필요
+
         const summaryBox = $("#travel-summary");
         const insightItem = $("#travel-insight-item");
         const tipsList = $("#travel-tips");
 
-        const rawLines = data.summary.split("\n");
-        const summaryText = rawLines[0]; // 첫 줄 요약
-        const tips = rawLines.filter(line => /^[0-9]+\./.test(line)); // 번호로 시작하는 줄만
+        const insights = extractInsightSections(data.summary);
 
-        // 보이게 만들기
-        container.removeClass("d-none");
-
-        // 요약 텍스트 (한 줄) 표시
-        summaryBox.html(`<p>${summaryText}</p>`);
-
-        // 전체 요약을 travel-insight-item에도 보여주기
+        summaryBox.html(`<p><strong>날씨 요약:</strong> ${insights.weather}</p>`);
         insightItem.html(`<div class="alert alert-info">${data.summary.replace(/\n/g, "<br>")}</div>`);
 
-        // 리스트로 여행 팁 뿌리기
         tipsList.empty();
-        tips.forEach(line => {
-            tipsList.append(`<li class="list-group-item">${line}</li>`);
-        });
+        if (insights.tips) {
+            tipsList.append(`<li class="list-group-item">${insights.tips}</li>`);
+        }
 
-        // 차트는 여기서 호출
-        renderWeatherChart();
+        if (insights.maxTemp !== null && insights.minTemp !== null) {
+            console.log("🔥 renderWeatherChart 호출 시작");
+            renderWeatherChart({
+                weather: [
+                    {
+                        date: "예상 기온",
+                        maxTemp: insights.maxTemp,
+                        minTemp: insights.minTemp
+                    }
+                ],
+                location: data.location || "여행지"
+            });
+        } else {
+            console.warn("기온 정보가 없어 차트를 그리지 않습니다.");
+        }
     }
 
-    function renderWeatherChart() {
-        const canvas = document.getElementById("weatherChart");
-        if (!canvas) {
-            console.warn("weatherChart 캔버스가 존재하지 않습니다.");
-            return;
-        }
+// summary에서 날씨/축제/치안/팁 파싱 및 기온 추출
+    function extractInsightSections(summaryText) {
+        const sections = {
+            weather: "",
+            festival: "",
+            safety: "",
+            tips: "",
+            maxTemp: null,
+            minTemp: null
+        };
 
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
-            console.warn("Canvas context를 가져올 수 없습니다.");
-            return;
-        }
+        const lines = summaryText.split(/[.!?]\s*/); // 문장 단위 분리
 
-        // 기존 차트 제거 (있으면)
-        if (weatherChartInstance) {
-            weatherChartInstance.destroy();
-        }
+        lines.forEach(line => {
+            const lower = line.toLowerCase();
+            let matched = false;
 
-        weatherChartInstance = new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: ["5/21", "5/22"],
-                datasets: [
-                    {
-                        label: "최고 기온",
-                        data: [25, 24],
-                        borderWidth: 2,
-                        fill: false,
-                    },
-                    {
-                        label: "최저 기온",
-                        data: [17, 16],
-                        borderWidth: 2,
-                        fill: false,
-                    },
-                ],
-            },
-            options: {
-                animation: {
-                    duration: 1500,
-                    easing: "easeOutQuart"
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        title: {
-                            display: true,
-                            text: "°C"
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: "bottom"
-                    },
-                    title: {
-                        display: true,
-                        text: "서울 5월 말 날씨 예측"
-                    }
-                }
+            // 날씨 관련 키워드 (기온, 날씨, 일교차, 겉옷 등 포함)
+            if (/(기온|날씨|일교차|겉옷|더위|추위)/.test(lower)) {
+                sections.weather += line.trim() + ". ";
+                matched = true;
+            }
+
+            // 축제
+            if (/(축제|행사|비엔날레)/.test(lower)) {
+                sections.festival += line.trim() + ". ";
+                matched = true;
+            }
+
+            // 맛집
+            if (/(맛집|음식|요리|식사|먹거리)/.test(lower)) {
+                sections.safety += line.trim() + ". ";  // 기존 safety 재활용
+                matched = true;
+            }
+
+            // 일반 팁 (다른 섹션에 해당되지 않은 경우에만)
+            if (!matched) {
+                sections.tips += line.trim() + ". ";
             }
         });
+
+        // 기온 숫자 추출
+        const maxMatch = sections.weather.match(/(?:최고|낮 최고)?[^\d]{0,10}(\d{1,2})도/);
+        const minMatch = sections.weather.match(/(?:최저|밤 최저)?[^\d]{0,10}(\d{1,2})도/);
+
+        if (maxMatch) {
+            sections.maxTemp = parseInt(maxMatch[1]);
+            console.log("[🌡️ 최고 기온 추출]", sections.maxTemp);
+        } else {
+            console.warn("⚠️ 최고 기온 추출 실패:", sections.weather);
+        }
+
+        if (minMatch) {
+            sections.minTemp = parseInt(minMatch[1]);
+            console.log("[🌡️ 최저 기온 추출]", sections.minTemp);
+        } else {
+            console.warn("⚠️ 최저 기온 추출 실패:", sections.weather);
+        }
+
+        return sections;
+    }
+
+    function displaySearchSuggestions(data) {
+        const container = $("#travel-insight-container");
+        const widgets = $("#travel-insight-widgets");
+
+        container.removeClass("d-none");
+        widgets.empty();
+
+        const cards = [
+            {
+                icon: "🌡️",
+                title: "최고 기온",
+                content: (data.maxTemp ?? "정보 없음") + "°C"
+            },
+            {
+                icon: "❄️",
+                title: "최저 기온",
+                content: (data.minTemp ?? "정보 없음") + "°C"
+            },
+            {
+                icon: "🎪",
+                title: "지역 축제",
+                content: data.festival ?? "정보 없음"
+            },
+            {
+                icon: "🍽️",
+                title: "맛집 정보",
+                content: data.food ?? "정보 없음"
+            }
+        ];
+
+        for (const card of cards) {
+            widgets.append(`
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm p-3 h-100">
+                    <div class="card-title"><strong>${card.icon} ${card.title}</strong></div>
+                    <div class="card-body p-0">
+                        <div class="text-muted small">${card.content}</div>
+                    </div>
+                </div>
+            </div>
+        `);
+        }
+
+        // ✅ 이 부분은 for문 밖에서 한 번만 실행!
+        container.append(`
+        <div class="text-end mt-3 pe-3">
+            <small class="text-muted">
+                Powered by 
+                <img src="images/gemini-brand-color.png" alt="Gemini Logo" height="20" style="vertical-align: middle;">
+            </small>
+        </div>
+    `);
     }
 
 // 팝업 기능을 초기화하는 함수

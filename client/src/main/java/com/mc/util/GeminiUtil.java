@@ -8,9 +8,7 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -23,16 +21,21 @@ public class GeminiUtil {
 
     private static final String MODEL_NAME = "gemini-2.0-flash";
 
-    // 1. 상위 호출 메서드: 여행 제안 전용
-    public String askGeminiSuggestion(AccomSuggestion suggestion) throws Exception {
+    // 상위 호출 메서드: 여행용 프롬프트 + JSON 응답 요청
+    public String askGeminiSuggestion(AccomSuggestion suggestion) {
         String prompt = buildSuggestionPrompt(suggestion);
-        return askGemini(prompt, "130자 이내로 간결하게 정리해서 말해줘.");
+        String suffix = "응답은 반드시 위 JSON 형식 그대로만 해주세요. 다른 말은 하지 마세요.";
+        try {
+            return askGemini(prompt, suffix);
+        } catch (Exception e) {
+            log.error("Gemini 호출 실패", e);
+            return "{}"; // JSON 실패 방지용 빈 객체
+        }
     }
 
-    // 2. 공통 Gemini 호출 메서드
+    // Gemini API 호출 메서드
     public String askGemini(String prompt, String suffixInstruction) throws Exception {
-        String constrainedPrompt = prompt + (suffixInstruction != null ? " " + suffixInstruction : "");
-
+        String fullPrompt = prompt + (suffixInstruction != null ? " " + suffixInstruction : "");
         String urlString = "https://generativelanguage.googleapis.com/v1beta/models/" + MODEL_NAME + ":generateContent?key=" + API_KEY;
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -40,64 +43,44 @@ public class GeminiUtil {
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
 
-        String jsonInputString = String.format(
+        String jsonInput = String.format(
                 "{\"contents\": [{\"parts\": [{\"text\": \"%s\"}]}]}",
-                constrainedPrompt.replace("\n", "\\n")
+                fullPrompt.replace("\n", "\\n").replace("\"", "\\\"") // JSON escape
         );
 
         try (OutputStream os = conn.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes("utf-8");
-            os.write(input, 0, input.length);
+            os.write(jsonInput.getBytes("utf-8"));
         }
 
         int responseCode = conn.getResponseCode();
-        if (responseCode == 200) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
-                StringBuilder response = new StringBuilder();
-                String responseLine;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
-                }
+        InputStream input = responseCode == 200 ? conn.getInputStream() : conn.getErrorStream();
 
-                JSONParser parser = new JSONParser();
-                JSONObject jsonResponse = (JSONObject) parser.parse(response.toString());
-                if (jsonResponse.containsKey("candidates")) {
-                    JSONArray candidates = (JSONArray) jsonResponse.get("candidates");
-                    StringBuilder message = new StringBuilder();
-                    for (Object candidateObj : candidates) {
-                        JSONObject candidate = (JSONObject) candidateObj;
-                        JSONObject content = (JSONObject) candidate.get("content");
-                        JSONArray parts = (JSONArray) content.get("parts");
-                        for (Object partObj : parts) {
-                            JSONObject part = (JSONObject) partObj;
-                            message.append(part.get("text")).append("\n");
-                        }
-                    }
-                    return message.toString().trim();
-                } else {
-                    return "No candidates found in the response.";
-                }
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(input, "utf-8"))) {
+            StringBuilder responseBuilder = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                responseBuilder.append(line.trim());
             }
-        } else if (responseCode == 401) {
-            throw new RuntimeException("Unauthorized. Please check your API key.");
-        } else if (responseCode == 400) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"))) {
-                StringBuilder response = new StringBuilder();
-                String responseLine;
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine.trim());
-                }
-                throw new RuntimeException("Bad Request: " + response);
+
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(responseBuilder.toString());
+
+            JSONArray candidates = (JSONArray) json.get("candidates");
+            if (candidates != null && !candidates.isEmpty()) {
+                JSONObject content = (JSONObject) ((JSONObject) candidates.get(0)).get("content");
+                JSONArray parts = (JSONArray) content.get("parts");
+                JSONObject part = (JSONObject) parts.get(0);
+                return part.get("text").toString();
+            } else {
+                return "{}"; // 빈 JSON으로 반환
             }
-        } else {
-            throw new RuntimeException("HTTP error code: " + responseCode);
         }
     }
 
-    // 3. Prompt 생성 메서드 (여행용)
+    // 프롬프트 생성 메서드
     private String buildSuggestionPrompt(AccomSuggestion req) {
         StringBuilder sb = new StringBuilder();
-        sb.append("사용자가 여행 정보를 요청했습니다.\n");
+        sb.append("다음은 여행 정보 요청입니다:\n");
         sb.append("장소: ").append(req.getLocation()).append("\n");
         sb.append("체크인: ").append(req.getCheckIn()).append("\n");
         sb.append("체크아웃: ").append(req.getCheckOut()).append("\n");
@@ -105,7 +88,18 @@ public class GeminiUtil {
         if (req.getExtras() != null && !req.getExtras().isEmpty()) {
             sb.append("요청 옵션: ").append(String.join(", ", req.getExtras())).append("\n");
         }
-        sb.append("200자 정도도 괜찮으니, 날씨, 옷차림, 지역 축제, 치안 정보 등 여행에 필요한 팁을 알려주세요.");
+
+        sb.append("\n아래 JSON 형식으로 응답해 주세요. 형식을 반드시 지켜주세요:\n");
+        sb.append("{\n");
+        sb.append("  \"weather\": \"기온과 옷차림 관련 팁\",\n");
+        sb.append("  \"festival\": \"지역 축제 및 행사 정보\",\n");
+        sb.append("  \"food\": \"맛집 정보\",\n");
+        sb.append("  \"tips\": \"기타 여행 팁\",\n");
+        sb.append("  \"maxTemp\": 숫자만 (예: 22),\n");
+        sb.append("  \"minTemp\": 숫자만 (예: 15)\n");
+        sb.append("}\n");
+
+        sb.append("정보가 없으면 빈 문자열이나 null을 사용하세요. 응답에 다른 말은 절대 하지 마세요. 다음과 같은 JSON 형식으로만 응답해주세요. Markdown 코드 블록(```json)이나 설명 없이 JSON만 주세요.");
         return sb.toString();
     }
 }

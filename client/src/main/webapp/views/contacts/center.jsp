@@ -62,6 +62,21 @@
           </form>
         </div>
       </div>
+
+      <div class="col-lg-4 sidebar_col">
+        <div class="position-sticky" style="top: 100px; z-index: 10;">
+          <!-- 사이드바 메뉴 -->
+          <div class="sidebar_archives" style="margin-left: 100px;">
+            <div class="sidebar_title">MENU</div>
+            <div class="sidebar_list">
+              <ul>
+                <li><a href="<c:url value="/contacts"/> ">고객센터 문의</a></li>
+                <li><a href="<c:url value="/faq1"/> ">FAQ</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <div id="chatbot" class="chatbot">
           <div id="chat-icon" class="chat-icon">
             <i class="fas fa-comments" aria-hidden="true"></i>
