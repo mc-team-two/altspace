@@ -308,8 +308,14 @@
         AND status = '활성'
         <if test="extras != null and extras.size > 0">
             AND (
+--                 25-05-20 / 황수 / SQL 인젝션 우려가 있어서   ${extra} = TRUE에서 수정.
             <foreach collection="extras" item="extra" separator="OR">
-                ${extra} = TRUE
+                <choose>
+                    <when test="extra == 'breakfast'">breakfast = TRUE</when>
+                    <when test="extra == 'pool'">pool = TRUE</when>
+                    <when test="extra == 'barbecue'">barbecue = TRUE</when>
+                    <when test="extra == 'pet'">pet = TRUE</when>
+                </choose>
             </foreach>
             )
         </if>

@@ -378,33 +378,47 @@ input:checked + .slider .sun-icon {
     transition: background-color 0.3s, color 0.3s; /* 부드러운 전환 효과 */
 }
 
-.user_box_login.dropdown select {
-    /* 기존 스타일 */
-    appearance: none; /* 기본 화살표 숨김 */
-    background-image: url('https://img.icons8.com/ios/50/down-squared--v1.png'); /* 사용자 정의 화살표 */
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 16px; /* 화살표 크기 조절 */
-    padding-right: 30px; /* 화살표 공간 확보 */
-}
-
-/* 또는 Font Awesome과 같은 아이콘 폰트 사용 */
-.user_box_login.dropdown {
-    position: relative; /* 아이콘 배치 기준점 */
-}
-
-.user_box_login.dropdown select {
-    /* 기존 스타일 */
+.user_box_login select {
     appearance: none;
-    padding-right: 30px; /* 아이콘 공간 확보 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 32px 8px 12px;
+    font-size: 13px;
+    color: #333;
+    background-image: none;
+    width: auto;
+    max-width: 120px;
 }
 
-.user_box_login.dropdown .select-arrow {
+/* 화살표 위치 아이콘 스타일 */
+.user_box_login.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user_box_login.dropdown::after {
+    content: "\f078"; /* FontAwesome down-chevron */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
     position: absolute;
+    right: 12px;
     top: 50%;
-    right: 8px;
     transform: translateY(-50%);
-    font-size: 12px; /* 아이콘 크기 */
-    color: #777;
-    pointer-events: none; /* 클릭 이벤트 방지 */
+    font-size: 10px;
+    pointer-events: none;
+    color: #666;
+}
+
+/* 다크 모드일 때 덮어쓰기 */
+[data-theme="dark"] .user_box_login select {
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    border-color: #444;
+}
+
+[data-theme="dark"] .user_box_login.dropdown::after {
+    color: #aaa;
 }

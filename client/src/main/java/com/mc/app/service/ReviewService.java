@@ -34,6 +34,20 @@ public class ReviewService implements MCService<Reviews, Integer> {
 
     @Override
     public void add(Reviews reviews) throws Exception {
+
+        // rating 검증 및 방어 로직
+        if (reviews.getGrade() < 1 || reviews.getGrade() > 5) {
+            throw new IllegalArgumentException("평점은 1~5 사이여야 합니다.");
+        }
+
+        // rating 비어있는지 서비스에서 한번 더 체크.
+        if (reviews.getComment() == null || reviews.getComment().trim().isEmpty()) {
+            throw new IllegalArgumentException("리뷰 내용이 비어있습니다.");
+        }
+
+        // XSS 방지용 HTML escape 처리
+        reviews.setComment(sanitize(reviews.getComment()));
+
         reviewRepository.insert(reviews); // insert 후 reviewId 자동 세팅되도록 할 것 (Mapper 에서 반환)
 
         int reviewId = reviews.getReviewId();  // 이미지 저장을 위해 DTO 에서 리뷰 아이디 가져옴
@@ -193,4 +207,10 @@ public class ReviewService implements MCService<Reviews, Integer> {
         return sum / reviews.size();
     }
 
+    // ✅ 클래스 하단에 유틸 메서드로 따로 정의
+    private String sanitize(String input) {
+        return input == null ? "" : input
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;");
+    }
 }
