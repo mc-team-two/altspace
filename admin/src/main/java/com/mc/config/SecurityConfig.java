@@ -38,20 +38,24 @@ public class SecurityConfig  {
         //CSRF, CORS
         http.csrf(AbstractHttpConfigurer::disable);
         //http.cors(Customizer.withDefaults());
+
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin(CorsConfiguration.ALL);
         configuration.addAllowedMethod(CorsConfiguration.ALL);
         configuration.addAllowedHeader(CorsConfiguration.ALL);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**,/chbot", configuration);
+        source.registerCorsConfiguration("/**", configuration);
+        http.cors(cors -> cors.configurationSource(source));
+
+
         // 권한 규칙 작성
         http.authorizeHttpRequests(authorize -> authorize
-                        //@PreAuthrization을 사용할 것이기 때문에 모든 경로에 대한 인증처리는 Pass
                         .anyRequest().permitAll()
-//                        .anyRequest().authenticated()
+                        //@PreAuthrization을 사용할 것이기 때문에 모든 경로에 대한 인증처리는 Pass
+                        //.anyRequest().authenticated()
         );
         return http.build();
     }
-
 
 }
