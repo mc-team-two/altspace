@@ -28,6 +28,11 @@ public class PaymentController {
     public String pay(Model model, HttpSession httpSession) throws Exception {
         User user = (User) httpSession.getAttribute("user");
 
+        // 로그인 했을 때만 접속 가능함
+        if (user == null) {
+            return "redirect:/auth/login";
+        }
+
         List<Payments> payments = paymentService.getByHostId(user.getUserId());
         model.addAttribute("payments", payments);
 
@@ -41,7 +46,12 @@ public class PaymentController {
     }
 
     @RequestMapping("/detail")
-    public String detail(@RequestParam("accommodationId") int accommodationId, Model model) throws Exception {
+    public String detail(@RequestParam("accommodationId") int accommodationId, Model model,
+                         HttpSession httpSession) throws Exception {
+        // 로그인 했을 때만 접속 가능함
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
         // 선택한 스페이스의 예약 내역을 가져옵니다.
         List<Payments> payments = paymentService.getByAccommodationId(accommodationId);
         model.addAttribute("payments", payments);
