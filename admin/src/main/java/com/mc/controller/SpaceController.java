@@ -40,7 +40,11 @@ public class SpaceController {
     String dir = "space/";
 
     @RequestMapping("/add")
-    public String add(Model model){
+    public String add(Model model, HttpSession httpSession){
+        // 권한 제어
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
         model.addAttribute("center", dir+"add");
         return "index";
@@ -49,7 +53,10 @@ public class SpaceController {
     @RequestMapping("/list")
     public String get(@RequestParam(value="pageNo", defaultValue = "1") int pageNo,
             Model model, HttpSession httpSession){
-
+        // 권한 제어
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
         User user = (User) httpSession.getAttribute("user");
         Page<Accommodations> page = null;
         PageInfo<Accommodations> pageInfo = null;
@@ -69,7 +76,12 @@ public class SpaceController {
 
     @RequestMapping("/mod")
     public String mod(@RequestParam("id") Integer id,
-                         Model model){
+                         Model model, HttpSession httpSession){
+        // 권한 제어
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
+
         try {
             Accommodations data = accomService.get(id);
             log.info(data.toString());
@@ -85,7 +97,11 @@ public class SpaceController {
     }
 
     @RequestMapping("/booking")
-    public String booking(Model model) {
+    public String booking(Model model, HttpSession httpSession) {
+        // 권한 제어
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
         model.addAttribute("center", dir + "booking");
         model.addAttribute("index", dir + "index");
         return "index";

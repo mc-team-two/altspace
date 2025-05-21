@@ -38,10 +38,8 @@ public class ReviewController {
             Model model,
             HttpSession httpSession) throws Exception {
 
-        // 세션에서 사용자 정보 가져오기
+        // 권한 제어
         User user = (User) httpSession.getAttribute("user");
-
-        // 사용자 세션이 없는 경우, 메인 페이지로 리다이렉트
         if (user == null) {
             return "redirect:/";
         }
