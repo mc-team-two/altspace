@@ -519,14 +519,14 @@
                         <label class="mb-1 font-weight-bold text-primary" for="description">
                             스페이스 소개글 (최대 150자)
                         </label>
-                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">백현동에서 가까운 별장</textarea>
+                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">${data.description}</textarea>
                     </div>
                     <%--notice--%>
                     <div class="form-group">
                         <label class="mb-1 font-weight-bold text-primary" for="notice">
                             스페이스 공지사항
                         </label>
-                        <textarea class="form-control overflow-auto" name="notice" id="notice" style="min-height: 120px;">이용 규칙 설명해드립니다~ ...</textarea>
+                        <textarea class="form-control overflow-auto" name="notice" id="notice" style="min-height: 120px;">${data.notice}</textarea>
                     </div>
 
                     <hr>
