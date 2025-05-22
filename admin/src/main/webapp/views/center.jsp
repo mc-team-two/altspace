@@ -13,7 +13,7 @@
     <div class="col-12 col-sm-6 col-lg-4 col-xl">
       <div class="card shadow-sm h-100">
         <div class="card-body p-4">
-          <h6 class="card-title mb-3 text-primary">📌 다가오는 예약</h6>
+          <h6 class="card-title mb-3 text-primary">📌 체크인 예정</h6>
           <div class="d-flex justify-content-around">
             <div>
               <div class="fw-bold text-muted">오늘</div>
@@ -32,7 +32,7 @@
     <div class="col-12 col-sm-6 col-lg-4 col-xl">
       <div class="card shadow-sm h-100">
         <div class="card-body d-flex flex-column p-4">
-          <h6 class="card-title mb-2">📅 현재 예약 건수</h6>
+          <h6 class="card-title mb-2">📅 예정된 예약</h6>
           <div class="flex-grow-1 d-flex align-items-center justify-content-center">
             <h2 class="fw-bold mb-0 text-info" id="reservationCount">0건</h2>
           </div>
@@ -75,9 +75,14 @@
     <div class="col-12 col-sm-6 col-lg-4 col-xl">
       <div class="card shadow-sm h-100">
         <div class="card-body d-flex flex-column p-4">
-          <h6 class="card-title mb-2">📂 전체 예약</h6>
+          <h6 class="card-title mb-2">📂 누적 예약</h6>
           <div class="flex-grow-1 d-flex align-items-center justify-content-center">
-            <h2 class="fw-bold mb-0 text-secondary" id="totalReservationCount">0건</h2>
+            <a href="<c:url value='/space/booking'/>" class="text-decoration-none">
+              <h2 class="fw-bold mb-0 text-secondary" id="totalReservationCount" style="cursor: pointer;">
+                <span class="count-text">0건</span>
+                <i class="bi bi-arrow-right-circle fs-6 text-muted ms-2" style="vertical-align: middle;"></i>
+              </h2>
+            </a>
           </div>
         </div>
       </div>
@@ -335,8 +340,7 @@
                   response.currentReservations.count +
                   response.upcomingCheckIns.count +
                   response.upcomingCheckOuts.count;
-          $('#totalReservationCount').text(totalReservationCount + '건');
-        },
+          $('#totalReservationCount .count-text').text(totalReservationCount + '건');        },
         error: function () {
           console.error('API 호출 실패');
         }
