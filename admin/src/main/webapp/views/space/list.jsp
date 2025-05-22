@@ -50,7 +50,7 @@
 
 <div class="container-fluid">
     <p class="text-muted">스페이스 관리 > <strong>내 스페이스</strong></p>
-            <%--contents 시작--%>
+            <%--헤더바--%>
             <div class="row my-3 mx-0 p-2 bg-primary rounded">
                 <div class="col px-0 d-flex justify-content-start align-items-center" style="color: #f5f5f9; font-size: 18px;">
                     &nbsp;<strong>${cpage.total}</strong>개의 검색결과
@@ -64,7 +64,9 @@
                     </a>
                 </div>
             </div>
+
             <div class="row">
+                <%--개별 데이터--%>
                 <c:forEach var="item" items="${cpage.getList()}">
                     <div class="col-12 col-md-6 col-lg-4 col-5-in-row mb-4 d-flex">
                         <div class="card w-100">
@@ -74,9 +76,19 @@
                             <div class="card-body">
                                 <h4 class="card-title">${item.name}</h4>
                                 <p class="card-text">${item.location}</p>
-                                <div class="float-end">
+                                <div class="d-flex justify-content-between">
+                                    <div class="float-start row">
+                                        <%--금액--%>
+                                        <div>&#8361;${item.priceNight}</div>
+                                        <%--찜--%>
+                                        <div></div>
+                                        <%--조회수--%>
+                                        <div>조회수 ${item.views}</div>
+                                    </div>
+                                    <div class="float-end">
                                     <a href="javascript:void(0);" onclick="space_get.modSpace(${item.accommodationId})" class="mx-4">수정</a>
                                     <a href="javascript:void(0);" onclick="space_get.delSpace(${item.accommodationId})">삭제</a>
+                                </div>
                                 </div>
                             </div>
                         </div>

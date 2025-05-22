@@ -43,4 +43,5 @@ public class Accommodations {
     private Timestamp createDay;         // 등록일
     private Timestamp updateDay;         // 수정일
     private int views;                   // 조회수
+    private int wish;                    // 위시리스트 수
 }

@@ -84,10 +84,9 @@ public class SpaceController {
 
         try {
             Accommodations data = accomService.get(id);
-            log.info(data.toString());
             model.addAttribute("data", data);
         } catch (Exception e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
 
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
