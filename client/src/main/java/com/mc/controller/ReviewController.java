@@ -1,22 +1,23 @@
 package com.mc.controller;
 
-import com.mc.app.dto.Accommodations;
-import com.mc.app.dto.Payments;
 import com.mc.app.dto.Reviews;
 import com.mc.app.dto.User;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.ReviewService;
 import com.mc.util.PapagoUtil;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +61,26 @@ public class ReviewController {
 
     /* 리뷰 수정 */
     @RequestMapping("/update")
-    public String update(Reviews reviews) throws Exception {
+    public String update(@Valid Reviews reviews,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) throws Exception {
+
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMessages = new StringBuilder();
+
+            bindingResult.getFieldErrors().forEach(error -> {
+                String field = error.getField();
+                if (field.equals("grade") || field.equals("comment")) {
+                    errorMessages.append(error.getDefaultMessage()).append("\n");
+                }
+            });
+
+            if (errorMessages.length() > 0) {
+                redirectAttributes.addFlashAttribute("errorMessage", errorMessages.toString());
+                return "redirect:/review";
+            }
+        }
+
         reviewService.mod(reviews);
         return "redirect:/review";
     }
@@ -74,9 +94,34 @@ public class ReviewController {
 
     /* 리뷰 업로드 */
     @RequestMapping("/reviewUpload")
-    public String reviewUpload(Model model,
+    public String reviewUpload(@Valid Reviews reviews,
+                               BindingResult bindingResult,
                                @RequestParam("id") int id,
-                               Reviews reviews) throws Exception {
+                               RedirectAttributes redirectAttributes) throws Exception {
+
+        /* DTO에서 유효성 검사 */
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMessages = new StringBuilder();
+            boolean redirectToLogin = false;
+
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errorMessages.append(error.getDefaultMessage()).append("\n");
+
+                // guestId 또는 accommodationId가 문제일 경우 로그인으로 리다이렉트
+                if (error.getField().equals("guestId") || error.getField().equals("accommodationId")) {
+                    redirectToLogin = true;
+                }
+            }
+
+            redirectAttributes.addFlashAttribute("errorMessage", errorMessages.toString());
+
+            if (redirectToLogin) {
+                return "redirect:/login";
+            }
+
+            // 그 외 유효성 오류는 다시 리뷰 작성 폼으로
+            return "redirect:/reviewAdd?id=" + id;
+        }
 
         reviewService.add(reviews);
         return "redirect:/review";

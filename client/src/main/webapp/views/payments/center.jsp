@@ -267,6 +267,13 @@
             this.displayMap();
 
             $('#sales_add_btn').click(() => {
+                const userId = '${sessionScope.user.userId}';
+                if (!userId || userId.trim() === '') {
+                    alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+                    location.href = '/login';
+                    return;
+                }
+                // 로그인 되어 있으면 결제 요청 함수 실행
                 this.reqPay();
             });
             $('#cancel_btn').click(() => {
@@ -327,6 +334,10 @@
             });
         },
         cancel: function () {
+            if (!confirm("정말로 결제를 취소하시겠습니까?")) {
+                return; // 사용자가 취소를 원하지 않으면 함수 종료
+            }
+
             let impUid = "${payInfo.impUid}"; // 저장된 imp_uid 가져오기
 
             if (!impUid) {
@@ -341,7 +352,7 @@
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                 success: function (res) {
                     alert(res.message);
-                    location.reload(); // 취소 후 새로고침
+                    location.href = '/details';
                 },
                 error: function (err) {
                     try {              // err는 실패한 응답이라 자동 파싱 x
@@ -764,9 +775,9 @@
         </div>
     </div>
 
-    <!-- 호스트 카드 + 상세 설명 -->
-    <div class="row mb-4">
-        <div class="col-md-8 mb-4">
+    <div class="row mb-2">
+        <!-- 호스트 카드 + 상세 설명 -->
+        <div class="col-md-8 mb-2">
             <!-- 호스트 카드 -->
             <div class="card shadow-sm p-4 rounded-4 mb-4"
                  style="border-left: 6px solid #007bff; background-color: #f8f9fa;">
@@ -789,10 +800,9 @@
                     </a>
                 </div>
             </div>
-
             <!-- 숙소 설명 -->
-            <div class="card shadow-sm p-4 rounded-4">
-                <div>${accomm.description}</div>
+            <div class="card shadow-sm p-4 rounded-4" style="min-height: 250px;">
+                <div style="white-space: pre-line;">${accomm.notice}</div>
             </div>
         </div>
         <!-- 예약 박스 -->
