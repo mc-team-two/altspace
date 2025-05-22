@@ -41,4 +41,5 @@ public class Accommodations {
     private BigDecimal longitude;        // 경도
     private Timestamp createDay;         // 등록일
     private Timestamp updateDay;         // 수정일
+    private int reviewCount;             // (조인) 리뷰수
 }

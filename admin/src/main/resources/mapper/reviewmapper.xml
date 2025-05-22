@@ -113,9 +113,10 @@
         WHERE r.review_id = #{reviewId}
     </select>
 
-    <!--호스트 Id로 리뷰 테이블 + 숙소 이름 가져오기-->
-    <select id="selectByHostId" parameterType="String" resultType="SimpReview">
-        select r.*, a.name AS accommodationName
+    <!-- admin에서 추가됨 -->
+    <!--호스트 Id로 리뷰 + 숙소 이름 가져오기-->
+    <select id="selectByHostId" parameterType="String" resultType="Reviews">
+        select r.*, a.name AS name, a.location AS location
         FROM reviews r
                  JOIN accommodations a ON r.accommodation_id = a.accommodation_id
         WHERE a.host_id = #{hostId}
@@ -123,12 +124,32 @@
     </select>
 
     <!--호스트 Id + 스페이스 id로 리뷰 테이블 + 숙소 이름 가져오기-->
-    <select id="selectByHostIdAndAccId" parameterType="map" resultType="SimpReview">
-        select r.*, a.name AS accommodationName
+    <select id="selectByHostIdAndAccId" parameterType="map" resultType="Reviews">
+        select r.*, a.name AS name, a.location AS location
         FROM reviews r
                  JOIN accommodations a ON r.accommodation_id = a.accommodation_id
         WHERE a.host_id = #{hostId}
           AND a.accommodation_id = #{accId}
+        ORDER BY r.create_day DESC;
+    </select>
+
+    <!--오늘 작성된 리뷰-->
+    <select id="selectTodayReview" parameterType="String" resultType="Reviews">
+        select r.*, a.name AS name, a.location AS location
+        FROM reviews r
+            JOIN accommodations a ON r.accommodation_id = a.accommodation_id
+        WHERE a.host_id = #{hostId} and DATE(r.create_day) = CURDATE()
+        ORDER BY r.create_day DESC;
+    </select>
+
+    <!--답글이 없는 리뷰-->
+    <select id="selectNoReplyReview" parameterType="String" resultType="Reviews">
+        SELECT r.*, a.name AS name, a.location AS location, rr.reply_id
+        FROM reviews r
+            JOIN accommodations a ON r.accommodation_id = a.accommodation_id
+                LEFT JOIN review_replies rr ON r.review_id = rr.review_id
+        WHERE a.host_id = #{hostId}
+        AND rr.review_id IS NULL
         ORDER BY r.create_day DESC;
     </select>
 </mapper>

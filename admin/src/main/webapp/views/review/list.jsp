@@ -13,6 +13,35 @@
     <p class="text-muted mb-4 fs-6">
         리뷰 관리 &nbsp;&nbsp;>&nbsp;&nbsp; <strong>작성된 리뷰 조회</strong>
     </p>
+
+    <small class="text-muted">데이터 기준일:</small>
+    <div class="row text-center justify-content-around">
+        <div class="col bg-light border-0 rounded-2 shadow-sm pt-2">
+            <p>누적 리뷰수</p>
+            <p id="totalReviewsCount">
+                <span class="spinner-border text-primary"></span>
+            </p>
+        </div>
+        <div class="col bg-light border-0 rounded-2 shadow-sm pt-2">
+            <p>누적 평점</p>
+            <p id="averageGrade">
+                <span class="spinner-border text-primary"></span>
+            </p>
+        </div>
+        <div class="col bg-light border-0 rounded-2 shadow-sm pt-2">
+            <p>오늘 등록된 리뷰</p>
+            <p id="todayReviews">
+                <span class="spinner-border text-primary"></span>
+            </p>
+        </div>
+        <div class="col bg-light border-0 rounded-2 shadow-sm pt-2">
+            <p>답글을 쓸 수 있는 리뷰</p>
+            <p id="noReplyReviews">
+                <span class="spinner-border text-primary"></span>
+            </p>
+        </div>
+    </div>
+
     <div class="row">
         <%--host가 소유한 acc 목록 (사이드바)--%>
         <div class="col-sm-3 mb-3">
@@ -31,7 +60,7 @@
             </ul>
         </div>
 
-        <%--작성한 리뷰 목록 (컨텐츠) --%>
+        <%--작성한 리뷰 목록 (컨텐츠)--%>
         <div class="col-sm-9">
             <c:if test="${empty reviewMap}">
                 <div class="card mb-3">
@@ -63,7 +92,7 @@
                                 <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
                                 <span style="font-size:18px; font-weight:bold">${entry.key.guestId}</span>
                             </div>
-                            <small>[${entry.key.accommodationName}]</small>
+                            <small>[${entry.key.name}]</small>
                             <p>${entry.key.comment}</p>
                             <small class="text-muted">
                                 작성일:<fmt:formatDate value="${entry.key.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/><br>
@@ -119,6 +148,8 @@
 
 <script>
     const reviewPage = {
+        countUpInstances: {},
+
         init: function () {
             // 답글 등록
             $(document).on('click', '.addReplyBtn', function () {
@@ -159,6 +190,21 @@
                 $(this).addClass("active");
             });
         },
+
+        animateCount: function (id, endValue, options = {}) {
+            if (this.countUpInstances[id]) {
+                this.countUpInstances[id].update(endValue);
+            } else {
+                const instance = new CountUp(id, endValue, options);
+                if (!instance.error) {
+                    instance.start();
+                    this.countUpInstances[id] = instance;
+                } else {
+                    console.error(`CountUp error on #${id}:`, instance.error);
+                }
+            }
+        },
+
         addReply: function (replyData) {
             $.ajax({
                 url: "<c:url value='/api/review/add-reply'/>",
@@ -166,24 +212,43 @@
                 contentType: "application/json",
                 data: JSON.stringify(replyData),
                 success: function (response) {
-                    alert(response);  // 성공 메시지
-                    location.reload();  // 페이지 새로고침
+                    alert(response);
+                    location.reload();
                 },
                 error: function (xhr) {
                     alert('error: ' + xhr.responseText);
                 }
             });
         },
-        delReply: function(replyId){
+
+        delReply: function (replyId) {
             $.ajax({
                 url: "/api/review/del-reply?replyId=" + replyId,
                 type: "POST",
                 success: function (response) {
-                    alert(response); // 성공 메시지
-                    location.reload();  // 페이지 새로고침
+                    alert(response);
+                    location.reload();
                 },
                 error: function (xhr) {
                     alert('error: ' + xhr.responseText);
+                }
+            });
+        },
+
+        loadDashBoardData: function () {
+            $.ajax({
+                url: "<c:url value='/api/review/dashboard'/>",
+                type: "POST",
+                data: { hostId: "${sessionScope.user.userId}" },
+                success: (resp) => {
+                    console.log(resp);
+                    $("#totalReviewsCount").text(resp.totalReviewsCount.count ?? 0).removeClass("placeholder-glow");
+                    $("#averageGrade").text(resp.averageGrade ?? 0 ).removeClass("placeholder-glow");
+                    $("#todayReviews").text(resp.todayReviews.count ?? 0).removeClass("placeholder-glow");
+                    $("#noReplyReviews").text(resp.noReplyReviews.count ?? 0).removeClass("placeholder-glow");
+                },
+                error: (xhr) => {
+                    console.error(xhr.status, xhr.responseText);
                 }
             });
         }
@@ -191,6 +256,8 @@
 
     $(function () {
         reviewPage.init();
+        reviewPage.loadDashBoardData();
     });
 </script>
+
 

@@ -2,7 +2,7 @@ package com.mc.controller;
 
 import com.mc.app.dto.Accommodations;
 import com.mc.app.dto.ReviewReplies;
-import com.mc.app.dto.SimpReview;
+import com.mc.app.dto.Reviews;
 import com.mc.app.dto.User;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.ReviewRepliesService;
@@ -11,8 +11,6 @@ import com.mc.util.ReviewUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +50,7 @@ public class ReviewController {
         List<Accommodations> accList = accomService.getByHostId(hostId);
 
         // 가져오기 #2: 호스트의 숙소에 대한 리뷰 가져오기
-        List<SimpReview> rvList;
+        List<Reviews> rvList;
         
         // 특정 숙소에 대한 리뷰만 가져오기
         if (accId != null) {
@@ -70,8 +68,11 @@ public class ReviewController {
         List<ReviewReplies> replyList = reviewRepliesService.getByHostId(hostId);
 
         // 리뷰와 답글을 같이 보여주기 위해서 순회해서 키밸류 쌍 만들기
-        Map<SimpReview, List<ReviewReplies>> reviewMap =
+        Map<Reviews, List<ReviewReplies>> reviewMap =
                 ReviewUtil.mapReviewsWithReplies(rvList, replyList);
+
+        log.info(rvList.toString());
+        log.info(reviewMap.toString());
 
         model.addAttribute("reviewMap", reviewMap);
         model.addAttribute("rvList", rvList);
