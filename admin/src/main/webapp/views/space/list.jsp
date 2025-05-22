@@ -154,6 +154,16 @@
                                                     <p><strong>예약 가능 여부:</strong> ${item.status}</p>
                                                 </div>
                                             </div>
+                                            <c:if test="${not empty item.description}">
+                                                <div class="row">
+                                                    <p><strong>소개글:</strong>${item.description}</p>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${not empty item.notice}">
+                                                <div class="row">
+                                                    <p><strong>공지사항:</strong>${item.notice}</p>
+                                                </div>
+                                            </c:if>
                                             <div class="mt-3">
                                                 <ul class="list-unstyled d-flex flex-wrap">
                                                     <li class="me-2 mb-2"><strong>제공옵션:</strong></li>

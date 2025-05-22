@@ -301,7 +301,7 @@
                 <form id="spaceModForm" style="overflow-x:hidden">
                     <h1 class="h3 mb-2 text-gray-800">기본 정보</h1>
                     <div class="row">
-
+                        <input type="hidden" name="hostId" value="${sessionScope.user.userId}">
                         <input type="hidden" name="accommodationId" value="${data.accommodationId}">
                         <input type="hidden" name="status" value="활성">
 
@@ -517,9 +517,16 @@
                     <%--description--%>
                     <div class="form-group">
                         <label class="mb-1 font-weight-bold text-primary" for="description">
-                            스페이스 소개글
+                            스페이스 소개글 (최대 150자)
                         </label>
-                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">${data.description}</textarea>
+                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">백현동에서 가까운 별장</textarea>
+                    </div>
+                    <%--notice--%>
+                    <div class="form-group">
+                        <label class="mb-1 font-weight-bold text-primary" for="notice">
+                            스페이스 공지사항
+                        </label>
+                        <textarea class="form-control overflow-auto" name="notice" id="notice" style="min-height: 120px;">이용 규칙 설명해드립니다~ ...</textarea>
                     </div>
 
                     <hr>
