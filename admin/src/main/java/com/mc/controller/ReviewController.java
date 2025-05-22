@@ -2,7 +2,7 @@ package com.mc.controller;
 
 import com.mc.app.dto.Accommodations;
 import com.mc.app.dto.ReviewReplies;
-import com.mc.app.dto.SimpReview;
+import com.mc.app.dto.Reviews;
 import com.mc.app.dto.User;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.ReviewRepliesService;
@@ -50,7 +50,7 @@ public class ReviewController {
         List<Accommodations> accList = accomService.getListByHostId(hostId);
 
         // 가져오기 #2: 호스트의 숙소에 대한 리뷰 가져오기
-        List<SimpReview> rvList;
+        List<Reviews> rvList;
         
         // 특정 숙소에 대한 리뷰만 가져오기
         if (accId != null) {
@@ -68,7 +68,7 @@ public class ReviewController {
         List<ReviewReplies> replyList = reviewRepliesService.getByHostId(hostId);
 
         // 리뷰와 답글을 같이 보여주기 위해서 순회해서 키밸류 쌍 만들기
-        Map<SimpReview, List<ReviewReplies>> reviewMap =
+        Map<Reviews, List<ReviewReplies>> reviewMap =
                 ReviewUtil.mapReviewsWithReplies(rvList, replyList);
 
         model.addAttribute("reviewMap", reviewMap);

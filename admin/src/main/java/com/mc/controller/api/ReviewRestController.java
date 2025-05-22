@@ -1,14 +1,22 @@
 package com.mc.controller.api;
 
 import com.mc.app.dto.ReviewReplies;
+import com.mc.app.dto.Reviews;
 import com.mc.app.dto.User;
 import com.mc.app.service.ReviewRepliesService;
+import com.mc.app.service.ReviewService;
 import com.mc.common.response.ResponseMessage;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/review")
 @RestController
@@ -16,7 +24,72 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class ReviewRestController {
 
+    private final ReviewService reviewService;
     private final ReviewRepliesService reviewRepliesService;
+
+    @PostMapping("/dashboard")
+    public ResponseEntity<?> dashboard(@RequestParam("hostId") String hostId,
+                                       HttpSession httpSession) throws Exception {
+        // 접근 제한 코드
+        User curUser = (User) httpSession.getAttribute("user");
+        if (curUser == null) {
+            return ResponseEntity
+                    .status(ResponseMessage.UNAUTHORIZED.getStatus())
+                    .body(ResponseMessage.UNAUTHORIZED.getMessage());
+        }
+        if (!curUser.getUserId().equals(hostId)) {
+            return ResponseEntity
+                    .status(ResponseMessage.FORBIDDEN.getStatus())
+                    .body(ResponseMessage.FORBIDDEN.getMessage());
+        }
+        
+        // 데이터
+        Map<String, Object> response = new LinkedHashMap<>();
+
+        try {
+            // 누적 리뷰수
+            Map<String, Object> totalReviewsData = new LinkedHashMap<>();
+            List<Reviews> totalReviewsDataList =  reviewService.getByHostId(hostId);
+            totalReviewsData.put("count", totalReviewsDataList.size());
+            totalReviewsData.put("list", totalReviewsDataList);
+            response.put("totalReviewsCount", totalReviewsData);
+
+            // 누적 평점
+            double averageGrade = 0.0;
+            int count = totalReviewsDataList.size();
+            if (count > 0) {
+                int totalGrade = totalReviewsDataList.stream()
+                        .mapToInt(Reviews::getGrade)
+                        .sum();
+                averageGrade = (double) totalGrade / count;
+            }
+            double roundedGrade = Math.round(averageGrade * 10.0) / 10.0;
+            response.put("averageGrade", roundedGrade);
+
+            // 오늘 등록된 리뷰
+            List<Reviews> todayReviewsList = reviewService.selectTodayReview(hostId);
+            Map<String, Object> todayReviewsData = new LinkedHashMap<>();
+            totalReviewsData.put("count", todayReviewsList.size());
+            totalReviewsData.put("list", todayReviewsList);
+            response.put("todayReviews", todayReviewsData);
+
+            // 답글을 쓸 수 있는 리뷰
+            List<Reviews> noReplyReviewsList = reviewService.selectNoReplyReview(hostId);
+
+            Map<String, Object> noReplyReviewsData = new LinkedHashMap<>();
+            noReplyReviewsData.put("count", noReplyReviewsList.size());
+            noReplyReviewsData.put("list", noReplyReviewsList);
+            response.put("noReplyReviews", noReplyReviewsData);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e)  {
+            // 에러 처리
+            return ResponseEntity
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
+        }
+    }
 
     @PostMapping("/add-reply")
     public ResponseEntity<?> addReply(@RequestBody ReviewReplies reply, HttpSession httpSession) {

@@ -2,7 +2,6 @@ package com.mc.app.service;
 
 import com.mc.app.dto.ReviewImage;
 import com.mc.app.dto.Reviews;
-import com.mc.app.dto.SimpReview;
 import com.mc.app.frame.MCService;
 import com.mc.app.repository.ReviewImageRepository;
 import com.mc.app.repository.ReviewRepository;
@@ -178,15 +177,22 @@ public class ReviewService implements MCService<Reviews, Integer> {
 
     // admin 모듈 추가
     // 호스트의 특정 숙소에 대한 리뷰
-    public List<SimpReview> getByHostIdAndAccId(Map<String, Object> params) throws Exception{
+    public List<Reviews> getByHostIdAndAccId(Map<String, Object> params) throws Exception{
         return reviewRepository.selectByHostIdAndAccId(params);
     }
 
     // 호스트의 모든 숙소에 대한 리뷰
-    public List<SimpReview> getByHostId(String hostId) throws Exception {
+    public List<Reviews> getByHostId(String hostId) throws Exception {
         return reviewRepository.selectByHostId(hostId);
     }
 
-    // 호스트의 모든 숙소에 대한 리뷰 + 리뷰 답글
+    // 오늘 작성된 리뷰
+    public List<Reviews> selectTodayReview(String hostId) {
+        return reviewRepository.selectTodayReview(hostId);
+    }
+    // 호스트 답글이 없는 리뷰
+    public List<Reviews> selectNoReplyReview(String hostId){
+        return reviewRepository.selectNoReplyReview(hostId);
+    }
 
 }
