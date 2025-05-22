@@ -52,20 +52,21 @@
       });
 
       $('#btn-del').click(() => {
-        const targetId = '${user.userId}';
         const c = confirm('정말 탈퇴하시겠습니까?\n모든 정보가 삭제되고 이 작업은 되돌릴 수 없습니다.');
         if (c) {
           $.ajax({
-            url: "<c:url value='/api/auth/del?id='/>" + targetId,
+            url: "<c:url value='/api/auth/del'/>",
             type: 'POST',
+            data: { id: "${sessionScope.user.userId}" },
             success: (resp) => {
-              self.showToast(resp);
-              setTimeout(() => {
-                window.location.href = "<c:url value='/'/>";
-              }, 1500);
+              console.log(resp);
+              alert(resp);
+              window.location.href = "<c:url value='/'/>";
             },
             error: (xhr) => {
-              self.showToast(xhr.responseText);
+              console.log(xhr.responseText);
+              alert(xhr.responseText);
+              console.log(xhr.status + ": " + xhr.responseText);
             }
           });
         }
