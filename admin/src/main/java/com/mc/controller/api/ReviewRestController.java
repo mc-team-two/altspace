@@ -48,11 +48,12 @@ public class ReviewRestController {
 
         try {
             // 누적 리뷰수
-            Map<String, Object> totalReviewsData = new LinkedHashMap<>();
             List<Reviews> totalReviewsDataList =  reviewService.getByHostId(hostId);
+
+            Map<String, Object> totalReviewsData = new LinkedHashMap<>();
             totalReviewsData.put("count", totalReviewsDataList.size());
             totalReviewsData.put("list", totalReviewsDataList);
-            response.put("totalReviewsCount", totalReviewsData);
+            response.put("totalReviews", totalReviewsData);
 
             // 누적 평점
             double averageGrade = 0.0;
@@ -68,16 +69,19 @@ public class ReviewRestController {
 
             // 오늘 등록된 리뷰
             List<Reviews> todayReviewsList = reviewService.selectTodayReview(hostId);
+
             Map<String, Object> todayReviewsData = new LinkedHashMap<>();
-            totalReviewsData.put("count", todayReviewsList.size());
-            totalReviewsData.put("list", todayReviewsList);
+            int todayReviewsCount = todayReviewsList.size();
+            todayReviewsData.put("count", todayReviewsCount);
+            todayReviewsData.put("list", todayReviewsList);
             response.put("todayReviews", todayReviewsData);
 
             // 답글을 쓸 수 있는 리뷰
             List<Reviews> noReplyReviewsList = reviewService.selectNoReplyReview(hostId);
 
             Map<String, Object> noReplyReviewsData = new LinkedHashMap<>();
-            noReplyReviewsData.put("count", noReplyReviewsList.size());
+            int noReplyReviewsCount = noReplyReviewsList.size();
+            noReplyReviewsData.put("count", noReplyReviewsCount);
             noReplyReviewsData.put("list", noReplyReviewsList);
             response.put("noReplyReviews", noReplyReviewsData);
 
@@ -163,4 +167,5 @@ public class ReviewRestController {
                     .body(ResponseMessage.ERROR.getMessage());
         }
     }
+
 }
