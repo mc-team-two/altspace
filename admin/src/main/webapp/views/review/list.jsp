@@ -93,12 +93,28 @@
                                     </c:choose>
                                 </c:forEach>
                             </p>
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
-                                <span style="font-size:18px; font-weight:bold">${rm.review.guestId}</span>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="float-start">
+                                    <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
+                                    <span style="font-size:18px; font-weight:bold">${rm.review.guestId}</span>
+                                </div>
+                                <div class="float-end">
+                                    <button class="btn border-gray p-1">
+                                        <i class="bi bi-globe2"></i><span class="ms-1">번역</span>
+                                        <select class="form-select form-select-sm"
+                                                data-review-id="${rm.review.reviewId}"
+                                                data-original="${rm.review.comment}">
+                                            <option value="" selected disabled hidden>언어</option>
+                                            <option value="ko">한국어</option>
+                                            <option value="en">영어</option>
+                                            <option value="zh-CN">중국어</option>
+                                            <option value="ja">일본어</option>
+                                        </select>
+                                    </button>
+                                </div>
                             </div>
                             <small>[${rm.review.name}]</small>
-                            <p>${rm.review.comment}</p>
+                            <p class="review-comment-text">${rm.review.comment}</p>
 
                             <%--이미지 추가--%>
                             <c:if test="${not empty rm.images}">
@@ -205,6 +221,26 @@
                 $("#accList").find(".list-group-item").removeClass("active");
                 $(this).addClass("active");
             });
+
+            // 번역 기능 초기화
+            $(document).on('change', '.form-select.form-select-sm', function() {
+                const $select = $(this);
+                const selectedLang = $select.val();
+                const originalText = $select.data('original');
+                // Find the specific comment paragraph related to this select
+                const $commentParagraph = $select.closest('.card-body').find('.review-comment-text');
+
+                if (!selectedLang) {
+                    $commentParagraph.text(originalText);
+                    return;
+                }
+
+                if ($commentParagraph.length) {
+                    reviewPage.translate(originalText, selectedLang, $commentParagraph);
+                } else {
+                    console.error("Could not find comment paragraph to update.");
+                }
+            });
         },
 
         addReply: function (replyData) {
@@ -268,6 +304,33 @@
             const formattedTimestamp = year + "년 " + month + "월 " + day + "일 " + hours + ":" + minutes + ":" + seconds;
             $("#dataTimestamp").text("데이터 기준일: " + formattedTimestamp);
 
+        },
+
+        translate: function(originalText, targetLang, $commentElement){
+            if (!targetLang) {
+                $commentElement.text(originalText);
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '<c:url value="/api/review/translate"/>',
+                contentType: 'application/json',
+                data: JSON.stringify({ msg: originalText, target: targetLang }),
+                success: function (translatedText) {
+                    if (translatedText && translatedText.trim() !== "") {
+                        $commentElement.text(translatedText);
+                    } else {
+                        $commentElement.text(originalText);
+                        alert('번역 결과를 받지 못했습니다. 원본 텍스트로 표시됩니다.');
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Translation error:", xhr.responseText);
+                    alert('번역 중 오류가 발생했습니다: ' + xhr.responseText);
+                    $commentElement.text(originalText);
+                }
+            });
         }
     };
 
