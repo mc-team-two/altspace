@@ -81,7 +81,7 @@
                                         <%--금액--%>
                                         <div>&#8361;${item.priceNight}</div>
                                         <%--찜--%>
-                                        <div></div>
+                                        <div>찜 ${item.wish}</div>
                                         <%--조회수--%>
                                         <div>조회수 ${item.views}</div>
                                     </div>

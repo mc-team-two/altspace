@@ -48,15 +48,32 @@
 
     <!--  숙소 id로 개별 숙소 정보 조회 -->
     <select id="selectOne" parameterType="Integer" resultType="Accommodations">
-        SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId}
+        SELECT a.*, COUNT(w.wishlist_id) AS wish
+        FROM accommodations a
+                 LEFT JOIN wishlists w
+                           ON a.accommodation_id = w.accommodation_id
+        WHERE a.accommodation_id = #{accommodationId}
+        GROUP BY a.accommodation_id
     </select>
 
-    <!--  개별 호스트가 등록한 모든 숙소 조회 -->
-    <select id="selectPageByHostId" parameterType="String" resultType="Accommodations">
-        SELECT * FROM accommodations WHERE host_id=#{hostId}
-    </select>
+    <!--  개별 호스트가 등록한 모든 숙소 조회 (리스트) -->
     <select id="selectListByHostId" parameterType="String" resultType="Accommodations">
-        SELECT * FROM accommodations WHERE host_id=#{hostId}
+        SELECT a.*, COUNT(w.wishlist_id) AS wish
+        FROM accommodations a
+                 LEFT JOIN wishlists w
+                           ON a.accommodation_id = w.accommodation_id
+        WHERE a.host_id = #{hostId}
+        GROUP BY a.accommodation_id
+    </select>
+
+    <!--  개별 호스트가 등록한 모든 숙소 조회 (페이지)-->
+    <select id="selectPageByHostId" parameterType="String" resultType="Accommodations">
+        SELECT a.*, COUNT(w.wishlist_id) AS wish
+        FROM accommodations a
+                 LEFT JOIN wishlists w
+                           ON a.accommodation_id = w.accommodation_id
+        WHERE a.host_id = #{hostId}
+        GROUP BY a.accommodation_id
     </select>
 
     <!--     호스팅 중인 숙소 개수  -->
