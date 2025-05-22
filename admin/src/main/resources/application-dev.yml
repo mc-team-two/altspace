@@ -61,3 +61,15 @@ jasypt:
   encryptor:
     password: space
     algorithm: PBEWithMD5AndDES
+
+# 7. NCP
+ncp:
+  ocr:
+    url: https://tjoxzsvb05.apigw.ntruss.com/custom/v1/41403/f27adacaf33ea3d4f1e97a5ef5c73683d6f2e788d40d9c582d24f9c1676df942/infer
+    key: a1R1U21XY05xT1p4d2FOZEtOZXpGTFJoR2NrQllrYk4=
+  chatbot:
+    url: https://2sw2npiyi7.apigw.ntruss.com/custom/v1/17417/f27adacaf33ea3d4f1e97a5ef5c73683d6f2e788d40d9c582d24f9c1676df942
+    key: cm9qYVV4U1RGSVBIY21aVVJrUUFjb2NCWktoaHFWV3g=
+  papago:
+    id: 7poc0cqw3p
+    key: HrLIOMOGp2173lnuNHV73vpFzlb1Y8RGqXt3DpLv

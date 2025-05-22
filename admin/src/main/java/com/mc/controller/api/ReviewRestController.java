@@ -3,13 +3,16 @@ package com.mc.controller.api;
 import com.mc.app.dto.ReviewReplies;
 import com.mc.app.dto.Reviews;
 import com.mc.app.dto.User;
+import com.mc.app.service.ReviewImageService;
 import com.mc.app.service.ReviewRepliesService;
 import com.mc.app.service.ReviewService;
 import com.mc.common.response.ResponseMessage;
+import com.mc.util.PapagoUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,11 @@ public class ReviewRestController {
 
     private final ReviewService reviewService;
     private final ReviewRepliesService reviewRepliesService;
+
+    @Value("${ncp.papago.id}")
+    String papagoId;
+    @Value("${ncp.papago.key}")
+    String papagoKey;
 
     @PostMapping("/dashboard")
     public ResponseEntity<?> dashboard(@RequestParam("hostId") String hostId,
@@ -48,11 +56,12 @@ public class ReviewRestController {
 
         try {
             // 누적 리뷰수
-            Map<String, Object> totalReviewsData = new LinkedHashMap<>();
             List<Reviews> totalReviewsDataList =  reviewService.getByHostId(hostId);
+
+            Map<String, Object> totalReviewsData = new LinkedHashMap<>();
             totalReviewsData.put("count", totalReviewsDataList.size());
             totalReviewsData.put("list", totalReviewsDataList);
-            response.put("totalReviewsCount", totalReviewsData);
+            response.put("totalReviews", totalReviewsData);
 
             // 누적 평점
             double averageGrade = 0.0;
@@ -68,16 +77,19 @@ public class ReviewRestController {
 
             // 오늘 등록된 리뷰
             List<Reviews> todayReviewsList = reviewService.selectTodayReview(hostId);
+
             Map<String, Object> todayReviewsData = new LinkedHashMap<>();
-            totalReviewsData.put("count", todayReviewsList.size());
-            totalReviewsData.put("list", todayReviewsList);
+            int todayReviewsCount = todayReviewsList.size();
+            todayReviewsData.put("count", todayReviewsCount);
+            todayReviewsData.put("list", todayReviewsList);
             response.put("todayReviews", todayReviewsData);
 
             // 답글을 쓸 수 있는 리뷰
             List<Reviews> noReplyReviewsList = reviewService.selectNoReplyReview(hostId);
 
             Map<String, Object> noReplyReviewsData = new LinkedHashMap<>();
-            noReplyReviewsData.put("count", noReplyReviewsList.size());
+            int noReplyReviewsCount = noReplyReviewsList.size();
+            noReplyReviewsData.put("count", noReplyReviewsCount);
             noReplyReviewsData.put("list", noReplyReviewsList);
             response.put("noReplyReviews", noReplyReviewsData);
 
@@ -162,5 +174,15 @@ public class ReviewRestController {
                     .status(ResponseMessage.ERROR.getStatus())
                     .body(ResponseMessage.ERROR.getMessage());
         }
+    }
+
+    ///  리뷰 번역
+    @PostMapping("/translate")
+    public ResponseEntity<String> translate(@RequestBody Map<String, String> body) {
+        String msg = body.get("msg");
+        String target = body.get("target");
+
+        String translatedText = PapagoUtil.getMsg(papagoId, papagoKey, msg, target);
+        return ResponseEntity.ok(translatedText);
     }
 }

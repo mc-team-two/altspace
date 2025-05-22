@@ -18,19 +18,18 @@
         리뷰 관리 &nbsp;&nbsp;>&nbsp;&nbsp; <strong>작성된 리뷰 조회</strong>
     </p>
 
-    <small class="text-muted">데이터 기준일:</small>
+    <small id="dataTimestamp" class="text-muted">데이터 기준일:</small>
     <%--헤더--%>
     <div class="row my-3 mx-0 bg-light rounded p-3 text-center justify-content-around">
         <div class="col p-0 border-0 rounded-2 pt-2">
             <p class="header-text">누적 리뷰수</p>
-            <p id="totalReviewsCount">
+            <p id="totalReviews">
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
         <div class="col border-0 rounded-2 pt-2">
-            <p class="header-text">누적 평점</p>
+            <p class="header-text">호스팅 누적 평점</p>
             <p id="averageGrade">
-
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
@@ -53,7 +52,7 @@
         <div class="col-sm-3 mb-3">
             <ul class="list-group bg-light" id="accList">
                 <a href="<c:url value='/review/list'/>" class="list-group-item ${param.accId == null ? 'active' : ''}" data-id="all">
-                    전체보기 (?)
+                    전체보기
                 </a>
 
                 <c:forEach var="item" items="${accList}">
@@ -76,7 +75,7 @@
                     </div>
                 </div>
             </c:if>
-            <c:forEach var="entry" items="${reviewMap}">
+            <c:forEach var="rm" items="${reviewMap}">
                 <div class="card mb-3">
                     <div class="card-body">
 
@@ -85,7 +84,7 @@
                             <p class="text-warning">
                                 <c:forEach var="i" begin="1" end="5">
                                     <c:choose>
-                                        <c:when test="${i <= entry.key.grade}">
+                                        <c:when test="${i <= rm.review.grade}">
                                             <i class="bi bi-star-fill"></i>
                                         </c:when>
                                         <c:otherwise>
@@ -94,15 +93,42 @@
                                     </c:choose>
                                 </c:forEach>
                             </p>
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
-                                <span style="font-size:18px; font-weight:bold">${entry.key.guestId}</span>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="float-start">
+                                    <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
+                                    <span style="font-size:18px; font-weight:bold">${rm.review.guestId}</span>
+                                </div>
+                                <div class="float-end">
+                                    <button class="btn border-gray p-1">
+                                        <i class="bi bi-globe2"></i><span class="ms-1">번역</span>
+                                        <select class="form-select form-select-sm"
+                                                data-review-id="${rm.review.reviewId}"
+                                                data-original="${rm.review.comment}">
+                                            <option value="" selected disabled hidden>언어</option>
+                                            <option value="ko">한국어</option>
+                                            <option value="en">영어</option>
+                                            <option value="zh-CN">중국어</option>
+                                            <option value="ja">일본어</option>
+                                        </select>
+                                    </button>
+                                </div>
                             </div>
-                            <small>[${entry.key.name}]</small>
-                            <p>${entry.key.comment}</p>
+                            <small>[${rm.review.name}]</small>
+                            <p class="review-comment-text">${rm.review.comment}</p>
+
+                            <%--이미지 추가--%>
+                            <c:if test="${not empty rm.images}">
+                                <div class="d-flex overflow-scroll">
+                                <c:forEach var="reviewImg" items="${rm.images}">
+                                    <img class="pe-2" style="height: 120px; width: auto;" src="<c:url value="/imgs/no-image-available.jpeg"/>" alt="리뷰이미지">
+                                <%--<img src="<c:url value='/imgs/${reviewImg}'/>" alt="리뷰이미지" class="img-fluid mb-2" />--%>
+                                </c:forEach>
+                                </div>
+                            </c:if>
+
                             <small class="text-muted">
-                                작성일:<fmt:formatDate value="${entry.key.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/><br>
-                                수정일:<fmt:formatDate value="${entry.key.updateDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
+                                작성일:<fmt:formatDate value="${rm.review.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/><br>
+                                수정일:<fmt:formatDate value="${rm.review.updateDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
                             </small>
                         </div>
 
@@ -110,12 +136,12 @@
                         <hr>
                         <div class="mt-3">
                             <c:choose>
-                                <c:when test="${empty entry.value}">
+                                <c:when test="${empty rm.reply}">
                                     <p class="text-muted">호스트 님의 답글을 남겨주세요. 😍</p>
                                 </c:when>
                                 <c:otherwise>
                                     <div class="reply-list">
-                                        <c:forEach var="reply" items="${entry.value}">
+                                        <c:forEach var="reply" items="${rm.reply}">
                                             <div class="reply-item mb-3 p-3 rounded shadow-sm">
                                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                                     <div class="left">
@@ -137,10 +163,10 @@
 
                         <!-- 답글 작성 폼 -->
                         <div class="d-flex mt-3">
-                            <input type="hidden" class="reviewId" value="${entry.key.reviewId}">
+                            <input type="hidden" class="reviewId" value="${rm.review.reviewId}">
                             <input type="hidden" class="userId" value="${sessionScope.user.userId}">
                             <textarea class="comment form-control me-2" rows="2" required></textarea>
-                            <button class="addReplyBtn btn btn-primary" data-review-id="${entry.key.reviewId}">
+                            <button class="addReplyBtn btn btn-primary" data-review-id="${rm.review.reviewId}">
                                 <i class="bi bi-send"></i>
                             </button>
                         </div>
@@ -195,6 +221,26 @@
                 $("#accList").find(".list-group-item").removeClass("active");
                 $(this).addClass("active");
             });
+
+            // 번역 기능 초기화
+            $(document).on('change', '.form-select.form-select-sm', function() {
+                const $select = $(this);
+                const selectedLang = $select.val();
+                const originalText = $select.data('original');
+                // Find the specific comment paragraph related to this select
+                const $commentParagraph = $select.closest('.card-body').find('.review-comment-text');
+
+                if (!selectedLang) {
+                    $commentParagraph.text(originalText);
+                    return;
+                }
+
+                if ($commentParagraph.length) {
+                    reviewPage.translate(originalText, selectedLang, $commentParagraph);
+                } else {
+                    console.error("Could not find comment paragraph to update.");
+                }
+            });
         },
 
         addReply: function (replyData) {
@@ -233,14 +279,56 @@
                 type: "POST",
                 data: { hostId: "${sessionScope.user.userId}" },
                 success: (resp) => {
-                    console.log(resp);
-                    $("#totalReviewsCount").text(resp.totalReviewsCount.count ?? 0).removeClass("placeholder-glow");
+                    this.displayTimestamp();
+                    $("#totalReviews").text(resp.totalReviews.count ?? 0).removeClass("placeholder-glow");
                     $("#averageGrade").text(resp.averageGrade ?? 0 ).removeClass("placeholder-glow");
                     $("#todayReviews").text(resp.todayReviews.count ?? 0).removeClass("placeholder-glow");
                     $("#noReplyReviews").text(resp.noReplyReviews.count ?? 0).removeClass("placeholder-glow");
                 },
                 error: (xhr) => {
+                    alert('error: ' + xhr.responseText);
                     console.error(xhr.status, xhr.responseText);
+                }
+            });
+        },
+
+        displayTimestamp: function() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const formattedTimestamp = year + "년 " + month + "월 " + day + "일 " + hours + ":" + minutes + ":" + seconds;
+            $("#dataTimestamp").text("데이터 기준일: " + formattedTimestamp);
+
+        },
+
+        translate: function(originalText, targetLang, $commentElement){
+            if (!targetLang) {
+                $commentElement.text(originalText);
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '<c:url value="/api/review/translate"/>',
+                contentType: 'application/json',
+                data: JSON.stringify({ msg: originalText, target: targetLang }),
+                success: function (translatedText) {
+                    if (translatedText && translatedText.trim() !== "") {
+                        $commentElement.text(translatedText);
+                    } else {
+                        $commentElement.text(originalText);
+                        alert('번역 결과를 받지 못했습니다. 원본 텍스트로 표시됩니다.');
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Translation error:", xhr.responseText);
+                    alert('번역 중 오류가 발생했습니다: ' + xhr.responseText);
+                    $commentElement.text(originalText);
                 }
             });
         }
