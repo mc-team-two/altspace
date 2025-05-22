@@ -11,8 +11,6 @@ import com.mc.util.ReviewUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +47,7 @@ public class ReviewController {
 
 
         // 가져오기 #1: 현재 호스트의 모든 숙소 목록 조회 (사이드바 뿌리는 용도)
-        List<Accommodations> accList = accomService.getByHostId(hostId);
+        List<Accommodations> accList = accomService.getListByHostId(hostId);
 
         // 가져오기 #2: 호스트의 숙소에 대한 리뷰 가져오기
         List<SimpReview> rvList;
