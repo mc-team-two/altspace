@@ -106,7 +106,7 @@
                                         <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                                     </div>
                                     <div class="user_box_login user_box_link">
-                                        <a href="<c:url value="/login/logout"/  > "><spring:message code="logout"/></a>
+                                        <a href="<c:url value="/login/logout"/>"><spring:message code="logout"/></a>
                                     </div>
                                     <div class="user_box_login theme-switch">
                                         <label class="theme-toggle" title="다크 모드 전환">
@@ -278,8 +278,7 @@
 <script src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'/>"></script>
 <%-- kakao map library --%>
 <script src="<c:url value='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'/>"></script>
-<script type="text/javascript"
-        src="<c:url value='//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services'/>"></script>
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"></script>
 
 
 <script src="<c:url value='styles/bootstrap4/popper.js'/>"></script>

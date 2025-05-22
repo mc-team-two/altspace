@@ -12,6 +12,8 @@
           href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
     <link rel="stylesheet"
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"></script>
 <style>
     .submenu {
         display: none;
@@ -50,7 +52,7 @@
             transform: translateY(0);
         }
     }
-    
+
     @media (min-width: 992px) {
         .pl-lg-5 {
             padding-left: 5rem !important; /* 간격 확보 */

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <head>
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
@@ -10,6 +11,8 @@
           href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
     <link rel="stylesheet"
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&autoload=false&libraries=services"></script>
+
 </head>
 
 <div class="menu trans_500">
@@ -132,7 +135,7 @@
                                            required="required">
                                 </div>
                                 <div class="search_item">
-                                    <div><spring:message code="checkin"/></div>
+                                    <div><spring:message code="checkIn"/></div>
                                     <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="search_item">
@@ -206,7 +209,7 @@
                                            required="required">
                                 </div>
                                 <div class="search_item">
-                                    <div><spring:message code="checkin"/></div>
+                                    <div><spring:message code="checkIn"/></div>
                                     <input type="text" class="check_in search_input" placeholder="YYYY-MM-DD">
                                 </div>
                                 <div class="search_item">
@@ -276,6 +279,12 @@
     <div class="container">
         <div id="travel-insight-container" class="mb-5 d-none">
             <div class="row text-center" id="travel-insight-widgets"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="mb-5">
+            <div class="row text-center" id="travel-insight-widgets"></div>
+            <div id="map" style="width: 300px; height: 200px; margin-top: 30px;"></div>
         </div>
     </div>
 
@@ -488,6 +497,113 @@
         </div>
     </div>
 </div>
+
+<!-- JSON 데이터를 담고 있는 스크립트 블록 -->
+<script id="statsJson" type="application/json">
+    <c:out value="${statsJson}" escapeXml="false"/>
+</script>
+
+<!-- 실제 JS에서 사용할 변수 정의 -->
+<script>
+    const statsElement = document.getElementById("statsJson");
+    let stats = [];
+
+    if (statsElement && statsElement.textContent.trim()) {
+        try {
+            stats = JSON.parse(statsElement.textContent);
+        } catch (e) {
+            console.error("📛 JSON 파싱 오류:", e);
+        }
+    } else {
+        console.warn("⚠ statsJson 요소가 없거나 내용이 비었습니다.");
+    }
+
+    console.log("📊 히트맵 데이터:", stats);
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mapContainer = document.getElementById("map");
+
+        if (!mapContainer) {
+            console.warn("지도 컨테이너(#map)가 없습니다.");
+            return;
+        }
+
+        // kakao 객체가 없는 경우 (429나 로딩 실패 등)
+        if (typeof kakao === "undefined" || !kakao.maps || !kakao.maps.load) {
+            console.error("⚠ Kakao 지도 API 로딩 실패 또는 차단되었습니다. (429 또는 네트워크 문제 등)");
+            mapContainer.innerHTML = `
+                <div style="padding: 2rem; text-align: center; color: red; font-weight: bold;">
+                    🔌 Kakao 지도 로딩에 실패했습니다.<br>
+                    네트워크 상태를 확인하거나, 새로고침 후 다시 시도해주세요.<br>
+                    (429 Too Many Requests 또는 차단 가능성)
+                </div>
+            `;
+            return;
+        }
+
+        // 정상 로딩된 경우
+        kakao.maps.load(function () {
+            if (!stats || stats.length === 0) {
+                console.warn("히트맵 데이터가 비어 있습니다.");
+                return;
+            }
+
+            const map = new kakao.maps.Map(mapContainer, {
+                center: new kakao.maps.LatLng(37.5665, 126.9780),
+                level: 8
+            });
+
+            const geocoder = new kakao.maps.services.Geocoder();
+
+            stats.forEach((item) => {
+                if (!item.location) return;
+
+                geocoder.addressSearch(item.location, function (result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                        // 원
+                        const circle = new kakao.maps.Circle({
+                            center: coords,
+                            radius: Math.max(300, item.totalViews * 10),
+                            strokeWeight: 1,
+                            strokeColor: '#0040ff',
+                            strokeOpacity: 0.8,
+                            fillColor: '#0040ff',
+                            fillOpacity: 0.4
+                        });
+                        circle.setMap(map);
+
+                        // 마커
+                        const marker = new kakao.maps.Marker({
+                            position: coords,
+                            map: map
+                        });
+
+                        // 정보창
+                        const infowindow = new kakao.maps.InfoWindow({
+                            content: `
+                                <div style="padding:10px;font-size:13px;">
+                                    <b>${item.location}</b><br/>
+                                    조회수: ${item.totalViews}<br/>
+                                    예약 수: ${item.bookingCount}<br/>
+                                    평점: ${item.avgRating != null ? item.avgRating.toFixed(1) : 'N/A'}
+                                </div>`
+                        });
+
+                        kakao.maps.event.addListener(marker, 'click', function () {
+                            infowindow.open(map, marker);
+                        });
+                    } else {
+                        console.warn("지오코딩 실패:", item.location);
+                    }
+                });
+            });
+        });
+    });
+</script>
 
 <script>
     function updateViewsAndGo(accId) {
