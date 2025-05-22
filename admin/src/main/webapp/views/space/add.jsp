@@ -113,10 +113,10 @@
             }
 
             // 대표 사진 체크
-            const mainImage = $("#image1");
-            if (!mainImage.files || mainImage.files.length === 0) {
+            const mainImageElement = $("#image1")[0]; // 수정된 부분
+            if (!mainImageElement.files || mainImageElement.files.length === 0) {
                 alert("대표 사진은 필수입니다.");
-                mainImage.focus();
+                $("#image1").focus(); // jQuery 객체로 focus
                 return false;
             }
 
@@ -378,9 +378,16 @@
                     <%--description--%>
                     <div class="form-group">
                         <label class="mb-1 font-weight-bold text-primary" for="description">
-                            스페이스 소개글
+                            스페이스 소개글 (최대 150자)
                         </label>
-                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">해변 근처의 Chill한 별장</textarea>
+                        <textarea class="form-control" name="description" id="description" style="resize: none !important;">백현동에서 가까운 별장</textarea>
+                    </div>
+                    <%--notice--%>
+                    <div class="form-group">
+                        <label class="mb-1 font-weight-bold text-primary" for="notice">
+                            스페이스 공지사항
+                        </label>
+                        <textarea class="form-control overflow-auto" name="notice" id="notice" style="min-height: 120px;">이용 규칙 설명해드립니다~ ...</textarea>
                     </div>
 
                     <hr>

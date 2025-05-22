@@ -47,7 +47,7 @@ public class ReviewController {
 
 
         // 가져오기 #1: 현재 호스트의 모든 숙소 목록 조회 (사이드바 뿌리는 용도)
-        List<Accommodations> accList = accomService.getByHostId(hostId);
+        List<Accommodations> accList = accomService.getListByHostId(hostId);
 
         // 가져오기 #2: 호스트의 숙소에 대한 리뷰 가져오기
         List<Reviews> rvList;

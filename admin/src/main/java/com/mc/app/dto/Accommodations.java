@@ -19,7 +19,8 @@ public class Accommodations {
     private String location;             // 숙소 주소
     private int priceNight;              // 1박 가격
     private int personMax;               // 최대 수용 인원
-    private String description;          // 상세 설명
+    private String description;          // 상세 설명 (소개글)
+    private String notice;               // 공지사항
     private String status;               // ENUM('활성','비활성')
     private String category;             // ENUM('아파트','단독주택','오피스텔','빌라')
     private String roomType;             // 객실 유형
@@ -41,5 +42,7 @@ public class Accommodations {
     private BigDecimal longitude;        // 경도
     private Timestamp createDay;         // 등록일
     private Timestamp updateDay;         // 수정일
-    private int reviewCount;             // (조인) 리뷰수
+    private int views;                   // 조회수
+    private int wish;                    // 위시리스트 수
+    private int reviewCount;             // (조인) 리뷰 카운트
 }

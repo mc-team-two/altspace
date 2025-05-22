@@ -29,7 +29,7 @@
           href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
     <link rel="stylesheet"
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
-
+</head>
     <style>
         .footer_col{
             margin-top: 50px;
@@ -44,7 +44,6 @@
             font-size: clamp(0.3rem, 0.6vw, 0.5rem);
         }
 </style>
-</head>
 
 <body>
 
@@ -107,7 +106,7 @@
                                         <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
                                     </div>
                                     <div class="user_box_login user_box_link">
-                                        <a href="<c:url value="/auth/logout"/> "><spring:message code="logout"/></a>
+                                        <a href="<c:url value="/login/logout"/  > "><spring:message code="logout"/></a>
                                     </div>
                                     <div class="user_box_login theme-switch">
                                         <label class="theme-toggle" title="다크 모드 전환">
