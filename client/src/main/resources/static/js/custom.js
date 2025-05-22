@@ -853,15 +853,16 @@ $(document).ready(function () {
         `);
         }
 
-        // ✅ 이 부분은 for문 밖에서 한 번만 실행!
-        container.append(`
-        <div class="text-end mt-3 pe-3">
+// ✅ 중복 방지: 기존 워터마크가 없을 때만 추가
+        if (container.find(".travel-insight-powered").length === 0) {
+            container.append(`
+        <div class="travel-insight-powered">
             <small class="text-muted">
-                Powered by 
+                Powered by  
                 <img src="images/gemini-brand-color.png" alt="Gemini Logo" height="20" style="vertical-align: middle;">
             </small>
         </div>
-    `);
+    `)}
     }
 
 // 팝업 기능을 초기화하는 함수

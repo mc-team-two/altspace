@@ -13,10 +13,52 @@
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 </head>
 
+<style>
+
+    .submenu {
+        display: none;
+        margin-top: 6px; /* 상단 여백 추가 */
+        padding-left: 18px; /* 좌측 들여쓰기 */
+        padding-top: 6px; /* 내부 위쪽 여백 */
+        list-style-type: circle;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .submenu li {
+        margin: 6px 0; /* 각 항목 간 간격 */
+    }
+
+    .has-submenu > a {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+    }
+
+    .has-submenu.active > .submenu {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
 <!-- 메뉴 -->
 <div class="menu trans_500">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
-        <div class="menu_close_container"><div class="menu_close"></div></div>
+        <div class="menu_close_container">
+            <div class="menu_close"></div>
+        </div>
         <div class="logo menu_logo"><a href="/"><img src="images/logo.png" alt=""></a></div>
         <ul>
             <li class="menu_item"><a href="<c:url value='/'/>">홈</a></li>
@@ -29,7 +71,8 @@
 
 <!-- 홈 영역 -->
 <div class="home">
-    <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
+    <div class="home_background parallax-window" data-parallax="scroll"
+         data-image-src="images/offer_background.jpg"></div>
     <div class="home_content">
         <div class="home_title">마이 페이지</div>
     </div>
@@ -45,7 +88,7 @@
                 <div class="single_listing" style="margin-top: 0 !important; padding: 30px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
                     <div class="hotel_info text-center">
                         <div class="hotel_title_container mb-4">
-                            <h1 class="hotel_title" style="font-size: 2.5rem; color: #333;">개인 정보</h1>
+                            <h1 class="hotel_title" style="font-size: 2.5rem; color: #333;">나의 정보</h1>
                         </div>
                         <div class="hotel_image">
                             <img src="/images/avatar.png" alt="User Profile" style="width: 150px; border-radius: 8px;">
@@ -142,7 +185,15 @@
                             <li><a href="<c:url value='/details'/>">나의 예약</a></li>
                             <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
                             <li><a href="<c:url value='/wishlist'/>">찜 목록</a></li>
-                            <li><a href="<c:url value='/mypage'/>">나의 정보</a></li>
+                            <li class="has-submenu">
+                                <a href="javascript:void(0)">나의 정보 <i class="fa fa-chevron-down ms-1"></i></a>
+                                <ul class="submenu">
+                                    <li><a href="<c:url value='/mypage'/>">내 정보</a>
+                                    <li><a href="<c:url value='/mypage/modify-info'/>">내 정보 수정</a></li>
+                                    <li><a href="<c:url value='/mypage/reset-password'/>">비밀번호 재설정</a></li>
+                                    <li><a href="<c:url value='/mypage/delete-account'/>">회원 탈퇴</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -151,5 +202,23 @@
     </div>
 </div>
 
-<!-- 스크립트 -->
-<script src="js/darkmode.js"></script>
+<script src="<c:url value='js/jquery-3.2.1.min.js'/>"></script>
+<script src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'/>"></script>
+<script src="<c:url value='styles/bootstrap4/popper.js'/>"></script>
+<script src="<c:url value='styles/bootstrap4/bootstrap.min.js'/>"></script>
+<script src="<c:url value='plugins/Isotope/isotope.pkgd.min.js'/>"></script>
+<script src="<c:url value='plugins/easing/easing.js'/>"></script>
+<script src="<c:url value='plugins/parallax-js-master/parallax.min.js'/>"></script>
+<script src="<c:url value='js/darkmode.js'/>"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const submenuToggles = document.querySelectorAll(".has-submenu > a");
+
+        submenuToggles.forEach(function (toggle) {
+            toggle.addEventListener("click", function () {
+                const parent = this.parentElement;
+                parent.classList.toggle("active");
+            });
+        });
+    });
+</script>

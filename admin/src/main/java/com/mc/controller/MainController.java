@@ -40,6 +40,9 @@ public class MainController {
             return "redirect:/auth/login";
         }
 
+        String hostId = user.getUserId();
+        model.addAttribute("hostId", hostId);
+
         // 이번 달 총 결제 금액 가져오기
         Integer monthTotal = paymentService.getMonthTotal();
         String formattedMonthTotal = String.format("%,d", monthTotal);
@@ -67,7 +70,6 @@ public class MainController {
         model.addAttribute("earningsDataJson", new ObjectMapper().writeValueAsString(earningsList));
 
         // 호스트 숙소 수 조회
-        String hostId = user.getUserId();
         int accommodationCount = accomService.getAccommodationCountByHost(hostId);
 
         // 전체 예약 건수 가져오기

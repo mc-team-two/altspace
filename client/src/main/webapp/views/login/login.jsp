@@ -7,7 +7,7 @@
     <title>로그인</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
@@ -158,7 +158,7 @@
 
         <div class="divider">또는</div>
 
-        <form method="post" action="<c:url value="/auth/loginimpl"/>" class="text-left">
+        <form id="loginForm" method="post" action="<c:url value="/api/auth/login"/>" class="text-left">
             <div class="form-group">
                 <label for="email">이메일</label>
                 <input type="email" id="email" name="email" class="form-control" value="guest01@example.com" placeholder="이메일을 입력해 주세요" required>
@@ -168,7 +168,7 @@
                 <input type="password" id="password" name="password" class="form-control" value="password123!!" placeholder="비밀번호를 입력해 주세요" required>
             </div>
             <div class="form-hidden">
-                <labet for="hidden"><!-- 로그인 전 / 로그인 후 채팅 아이디 일관성을 위한 히든 폼 --></labet>
+                <label for="hidden"><!-- 로그인 전 / 로그인 후 채팅 아이디 일관성을 위한 히든 폼 --></label>
                 <input type="hidden" name="chatbot_id" id="chatbot_id">
             </div>
             <button id="login-btn" type="submit" class="btn btn-block login-btn">로그인</button>
@@ -189,6 +189,7 @@
 
     </div>
 </div>
+<div id="login-alert" class="alert alert-danger mt-3" style="display:none;"></div>
 <!-- 정책 메뉴는 화면 아래 고정 -->
 <footer class="mt-auto text-center py-3">
     <div class="footer-links">
@@ -201,4 +202,45 @@
 
 </body>
 </html>
-<script>document.getElementById("chatbot_id").value = localStorage.getItem("chatbot_id");</script>
+<script>
+    const loginPage = {
+        init: function () {
+            $('#email, #password').on('focus', function () {
+                $('#login-alert').fadeOut(300);
+            });
+
+            $('#loginForm').on('submit', function (e) {
+                e.preventDefault();
+                const formData = {
+                    email: $("#email").val(),
+                    password: $("#password").val()
+                };
+                loginPage.loginImpl(formData);
+            });
+        },
+        loginImpl: function (formData) {
+            $.ajax({
+                url: "<c:url value='/api/auth/login'/>",
+                type: "POST",
+                contentType: "application/x-www-form-urlencoded",
+                data: $.param(formData),
+                beforeSend: function () {
+                    $('#login-btn').prop('disabled', true).text('처리 중...');
+                },
+                success: function () {
+                    window.location.href = "<c:url value='/'/>";
+                },
+                error: function (xhr) {
+                    const msg = xhr.responseJSON?.message || xhr.responseText || '로그인에 실패했습니다.';
+                    $('#login-alert').text(msg).fadeIn(300);
+                    $('#login-btn').prop('disabled', false).text('로그인');
+                }
+            });
+        }
+    };
+
+    $(function () {
+        loginPage.init();
+        document.getElementById("chatbot_id").value = localStorage.getItem("chatbot_id");
+    });
+</script>

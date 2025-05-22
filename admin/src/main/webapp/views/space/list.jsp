@@ -50,7 +50,7 @@
 
 <div class="container-fluid">
     <p class="text-muted">스페이스 관리 > <strong>내 스페이스</strong></p>
-            <%--contents 시작--%>
+            <%--헤더바--%>
             <div class="row my-3 mx-0 p-2 bg-primary rounded">
                 <div class="col px-0 d-flex justify-content-start align-items-center" style="color: #f5f5f9; font-size: 18px;">
                     &nbsp;<strong>${cpage.total}</strong>개의 검색결과
@@ -64,7 +64,9 @@
                     </a>
                 </div>
             </div>
+
             <div class="row">
+                <%--개별 데이터--%>
                 <c:forEach var="item" items="${cpage.getList()}">
                     <div class="col-12 col-md-6 col-lg-4 col-5-in-row mb-4 d-flex">
                         <div class="card w-100">
@@ -74,9 +76,19 @@
                             <div class="card-body">
                                 <h4 class="card-title">${item.name}</h4>
                                 <p class="card-text">${item.location}</p>
-                                <div class="float-end">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="float-start">
+                                        <%--금액--%>
+                                        <span style="font-size: 18px; font-weight: bold;">&#8361; ${item.priceNight}</span>
+                                        <%--찜--%>
+                                        <span><i class="bi bi-heart-fill text-danger"></i> ${item.wish}</span>
+                                        <%--조회수--%>
+                                        <span>조회수 ${item.views}</span>
+                                    </div>
+                                    <div class="float-end">
                                     <a href="javascript:void(0);" onclick="space_get.modSpace(${item.accommodationId})" class="mx-4">수정</a>
                                     <a href="javascript:void(0);" onclick="space_get.delSpace(${item.accommodationId})">삭제</a>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -154,6 +166,16 @@
                                                     <p><strong>예약 가능 여부:</strong> ${item.status}</p>
                                                 </div>
                                             </div>
+                                            <c:if test="${not empty item.description}">
+                                                <div class="row">
+                                                    <p><strong>소개글:</strong>${item.description}</p>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${not empty item.notice}">
+                                                <div class="row">
+                                                    <p><strong>공지사항:</strong>${item.notice}</p>
+                                                </div>
+                                            </c:if>
                                             <div class="mt-3">
                                                 <ul class="list-unstyled d-flex flex-wrap">
                                                     <li class="me-2 mb-2"><strong>제공옵션:</strong></li>

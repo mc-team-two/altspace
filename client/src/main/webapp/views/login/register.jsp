@@ -139,7 +139,7 @@
         <div class="divider">또는</div>
 
         <%--register form--%>
-        <form id="registrationForm" method="post" action="<c:url value='/login/registerimpl'/>" class="text-left">
+        <form id="registrationForm" method="post" action="<c:url value='/api/auth/register'/>" class="text-left">
             <%--role (using default value)--%>
             <input type="hidden" name="role" class="form-control" value="호스트" required>
 
@@ -194,39 +194,20 @@
         </div>
     </div>
 </div>
-
 <script>
     const registerPage = {
         isEmailDuplicateChecked : false,
         init:function(){
             // 이메일 중복 확인 버튼
             $('#btn-chk-email').click(() => {
-                const val = $('#email').val().trim();
-                if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                const emailVal = $('#email').val().trim();
+                if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
                     this.checkFormValidity();
                     return;
                 }
 
                 $('#btn-chk-email').prop('disabled', true);
-                $.ajax({
-                    url: "<c:url value='/login/check-email'/>",
-                    type: 'POST',
-                    data: { email: val },
-                    success: (resp) => {
-                        $('#email-feedback').text(resp).css('color', 'green');
-                        $('#email').addClass('is-valid').removeClass('is-invalid');
-                        isEmailDuplicateChecked = true;
-                        $('#btn-chk-email').removeClass('btn-dark').addClass('btn-outline-secondary');
-                        this.checkFormValidity();
-                    },
-                    error: (xhr) => {
-                        $('#email-feedback').text(xhr.responseText).css('color', 'red');
-                        $('#email').addClass('is-invalid').removeClass('is-valid');
-                        isEmailDuplicateChecked = false;
-                        $('#btn-chk-email').prop('disabled', false);
-                        this.checkFormValidity();
-                    }
-                });
+                this.emailCheckImpl(emailVal);
             });
 
             // 이메일 입력 시 실시간 감지
@@ -238,7 +219,6 @@
                     .addClass('btn-dark');
                 this.checkFormValidity();
             });
-
             $('#email').on('keyup blur', ()=>{
                 this.validateEmailFormatOnly();
             })
@@ -319,6 +299,21 @@
                 }
                 registerPage.checkFormValidity();
             });
+
+            // 폼 제출
+            $("#registrationForm").on('submit', function(e) {
+                e.preventDefault();
+
+                const formData = {
+                    role: $("input[name='role']").val(),
+                    email: $("#email").val().trim(),
+                    password: $("#pwd1").val().trim(),
+                    name: $("#name").val().trim(),
+                    phone: $("#phone").val().trim()
+                };
+
+                registerPage.registerImpl(formData);
+            });
         },
         validateEmailFormatOnly:function(){
             const val = $('#email').val().trim();
@@ -338,8 +333,49 @@
         checkFormValidity: function() {
             const fields = ['#email', '#pwd1', '#pwd2', '#name', '#phone'];
             const allValid = fields.every(field => $(field).hasClass('is-valid'));
+            const isAllOk = allValid && this.isEmailDuplicateChecked;
 
-            $('#btn-register').prop('disabled', !allValid);
+            $('#btn-register').prop('disabled', !isAllOk);
+        },
+        registerImpl:function(formData){
+            $.ajax({
+                url: "<c:url value='/api/auth/register'/>",
+                type: "POST",
+                contentType: "application/x-www-form-urlencoded",
+                data: formData,
+                beforeSend: function () {
+                    $('#btn-register').prop('disabled', true).text('처리 중...');
+                },
+                success: function (response) {
+                    console.log(response);
+                    window.location.href = "<c:url value='/auth/login'/>";
+                },
+                error: function (xhr) {
+                    console.log("" + xhr.status + ": " + xhr.responseText);
+                    $('#btn-register').prop('disabled', false).text('회원가입');
+                }
+            });
+        },
+        emailCheckImpl:function(emailVal){
+            $.ajax({
+                url: "<c:url value='/api/auth/check-email'/>",
+                type: 'POST',
+                data: { email: emailVal },
+                success: (resp) => {
+                    $('#email-feedback').text(resp).css('color', 'green');
+                    $('#email').addClass('is-valid').removeClass('is-invalid');
+                    this.isEmailDuplicateChecked = true;
+                    $('#btn-chk-email').removeClass('btn-dark').addClass('btn-outline-secondary');
+                    this.checkFormValidity();
+                },
+                error: (xhr) => {
+                    $('#email-feedback').text(xhr.responseText).css('color', 'red');
+                    $('#email').addClass('is-invalid').removeClass('is-valid');
+                    this.isEmailDuplicateChecked = false;
+                    $('#btn-chk-email').prop('disabled', false);
+                    this.checkFormValidity();
+                }
+            });
         }
     };
     $(function(){

@@ -3,6 +3,7 @@ package com.mc.controller.api;
 import com.mc.app.dto.Accommodations;
 import com.mc.app.dto.User;
 import com.mc.app.service.AccomService;
+import com.mc.common.response.ResponseMessage;
 import com.mc.util.FileUploadUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +36,17 @@ public class SpaceRestController {
                                  @RequestParam("image5") MultipartFile image5,
                                  HttpSession httpSession) {
 
-        // 현재 유저 정보
+        // 접근 권한 제어
         User currentUser = (User) httpSession.getAttribute("user");
-        acc.setHostId(currentUser.getUserId());
+        if (currentUser == null) {
+            return ResponseEntity
+                    .status(ResponseMessage.UNAUTHORIZED.getStatus())
+                    .body(ResponseMessage.UNAUTHORIZED.getMessage());
+        }
 
-        // 활성 정보
-        acc.setStatus("활성");
+        // 숙소 정보 디폴트값 설정
+        acc.setHostId(currentUser.getUserId());  // 호스트 아이디
+        acc.setStatus("활성");                    // 활성 정보
 
         MultipartFile[] images = {image1, image2, image3, image4, image5};
         String[] imageFieldNames = {"setImage1Name", "setImage2Name", "setImage3Name", "setImage4Name", "setImage5Name"};
@@ -58,12 +64,15 @@ public class SpaceRestController {
             }
             // DB 저장
             accomService.add(acc);
-            return ResponseEntity.ok().body("정상적으로 등록되었습니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.SUCCESS.getStatus())
+                    .body(ResponseMessage.SUCCESS.getMessage());
 
         } catch (Exception e) {
+            log.error(e.getMessage());
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("스페이스 등록 과정에서 오류가 발생했습니다. " + e.getMessage());
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
         }
     }
 
@@ -76,13 +85,22 @@ public class SpaceRestController {
                                  @RequestParam("image4") MultipartFile image4,
                                  @RequestParam("image5") MultipartFile image5,
                                  HttpSession httpSession) {
+        // 데이터 확인
+        log.info(acc.toString());
 
-        // 현재 유저 정보
+        // 접근 권한 제어
         User currentUser = (User) httpSession.getAttribute("user");
-        acc.setHostId(currentUser.getUserId());
-
-        // 활성 정보
-        acc.setStatus("활성");
+        if (currentUser == null) {
+            return ResponseEntity
+                    .status(ResponseMessage.UNAUTHORIZED.getStatus())
+                    .body(ResponseMessage.UNAUTHORIZED.getMessage());
+        }
+        // 수정 권한 제어
+        if (!currentUser.getUserId().equals(acc.getHostId())) {
+            return ResponseEntity
+                    .status(ResponseMessage.FORBIDDEN.getStatus())
+                    .body(ResponseMessage.FORBIDDEN.getMessage());
+        }
 
         MultipartFile[] images = {image1, image2, image3, image4, image5};
         String[] imageFieldNames = {"setImage1Name", "setImage2Name", "setImage3Name", "setImage4Name", "setImage5Name"};
@@ -100,25 +118,61 @@ public class SpaceRestController {
             }
             // DB 저장
             accomService.mod(acc);
-            return ResponseEntity.ok().body("정상적으로 수정되었습니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.SUCCESS.getStatus())
+                    .body(ResponseMessage.SUCCESS.getMessage());
 
         } catch (Exception e) {
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("업데이트 과정에서 오류가 발생했습니다. " + e.getMessage());
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
         }
     }
 
     // 삭제
     @PostMapping("/del")
     @ResponseBody
-    public ResponseEntity<String> del(@RequestParam("id") Integer id) {
+    public ResponseEntity<String> del(@RequestParam("id") Integer id, HttpSession httpSession) {
+        // 접근 권한 제어
+        User currentUser = (User) httpSession.getAttribute("user");
+        if (currentUser == null) {
+            return ResponseEntity
+                    .status(ResponseMessage.UNAUTHORIZED.getStatus())
+                    .body(ResponseMessage.UNAUTHORIZED.getMessage());
+        }
+
+        // DB 참조 (권한 체크)
+        try {
+            Accommodations acc = accomService.get(id);
+            if (acc == null) {
+                return ResponseEntity
+                        .status(ResponseMessage.NOTFOUND.getStatus())
+                        .body(ResponseMessage.NOTFOUND.getMessage());
+            }
+            // 삭제 권한 제어
+            if (!currentUser.getUserId().equals(acc.getHostId())) {
+                return ResponseEntity
+                        .status(ResponseMessage.FORBIDDEN.getStatus())
+                        .body(ResponseMessage.FORBIDDEN.getMessage());
+            }
+        } catch (Exception e ) {
+            log.error(e.getMessage());
+            return ResponseEntity
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
+        }
+
+        // 삭제 시도
         try {
             accomService.del(id);
-            return ResponseEntity.ok("정상적으로 삭제되었습니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.SUCCESS.getStatus())
+                    .body(ResponseMessage.SUCCESS.getMessage());
         } catch (Exception e) {
             log.info(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 과정에서 오류가 발생했습니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
         }
     }
 

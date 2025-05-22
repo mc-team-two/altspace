@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script>
@@ -37,7 +37,7 @@
 
         // 비동기 요청
         $.ajax({
-          url: "<c:url value='/auth/mod?id='/>" + targetId + '&name=' + nameInputVal,
+          url: "<c:url value='/api/auth/mod?id='/>" + targetId + '&name=' + nameInputVal,
           type: 'POST',
           success: (resp) => {
             self.showToast(resp);
@@ -52,20 +52,21 @@
       });
 
       $('#btn-del').click(() => {
-        const targetId = '${user.userId}';
         const c = confirm('정말 탈퇴하시겠습니까?\n모든 정보가 삭제되고 이 작업은 되돌릴 수 없습니다.');
         if (c) {
           $.ajax({
-            url: "<c:url value='/auth/del?id='/>" + targetId,
+            url: "<c:url value='/api/auth/del'/>",
             type: 'POST',
+            data: { id: "${sessionScope.user.userId}" },
             success: (resp) => {
-              self.showToast(resp);
-              setTimeout(() => {
-                window.location.href = "<c:url value='/'/>";
-              }, 1500);
+              console.log(resp);
+              alert(resp);
+              window.location.href = "<c:url value='/'/>";
             },
             error: (xhr) => {
-              self.showToast(xhr.responseText);
+              console.log(xhr.responseText);
+              alert(xhr.responseText);
+              console.log(xhr.status + ": " + xhr.responseText);
             }
           });
         }
@@ -93,7 +94,7 @@
         }
 
         $.ajax({
-          url: "<c:url value='/change-pwd-impl'/>",
+          url: "<c:url value='/api/auth/change-pwd-impl'/>",
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify({

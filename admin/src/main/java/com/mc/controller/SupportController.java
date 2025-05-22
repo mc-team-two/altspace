@@ -2,6 +2,7 @@ package com.mc.controller;
 
 import com.mc.app.dto.Guide;
 import com.mc.app.service.GuideService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +26,13 @@ public class SupportController {
     String dir = "support/";
 
     @RequestMapping("/guide")
-    public String guide(Model model) throws Exception {
-        List<Guide> guides = null;
+    public String guide(Model model, HttpSession httpSession) throws Exception {
+        // 권한 제어
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
+
+        List<Guide> guides;
         guides = guideService.get();
 
         model.addAttribute("guides", guides);
@@ -36,7 +42,11 @@ public class SupportController {
     }
 
     @RequestMapping("/message")
-    public String message(Model model){
+    public String message(Model model, HttpSession httpSession){
+        // 권한 제어
+        if (httpSession.getAttribute("user") == null) {
+            return "redirect:/auth/login";
+        }
         model.addAttribute("serverUrl", serverUrl);
         return dir+"message";
     }

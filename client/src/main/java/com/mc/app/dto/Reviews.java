@@ -34,10 +34,11 @@ public class Reviews {
     private String location;        // 숙소 주소(조인해서 받아오는 값)
     private Timestamp createDay;
     private Timestamp updateDay;
-    private List<MultipartFile> images; // 파일 업로드용 (폼에서 들어오는 다중 파일)
-    private List<String> imageUrl;  // 이미지 URL 리스트 추가
+
+    private List<MultipartFile> images;
+    private List<String> imageUrl;
     private double rating;
-    // 답글 정보 추가
+
     private Integer replyId;
     private String userId;
     private String replyComment;

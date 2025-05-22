@@ -11,6 +11,10 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 import java.util.HashMap;
 import java.util.Map;
 
+// 원래는 비로그인 유저가 로그인 했을 시, 챗봇 로그를 막힘 없이 보여주기 위한 용도로 만들었으나,
+// 도중 사양이 바뀌어서 완성되지는 못한 코드.
+// WebSocket HandShake 시 로그인 된 사용자 ID를 확인해, 메세지에 포함.
+
 @Component
 public class HttpHandshakeInterceptor implements HandshakeInterceptor {
     @Override
