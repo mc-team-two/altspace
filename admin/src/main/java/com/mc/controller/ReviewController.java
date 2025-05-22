@@ -71,9 +71,6 @@ public class ReviewController {
         Map<Reviews, List<ReviewReplies>> reviewMap =
                 ReviewUtil.mapReviewsWithReplies(rvList, replyList);
 
-        log.info(rvList.toString());
-        log.info(reviewMap.toString());
-
         model.addAttribute("reviewMap", reviewMap);
         model.addAttribute("rvList", rvList);
         model.addAttribute("accList", accList);

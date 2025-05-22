@@ -7,35 +7,41 @@
     .list-group .list-group-item {
         cursor: pointer;
     }
+    .header-text {
+        font-size: 20px;
+        font-weight: bold;
+    }
 </style>
 
-<div class="container">
+<div class="container-fluid">
     <p class="text-muted mb-4 fs-6">
         리뷰 관리 &nbsp;&nbsp;>&nbsp;&nbsp; <strong>작성된 리뷰 조회</strong>
     </p>
 
     <small class="text-muted">데이터 기준일:</small>
-    <div class="row text-center justify-content-around">
-        <div class="col bg-light border-0 rounded-2 shadow-sm pt-2">
-            <p>누적 리뷰수</p>
+    <%--헤더--%>
+    <div class="row my-3 mx-0 bg-light rounded p-3 text-center justify-content-around">
+        <div class="col p-0 border-0 rounded-2 pt-2">
+            <p class="header-text">누적 리뷰수</p>
             <p id="totalReviewsCount">
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
-        <div class="col bg-light border-0 rounded-2 shadow-sm pt-2">
-            <p>누적 평점</p>
+        <div class="col border-0 rounded-2 pt-2">
+            <p class="header-text">누적 평점</p>
             <p id="averageGrade">
+
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
-        <div class="col bg-light border-0 rounded-2 shadow-sm pt-2">
-            <p>오늘 등록된 리뷰</p>
+        <div class="col border-0 rounded-2 pt-2">
+            <p class="header-text">오늘 등록된 리뷰</p>
             <p id="todayReviews">
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
-        <div class="col bg-light border-0 rounded-2 shadow-sm pt-2">
-            <p>답글을 쓸 수 있는 리뷰</p>
+        <div class="col border-0 rounded-2 pt-2">
+            <p class="header-text">답글을 쓸 수 있는 리뷰</p>
             <p id="noReplyReviews">
                 <span class="spinner-border text-primary"></span>
             </p>
@@ -47,14 +53,14 @@
         <div class="col-sm-3 mb-3">
             <ul class="list-group bg-light" id="accList">
                 <a href="<c:url value='/review/list'/>" class="list-group-item ${param.accId == null ? 'active' : ''}" data-id="all">
-                    전체보기
+                    전체보기 (?)
                 </a>
 
                 <c:forEach var="item" items="${accList}">
                     <a href="<c:url value='/review/list'/>?accId=${item.accommodationId}"
                        class="list-group-item ${param.accId == item.accommodationId ? 'active' : ''}"
                        data-id="${item.accommodationId}">
-                            ${item.name}
+                            ${item.name} (${item.reviewCount})
                     </a>
                 </c:forEach>
             </ul>
@@ -189,20 +195,6 @@
                 $("#accList").find(".list-group-item").removeClass("active");
                 $(this).addClass("active");
             });
-        },
-
-        animateCount: function (id, endValue, options = {}) {
-            if (this.countUpInstances[id]) {
-                this.countUpInstances[id].update(endValue);
-            } else {
-                const instance = new CountUp(id, endValue, options);
-                if (!instance.error) {
-                    instance.start();
-                    this.countUpInstances[id] = instance;
-                } else {
-                    console.error(`CountUp error on #${id}:`, instance.error);
-                }
-            }
         },
 
         addReply: function (replyData) {
