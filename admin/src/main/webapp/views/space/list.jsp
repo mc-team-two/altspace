@@ -76,14 +76,14 @@
                             <div class="card-body">
                                 <h4 class="card-title">${item.name}</h4>
                                 <p class="card-text">${item.location}</p>
-                                <div class="d-flex justify-content-between">
-                                    <div class="float-start row">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="float-start">
                                         <%--금액--%>
-                                        <div>&#8361;${item.priceNight}</div>
+                                        <span style="font-size: 18px; font-weight: bold;">&#8361; ${item.priceNight}</span>
                                         <%--찜--%>
-                                        <div>찜 ${item.wish}</div>
+                                        <span><i class="bi bi-heart-fill text-danger"></i> ${item.wish}</span>
                                         <%--조회수--%>
-                                        <div>조회수 ${item.views}</div>
+                                        <span>조회수 ${item.views}</span>
                                     </div>
                                     <div class="float-end">
                                     <a href="javascript:void(0);" onclick="space_get.modSpace(${item.accommodationId})" class="mx-4">수정</a>
