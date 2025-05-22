@@ -38,4 +38,8 @@ public class ReviewImageService implements MCService<ReviewImage, Integer> {
     public List<ReviewImage> get() throws Exception {
         return List.of();
     }
+
+    public List<ReviewImage> getByHostId(String id) throws Exception {
+        return reviewImageRepository.selectByHostId(id);
+    }
 }

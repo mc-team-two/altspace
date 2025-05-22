@@ -3,6 +3,7 @@ package com.mc.controller.api;
 import com.mc.app.dto.ReviewReplies;
 import com.mc.app.dto.Reviews;
 import com.mc.app.dto.User;
+import com.mc.app.service.ReviewImageService;
 import com.mc.app.service.ReviewRepliesService;
 import com.mc.app.service.ReviewService;
 import com.mc.common.response.ResponseMessage;
@@ -26,6 +27,7 @@ public class ReviewRestController {
 
     private final ReviewService reviewService;
     private final ReviewRepliesService reviewRepliesService;
+    private final ReviewImageService reviewImageService;
 
     @PostMapping("/dashboard")
     public ResponseEntity<?> dashboard(@RequestParam("hostId") String hostId,
@@ -167,5 +169,4 @@ public class ReviewRestController {
                     .body(ResponseMessage.ERROR.getMessage());
         }
     }
-
 }

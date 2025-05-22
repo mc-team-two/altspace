@@ -25,4 +25,17 @@
         WHERE review_id = #{reviewId}
     </delete>
 
+    <select id="selectByHostId" parameterType="String" resultType="ReviewImage">
+        SELECT review_id, image_url
+        FROM review_images
+        WHERE review_id IN (
+            SELECT r.review_id
+            FROM reviews r
+                     JOIN accommodations a ON r.accommodation_id = a.accommodation_id
+            WHERE a.host_id = 'cb55f65d'
+        )
+    </select>
+
+
+
 </mapper>

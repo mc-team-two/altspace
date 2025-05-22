@@ -11,4 +11,5 @@ import java.util.List;
 @Mapper
 public interface ReviewImageRepository extends MCRepository<ReviewImage,Integer> {
     List<ReviewImage> selectByReviewId(Integer integer);
+    List<ReviewImage> selectByHostId(String id) throws Exception;
 }
