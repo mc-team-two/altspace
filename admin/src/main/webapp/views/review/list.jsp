@@ -18,7 +18,7 @@
         리뷰 관리 &nbsp;&nbsp;>&nbsp;&nbsp; <strong>작성된 리뷰 조회</strong>
     </p>
 
-    <small class="text-muted">데이터 기준일:</small>
+    <small id="dataTimestamp" class="text-muted">데이터 기준일:</small>
     <%--헤더--%>
     <div class="row my-3 mx-0 bg-light rounded p-3 text-center justify-content-around">
         <div class="col p-0 border-0 rounded-2 pt-2">
@@ -28,9 +28,8 @@
             </p>
         </div>
         <div class="col border-0 rounded-2 pt-2">
-            <p class="header-text">누적 평점</p>
+            <p class="header-text">호스팅 누적 평점</p>
             <p id="averageGrade">
-
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
@@ -244,16 +243,31 @@
                 type: "POST",
                 data: { hostId: "${sessionScope.user.userId}" },
                 success: (resp) => {
-                    console.log(resp);
+                    this.displayTimestamp();
                     $("#totalReviews").text(resp.totalReviews.count ?? 0).removeClass("placeholder-glow");
                     $("#averageGrade").text(resp.averageGrade ?? 0 ).removeClass("placeholder-glow");
                     $("#todayReviews").text(resp.todayReviews.count ?? 0).removeClass("placeholder-glow");
                     $("#noReplyReviews").text(resp.noReplyReviews.count ?? 0).removeClass("placeholder-glow");
                 },
                 error: (xhr) => {
+                    alert('error: ' + xhr.responseText);
                     console.error(xhr.status, xhr.responseText);
                 }
             });
+        },
+
+        displayTimestamp: function() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const formattedTimestamp = year + "년 " + month + "월 " + day + "일 " + hours + ":" + minutes + ":" + seconds;
+            $("#dataTimestamp").text("데이터 기준일: " + formattedTimestamp);
+
         }
     };
 
