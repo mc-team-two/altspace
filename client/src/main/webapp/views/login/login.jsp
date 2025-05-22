@@ -180,6 +180,13 @@
             <a href="<c:url value="/login/find-account"/>">ID/PW 찾기</a>
         </div>
 
+        <c:if test="${not empty errorMessage}">
+            <script>
+                const errorMsg = `<c:out value="${errorMessage}" />`.replace(/\\n/g, '\n');
+                alert(errorMsg);
+            </script>
+        </c:if>
+
     </div>
 </div>
 <div id="login-alert" class="alert alert-danger mt-3" style="display:none;"></div>

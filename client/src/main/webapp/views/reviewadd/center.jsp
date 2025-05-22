@@ -166,6 +166,12 @@
                 <label for="image" class="font-weight-bold">이미지 업로드</label>
                 <input type="file" class="form-control-file" id="image" name="images" multiple>
             </div>
+
+            <c:if test="${not empty errorMessage}">
+                <script>
+                    alert(`${errorMessage}`);
+                </script>
+            </c:if>
         </form>
 
         <!-- 등록 버튼 -->

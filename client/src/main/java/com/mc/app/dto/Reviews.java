@@ -17,22 +17,21 @@ import java.util.List;
 public class Reviews {
     private int reviewId;
 
-    @NotBlank(message = "작성자 ID는 필수입니다.")
-    private String guestId;
+    @NotBlank(message = "작성자 정보가 없습니다. 로그인 페이지로 이동합니다.")
+    private String guestId;         // 리뷰 작성한 게스트
 
-    @Min(value = 1)
-    private int accommodationId;
+    @Positive(message = "숙소 정보가 없습니다. 로그인 페이지로 이동합니다.")
+    private int accommodationId;    // 리뷰 대상 숙박시설
 
-    @Min(value = 1)
-    @Max(value = 5)
-    private int grade;
+    @Min(value = 1, message = "평점은 필수 항목입니다.")
+    @Max(value = 5, message = "평점은 1~5 사이여야 합니다.")
+    private int grade;              // 평점
 
-    @NotBlank(message = "리뷰 내용을 입력해주세요.")
-    @Size(max = 1000, message = "리뷰는 1000자 이내로 작성해주세요.")
-    private String comment;
-
-    private String name;
-    private String location;
+    @NotBlank(message = "리뷰 내용을 작성해주세요.")
+    @Size(max = 1000, message = "리뷰는 최대 1000자까지 작성할 수 있습니다.")
+    private String comment;         // 내용
+    private String name;            // 숙소 이름(조인해서 받아오는 값)
+    private String location;        // 숙소 주소(조인해서 받아오는 값)
     private Timestamp createDay;
     private Timestamp updateDay;
 

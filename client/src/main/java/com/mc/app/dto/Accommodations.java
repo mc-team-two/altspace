@@ -36,6 +36,8 @@ public class Accommodations {
     @NotBlank
     private String description;
 
+    private String notice;
+
     @Pattern(regexp = "활성|비활성")
     private String status;
 

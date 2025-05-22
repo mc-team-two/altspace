@@ -114,6 +114,20 @@
             // 저장 버튼 클릭 시 업데이트
             $(document).on('click', '.review-save-btn', function() {
                 const id = $(this).data('review-id');
+
+                const grade = $('#gradeInput-' + id).val();
+                const comment = $('#commentInput-' + id).val();
+
+                if (!grade || grade === "") {
+                    alert("평점을 선택해주세요.");
+                    return;
+                }
+
+                if (!comment || comment.trim() === "") {
+                    alert("리뷰 내용을 작성해주세요.");
+                    return;
+                }
+
                 reviewEdit.update(id);
             });
 
@@ -255,7 +269,7 @@
               <c:otherwise>
               <!-- 내가 작성한 리뷰 리스트 출력 -->
               <c:forEach var="rv" items="${ReviewList}">
-                  <div class="card mb-4 p-3 shadow-sm">
+                  <div class="card mb-4 p-3 shadow-sm" style="border-radius: 12px;">
                       <!-- 숙소 이름 + 수정/삭제 드롭다운 -->
                       <div class="d-flex justify-content-between align-items-center">
                           <div>
@@ -269,15 +283,16 @@
                               </button>
                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu${rv.reviewId}" style="min-width: 120px;">
                                   <a class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2 small text-muted review-edit-btn"
-                                     href="javascript:void(0);" data-review-id="${rv.reviewId}"> <%-- javascript:void(0) : a 태그 클릭해도 아무 동작 안하도록 하는 코드 --%>
+                                     href="javascript:void(0);"
+                                     data-review-id="${rv.reviewId}"> <%-- javascript:void(0) : a 태그 클릭해도 아무 동작 안하도록 하는 코드 --%>
                                       수정하기
-                                      <i class="fa fa-pencil"></i>
+                                      <i class="fas fa-pencil-alt"></i>
                                   </a>
                                   <a href="<c:url value='/review/delete?rvId=${rv.reviewId}'/>"
                                      class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2 small text-muted"
                                      onclick="return confirm('정말 삭제하시겠습니까?');">
                                       삭제하기
-                                      <i class="fa fa-trash"></i>
+                                      <i class="fas fa-trash-alt"></i>
                                   </a>
                               </div>
                           </div>
@@ -336,8 +351,11 @@
                                   <input type="file" class="form-control" name="images" id="imageInput-${rv.reviewId}" multiple>
                               </div>
                           </form>
-                          <button class="btn btn-sm btn-primary review-save-btn" data-review-id="${rv.reviewId}">저장</button>
-                          <button class="btn btn-sm btn-secondary review-cancel-btn" data-review-id="${rv.reviewId}">취소</button>
+                          <div class="text-right mt-2">
+                              <button class="btn btn-sm btn-primary review-save-btn" data-review-id="${rv.reviewId}">저장</button>
+                              <button class="btn btn-sm btn-secondary review-cancel-btn" data-review-id="${rv.reviewId}">취소</button>
+                          </div>
+
                       </div>
 
                       <!-- 작성일 -->
@@ -356,13 +374,16 @@
                               <p class="mb-0 text-dark">${rv.replyComment}</p>
                           </div>
                       </c:if>
-
                   </div>
               </c:forEach>
               </c:otherwise>
                   </c:choose>
           </div>
-
+          <c:if test="${not empty errorMessage}">
+              <script>
+                  alert(`${errorMessage}`);
+              </script>
+          </c:if>
           <!-- 사이드바 (오른쪽) -->
           <div class="col-lg-4 sidebar_list4css">
               <div class="sidebar_archives" style="margin-left: 100px;">
