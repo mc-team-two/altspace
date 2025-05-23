@@ -152,6 +152,25 @@
             right: 0;
             background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
         }
+
+        /* 모달 */
+        .text-truncate-multiline {
+            display: -webkit-box;
+            -webkit-line-clamp: 7;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .accomm-notice-text {
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .modal-title {
+            font-size: 1.6rem; /* 제목 크게 */
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -800,9 +819,29 @@
                 </div>
             </div>
             <!-- 숙소 설명 -->
-            <div class="card shadow-sm p-4 rounded-4" style="min-height: 250px;">
-                <div style="white-space: pre-line;">${accomm.notice}</div>
+            <div class="card shadow-sm p-4 rounded-4 position-relative" style="min-height: 250px;">
+                <div id="accommNotice" class="text-truncate-multiline accomm-notice-text" style="white-space: pre-line;">
+                    ${accomm.notice}
+                </div>
+                <button class="btn btn-link p-0 mt-2" onclick="$('#noticeModal').modal('show')">더보기</button>
             </div>
+            <!-- 모달 -->
+            <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="noticeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content rounded-4">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="noticeModalLabel">숙소 설명</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="닫기">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body accomm-notice-text" style="white-space: pre-line; max-height: 70vh; overflow-y: auto;">
+                            <c:out value="${accomm.notice}" escapeXml="false" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <!-- 예약 박스 -->
         <div class="col-md-4 sticky-reservation">
@@ -853,7 +892,7 @@
                     <c:otherwise>
                         <div class="price-per-night mb-3">
                             <span class="price-amount">₩<fmt:formatNumber value="${accomm.priceNight}"
-                                                                          type="number"/></span> /박
+                                                                          type="number"/></span> / 박
                         </div>
 
                         <form id="data_add">
