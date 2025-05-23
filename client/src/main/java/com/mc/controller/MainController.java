@@ -198,13 +198,4 @@ public class MainController {
         model.addAttribute("serverUrl", webSocketUrl);
         return "chat";
     }
-
-    @GetMapping("/heatmap")
-    public String showHeatmap(Model model) throws Exception {
-
-
-        model.addAttribute("center", "center");
-
-        return "index";
-    }
 }
