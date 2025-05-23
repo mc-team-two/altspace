@@ -544,6 +544,7 @@
         }
 
         // 정상 로딩된 경우
+        // 기본값: 서울
         kakao.maps.load(function () {
             if (!stats || stats.length === 0) {
                 console.warn("히트맵 데이터가 비어 있습니다.");
@@ -551,8 +552,8 @@
             }
 
             const map = new kakao.maps.Map(mapContainer, {
-                center: new kakao.maps.LatLng(37.5665, 126.9780),
-                level: 8
+                center: new kakao.maps.LatLng(36.5, 127.5), // 대한민국 중심부 (충청도 부근)
+                level: 18
             });
 
             const geocoder = new kakao.maps.services.Geocoder();
@@ -585,12 +586,12 @@
                         // 정보창
                         const infowindow = new kakao.maps.InfoWindow({
                             content: `
-                                <div style="padding:10px;font-size:13px;">
-                                    <b>${item.location}</b><br/>
-                                    조회수: ${item.totalViews}<br/>
-                                    예약 수: ${item.bookingCount}<br/>
-                                    평점: ${item.avgRating != null ? item.avgRating.toFixed(1) : 'N/A'}
-                                </div>`
+                        <div style="padding:10px;font-size:13px;">
+                            <b>${item.location}</b><br/>
+                            조회수: ${item.totalViews}<br/>
+                            예약 수: ${item.bookingCount}<br/>
+                            평점: ${item.avgRating != null ? item.avgRating.toFixed(1) : 'N/A'}
+                        </div>`
                         });
 
                         kakao.maps.event.addListener(marker, 'click', function () {
@@ -600,9 +601,8 @@
                         console.warn("지오코딩 실패:", item.location);
                     }
                 });
-            });
-        });
-    });
+            })}
+)        });
 </script>
 
 <script>
