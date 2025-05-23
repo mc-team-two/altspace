@@ -1,5 +1,6 @@
 package com.mc.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.*;
@@ -30,6 +31,8 @@ public class MainController {
     final AccomService accomService;
     final PaymentService paymentService;
     final ReviewService reviewService;
+    final GeminiService geminiService;
+
 
     @Value("${app.key.kakaoJSApiKey}")
     String kakaoJSApiKey;
@@ -47,9 +50,22 @@ public class MainController {
 
         List<Accommodations> allAccomm = accomService.get();
         PageInfo<Accommodations> pageInfo = new PageInfo<>(allAccomm); // PageInfo 객체 생성
+        List<PopularLocation> stats = geminiService.getPopularStats();
 
         model.addAttribute("accomm", allAccomm);
         model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
+
+
+        log.info("🔥 인기 지역 통계: {}", stats);  // 로그로 확인
+
+        ObjectMapper mapper = new ObjectMapper();
+        String statsJson = mapper.writeValueAsString(stats);
+
+        log.info("📦 JSON 변환 결과: {}", statsJson);  // JSON 결과도 출력
+
+        model.addAttribute("statsJson", statsJson);
+        model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
 
         model.addAttribute("headers", dir + "headers");
         model.addAttribute("center", dir + "center");
