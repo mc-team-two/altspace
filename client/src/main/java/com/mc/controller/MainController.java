@@ -8,6 +8,7 @@ import com.mc.app.service.*;
 
 import java.sql.Date;
 
+import com.mc.util.GeminiUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class MainController {
     final PaymentService paymentService;
     final ReviewService reviewService;
     final GeminiService geminiService;
+    final GeminiUtil geminiUtil;
 
 
     @Value("${app.key.kakaoJSApiKey}")
@@ -197,5 +199,32 @@ public class MainController {
         model.addAttribute("acc", acc);
         model.addAttribute("serverUrl", webSocketUrl);
         return "chat";
+    }
+    @PostMapping("/analyze-heatmap")
+    @ResponseBody
+    public String analyzeHeatmap(@RequestBody List<PopularLocation> stats) {
+        try {
+            StringBuilder prompt = new StringBuilder();
+            prompt.append("다음은 호텔별별 숙소 통계입니다. 이를 분석해서, 상위 5개 지역만 조회수, 예약수, 평점에 따라 인사이트를 요약해주세요:\n\n");
+
+            for (PopularLocation loc : stats) {
+                prompt.append(String.format(
+                        "- 호텔명: %s, 조회수: %d, 예약수: %d, 평점: %.1f\n",
+                        loc.getName(),
+                        loc.getTotalViews(),
+                        loc.getBookingCount(),
+                        loc.getAvgRating() != null ? loc.getAvgRating() : 0.0
+                ));
+            }
+
+            prompt.append("\n주요 지역, 통계적 이상치, 추천 마케팅 포인트를 포함해주세요.");
+
+            return geminiUtil.askGemini(prompt.toString(), "짧고 인사이트 있게 요약해 주세요." +
+                    "절대로 호텔명, 조회수, 예약수, 평점, 인사이트는 꼭꼭 기재해주세요." +
+                    "절대로 마크다운, 설명 문장, 코드 블록, 주석등, 불필요한 설명 없이 json 배열 형식으로 응답해주세요.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Gemini 분석 중 오류 발생";
+        }
     }
 }
