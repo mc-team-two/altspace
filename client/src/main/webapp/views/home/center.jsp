@@ -275,14 +275,24 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5">
-        <h5>📌 Gemini 분석 결과</h5>
-        <h6>AltSpace에서는 이곳들이 인기가 있어요!</h6>
+    <div id="travel-insight-container" class="mb-5 d-none">
+        <div id="travel-insight-item"></div> <!-- 날씨 요약 (alert) -->
+        <ul id="travel-tips" class="list-group my-3"></ul>
 
-        <div class="row mt-4">
+        <!-- 여기에 카드 형식 정보 출력 -->
+        <div class="row mt-4" id="travel-insight-widgets"></div>
+    </div>
+
+    <div class="container my-5">
+        <div class="text-center mb-4">
+            <h5 class="font-weight-bold">📌 Gemini 분석 결과</h5>
+            <h6 class="text-muted">AltSpace에서는 이곳들이 인기가 있어요!</h6>
+        </div>
+
+        <div class="row">
             <!-- GeoChart 영역 -->
             <div class="col-lg-6 col-md-12 mb-4">
-                <div class="card h-100">
+                <div class="card shadow-sm h-100">
                     <div class="card-body p-0">
                         <div id="regions_div" style="width: 100%; height: 500px;"></div>
                     </div>
@@ -290,27 +300,35 @@
             </div>
 
             <!-- 캐러셀 영역 -->
-            <div class="col-lg-6 col-md-12">
-                <div id="gemini-insight">
-                    <div id="top5Carousel" class="carousel slide d-none" data-ride="carousel">
-                        <div class="carousel-inner">
-                            <div id="carousel1" class="carousel-item active"></div>
-                            <div id="carousel2" class="carousel-item"></div>
-                            <div id="carousel3" class="carousel-item"></div>
-                            <div id="carousel4" class="carousel-item"></div>
-                            <div id="carousel5" class="carousel-item"></div>
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div id="top5Carousel" class="carousel slide d-none" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" id="carousel1"></div>
+                                <div class="carousel-item" id="carousel2"></div>
+                                <div class="carousel-item" id="carousel3"></div>
+                                <div class="carousel-item" id="carousel4"></div>
+                                <div class="carousel-item" id="carousel5"></div>
+                            </div>
+                            <a class="carousel-control-prev" href="#top5Carousel" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#top5Carousel" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </div>
-                        <a class="carousel-control-prev" href="#top5Carousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#top5Carousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-5 text-muted" style="font-size: 1rem;">
+            powered by
+            <img src="images/gemini-brand-color.png" alt="Gemini" style="height: 2em; vertical-align: middle;">
         </div>
     </div>
 <!-- 예약 > 목록 -->

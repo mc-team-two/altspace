@@ -9,6 +9,7 @@
     --switch-bg-light: #f0f0f0; /* 스위치 배경색 (라이트 모드) */
     --switch-bg-dark: #333; /* 스위치 배경색 (다크 모드) */
     --switch-icon-color: #fa9e1b; /* 스위치 아이콘 색상 (주요 테마 색상과 일치) */
+    --carousel-icon-color: #000; /* 기본은 검정색 */
 }
 
 [data-theme="dark"] {
@@ -423,12 +424,54 @@ input:checked + .slider .sun-icon {
     color: #aaa;
 }
 
-/* 캐러셀 이전 버튼 아이콘 스타일 *//* 캐러셀 이전 버튼 아이콘 스타일 */
-.carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='var(--carousel-icon-color)' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0L6.5 1.25 3.25 4 6.5 6.75 5.25 8l-4-4 4-4z'/%3E%3C/svg%3E");
+
+/* 공통 스타일: 배경 색상 + 마스크 기반 아이콘 표시 */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--carousel-icon-color);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    width: 2rem;
+    height: 2rem;
+    background-image: none; /* SVG 인라인 제거 */
 }
 
-/* 캐러셀 다음 버튼 아이콘 스타일 */
+/* 이전 버튼: 왼쪽 화살표 마스크 적용 */
+.carousel-control-prev-icon {
+    mask-image: url("/images/left-arrow.svg");
+}
+
 .carousel-control-next-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='var(--carousel-icon-color)' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0L1.5 1.25 4.75 4 1.5 6.75 2.75 8l4-4-4-4z'/%3E%3C/svg%3E");
+    mask-image: url("/images/right-arrow.svg");
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--carousel-icon-color);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    width: 2rem;
+    height: 2rem;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.8; /* 기본은 살짝 흐리게 */
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    opacity: 1; /* 선명하게 */
+    transform: scale(1.15); /* 확대 */
+}
+
+/* 다크 모드 색상 정의 */
+[data-theme="dark"] {
+    --carousel-icon-color: #f5f5f5;
+}
+
+[data-theme="dark"] .carousel-control-next-icon{
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .carousel-control-prev-icon{
+    color: var(--text-color);
 }
