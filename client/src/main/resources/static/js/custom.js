@@ -802,7 +802,7 @@ $(document).ready(function () {
         for (const card of cards) {
             widgets.append(`
             <div class="col-md-3 mb-4">
-                <div class="card shadow-sm p-3 h-100">
+                <div class="card shadow-sm p-3 h-100 text-center align-items-center">
                     <div class="card-title"><strong>${card.icon} ${card.title}</strong></div>
                     <div class="card-body p-0">
                         <div class="text-muted small">${card.content}</div>
