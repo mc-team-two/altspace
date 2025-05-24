@@ -34,7 +34,7 @@
 
 <div class="home">
     <div class="home_background parallax-window" data-parallax="scroll"
-         data-image-src="images/image20250516174110.gif"></div>
+         data-image-src="images/ezgif-36080958e1e6e6.webp"></div>
     <div class="home_content">
         <div class="home_title">
             <spring:message code="hometitle"/>
@@ -302,7 +302,10 @@
             <!-- 캐러셀 영역 -->
             <div class="col-lg-6 col-md-12 mb-4">
                 <div class="card shadow-sm h-100">
-                    <div class="card-body">
+                    <div class="card-body text-center align-content-center">
+                        <h5 class="card-title font-weight-bold">📌 Gemini가 분석한 Top 5!</h5>
+                        <h6 class="card-subtitle mb-3 text-muted">가장 인기있는 장소들을 둘러보세요!</h6>
+
                         <div id="top5Carousel" class="carousel slide d-none" data-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active" id="carousel1"></div>
@@ -323,227 +326,228 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Footer -->
-        <div class="text-center mt-5 text-muted" style="font-size: 1rem;">
-            powered by
-            <img src="images/gemini-brand-color.png" alt="Gemini" style="height: 2em; vertical-align: middle;">
-        </div>
-    </div>
-<!-- 예약 > 목록 -->
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-1 temp_col"></div>
-        <div class="col-lg-11">
-
-            <!-- Offers Sorting -->
-            <div class="offers_sorting_container">
-                <ul class="offers_sorting">
-                    <li>
-                        <span class="sorting_text"><spring:message code="filter1title"/></span>
-                        <i class="fa fa-chevron-down"></i>
-                        <ul>
-                            <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'
-                                data-parent=".price_sorting"><span><spring:message code="filter1all"/></span></li>
-                            <li class="sort_btn" data-isotope-option='{ "sortBy": "price", "sortAscending": true }'
-                                data-parent=".price_sorting"><span><spring:message code="filter1asc"/></span></li>
-                            <li class="sort_btn" data-isotope-option='{ "sortBy": "price", "sortAscending": false }'
-                                data-parent=".price_sorting"><span><spring:message code="filter1desc"/></span></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="sorting_text"><spring:message code="filter2title"/></span>
-                        <i class="fa fa-chevron-down"></i>
-                        <ul>
-                            <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'>
-                                <span><spring:message code="filter2all"/></span></li>
-                            <li class="sort_btn" data-isotope-option='{ "sortBy": "name", "sortAscending": true }'>
-                                <span><spring:message code="filter2asc"/></span></li>
-                            <li class="sort_btn" data-isotope-option='{ "sortBy": "name", "sortAscending": false }'>
-                                <span><spring:message code="filter2desc"/></span></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="sorting_text"><spring:message code="filter3title"/></span>
-                        <i class="fa fa-chevron-down"></i>
-                        <ul>
-                            <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'>
-                                <span><spring:message code="filter3all"/></span></li>
-                            <li class="sort_btn" data-isotope-option='{ "sortBy": "stars", "sortAscending": true }'>
-                                <span><spring:message code="filter3asc"/></span></li>
-                            <li class="sort_btn"
-                                data-isotope-option='{ "sortBy": "stars", "sortAscending": false }'>
-                                <span><spring:message code="filter3desc"/></span></li>
-                            <%--                                기능 보류. isotope에서 처리하는 녀석과 아닌 녀석이 한 카테고리에 있어서 전체 소트가 안먹힘..--%>
-                            <%--                                <li class="filter_btn" data-filter=".rating_3"><span>3</span></li>--%>
-                            <%--                                <li class="filter_btn" data-filter=".rating_4"><span>4</span></li>--%>
-                            <%--                                <li class="filter_btn" data-filter=".rating_5"><span>5</span></li>--%>
-                        </ul>
-                    </li>
-                </ul>
-                <button id="geolocationBtn" data-popper-content=<spring:message code="geolocationBtn"/>>
-                    <i class="fa fa-crosshairs" aria-hidden="true"></i></button>
-                <div class="popper-arrow"></div>
+            <!-- Footer -->
+            <div class="text-center mt-5 text-muted" style="font-size: 1rem;">
+                powered by
+                <img src="images/gemini-brand-color.png" alt="Gemini" style="height: 2em; vertical-align: middle;">
             </div>
         </div>
-        <div class="col-lg-12">
-            <div class="offers_grid">
-                <c:forEach var="a" items="${accomm}">
-                    <c:set var="currentRating" value="0"/>
-                    <c:forEach var="awr" items="${accommodationsWithRatingList}">
-                        <c:if test="${awr.accommodation.accommodationId == a.accommodationId}">
-                            <c:set var="currentRating" value="${awr.roundedRating}"/>
-                        </c:if>
-                    </c:forEach>
+    </div>
+    <!-- 예약 > 목록 -->
 
-                    <div class="offers_item rating_${currentRating}">
-                        <div class="row">
-                            <div class="col-lg-1 temp_col"></div>
-                            <div class="col-lg-3 col-1680-4">
-                                <div class="offers_image_container" style="cursor:pointer;"
-                                     onclick="updateViewsAndGo(${a.accommodationId})">
-                                    <div class="offers_image_background"
-                                         style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
-                                    <div class="offer_name"><a
-                                            href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-1 temp_col"></div>
+            <div class="col-lg-11">
+
+                <!-- Offers Sorting -->
+                <div class="offers_sorting_container">
+                    <ul class="offers_sorting">
+                        <li>
+                            <span class="sorting_text"><spring:message code="filter1title"/></span>
+                            <i class="fa fa-chevron-down"></i>
+                            <ul>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'
+                                    data-parent=".price_sorting"><span><spring:message code="filter1all"/></span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "price", "sortAscending": true }'
+                                    data-parent=".price_sorting"><span><spring:message code="filter1asc"/></span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "price", "sortAscending": false }'
+                                    data-parent=".price_sorting"><span><spring:message code="filter1desc"/></span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="sorting_text"><spring:message code="filter2title"/></span>
+                            <i class="fa fa-chevron-down"></i>
+                            <ul>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'>
+                                    <span><spring:message code="filter2all"/></span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "name", "sortAscending": true }'>
+                                    <span><spring:message code="filter2asc"/></span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "name", "sortAscending": false }'>
+                                    <span><spring:message code="filter2desc"/></span></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="sorting_text"><spring:message code="filter3title"/></span>
+                            <i class="fa fa-chevron-down"></i>
+                            <ul>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "original-order" }'>
+                                    <span><spring:message code="filter3all"/></span></li>
+                                <li class="sort_btn" data-isotope-option='{ "sortBy": "stars", "sortAscending": true }'>
+                                    <span><spring:message code="filter3asc"/></span></li>
+                                <li class="sort_btn"
+                                    data-isotope-option='{ "sortBy": "stars", "sortAscending": false }'>
+                                    <span><spring:message code="filter3desc"/></span></li>
+                                <%--                                기능 보류. isotope에서 처리하는 녀석과 아닌 녀석이 한 카테고리에 있어서 전체 소트가 안먹힘..--%>
+                                <%--                                <li class="filter_btn" data-filter=".rating_3"><span>3</span></li>--%>
+                                <%--                                <li class="filter_btn" data-filter=".rating_4"><span>4</span></li>--%>
+                                <%--                                <li class="filter_btn" data-filter=".rating_5"><span>5</span></li>--%>
+                            </ul>
+                        </li>
+                    </ul>
+                    <button id="geolocationBtn" data-popper-content=<spring:message code="geolocationBtn"/>>
+                        <i class="fa fa-crosshairs" aria-hidden="true"></i></button>
+                    <div class="popper-arrow"></div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="offers_grid">
+                    <c:forEach var="a" items="${accomm}">
+                        <c:set var="currentRating" value="0"/>
+                        <c:forEach var="awr" items="${accommodationsWithRatingList}">
+                            <c:if test="${awr.accommodation.accommodationId == a.accommodationId}">
+                                <c:set var="currentRating" value="${awr.roundedRating}"/>
+                            </c:if>
+                        </c:forEach>
+
+                        <div class="offers_item rating_${currentRating}">
+                            <div class="row">
+                                <div class="col-lg-1 temp_col"></div>
+                                <div class="col-lg-3 col-1680-4">
+                                    <div class="offers_image_container" style="cursor:pointer;"
+                                         onclick="updateViewsAndGo(${a.accommodationId})">
+                                        <div class="offers_image_background"
+                                             style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
+                                        <div class="offer_name"><a
+                                                href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="offers_content">
-                                    <div class="offers_price">₩${a.priceNight}<span><spring:message
-                                            code="pernight"/></span></div>
-                                    <div class="rating_r rating_r_${currentRating} offers_rating"
-                                         data-rating="${currentRating}">
-                                        <i></i><i></i><i></i><i></i><i></i>
-                                    </div>
-                                    <p class="offers_text">${a.description}</p>
-                                    <div class="offers_icons">
-                                        <ul class="offers_icons_list">
-                                            <c:if test="${a.barbecue}">
-                                                <li class="offers_icons_item"
-                                                    data-popper-content="<spring:message code="barbecue"/>">
-                                                    <i class="fa fa-fire-alt text-warning" aria-hidden="true"></i>
-                                                </li>
-                                                <div class="popper-arrow"></div>
-                                            </c:if>
-                                            <c:if test="${a.breakfast}">
-                                                <li class="offers_icons_item"
-                                                    data-popper-content="<spring:message code="breakfast"/>">
-                                                    <i class="fa fa-coffee text-danger" aria-hidden="true"></i>
-                                                </li>
-                                                <div class="popper-arrow"></div>
-                                            </c:if>
-                                            <c:if test="${a.pet}">
-                                                <li class="offers_icons_item"
-                                                    data-popper-content="<spring:message code="petfrendly"/>">
-                                                    <i class="fa fa-paw text-info" aria-hidden="true"></i>
-                                                </li>
-                                                <div class="popper-arrow"></div>
-                                            </c:if>
-                                            <c:if test="${a.pool}">
-                                                <li class="offers_icons_item"
-                                                    data-popper-content="<spring:message code="swimmingpool"/>">
-                                                    <i class="fas fa-swimmer text-primary" aria-hidden="true"></i>
-                                                </li>
-                                                <div class="popper-arrow"></div>
-                                            </c:if>
-                                        </ul>
-                                    </div>
-                                    <div class="button book_button"><a href="javascript:void(0);"
-                                                                       onclick="updateViewsAndGo(${a.accommodationId})"><spring:message
-                                            code="book_button"/><span></span><span></span><span></span></a>
-                                    </div>
-                                    <div class="offer_reviews">
-                                        <div class="offer_reviews_content">
-                                            <div class="offer_reviews_title">
-                                                <c:choose>
-                                                    <c:when test="${currentRating >= 4}"><spring:message
-                                                            code="score4"/></c:when>
-                                                    <c:when test="${currentRating == 3}"><spring:message
-                                                            code="score3"/></c:when>
-                                                    <c:when test="${currentRating == 2}"><spring:message
-                                                            code="score2"/></c:when>
-                                                    <c:when test="${currentRating == 1}"><spring:message
-                                                            code="score1"/></c:when>
-                                                    <c:otherwise><spring:message code="score0"/></c:otherwise>
-                                                </c:choose>
-                                            </div>
-                                            <div class="offer_reviews_subtitle"><spring:message
-                                                    code="offer_reviews_subtitle"/></div>
+                                <div class="col-lg-8">
+                                    <div class="offers_content">
+                                        <div class="offers_price">₩${a.priceNight}<span><spring:message
+                                                code="pernight"/></span></div>
+                                        <div class="rating_r rating_r_${currentRating} offers_rating"
+                                             data-rating="${currentRating}">
+                                            <i></i><i></i><i></i><i></i><i></i>
                                         </div>
-                                        <div class="offer_reviews_rating text-center">
-                                                ${currentRating}
+                                        <p class="offers_text">${a.description}</p>
+                                        <div class="offers_icons">
+                                            <ul class="offers_icons_list">
+                                                <c:if test="${a.barbecue}">
+                                                    <li class="offers_icons_item"
+                                                        data-popper-content="<spring:message code="barbecue"/>">
+                                                        <i class="fa fa-fire-alt text-warning" aria-hidden="true"></i>
+                                                    </li>
+                                                    <div class="popper-arrow"></div>
+                                                </c:if>
+                                                <c:if test="${a.breakfast}">
+                                                    <li class="offers_icons_item"
+                                                        data-popper-content="<spring:message code="breakfast"/>">
+                                                        <i class="fa fa-coffee text-danger" aria-hidden="true"></i>
+                                                    </li>
+                                                    <div class="popper-arrow"></div>
+                                                </c:if>
+                                                <c:if test="${a.pet}">
+                                                    <li class="offers_icons_item"
+                                                        data-popper-content="<spring:message code="petfrendly"/>">
+                                                        <i class="fa fa-paw text-info" aria-hidden="true"></i>
+                                                    </li>
+                                                    <div class="popper-arrow"></div>
+                                                </c:if>
+                                                <c:if test="${a.pool}">
+                                                    <li class="offers_icons_item"
+                                                        data-popper-content="<spring:message code="swimmingpool"/>">
+                                                        <i class="fas fa-swimmer text-primary" aria-hidden="true"></i>
+                                                    </li>
+                                                    <div class="popper-arrow"></div>
+                                                </c:if>
+                                            </ul>
+                                        </div>
+                                        <div class="button book_button"><a href="javascript:void(0);"
+                                                                           onclick="updateViewsAndGo(${a.accommodationId})"><spring:message
+                                                code="book_button"/><span></span><span></span><span></span></a>
+                                        </div>
+                                        <div class="offer_reviews">
+                                            <div class="offer_reviews_content">
+                                                <div class="offer_reviews_title">
+                                                    <c:choose>
+                                                        <c:when test="${currentRating >= 4}"><spring:message
+                                                                code="score4"/></c:when>
+                                                        <c:when test="${currentRating == 3}"><spring:message
+                                                                code="score3"/></c:when>
+                                                        <c:when test="${currentRating == 2}"><spring:message
+                                                                code="score2"/></c:when>
+                                                        <c:when test="${currentRating == 1}"><spring:message
+                                                                code="score1"/></c:when>
+                                                        <c:otherwise><spring:message code="score0"/></c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                                <div class="offer_reviews_subtitle"><spring:message
+                                                        code="offer_reviews_subtitle"/></div>
+                                            </div>
+                                            <div class="offer_reviews_rating text-center">
+                                                    ${currentRating}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </c:forEach>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog_navigation">
-                        <ul class="d-flex flex-row align-items-center justify-content-center">
-                            <c:forEach var="i" begin="${pageInfo.navigateFirstPage}"
-                                       end="${pageInfo.navigateLastPage}">
-                                <li class="blog_page_item">
-                                    <a href="?pageNum=${i}"
-                                       class="blog_dot ${i == pageInfo.pageNum ? 'active' : ''}">
-                                        <fmt:formatNumber value="${i}" pattern="0"/>
-                                    </a>
-                                </li>
-                            </c:forEach>
-                        </ul>
+                    </c:forEach>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="blog_navigation">
+                            <ul class="d-flex flex-row align-items-center justify-content-center">
+                                <c:forEach var="i" begin="${pageInfo.navigateFirstPage}"
+                                           end="${pageInfo.navigateLastPage}">
+                                    <li class="blog_page_item">
+                                        <a href="?pageNum=${i}"
+                                           class="blog_dot ${i == pageInfo.pageNum ? 'active' : ''}">
+                                            <fmt:formatNumber value="${i}" pattern="0"/>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="chatbot" class="chatbot">
-                <div id="chat-icon" class="chat-icon">
-                    <i class="fas fa-comments" aria-hidden="true"></i>
-                </div>
-                <div id="chat-window" class="chat-window">
-                    <div class="chat-header">
-                        <span><spring:message code="chat-header"/></span>
-                        <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+                <div id="chatbot" class="chatbot">
+                    <div id="chat-icon" class="chat-icon">
+                        <i class="fas fa-comments" aria-hidden="true"></i>
                     </div>
-                    <div class="chat-messages" id="chat-messages">
+                    <div id="chat-window" class="chat-window">
+                        <div class="chat-header">
+                            <span><spring:message code="chat-header"/></span>
+                            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+                        </div>
+                        <div class="chat-messages" id="chat-messages">
 
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" id="chat-input" placeholder="<spring:message code="chat-input"/>">
-                        <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="chat-input" placeholder="<spring:message code="chat-input"/>">
+                            <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div id="gemini-chatbot" class="chatbot chatbot-gemini">
-                <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                    <i class="fab fa-android" aria-hidden="true"></i>
-                </div>
-                <div id="gemini-chat-window" class="chat-window gemini-window">
-                    <div class="chat-header gemini-header">
-                        <span><spring:message code="gemini-header"/></span>
-                        <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+                <div id="gemini-chatbot" class="chatbot chatbot-gemini">
+                    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+                        <i class="fab fa-android" aria-hidden="true"></i>
                     </div>
-                    <div class="chat-messages" id="gemini-chat-messages"></div>
-                    <div class="chat-input">
-                        <input type="text" id="gemini-chat-input"
-                               placeholder="<spring:message code="gemini-chat-input"/>">
-                        <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
+                    <div id="gemini-chat-window" class="chat-window gemini-window">
+                        <div class="chat-header gemini-header">
+                            <span><spring:message code="gemini-header"/></span>
+                            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+                        </div>
+                        <div class="chat-messages" id="gemini-chat-messages"></div>
+                        <div class="chat-input">
+                            <input type="text" id="gemini-chat-input"
+                                   placeholder="<spring:message code="gemini-chat-input"/>">
+                            <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 
 <!-- JSON 데이터를 담고 있는 스크립트 블록 -->
 <script id="statsJson" type="application/json">
     <c:out value="${statsJson}" escapeXml="false"/>
+
 
 </script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
