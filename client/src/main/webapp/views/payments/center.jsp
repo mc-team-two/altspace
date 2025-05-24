@@ -153,6 +153,17 @@
             background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
         }
 
+
+        .viewing-info {
+            color: #d9534f;          /* 부드러운 빨간색 (부트스트랩 danger 톤) */
+            font-weight: bold;
+            background-color: rgba(255, 0, 0, 0.05); /* 은은한 빨간 배경 */
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-size: 1rem;         /* 적당한 크기 */
+            transition: opacity 0.3s;
+
         /* 모달 */
         .text-truncate-multiline {
             display: -webkit-box;
@@ -170,6 +181,7 @@
         .modal-title {
             font-size: 1.6rem; /* 제목 크게 */
             font-weight: 700;
+
         }
     </style>
 </head>
@@ -725,6 +737,7 @@
         </div>
     </div>
     <h2>${accomm.name}</h2>
+    <div id="viewing-info" class="viewing-info" style="color: red; font-weight: bold;"></div>
     <!-- 상단 정보 카드 3개 -->
     <div class="row mt-3 mb-4">
         <!-- 최근 리뷰 -->
@@ -1130,5 +1143,8 @@
 <script src="<c:url value="plugins/easing/easing.js"/>"></script>
 <script src="<c:url value="plugins/parallax-js-master/parallax.min.js"/>"></script>
 <script src="<c:url value="js/offers_custom.js"/>"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+<script src="<c:url value="js/viewing.js"/>"></script>
 
 

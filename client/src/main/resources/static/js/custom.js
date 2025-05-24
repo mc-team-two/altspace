@@ -402,13 +402,6 @@ $(document).ready(function () {
         }
     }
 
-    // 검색 추천을 화면에 표시하는 함수
-    function displaySearchSuggestions(accomsuggestions) {
-        const SearchSuggestions = $("SearchSuggestions");
-        console.log("[📦 Gemini 응답 데이터]", data);
-
-
-    }
 
 // 검색 결과를 화면에 표시하는 함수
     function displayGeoSearchResults(accommodationsWithRating) {
@@ -618,6 +611,7 @@ $(document).ready(function () {
                 extras: extras
             }),
             success: function (accomsuggestions) {
+                console.log("✅ Gemini 응답 확인:", accomsuggestions);
                 displaySearchSuggestions(accomsuggestions);
             },
             error: function (error) {
@@ -710,43 +704,6 @@ $(document).ready(function () {
         return "평가가 없어요";
     }
 
-    let weatherChartInstance = null; // 차트 인스턴스 저장용
-
-// 제미나이 응답을 받아서 출력하는 함수
-    function displaySearchSuggestions(data) {
-        const container = $("#travel-insight-container");
-        container.removeClass("d-none").css("display", "block"); // ← 이 줄 반드시 필요
-
-        const summaryBox = $("#travel-summary");
-        const insightItem = $("#travel-insight-item");
-        const tipsList = $("#travel-tips");
-
-        const insights = extractInsightSections(data.summary);
-
-        summaryBox.html(`<p><strong>날씨 요약:</strong> ${insights.weather}</p>`);
-        insightItem.html(`<div class="alert alert-info">${data.summary.replace(/\n/g, "<br>")}</div>`);
-
-        tipsList.empty();
-        if (insights.tips) {
-            tipsList.append(`<li class="list-group-item">${insights.tips}</li>`);
-        }
-
-        if (insights.maxTemp !== null && insights.minTemp !== null) {
-            console.log("🔥 renderWeatherChart 호출 시작");
-            renderWeatherChart({
-                weather: [
-                    {
-                        date: "예상 기온",
-                        maxTemp: insights.maxTemp,
-                        minTemp: insights.minTemp
-                    }
-                ],
-                location: data.location || "여행지"
-            });
-        } else {
-            console.warn("기온 정보가 없어 차트를 그리지 않습니다.");
-        }
-    }
 
 // summary에서 날씨/축제/치안/팁 파싱 및 기온 추출
     function extractInsightSections(summaryText) {
@@ -812,38 +769,40 @@ $(document).ready(function () {
 
     function displaySearchSuggestions(data) {
         const container = $("#travel-insight-container");
+        container.removeClass("d-none").css("display", "block");
+
+        // 각 요소 접근 (summary 없음에 대응)
+        const insightItem = $("#travel-insight-item");
+        const tipsList = $("#travel-tips");
         const widgets = $("#travel-insight-widgets");
 
-        container.removeClass("d-none");
-        widgets.empty();
+        // 💬 요약 출력 (weather + tips 등 간단히 구성)
+        insightItem.html(`
+        <div class="alert alert-info">
+            <strong>🌤️ 날씨:</strong> ${data.weather}<br>
+            <strong>💡 팁:</strong> ${data.tips}
+        </div>
+    `);
 
+        // 🔄 팁 리스트
+        tipsList.empty();
+        if (data.tips) {
+            tipsList.append(`<li class="list-group-item">${data.tips}</li>`);
+        }
+
+        // 💡 카드 출력
+        widgets.empty();
         const cards = [
-            {
-                icon: "🌡️",
-                title: "최고 기온",
-                content: (data.maxTemp ?? "정보 없음") + "°C"
-            },
-            {
-                icon: "❄️",
-                title: "최저 기온",
-                content: (data.minTemp ?? "정보 없음") + "°C"
-            },
-            {
-                icon: "🎪",
-                title: "지역 축제",
-                content: data.festival ?? "정보 없음"
-            },
-            {
-                icon: "🍽️",
-                title: "맛집 정보",
-                content: data.food ?? "정보 없음"
-            }
+            { icon: "🌡️", title: "최고 기온", content: (data.maxTemp ?? "정보 없음") + "°C" },
+            { icon: "❄️", title: "최저 기온", content: (data.minTemp ?? "정보 없음") + "°C" },
+            { icon: "🎪", title: "지역 축제", content: data.festival || "정보 없음" },
+            { icon: "🍽️", title: "맛집 정보", content: data.food || "정보 없음" }
         ];
 
         for (const card of cards) {
             widgets.append(`
             <div class="col-md-3 mb-4">
-                <div class="card shadow-sm p-3 h-100">
+                <div class="card shadow-sm p-3 h-100 text-center align-items-center">
                     <div class="card-title"><strong>${card.icon} ${card.title}</strong></div>
                     <div class="card-body p-0">
                         <div class="text-muted small">${card.content}</div>
@@ -853,57 +812,16 @@ $(document).ready(function () {
         `);
         }
 
-// ✅ 중복 방지: 기존 워터마크가 없을 때만 추가
+        // ✅ 워터마크 중복 방지
         if (container.find(".travel-insight-powered").length === 0) {
             container.append(`
-        <div class="travel-insight-powered">
-            <small class="text-muted">
-                Powered by  
-                <img src="images/gemini-brand-color.png" alt="Gemini Logo" height="20" style="vertical-align: middle;">
-            </small>
-        </div>
-    `)}
-    }
-
-// 팝업 기능을 초기화하는 함수
-    function initIconPopper() {
-        const tooltipTriggers = document.querySelectorAll('.offers_icons_item[data-popper-content]');
-
-        tooltipTriggers.forEach(trigger => {
-            const tooltip = document.createElement('div');
-            tooltip.classList.add('popper-tooltip');
-            tooltip.textContent = trigger.dataset.popperContent;
-            document.body.appendChild(tooltip);
-
-            // 1.x 버전의 Popper 사용
-            const popperInstance = new Popper(trigger, tooltip, {
-                placement: 'top',
-                modifiers: {
-                    offset: {
-                        offset: '0, 8',
-                    },
-                    arrow: {
-                        element: '.popper-arrow',
-                    },
-                },
-            });
-
-            const showEvents = ['mouseenter', 'focus'];
-            const hideEvents = ['mouseleave', 'blur'];
-
-            showEvents.forEach(event => {
-                trigger.addEventListener(event, () => {
-                    tooltip.classList.add('active');
-                    popperInstance.update();
-                });
-            });
-
-            hideEvents.forEach(event => {
-                trigger.addEventListener(event, () => {
-                    tooltip.classList.remove('active');
-                });
-            });
-        });
+            <div class="travel-insight-powered mt-3">
+                <small class="text-muted">
+                    Powered by <img src="images/gemini-brand-color.png" alt="Gemini Logo" height="20" style="vertical-align: middle;">
+                </small>
+            </div>
+        `);
+        }
     }
 
 });
