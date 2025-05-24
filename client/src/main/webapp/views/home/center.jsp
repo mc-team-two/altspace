@@ -275,12 +275,12 @@
             </div>
         </div>
     </div>
-    <div id="travel-insight-container" class="mb-5 d-none">
-        <div id="travel-insight-item"></div> <!-- 날씨 요약 (alert) -->
-        <ul id="travel-tips" class="list-group my-3"></ul>
-
-        <!-- 여기에 카드 형식 정보 출력 -->
-        <div class="row mt-4" id="travel-insight-widgets"></div>
+    <div class="container my-5">
+        <div id="travel-insight-container" class="mb-5 d-none">
+            <div id="travel-insight-item"></div>
+            <ul id="travel-tips" class="list-group my-3"></ul>
+            <div class="row mt-4" id="travel-insight-widgets"></div>
+        </div>
     </div>
 
     <div class="container my-5">
