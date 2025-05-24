@@ -79,15 +79,13 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="float-start">
                                         <%--금액--%>
-                                        <span style="font-size: 18px; font-weight: bold;">&#8361; ${item.priceNight}</span>
-                                        <%--찜--%>
-                                        <span><i class="bi bi-heart-fill text-danger"></i> ${item.wish}</span>
-                                        <%--조회수--%>
-                                        <span>조회수 ${item.views}</span>
+                                        <span style="font-size: 18px; font-weight: bold;">&#8361; <fmt:formatNumber value="${item.priceNight}" pattern="###,###"/></span>
                                     </div>
                                     <div class="float-end">
-                                    <a href="javascript:void(0);" onclick="space_get.modSpace(${item.accommodationId})" class="mx-4">수정</a>
-                                    <a href="javascript:void(0);" onclick="space_get.delSpace(${item.accommodationId})">삭제</a>
+                                        <%--조회수--%>
+                                        <span>조회수 <strong>${item.views}</strong></span>
+                                        <%--찜--%>
+                                            <span class="ms-3"><i class="bi bi-heart-fill text-danger"></i> <strong>${item.wish}</strong></span>
                                 </div>
                                 </div>
                             </div>
@@ -96,7 +94,7 @@
 
                     <%--상세보기 모달--%>
                     <div class="modal fade" id="acc_${item.accommodationId}" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog mx-sm-0 mx-lg-auto">
                             <div class="modal-content">
 
                                 <%-- Modal Header --%>
@@ -109,7 +107,6 @@
                                 <hr class="my-0">
                                 <%-- Modal body --%>
                                 <div class="modal-body">
-
                                     <%-- Carousel (Gallery) --%>
                                     <div id="gallery_${item.accommodationId}" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
 
@@ -154,31 +151,39 @@
                                         </button>
                                     </div>
 
+                                    <%--수정/삭제 버튼--%>
+                                    <div class="d-flex justify-content-evenly mt-3">
+                                        <a href="javascript:void(0);" onclick="space_get.delSpace(${item.accommodationId})"
+                                           class="btn btn-dark me-3 w-50 shadow-sm">삭 제</a>
+                                        <a href="javascript:void(0);" onclick="space_get.modSpace(${item.accommodationId})"
+                                           class="btn btn-secondary w-50 shadow-sm">수 정</a>
+                                    </div>
+
                                     <%-- data --%>
-                                        <div class="container-fluid mt-4 p-3 shadow-sm bg-white rounded">
+                                    <div class="container-fluid mt-4 p-3 shadow-sm bg-white rounded">
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
-                                                    <p><strong>건물 유형:</strong> ${item.category}</p>
-                                                    <p><strong>공간 유형:</strong> ${item.roomType}</p>
+                                                    <p><strong>◼ 건물 유형:</strong> ${item.category}</p>
+                                                    <p><strong>◼ 공간 유형:</strong> ${item.roomType}</p>
                                                 </div>
                                                 <div class="col-12 col-md-6">
-                                                    <p><strong>1박 요금:</strong> <fmt:formatNumber value="${item.priceNight}" pattern="###,###"/> 원</p>
-                                                    <p><strong>예약 가능 여부:</strong> ${item.status}</p>
+                                                    <p><strong>◼ 1박 요금:</strong> <fmt:formatNumber value="${item.priceNight}" pattern="###,###"/> 원</p>
+                                                    <p><strong>◼ 예약 가능 여부:</strong> ${item.status}</p>
                                                 </div>
                                             </div>
                                             <c:if test="${not empty item.description}">
                                                 <div class="row">
-                                                    <p><strong>소개글:</strong>${item.description}</p>
+                                                    <p><strong>◼ 소개글: </strong>${item.description}</p>
                                                 </div>
                                             </c:if>
                                             <c:if test="${not empty item.notice}">
                                                 <div class="row">
-                                                    <p><strong>공지사항:</strong>${item.notice}</p>
+                                                    <p><strong>◼ 공지사항: </strong>${item.notice}</p>
                                                 </div>
                                             </c:if>
                                             <div class="mt-3">
                                                 <ul class="list-unstyled d-flex flex-wrap">
-                                                    <li class="me-2 mb-2"><strong>제공옵션:</strong></li>
+                                                    <li class="me-2 mb-2"><strong>◼ 제공옵션:</strong></li>
                                                     <c:if test="${item.breakfast}">
                                                         <li class="badge bg-success me-2 mb-2">#조식포함</li>
                                                     </c:if>
@@ -194,15 +199,15 @@
                                                 </ul>
                                             </div>
                                             <div class="mt-3">
-                                                <p><strong>등록일:</strong> <fmt:formatDate value="${item.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/></p>
-                                                <p><strong>수정일:</strong> <fmt:formatDate value="${item.updateDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/></p>
+                                                <p><strong>◼ 등록일:</strong> <fmt:formatDate value="${item.createDay}" pattern="yyyy년 MM월 dd일 HH시 mm분"/></p>
+                                                <p><strong>◼ 수정일:</strong> <fmt:formatDate value="${item.updateDay}" pattern="yyyy년 MM월 dd일 HH시 mm분"/></p>
                                             </div>
                                         </div>
                                 </div>
 
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                    <button class="btn" data-bs-dismiss="modal">팝업 닫기</button>
                                 </div>
 
                             </div>
