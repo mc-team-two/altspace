@@ -75,7 +75,6 @@
         <div class="home_title">마이 페이지</div>
     </div>
 </div>
-
 <div class="blog">
     <div class="container">
         <div class="row">
@@ -83,24 +82,33 @@
             <div class="col-lg-8 items_4css">
                 <div class="single_listing"
                      style="margin-top: 0 !important; padding: 30px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
-                    <h2>비밀번호 재설정</h2>
-<%--                    소셜로그인시 패스워드 유무로 판별.--%>
+                    <h3 class="mb-4">비밀번호 재설정</h3>
+
+                    <%-- 소셜로그인시 패스워드 유무로 판별 --%>
                     <c:choose>
-                    <c:when test="${empty user.password}">
-                        <div class="alert alert-warning">
-                            소셜 로그인 사용자입니다. 비밀번호를 재설정할 수 없습니다.
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                    <form id="resetPasswordForm">
-                        <input type="password" name="currentPassword" placeholder="현재 비밀번호" required><br><br>
-                        <input type="password" name="newPassword" placeholder="새 비밀번호" required><br><br>
-                        <button type="submit">변경하기</button>
-                    </form>
+                        <c:when test="${empty user.password}">
+                            <div class="alert alert-warning">
+                                소셜 로그인 사용자입니다. 비밀번호를 재설정할 수 없습니다.
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <form id="resetPasswordForm">
+                                <div class="form-group mb-3">
+                                    <label for="currentPassword">현재 비밀번호</label>
+                                    <input type="password" class="form-control" name="currentPassword"
+                                           id="currentPassword" placeholder="현재 비밀번호" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="newPassword">새 비밀번호</label>
+                                    <input type="password" class="form-control" name="newPassword"
+                                           id="newPassword" placeholder="새 비밀번호" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">변경하기</button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
-            </c:otherwise>
-            </c:choose>
 
             <!-- 오른쪽 사이드바 -->
             <div class="col-lg-4 sidebar_list4css">
@@ -111,6 +119,7 @@
                             <li><a href="<c:url value='/details'/>">나의 예약</a></li>
                             <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
                             <li><a href="<c:url value='/wishlist'/>">찜 목록</a></li>
+                            <li><a href="<c:url value='/mypage/aireport'/>">AI 분석</a></li>
                             <li class="has-submenu">
                                 <a href="javascript:void(0)">나의 정보 <i class="fa fa-chevron-down ms-1"></i></a>
                                 <ul class="submenu">
@@ -127,58 +136,58 @@
         </div>
     </div>
 </div>
-<!-- 챗봇 영역 -->
+    <!-- 챗봇 영역 -->
 
-<div id="chatbot" class="chatbot">
-    <div id="chat-icon" class="chat-icon">
-        <i class="fas fa-comments" aria-hidden="true"></i>
-    </div>
-    <div id="chat-window" class="chat-window">
-        <div class="chat-header">
-            <span><spring:message code="chat-header"/></span>
-            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+    <div id="chatbot" class="chatbot">
+        <div id="chat-icon" class="chat-icon">
+            <i class="fas fa-comments" aria-hidden="true"></i>
         </div>
-        <div class="chat-messages" id="chat-messages">
+        <div id="chat-window" class="chat-window">
+            <div class="chat-header">
+                <span><spring:message code="chat-header"/></span>
+                <button id="chat-close-btn" class="chat-close-btn">&times;</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
 
-        </div>
-        <div class="chat-input">
-            <input type="text" id="chat-input" placeholder="<spring:message code="chat-input"/>">
-            <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
-        </div>
-    </div>
-</div>
-<div id="gemini-chatbot" class="chatbot chatbot-gemini">
-    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-        <i class="fab fa-android" aria-hidden="true"></i>
-    </div>
-    <div id="gemini-chat-window" class="chat-window gemini-window">
-        <div class="chat-header gemini-header">
-            <span><spring:message code="gemini-header"/></span>
-            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
-        </div>
-        <div class="chat-messages" id="gemini-chat-messages"></div>
-        <div class="chat-input">
-            <input type="text" id="gemini-chat-input" placeholder="<spring:message code="gemini-chat-input"/>">
-            <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chat-input" placeholder="<spring:message code="chat-input"/>">
+                <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
+            </div>
         </div>
     </div>
-</div>
+    <div id="gemini-chatbot" class="chatbot chatbot-gemini">
+        <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+            <i class="fab fa-android" aria-hidden="true"></i>
+        </div>
+        <div id="gemini-chat-window" class="chat-window gemini-window">
+            <div class="chat-header gemini-header">
+                <span><spring:message code="gemini-header"/></span>
+                <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+            </div>
+            <div class="chat-messages" id="gemini-chat-messages"></div>
+            <div class="chat-input">
+                <input type="text" id="gemini-chat-input" placeholder="<spring:message code="gemini-chat-input"/>">
+                <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
+            </div>
+        </div>
+    </div>
 
-<script src="<c:url value='js/jquery-3.2.1.min.js'/>"></script>
-<script src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'/>"></script>
-<script src="<c:url value='styles/bootstrap4/popper.js'/>"></script>
-<script src="<c:url value='styles/bootstrap4/bootstrap.min.js'/>"></script>
-<script src="<c:url value='plugins/Isotope/isotope.pkgd.min.js'/>"></script>
-<script src="<c:url value='plugins/easing/easing.js'/>"></script>
-<script src="<c:url value='plugins/parallax-js-master/parallax.min.js'/>"></script>
+    <script src="<c:url value='js/jquery-3.2.1.min.js'/>"></script>
+    <script src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'/>"></script>
+    <script src="<c:url value='styles/bootstrap4/popper.js'/>"></script>
+    <script src="<c:url value='styles/bootstrap4/bootstrap.min.js'/>"></script>
+    <script src="<c:url value='plugins/Isotope/isotope.pkgd.min.js'/>"></script>
+    <script src="<c:url value='plugins/easing/easing.js'/>"></script>
+    <script src="<c:url value='plugins/parallax-js-master/parallax.min.js'/>"></script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const submenuToggles = document.querySelectorAll(".has-submenu > a");
-        submenuToggles.forEach(function (toggle) {
-            toggle.addEventListener("click", function () {
-                this.parentElement.classList.toggle("active");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const submenuToggles = document.querySelectorAll(".has-submenu > a");
+            submenuToggles.forEach(function (toggle) {
+                toggle.addEventListener("click", function () {
+                    this.parentElement.classList.toggle("active");
+                });
             });
         });
-    });
-</script>
+    </script>

@@ -1,14 +1,14 @@
 package com.mc.controller;
 
-import com.mc.app.dto.AccomSuggestion;
-import com.mc.app.dto.TravelInsight;
+import com.mc.app.dto.*;
+import com.mc.app.dto.aiSuggest.UserPreference;
+import com.mc.app.dto.aiSuggest.UserPreferenceRequest;
 import com.mc.app.service.AccomService;
 import com.mc.app.service.GeminiService;
 import com.mc.msg.GeminiMsg;
 import com.mc.util.GeminiUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -30,6 +30,7 @@ public class GeminiController {
     private final SimpMessagingTemplate template;
     private final GeminiUtil geminiUtil;
     private final AccomService accomService;
+    private final GeminiService geminiService;
 
     @MessageMapping("/geminichat")
     public void handleGemini(@Payload GeminiMsg msg) {
@@ -64,6 +65,14 @@ public class GeminiController {
         }
 
         return accomService.getSuggestions(request);
+    }
+
+    // 개인화 추천 사용자 데이터 조회
+    @PostMapping("/search-usersuggestions")
+    @ResponseBody
+    public UserPreference getUserSuggestions(@RequestBody UserPreferenceRequest request) {
+        // 이 시점에서 AI로 보내기 전, DB에서 사용자 취향 데이터 조회
+        return geminiService.getUserPreferenceData(request.getUserId());
     }
 
     private String sanitize(String input) {

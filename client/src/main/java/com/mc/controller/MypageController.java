@@ -1,14 +1,21 @@
 package com.mc.controller;
 
 import com.mc.app.dto.User;
-import com.mc.app.service.SocialUserService;
+import com.mc.app.dto.aiSuggest.PersonalizedRecommendation;
+import com.mc.app.dto.aiSuggest.UserConsumptionAnalysis;
+import com.mc.app.dto.aiSuggest.UserPreference;
+import com.mc.app.service.GeminiService;
 import com.mc.app.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
@@ -16,6 +23,7 @@ public class MypageController {
 
     private final UserService userService;
     private final String dir = "mypage/";
+    private final GeminiService geminiService;
 
     // 마이페이지 홈
     @GetMapping("")
@@ -123,5 +131,31 @@ public class MypageController {
         userService.del(user.getUserId());
         session.invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("/aireport")
+    public String aireport(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        String userId = user.getUserId();
+
+        // 1️⃣ 사용자 취향 데이터 조회
+        UserPreference userPref = geminiService.getUserPreferenceData(userId);
+
+        // 2️⃣ AI에게 추천 요청
+        List<PersonalizedRecommendation> recommendations = geminiService.getPersonalizedRecommendations(userPref);
+
+        // 2️⃣ AI에게 내 유형 분석 요청
+        UserConsumptionAnalysis analysis = geminiService.getUserConsumptionAnalysis(userPref);
+
+        log.info("### 추천 결과 크기: {}", recommendations.size());
+        recommendations.forEach(r -> log.info("추천: {}", r));
+
+
+        // 3️⃣ JSP로 전달
+        model.addAttribute("aiRecommendations", recommendations);
+        model.addAttribute("consumptionAnalysis", analysis);
+        model.addAttribute("center", dir + "aireport");
+
+        return "index";
     }
 }
