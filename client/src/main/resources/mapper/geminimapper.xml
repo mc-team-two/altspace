@@ -2,11 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.mc.app.repository.GeminiRepository">
-<!--    히트맵을 만들기 위한 DB 조회 쿼리 -->
+
+    <!--    히트맵을 만들기 위한 DB 조회 쿼리 -->
     <select id="selectPopularLocations" resultType="com.mc.app.dto.PopularLocation">
         SELECT
-            a.name,
             a.location,
             SUM(a.views) AS total_views,
             COUNT(DISTINCT p.payment_id) AS booking_count,
@@ -14,6 +15,54 @@
         FROM accommodations AS a
                  LEFT JOIN payments p ON a.accommodation_id = p.accommodation_id AND p.pay_status = '완료'
                  LEFT JOIN reviews r ON a.accommodation_id = r.accommodation_id
-        GROUP BY a.name, a.location
+        GROUP BY a.location
     </select>
+
+    <!-- ✅ 사용자 개인화 추천 데이터 -->
+    <select id="selectUserPreferenceData" resultMap="UserPreferenceResultMap">
+        SELECT u.user_id,
+               u.name             AS user_name,
+
+               p.accommodation_id AS booked_accommodation_id,
+               a.location         AS booked_location,
+               a.price_night      AS booked_price,
+
+               w.accommodation_id AS wishlist_accommodation_id,
+               a2.location        AS wishlist_location,
+               a2.price_night     AS wishlist_price,
+
+               r.accommodation_id AS reviewed_accommodation_id,
+               r.grade            AS review_grade,
+               r.comment          AS review_comment
+
+        FROM users u
+                 LEFT JOIN payments p ON u.user_id = p.guest_id AND p.pay_status = '완료'
+                 LEFT JOIN accommodations a ON p.accommodation_id = a.accommodation_id
+
+                 LEFT JOIN wishlists w ON u.user_id = w.user_id
+                 LEFT JOIN accommodations a2 ON w.accommodation_id = a2.accommodation_id
+
+                 LEFT JOIN reviews r ON u.user_id = r.guest_id
+
+        WHERE u.user_id = #{userId}
+    </select>
+
+    <!-- ✅ 개인화 추천 데이터 구조 매핑 -->
+    <resultMap id="UserPreferenceResultMap" type="com.mc.app.dto.aiSuggest.UserPreference">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+
+        <!-- 예약 숙소 ID 목록 -->
+        <collection property="bookedAccommodationIds" ofType="java.lang.String" column="booked_accommodation_id"/>
+
+        <!-- 찜 숙소 ID 목록 -->
+        <collection property="wishlistAccommodationIds" ofType="java.lang.String" column="wishlist_accommodation_id"/>
+
+        <!-- 리뷰 정보 목록 -->
+        <collection property="reviews" ofType="com.mc.app.dto.aiSuggest.ReviewSummary">
+            <result property="accommodationId" column="reviewed_accommodation_id"/>
+            <result property="grade" column="review_grade"/>
+            <result property="comment" column="review_comment"/>
+        </collection>
+    </resultMap>
 </mapper>

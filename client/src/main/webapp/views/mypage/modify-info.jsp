@@ -116,6 +116,7 @@
                             <li><a href="<c:url value='/details'/>">나의 예약</a></li>
                             <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
                             <li><a href="<c:url value='/wishlist'/>">찜 목록</a></li>
+                            <li><a href="<c:url value='/mypage/aireport'/>">AI 분석</a></li>
                             <li class="has-submenu">
                                 <a href="javascript:void(0)">나의 정보 <i class="fa fa-chevron-down ms-1"></i></a>
                                 <ul class="submenu">

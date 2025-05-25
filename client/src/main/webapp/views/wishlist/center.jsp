@@ -12,7 +12,51 @@
     <link rel="stylesheet"
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 </head>
+<style>
+    .submenu {
+        display: none;
+        margin-top: 6px; /* 상단 여백 추가 */
+        padding-left: 18px; /* 좌측 들여쓰기 */
+        padding-top: 6px; /* 내부 위쪽 여백 */
+        list-style-type: circle;
+        font-size: 14px;
+        color: #555;
+    }
 
+    .submenu li {
+        margin: 6px 0; /* 각 항목 간 간격 */
+    }
+
+    .has-submenu > a {
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+    }
+
+    .has-submenu.active > .submenu {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-5px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (min-width: 992px) {
+        .pl-lg-5 {
+            padding-left: 5rem !important; /* 간격 확보 */
+        }
+    }
+</style>
 <body>
 <div class="menu trans_500">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
@@ -150,10 +194,19 @@
                     <div class="sidebar_title">MENU</div>
                     <div class="sidebar_list">
                         <ul>
-                            <li><a href="<c:url value='/details'/>">나의 예약</a></li>
-                            <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
+                            <li><a href="<c:url value="/details"/> ">나의 예약</a></li>
+                            <li><a href="<c:url value="/review"/> ">나의 리뷰</a></li>
                             <li><a href="<c:url value="/wishlist"/> ">찜 목록</a></li>
-                            <li><a href="<c:url value="/mypage"/>">나의 정보</a></li>
+                            <li><a href="<c:url value='/mypage/aireport'/>">AI 분석</a></li>
+                            <li class="has-submenu">
+                                <a href="javascript:void(0)">나의 정보 <i class="fa fa-chevron-down ms-1"></i></a>
+                                <ul class="submenu">
+                                    <li><a href="<c:url value='/mypage'/>">내 정보</a></li>
+                                    <li><a href="<c:url value='/mypage/modify-info'/>">내 정보 수정</a></li>
+                                    <li><a href="<c:url value='/mypage/reset-password'/>">비밀번호 재설정</a></li>
+                                    <li><a href="<c:url value='/mypage/delete-account'/>">회원 탈퇴</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -163,3 +216,13 @@
 </div>
 
 <script src="js/darkmode.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const submenuToggles = document.querySelectorAll(".has-submenu > a");
+        submenuToggles.forEach(function (toggle) {
+            toggle.addEventListener("click", function () {
+                this.parentElement.classList.toggle("active");
+            });
+        });
+    });
+</script>
