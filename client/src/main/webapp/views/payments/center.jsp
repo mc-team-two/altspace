@@ -153,16 +153,16 @@
             background: linear-gradient(to left, rgba(255,255,255,1), rgba(255,255,255,0));
         }
 
-
         .viewing-info {
-            color: #d9534f;          /* 부드러운 빨간색 (부트스트랩 danger 톤) */
+            color: #d9534f; /* 부드러운 빨간색 (부트스트랩 danger 톤) */
             font-weight: bold;
             background-color: rgba(255, 0, 0, 0.05); /* 은은한 빨간 배경 */
             padding: 0.5rem 1rem;
             border-radius: 4px;
             margin-top: 0.5rem;
-            font-size: 1rem;         /* 적당한 크기 */
+            font-size: 1rem; /* 적당한 크기 */
             transition: opacity 0.3s;
+        }
 
         /* 모달 */
         .text-truncate-multiline {
@@ -818,7 +818,7 @@
                         <i class="bi bi-person-circle text-primary mr-3" style="font-size: 1.75rem;"></i>
                         <div>
                             <div class="font-weight-bold mb-1" style="font-size: 1rem;">호스트: ${accomm.hostId} 님</div>
-                            <div class="text-muted" style="font-size: 0.8rem;">신입호스트 · 호스팅 경력 6개월</div>
+                            <div class="text-muted" style="font-size: 0.8rem;">${accomm.hostGrade}</div>
                         </div>
                     </div>
                     <!-- 문의 버튼 -->

@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
@@ -117,6 +119,23 @@ public class MainController {
                          HttpSession httpSession) throws Exception {
 
         Accommodations accomm = accomService.get(id);
+        if (accomm.getHostCreateDay() != null) {
+            long months = ChronoUnit.MONTHS.between(
+                    accomm.getHostCreateDay().toLocalDateTime().toLocalDate(),
+                    LocalDate.now()
+            );
+
+            String hostGrade;
+            if (months < 7) {
+                hostGrade = "신입호스트 · 호스팅 경력 " + months + "개월";
+            } else if (months < 24) {
+                hostGrade = "일반호스트 · 호스팅 경력 " + months + "개월";
+            } else {
+                long years = months / 12;
+                hostGrade = "슈퍼호스트 · 호스팅 경력 " + years + "년";
+            }
+            accomm.setHostGrade(hostGrade);
+        }
         model.addAttribute("accomm", accomm);
 
         // 로그인 사용자 정보 가져오기
