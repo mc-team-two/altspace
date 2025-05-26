@@ -5,7 +5,6 @@ import com.mc.app.service.AccomService;
 import com.mc.app.service.ReviewImageService;
 import com.mc.app.service.ReviewRepliesService;
 import com.mc.app.service.ReviewService;
-import com.mc.util.ReviewUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
