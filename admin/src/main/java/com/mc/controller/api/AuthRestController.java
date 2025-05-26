@@ -187,7 +187,8 @@ public class AuthRestController {
         // 탈퇴 시도
         try {
             // DB 접근
-            userService.del(id);
+            userService.softDel(id);
+            // userService.del(id);
 
             // 로그아웃 처리
             httpSession.removeAttribute("user");
