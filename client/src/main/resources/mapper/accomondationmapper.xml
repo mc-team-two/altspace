@@ -11,7 +11,14 @@
 
     <!-- 하나의 숙소 조회 -->
     <select id="selectOne" parameterType="Integer" resultType="Accommodations">
-        SELECT * FROM accommodations WHERE accommodation_id=#{accommodationId}
+        SELECT
+            a.*,
+            u.create_day AS host_create_day
+        FROM
+            accommodations a JOIN users u
+                ON a.host_id = u.user_id
+        WHERE
+            a.accommodation_id = #{accommodationId}
     </select>
 
     <!-- 숙소 추가 -->
