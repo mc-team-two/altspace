@@ -41,23 +41,6 @@ public class MainController {
         }
 
         String hostId = user.getUserId();
-        model.addAttribute("hostId", hostId);
-
-        // 이번 달 총 결제 금액 가져오기
-        Integer monthTotal = paymentService.getMonthTotal();
-        String formattedMonthTotal = String.format("%,d", monthTotal);
-
-        // 현재 예약 건수 계산
-        List<Payments> upcomingReservations = paymentService.getUpcomingReservations();
-        int reservationCount = upcomingReservations.size();
-
-        // 오늘/내일 체크인 예약 건수 가져오기
-        Integer todayCheckInCount = paymentService.getTodayCheckInCount();
-        Integer tomorrowCheckInCount = paymentService.getTomorrowCheckInCount();
-
-        // 오늘/내일 체크아웃 예약 건수 가져오기
-        Integer todayCheckOutCount = paymentService.getTodayCheckOutCount();
-        Integer tomorrowCheckOutCount = paymentService.getTomorrowCheckOutCount();
 
         // 다가오는 7일 이내의 예약 정보 가져오기
         List<Payments> upcoming7DaysReservations = paymentService.getUpcoming7DaysReservations();
@@ -69,24 +52,11 @@ public class MainController {
         List<Map<String, Object>> earningsList = paymentService.getLast6MonthsEarnings();
         model.addAttribute("earningsDataJson", new ObjectMapper().writeValueAsString(earningsList));
 
-        // 호스트 숙소 수 조회
-        int accommodationCount = accomService.getAccommodationCountByHost(hostId);
-
-        // 전체 예약 건수 가져오기
-        Integer totalReservationCount = paymentService.getTotalReservationCount();
-
         // 모델에 데이터 추가
-        model.addAttribute("reservationCount", reservationCount);
-        model.addAttribute("monthTotal", formattedMonthTotal);
-        model.addAttribute("todayCheckInCount", todayCheckInCount);
-        model.addAttribute("tomorrowCheckInCount", tomorrowCheckInCount);
-        model.addAttribute("todayCheckOutCount", todayCheckOutCount);
-        model.addAttribute("tomorrowCheckOutCount", tomorrowCheckOutCount);
+        model.addAttribute("hostId", hostId);
         model.addAttribute("upcoming7DaysReservations", upcoming7DaysReservations);
         model.addAttribute("popularSpace", popularSpace);
         model.addAttribute("last6MonthsEarnings", earningsList);
-        model.addAttribute("accommodationCount", accommodationCount);
-        model.addAttribute("totalReservationCount", totalReservationCount);
         model.addAttribute("center","center");
 
         return "index";
