@@ -3,197 +3,191 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>회원가입</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <%--jQuery--%>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <%--bootstrap--%>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        body {
-            background-color: #f5f5f9;
-        }
-        .register-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 30px 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .form-group label {
-            font-size: 12px;
-            font-weight: bold;
-            color: #555;
-            text-align: left;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-control {
-            margin-bottom: 5px; /* 오류 메시지 공간 확보 */
-            padding: 20px 16px;
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            font-size: 14px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .form-control:focus {
-            border-color: #86b7fe;
-            box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
-        }
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <%--jQuery--%>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <%--bootstrap--%>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      background-color: #f5f5f9;
+    }
+    .register-container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 30px 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .form-group label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #555;
+      text-align: left;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-control {
+      margin-bottom: 5px; /* 오류 메시지 공간 확보 */
+      padding: 20px 16px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus {
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.25);
+    }
 
-        /* 소셜 로그인 버튼 영역 */
-        .btn-social {
-            width: 100%;
-            margin-bottom: 10px;
-            font-weight: bold;
-            padding: 12px 16px;         /* 버튼 padding 추가 */
-            border-radius: 10px;        /* 둥글게 만듦 */
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .btn-social img {
-            margin-right: 8px;
-        }
-        .btn-kakao {
-            background-color: #FEE500;
-            color: #444;
-        }
-        .btn-naver {
-            background-color: #03C75A;
-            color: #333;
-        }
-        .btn-google {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            color: #444;
-        }
+    /* 소셜 로그인 버튼 영역 */
+    .btn-social {
+      width: 100%;
+      margin-bottom: 10px;
+      font-weight: bold;
+      padding: 12px 16px;         /* 버튼 padding 추가 */
+      border-radius: 10px;        /* 둥글게 만듦 */
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-social img {
+      margin-right: 8px;
+    }
+    .btn-kakao {
+      background-color: #FEE500;
+      color: #444;
+    }
+    .btn-naver {
+      background-color: #03C75A;
+      color: #333;
+    }
+    .btn-google {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      color: #444;
+    }
 
-        /* 또는 */
-        .divider {
-            margin: 20px 0;
-            text-align: center;
-            position: relative;
-            font-size: 14px;
-            color: #888;
-        }
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background-color: #ddd;
-        }
-        .divider::before {
-            left: 0;
-        }
-        .divider::after {
-            right: 0;
-        }
+    /* 또는 */
+    .divider {
+      margin: 20px 0;
+      text-align: center;
+      position: relative;
+      font-size: 14px;
+      color: #888;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background-color: #ddd;
+    }
+    .divider::before {
+      left: 0;
+    }
+    .divider::after {
+      right: 0;
+    }
 
-        .btn-register {
-            background-color: #696cff;
-            border-color: #696cff;
-            color: #fff;
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 500;
-            width: 100%;
-        }
-    </style>
+    .btn-register {
+      background-color: #696cff;
+      border-color: #696cff;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-    <div class="register-container text-center">
+  <div class="register-container text-center">
 
-        <%--logo--%>
-        <a href="/">
-            <img src="<c:url value='/images/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
-        </a>
+    <%--logo--%>
+    <a href="<c:url value="/"/>">
+      <img src="<c:url value='/images/Altspace_lightmode_Horizontal.png'/>" alt="logo" style="height: 40px;" class="mb-4">
+    </a>
 
-        <%--error message--%>
-        <c:if test="${msg != null}">
-            <div class="alert alert-danger" role="alert">
-                    ${msg}
+    <%--social login buttons--%>
+    <a href="<c:url value="/auth/kakao/authorize"/>" class="btn btn-social btn-kakao">
+      <img src="<c:url value='/images/social_kakao_icon.svg'/>" width="24" alt="">카카오 계정으로 로그인
+    </a>
+    <a href="<c:url value="/auth/naver/authorize"/>" class="btn btn-social btn-naver">
+      <img src="<c:url value='/images/social_naver_icon.svg'/>" width="24" alt="">네이버 계정으로 로그인
+    </a>
+    <a href="<c:url value="/auth/google/authorize"/>" class="btn btn-social btn-google">
+      <img src="<c:url value='/images/social_google_icon.svg'/>" width="24" alt="">구글 계정으로 로그인
+    </a>
+
+    <div class="divider">또는</div>
+
+    <%--register form--%>
+    <form id="registrationForm" class="text-left">
+      <%--role (using default value)--%>
+      <input type="hidden" name="role" class="form-control" value="호스트" required>
+
+      <%--email--%>
+      <div class="form-group">
+          <label for="email">이메일</label>
+          <div class="input-group">
+            <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required value="host01@example.com">
+            <div class="input-group-append">
+              <span id="btn-chk-email" class="btn btn-dark">중복확인</span>
             </div>
-        </c:if>
-
-        <%--social login buttons--%>
-        <a href="/auth/kakao/authorize" class="btn btn-social btn-kakao">
-            <img src="<c:url value='/images/social_kakao_icon.svg'/>" width="24">카카오 계정으로 가입하기
-        </a>
-        <a href="/auth/naver/authorize" class="btn btn-social btn-naver">
-            <img src="<c:url value='/images/social_naver_icon.svg'/>" width="24">네이버 계정으로 가입하기
-        </a>
-        <a href="/auth/google/authorize" class="btn btn-social btn-google">
-            <img src="<c:url value='/images/social_google_icon.svg'/>" width="24">구글 계정으로 가입하기
-        </a>
-
-        <div class="divider">또는</div>
-
-        <%--register form--%>
-        <form id="registrationForm" method="post" action="<c:url value='/api/auth/register'/>" class="text-left">
-            <%--role (using default value)--%>
-            <input type="hidden" name="role" class="form-control" value="호스트" required>
-
-            <%--email--%>
-            <div class="form-group">
-                <label for="email">이메일</label>
-                <div class="input-group">
-                    <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해 주세요" required value="host01@example.com">
-                    <div class="input-group-append">
-                        <span id="btn-chk-email" class="btn btn-dark">중복확인</span>
-                    </div>
-                </div>
-                <p id="email-feedback" style="font-size:12px;"></p>
-            </div>
-
-            <%--pwd--%>
-            <div class="form-group">
-                <label for="pwd1">비밀번호</label>
-                <input type="password" id="pwd1" name="password" class="form-control"
-                       placeholder="비밀번호를 입력해 주세요" required value="pwd1234!!">
-                <p id="pwd1-feedback" style="font-size:12px;"></p>
-            </div>
-            <div class="form-group">
-                <label for="pwd2">비밀번호 확인</label>
-                <input type="password" id="pwd2" class="form-control"
-                       placeholder="비밀번호를 입력해 주세요" required value="pwd1234!!">
-                <p id="pwd2-feedback" style="font-size:12px;"></p>
-            </div>
-
-            <%--name--%>
-            <div class="form-group">
-                <label for="name">이름</label>
-                <input type="text" id="name" name="name" class="form-control"
-                       placeholder="이름을 입력해 주세요" required value="이말숙">
-                <p id="name-feedback" style="font-size:12px;"></p>
-            </div>
-
-            <%--phone--%>
-            <div class="form-group">
-                <label for="phone">전화번호</label>
-                <input type="text" id="phone" name="phone" maxlength="13" class="form-control"
-                       placeholder="전화번호를 입력해 주세요" required value="010-1234-5678">
-                <p id="phone-feedback" style="font-size:12px;"></p>
-            </div>
-
-            <button id="btn-register" type="submit" class="btn btn-block btn-register">회원가입</button>
-        </form>
-
-        <%--login page swap--%>
-        <div class="mt-3" style="font-size: 13px;">
-            <a href="<c:url value="/login"/>" class="text-muted">이미 계정이 있으신가요? 로그인</a>
+          </div>
+          <p id="email-feedback" style="font-size:12px;"></p>
         </div>
+
+      <%--pwd--%>
+      <div class="form-group">
+        <label for="pwd1">비밀번호</label>
+        <input type="password" id="pwd1" name="password" class="form-control"
+               placeholder="비밀번호를 입력해 주세요" required value="pwd1234!!">
+        <p id="pwd1-feedback" style="font-size:12px;"></p>
+      </div>
+      <div class="form-group">
+          <label for="pwd2">비밀번호 확인</label>
+          <input type="password" id="pwd2" class="form-control"
+                 placeholder="비밀번호를 입력해 주세요" required value="pwd1234!!">
+          <p id="pwd2-feedback" style="font-size:12px;"></p>
+      </div>
+
+      <%--name--%>
+      <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" class="form-control"
+               placeholder="이름을 입력해 주세요" required value="이말숙">
+          <p id="name-feedback" style="font-size:12px;"></p>
+      </div>
+
+      <%--phone--%>
+      <div class="form-group">
+        <label for="phone">전화번호</label>
+        <input type="text" id="phone" name="phone" maxlength="13" class="form-control"
+               placeholder="전화번호를 입력해 주세요" required value="010-1234-5678">
+          <p id="phone-feedback" style="font-size:12px;"></p>
+      </div>
+
+      <button id="btn-register" type="submit" class="btn btn-block btn-register">회원가입</button>
+    </form>
+
+    <%--login page swap--%>
+    <div class="mt-3" style="font-size: 13px;">
+      <a href="<c:url value="/login"/>" class="text-muted">이미 계정이 있으신가요? 로그인</a>
     </div>
+  </div>
 </div>
+
 <script>
     const registerPage = {
         isEmailDuplicateChecked : false,
@@ -302,17 +296,17 @@
 
             // 폼 제출
             $("#registrationForm").on('submit', function(e) {
-                e.preventDefault();
+              e.preventDefault();
 
-                const formData = {
-                    role: $("input[name='role']").val(),
-                    email: $("#email").val().trim(),
-                    password: $("#pwd1").val().trim(),
-                    name: $("#name").val().trim(),
-                    phone: $("#phone").val().trim()
-                };
+              const formData = {
+                role: $("input[name='role']").val(),
+                email: $("#email").val().trim(),
+                password: $("#pwd1").val().trim(),
+                name: $("#name").val().trim(),
+                phone: $("#phone").val().trim()
+              };
 
-                registerPage.registerImpl(formData);
+              registerPage.registerImpl(formData);
             });
         },
         validateEmailFormatOnly:function(){
@@ -333,49 +327,48 @@
         checkFormValidity: function() {
             const fields = ['#email', '#pwd1', '#pwd2', '#name', '#phone'];
             const allValid = fields.every(field => $(field).hasClass('is-valid'));
-            const isAllOk = allValid && this.isEmailDuplicateChecked;
 
-            $('#btn-register').prop('disabled', !isAllOk);
+            $('#btn-register').prop('disabled', !allValid);
         },
         registerImpl:function(formData){
-            $.ajax({
-                url: "<c:url value='/api/auth/register'/>",
-                type: "POST",
-                contentType: "application/x-www-form-urlencoded",
-                data: formData,
-                beforeSend: function () {
-                    $('#btn-register').prop('disabled', true).text('처리 중...');
-                },
-                success: function (response) {
-                    console.log(response);
-                    window.location.href = "<c:url value='/auth/login'/>";
-                },
-                error: function (xhr) {
-                    console.log("" + xhr.status + ": " + xhr.responseText);
-                    $('#btn-register').prop('disabled', false).text('회원가입');
-                }
-            });
+          $.ajax({
+            url: "<c:url value='/api/auth/register'/>",
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            data: formData,
+            beforeSend: function () {
+              $('#btn-register').prop('disabled', true).text('처리 중...');
+            },
+            success: function (response) {
+              console.log(response);
+              window.location.href = "<c:url value='/login'/>";
+            },
+            error: function (xhr) {
+              console.log("" + xhr.status + ": " + xhr.responseText);
+              $('#btn-register').prop('disabled', false).text('회원가입');
+            }
+          });
         },
         emailCheckImpl:function(emailVal){
-            $.ajax({
-                url: "<c:url value='/api/auth/check-email'/>",
-                type: 'POST',
-                data: { email: emailVal },
-                success: (resp) => {
-                    $('#email-feedback').text(resp).css('color', 'green');
-                    $('#email').addClass('is-valid').removeClass('is-invalid');
-                    this.isEmailDuplicateChecked = true;
-                    $('#btn-chk-email').removeClass('btn-dark').addClass('btn-outline-secondary');
-                    this.checkFormValidity();
-                },
-                error: (xhr) => {
-                    $('#email-feedback').text(xhr.responseText).css('color', 'red');
-                    $('#email').addClass('is-invalid').removeClass('is-valid');
-                    this.isEmailDuplicateChecked = false;
-                    $('#btn-chk-email').prop('disabled', false);
-                    this.checkFormValidity();
-                }
-            });
+          $.ajax({
+            url: "<c:url value='/api/auth/check-email'/>",
+            type: 'POST',
+            data: { email: emailVal },
+            success: (resp) => {
+              $('#email-feedback').text(resp).css('color', 'green');
+              $('#email').addClass('is-valid').removeClass('is-invalid');
+              this.isEmailDuplicateChecked = true;
+              $('#btn-chk-email').removeClass('btn-dark').addClass('btn-outline-secondary');
+              this.checkFormValidity();
+            },
+            error: (xhr) => {
+              $('#email-feedback').text(xhr.responseText).css('color', 'red');
+              $('#email').addClass('is-invalid').removeClass('is-valid');
+              this.isEmailDuplicateChecked = false;
+              $('#btn-chk-email').prop('disabled', false);
+              this.checkFormValidity();
+            }
+          });
         }
     };
     $(function(){

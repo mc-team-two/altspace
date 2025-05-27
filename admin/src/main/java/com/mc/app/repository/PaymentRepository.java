@@ -17,22 +17,6 @@ public interface PaymentRepository extends MCRepository<Payments,Integer> {
     List<Payments> selectByHostId(String s) throws Exception;
     List<Payments> selectByAccommodationId(int accommodationId);
 
-    // 이번 달 수익 합계
-    Integer selectMonthTotal() throws Exception;
-
-    // 내일 이후의 완료된 예약 건수 조회
-    List<Payments> selectUpcomingReservations() throws Exception;
-
-    // 오늘/내일 체크인 건수 조회
-    int countTodayCheckIn() throws Exception;
-    int countTomorrowCheckIn() throws Exception;
-
-    // 오늘/내일 체크아웃 건수 조회
-    int countTodayCheckOut() throws Exception;
-    int countTomorrowCheckOut() throws Exception;
-
-    int countTotalReservations() throws Exception;
-
     // 오늘부터 7일 이내의 다가오는 예약 목록
     List<Payments> selectUpcoming7DaysReservations() throws Exception;
 

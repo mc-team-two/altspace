@@ -5,6 +5,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mc.app.dto.*;
 import com.mc.app.service.*;
+
+import java.sql.Date;
+
 import com.mc.util.GeminiUtil;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -55,13 +60,12 @@ public class MainController {
         model.addAttribute("pageInfo", pageInfo);
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
 
-
-        log.info("🔥 인기 지역 통계: {}", stats);  // 로그로 확인
+        //log.info("🔥 인기 지역 통계: {}", stats);  // 로그로 확인
 
         ObjectMapper mapper = new ObjectMapper();
         String statsJson = mapper.writeValueAsString(stats);
 
-        log.info("📦 JSON 변환 결과: {}", statsJson);  // JSON 결과도 출력
+        //log.info("📦 JSON 변환 결과: {}", statsJson);  // JSON 결과도 출력
 
         model.addAttribute("statsJson", statsJson);
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
@@ -113,6 +117,23 @@ public class MainController {
                          HttpSession httpSession) throws Exception {
 
         Accommodations accomm = accomService.get(id);
+        if (accomm.getHostCreateDay() != null) {
+            long months = ChronoUnit.MONTHS.between(
+                    accomm.getHostCreateDay().toLocalDateTime().toLocalDate(),
+                    LocalDate.now()
+            );
+
+            String hostGrade;
+            if (months < 7) {
+                hostGrade = "신입호스트 · 호스팅 경력 " + months + "개월";
+            } else if (months < 24) {
+                hostGrade = "일반호스트 · 호스팅 경력 " + months + "개월";
+            } else {
+                long years = months / 12;
+                hostGrade = "슈퍼호스트 · 호스팅 경력 " + years + "년";
+            }
+            accomm.setHostGrade(hostGrade);
+        }
         model.addAttribute("accomm", accomm);
 
         // 로그인 사용자 정보 가져오기

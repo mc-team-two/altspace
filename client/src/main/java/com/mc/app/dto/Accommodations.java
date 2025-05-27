@@ -60,6 +60,9 @@ public class Accommodations {
 
     private Timestamp createDay;
     private Timestamp updateDay;
+    private Timestamp hostCreateDay;
 
     private int views;
+
+    private String hostGrade; // 예: 신입호스트, 일반호스트, 슈퍼호스트
 }

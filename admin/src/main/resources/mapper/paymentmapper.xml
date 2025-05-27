@@ -85,46 +85,6 @@
             )
     </select>
 
-    <!-- 내일 이후 예약 건수 조회 -->
-    <select id="selectUpcomingReservations" resultType="Payments">
-        SELECT *
-        FROM payments
-        WHERE pay_status = '완료'
-        AND check_in > CURDATE()  <!-- 내일 이후 -->
-    </select>
-
-    <!-- 오늘 체크인 건수 조회 -->
-    <select id="countTodayCheckIn" resultType="int">
-        SELECT COUNT(*)
-        FROM payments
-        WHERE DATE(check_in) = CURRENT_DATE
-          AND pay_status = '완료'
-    </select>
-
-    <!-- 내일 체크인 건수 조회 -->
-    <select id="countTomorrowCheckIn" resultType="int">
-        SELECT COUNT(*)
-        FROM payments
-        WHERE DATE(check_in) = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
-          AND pay_status = '완료'
-    </select>
-
-    <!-- 오늘 체크아웃 건수 조회 -->
-    <select id="countTodayCheckOut" resultType="int">
-        SELECT COUNT(*)
-        FROM payments
-        WHERE DATE(check_out) = CURRENT_DATE
-          AND pay_status = '완료'
-    </select>
-
-    <!-- 내일 체크아웃 건수 조회 -->
-    <select id="countTomorrowCheckOut" resultType="int">
-        SELECT COUNT(*)
-        FROM payments
-        WHERE DATE(check_out) = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
-          AND pay_status = '완료'
-    </select>
-
     <select id="selectUpcoming7DaysReservations" resultType="Payments">
         SELECT
             p.*,
