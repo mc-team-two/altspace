@@ -61,7 +61,7 @@
         <ul>
             <li class="menu_item"><a href="<c:url value='/'/>">홈</a></li>
             <li class="menu_item"><a href="<c:url value='/about'/>">Altspace란</a></li>
-            <li class="menu_item"><a href="<c:url value='/faq1'/>">고객센터</a></li>
+            <li class="menu_item"><a href="<c:url value='/contacts'/>">고객센터</a></li>
             <li class="menu_item"><a href="<c:url value='/mypage/aireport'/>">마이페이지</a></li>
         </ul>
     </div>
@@ -96,7 +96,7 @@
                         </c:when>
                         <c:otherwise>
                             <form id="deleteAccountForm">
-                                <input type="password" name="confirmPassword" placeholder="비밀번호 확인" required
+                                <input type="password" name="confirmPassword" placeholder="비밀번호 입력" required
                                        class="mb-3"><br>
                                 <button type="submit" class="btn btn-danger">회원 탈퇴</button>
                             </form>
@@ -111,10 +111,10 @@
                     <div class="sidebar_title">MENU</div>
                     <div class="sidebar_list">
                         <ul>
-                            <li><a href="<c:url value='/mypage/aireport'/>">AI 분석</a></li>
                             <li><a href="<c:url value='/details'/>">나의 예약</a></li>
                             <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
                             <li><a href="<c:url value='/wishlist'/>">찜 목록</a></li>
+                            <li><a href="<c:url value='/mypage/aireport'/>">AI 분석</a></li>
                             <li class="has-submenu">
                                 <a href="javascript:void(0)">나의 정보 <i class="fa fa-chevron-down ms-1"></i></a>
                                 <ul class="submenu">
@@ -154,7 +154,7 @@
 </div>
 <div id="gemini-chatbot" class="chatbot chatbot-gemini">
     <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-        <i class="fab fa-android" aria-hidden="true"></i>
+        <i class="fab fa-google" aria-hidden="true"></i>
     </div>
     <div id="gemini-chat-window" class="chat-window gemini-window">
         <div class="chat-header gemini-header">
@@ -188,5 +188,63 @@
                 this.parentElement.classList.toggle("active");
             });
         });
+    });
+</script>
+
+<script>
+        // 🔴 소셜 회원 탈퇴
+        const deleteSocialBtn = document.getElementById("deleteSocialAccountBtn");
+        if (deleteSocialBtn) {
+            deleteSocialBtn.addEventListener("click", function () {
+                if (confirm("정말 탈퇴하시겠습니까?")) {
+                    fetch("<c:url value='/api/auth/del'/>", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: new URLSearchParams({
+                            id: "${user.userId}"
+                        })
+                    }).then(response => response.text())
+                        .then(msg => {
+                            alert(msg);
+                            window.location.href = "/";
+                        }).catch(error => {
+                        console.error(error);
+                        alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                    });
+                }
+            });
+        }
+
+        // 🔴 일반 회원 탈퇴
+        const deleteBtn = document.getElementById("deleteAccountBtn");
+        if (deleteBtn) {
+            deleteBtn.addEventListener("click", function () {
+                const pwd = document.getElementById("confirmPassword").value.trim();
+                if (!pwd) {
+                    alert("비밀번호를 입력하세요!");
+                    return;
+                }
+                if (confirm("정말 탈퇴하시겠습니까?")) {
+                    fetch("<c:url value='/api/auth/del'/>", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: new URLSearchParams({
+                            id: "${user.userId}"
+                        })
+                    }).then(response => response.text())
+                        .then(msg => {
+                            alert(msg);
+                            window.location.href = "/";
+                        }).catch(error => {
+                        console.error(error);
+                        alert("오류가 발생했습니다. 다시 시도해 주세요.");
+                    });
+                }
+            });
+        }
     });
 </script>

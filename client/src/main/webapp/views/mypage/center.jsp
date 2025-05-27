@@ -160,7 +160,7 @@
                 </div>
                 <div id="gemini-chatbot" class="chatbot chatbot-gemini">
                     <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                        <i class="fab fa-android" aria-hidden="true"></i>
+                        <i class="fab fa-google" aria-hidden="true"></i>
                     </div>
                     <div id="gemini-chat-window" class="chat-window gemini-window">
                         <div class="chat-header gemini-header">

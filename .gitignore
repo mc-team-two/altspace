@@ -41,7 +41,8 @@ Desktop.ini  # Windows 폴더 설정 파일
 admin/.gradle/
 client/.gradle/
 
-# ========= 환경 설정 파일 (보류 중) =========
-# application.yml이나 gradlew는 일단 제외 보류
-# application.yml
-# gradlew
+ ========= 환경 설정 파일 (보류 중) =========
+ application.yml이나 gradlew는 일단 제외 보류
+ application.yml
+ application-dev.yml
+ gradlew
