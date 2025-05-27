@@ -51,8 +51,8 @@ app:
     naverApiKey: ENC(W21CWi5vucRAWCqK4GMx1P+L27Q66k3kJRU/e0BOyxs=)
     naverApiSecretKey: ENC(P7kspdfWVZVOh9kr3DG+ogt3pyebrCLy)
   dir:
-    imgdir: file:///C:/Users/yejin/Documents/github/altspace/imgs/  # 화면 출력 용
-    uploadimgdir: C:/Users/yejin/Documents/github/altspace/imgs/    # 파일 Write 용
+    imgdir: file:../imgs/     # 화면 출력 용
+    uploadimgdir: ../imgs/    # 파일 Write 용
   url:
     serverUrl : http://127.0.0.1:9090
 
