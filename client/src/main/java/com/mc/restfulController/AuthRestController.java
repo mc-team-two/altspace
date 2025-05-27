@@ -1,30 +1,31 @@
 package com.mc.restfulController;
 
+
 import com.mc.app.dto.SocialUser;
 import com.mc.app.dto.User;
 import com.mc.app.service.EmailService;
 import com.mc.app.service.SocialUserService;
 import com.mc.app.service.UserService;
+import com.mc.common.response.ResponseMessage;
+import com.mc.common.response.AuthMessage;
 import com.mc.util.AuthUtil;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Map;
 
+@RequestMapping("/api/auth")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("api/auth")
 public class AuthRestController {
-
 
     private final UserService userService;
     private final SocialUserService socialUserService;
@@ -36,8 +37,6 @@ public class AuthRestController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid User user, BindingResult bindingResult) {
         // 파라미터의 @Valid -> User DTO 에서 유효성 검사
-        log.info(user.toString());
-
         // 유효성 검사 실패시
         if (bindingResult.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder();
@@ -47,17 +46,18 @@ public class AuthRestController {
                             .append("] ")
                             .append(error.getDefaultMessage())
                             .append(" "));
+            log.error(errorMessage.toString());
             return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(errorMessage);
+                    .status(AuthMessage.SIGNUP_BAD_REQUEST.getStatus())
+                    .body(AuthMessage.SIGNUP_BAD_REQUEST.getMessage());
         }
 
         // 유효성 검사 통과시
         // #1. DB에서 이메일 주소 중복 검사 (unique key)
         if (userService.getByEmail(user.getEmail()) != null) {
             return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body("사용중인 이메일 주소입니다.");
+                    .status(AuthMessage.EMAIL_CONFLICT.getStatus())
+                    .body(AuthMessage.EMAIL_CONFLICT.getMessage());
         }
 
         // #2. DB에 푸시 (고유 UID 제공 + 암호화)
@@ -68,13 +68,14 @@ public class AuthRestController {
 
         try {
             userService.add(user);
-            log.info(user.toString());
-            return ResponseEntity.ok("회원가입 성공");
+            return ResponseEntity
+                    .status(AuthMessage.SIGNUP_SUCCESS.getStatus())
+                    .body(AuthMessage.SIGNUP_SUCCESS.getMessage());
         } catch (Exception e) {
             log.error("회원가입 중 예외 발생: {}", e.getMessage());
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("회원가입 처리 중 오류가 발생했습니다.");
+                    .status(AuthMessage.SIGNUP_FAIL.getStatus())
+                    .body(AuthMessage.SIGNUP_FAIL.getMessage());
         }
     }
 
@@ -82,7 +83,7 @@ public class AuthRestController {
     @PostMapping("/login")
     public ResponseEntity<?> login(
             @RequestParam("email") String email,
-            @RequestParam("password") String password, HttpSession httpSession) {
+            @RequestParam("password") String password,HttpSession httpSession) {
 
         // 해당 email을 사용하는 유저가 DB에 있는지 확인
         User dbUser = userService.getByEmail(email);
@@ -90,8 +91,8 @@ public class AuthRestController {
         // #1. 유저가 없으면 -> 에러 처리
         if (dbUser == null) {
             return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body("이메일 또는 비밀번호가 틀렸습니다.");
+                    .status(AuthMessage.LOGIN_NOT_FOUND.getStatus())
+                    .body(AuthMessage.LOGIN_NOT_FOUND.getMessage());
         }
 
         // 유저가 있으면 ->
@@ -101,26 +102,26 @@ public class AuthRestController {
             dbUser.setName(standardPBEStringEncryptor.decrypt(dbUser.getName()));
             dbUser.setPhone(standardPBEStringEncryptor.decrypt(dbUser.getPhone()));
             httpSession.setAttribute("user", dbUser);
-            return ResponseEntity.ok("로그인 성공");
-        } else if (!bCryptPasswordEncoder.matches(password, dbUser.getPassword())) {
             return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body("이메일 또는 비밀번호가 틀렸습니다.");
+                    .status(AuthMessage.LOGIN_SUCCESS.getStatus())
+                    .body(AuthMessage.LOGIN_SUCCESS.getMessage());
+        } else if (!bCryptPasswordEncoder.matches(password, dbUser.getPassword())){
+            return ResponseEntity
+                    .status(AuthMessage.LOGIN_BAD_REQUEST.getStatus())
+                    .body(AuthMessage.LOGIN_BAD_REQUEST.getMessage());
         }
 
         // #3. 소셜 회원인지 확인 (비밀번호 필드가 없음) -> 소셜 로그인 버튼으로 로그인 해야됨 (리다이렉트)
         try {
             SocialUser sUser = socialUserService.get(dbUser.getUserId());
-            String provider = sUser.getProvider();
-            String msg = provider + "로 가입한 회원입니다.";
             return ResponseEntity
-                    .status(HttpStatus.FORBIDDEN)
-                    .body(msg);
+                    .status(AuthMessage.LOGIN_BAD_REQUEST.getStatus())
+                    .body(AuthMessage.LOGIN_BAD_REQUEST.getMessage()
+                            + "(" + sUser.getProvider() + ")");
         } catch (Exception e) {
-            log.error("소셜 로그인 사용자 조회 실패", e);
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("소셜 로그인 정보 확인 중 오류가 발생했습니다.");
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
         }
     }
 
@@ -133,10 +134,14 @@ public class AuthRestController {
         // #1. 요청 권한 확인 (세션에서 유저 정보 확인)
         User curUser = (User) httpSession.getAttribute("user");
         if (curUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요한 요청입니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.UNAUTHORIZED.getStatus())
+                    .body(ResponseMessage.UNAUTHORIZED.getMessage());
         }
         if (!curUser.getUserId().equals(id)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("허가되지 않은 요청입니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.FORBIDDEN.getStatus())
+                    .body(ResponseMessage.FORBIDDEN.getMessage());
         }
 
         // #2. DB 접근
@@ -150,31 +155,51 @@ public class AuthRestController {
             curUser.setName(standardPBEStringEncryptor.decrypt(curUser.getName()));
             httpSession.setAttribute("user", curUser);
 
-            return ResponseEntity.ok("회원 정보가 수정되었습니다");
+            return ResponseEntity
+                    .status(AuthMessage.USER_MODIFY_SUCCESS.getStatus())
+                    .body(AuthMessage.USER_MODIFY_SUCCESS.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage());
-            return ResponseEntity.internalServerError().body("서버 오류가 발생했습니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
         }
     }
 
     // 유저 삭제
     @PostMapping("/del")
     public ResponseEntity<?> del(@RequestParam("id") String id, HttpSession httpSession) {
+        // 권한 체크
         User curUser = (User) httpSession.getAttribute("user");
-
         if (curUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요한 요청입니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.UNAUTHORIZED.getStatus())
+                    .body(ResponseMessage.UNAUTHORIZED.getMessage());
         }
         if (!curUser.getUserId().equals(id)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("허가되지 않은 요청입니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.FORBIDDEN.getStatus())
+                    .body(ResponseMessage.FORBIDDEN.getMessage());
         }
+
+        // 탈퇴 시도
         try {
+            // DB 접근
             userService.del(id);
+
+            // 로그아웃 처리
+            httpSession.removeAttribute("user");
             httpSession.invalidate();
-            return ResponseEntity.ok("탈퇴가 정상적으로 완료되었습니다.\n이용해주셔서 감사합니다.");
+
+            // 읃답 반환
+            return ResponseEntity
+                    .status(AuthMessage.USER_DELETE_SUCCESS.getStatus())
+                    .body(AuthMessage.USER_DELETE_SUCCESS.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage());
-            return ResponseEntity.internalServerError().body("회원 탈퇴 과정에서 서버 오류가 발생했습니다.");
+            return ResponseEntity
+                    .status(AuthMessage.USER_DELETE_FAIL.getStatus())
+                    .body(AuthMessage.USER_DELETE_FAIL.getMessage());
         }
     }
 
@@ -188,8 +213,8 @@ public class AuthRestController {
 
             if (dbUser == null) {
                 return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body("해당 이메일로 가입한 회원이 없습니다.");
+                        .status(AuthMessage.EMAIL_NOTFOUND.getStatus())
+                        .body(AuthMessage.EMAIL_NOTFOUND.getMessage());
             }
 
             // #2. 소셜 유저인지 확인
@@ -197,7 +222,9 @@ public class AuthRestController {
             if (dbSocialUser != null) {
                 String msg = dbSocialUser.getProvider() + " 계정으로 가입한 회원입니다.\n"
                         + "연동 일자: " + dbSocialUser.getConnectedAt();
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(msg);
+                return ResponseEntity
+                        .status(AuthMessage.LOGIN_FAIL_SOCIAL.getStatus())
+                        .body(msg);
             }
 
             // #3. 이메일로 가입한 유저라면
@@ -216,13 +243,15 @@ public class AuthRestController {
                     "임시 비밀번호 : " + rawPwd);
 
             // 전송 후 안내 메시지 반환
-            return ResponseEntity.ok("메일이 정상적으로 발송되었습니다. 메일함을 확인해주세요.");
+            return ResponseEntity
+                    .status(AuthMessage.FIND_ACCOUNT_SUCCESS.getStatus())
+                    .body(AuthMessage.FIND_ACCOUNT_SUCCESS.getMessage());
 
         } catch (Exception e) {
             log.error("계정 찾기 중 예외 발생: {}", e.getMessage());
             return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("계정 찾기 중 오류가 발생했습니다.");
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
         }
     }
 
@@ -233,8 +262,8 @@ public class AuthRestController {
         String oldPwd = pwdData.get("oldPwd");
         String newPwd = pwdData.get("newPwd");
 
-        log.info("oldPwd: " + oldPwd);
-        log.info("newPwd: " + newPwd);
+        //log.info("oldPwd: " + oldPwd);
+        //log.info("newPwd: " + newPwd);
 
         // 현재 로그인한 사용자
         User user = (User) httpSession.getAttribute("user");
@@ -245,16 +274,19 @@ public class AuthRestController {
             dbUser.setPassword(bCryptPasswordEncoder.encode(newPwd));
             userService.mod(dbUser);
             httpSession.setAttribute("user", dbUser);
-            return ResponseEntity.ok("정상적으로 변경되었습니다.");
+            return ResponseEntity
+                    .status(AuthMessage.PWD_CHANGE_SUCCESS.getStatus())
+                    .body(AuthMessage.PWD_CHANGE_SUCCESS.getMessage());
         } else if (!bCryptPasswordEncoder.matches(oldPwd, dbUser.getPassword())) {
-            return ResponseEntity.badRequest().body("비밀번호가 틀렸습니다");
+            return ResponseEntity
+                    .status(AuthMessage.PWD_CHANGE_BAD_REQUEST.getStatus())
+                    .body(AuthMessage.PWD_CHANGE_BAD_REQUEST.getMessage());
         }
 
-        if (!newPwd.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")) {
-            return ResponseEntity.badRequest().body("비밀번호는 8~20자의 영문자, 숫자, 특수문자를 포함해야 합니다.");
-        }
-
-        return ResponseEntity.internalServerError().body("오류가 발생했습니다. 관리자에게 문의해주세요.");
+        // 디폴트 응답 (처리 불가)
+        return ResponseEntity
+                .status(ResponseMessage.ERROR.getStatus())
+                .body(ResponseMessage.ERROR.getMessage());
     }
 
     // 이메일 중복 체크
@@ -264,13 +296,18 @@ public class AuthRestController {
             User dbUser = userService.getByEmail(email);
             if (dbUser != null) {
                 return ResponseEntity
-                        .status(HttpStatus.CONFLICT)
-                        .body("이미 사용중인 이메일 주소입니다.");
+                        .status(AuthMessage.EMAIL_CONFLICT.getStatus())
+                        .body(AuthMessage.EMAIL_CONFLICT.getMessage());
             }
-            return ResponseEntity.ok("사용 가능한 이메일 주소입니다.");
+            return ResponseEntity
+                    .status(AuthMessage.EMAIL_AVAILABLE.getStatus())
+                    .body(AuthMessage.EMAIL_AVAILABLE.getMessage());
         } catch (Exception e) {
             log.error(e.getMessage());
-            return ResponseEntity.internalServerError().body("서버 오류가 발생했습니다.");
+            return ResponseEntity
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
         }
     }
+
 }
