@@ -25,5 +25,10 @@
     <delete id="delete" parameterType="String">
         DELETE FROM users WHERE user_id=#{userId}
     </delete>
+    <update id="softDelete" parameterType="String">
+        UPDATE users
+        SET deleted_day = NOW()
+        WHERE user_id = #{userId}
+    </update>
 
 </mapper>

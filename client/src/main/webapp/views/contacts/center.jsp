@@ -125,6 +125,23 @@
     </div>
 </div>
 
+<div id="gemini-chatbot" class="chatbot chatbot-gemini">
+    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+        <i class="fab fa-google" aria-hidden="true"></i>
+    </div>
+    <div id="gemini-chat-window" class="chat-window gemini-window">
+        <div class="chat-header gemini-header">
+            <span>Gemini 챗봇</span>
+            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+        </div>
+        <div class="chat-messages" id="gemini-chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="gemini-chat-input" placeholder="Gemini에게 물어보세요">
+            <button id="gemini-chat-send-btn">보내기</button>
+        </div>
+    </div>
+</div>
+
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>

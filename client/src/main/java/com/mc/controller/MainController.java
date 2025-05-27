@@ -22,6 +22,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -30,16 +31,15 @@ public class MainController {
     @Value("${app.url.webSocketUrl}")
     String webSocketUrl;
 
+    @Value("${app.key.kakaoJSApiKey}")
+    String kakaoJSApiKey;
+
     final WishlistService wishlistService;
     final AccomService accomService;
     final PaymentService paymentService;
     final ReviewService reviewService;
     final GeminiService geminiService;
     final GeminiUtil geminiUtil;
-
-
-    @Value("${app.key.kakaoJSApiKey}")
-    String kakaoJSApiKey;
 
     private static final int PAGE_SIZE = 10; // 한 페이지에 표시할 숙소 수
 
@@ -81,32 +81,31 @@ public class MainController {
     }
 
     @RequestMapping("/contacts")
-    public String contacts(Model model){
+    public String contacts(Model model) {
         model.addAttribute("center", "contacts/center");
         return "index";
     }
 
     @RequestMapping("/faq1")
-    public String faq1(Model model){
-        model.addAttribute("headers", "faq1/headers");
+    public String faq1(Model model) {
+
         model.addAttribute("center", "faq1/center");
-        model.addAttribute("footer", "faq1/footer");
         return "index";
     }
 
     @RequestMapping("/faq2")
-    public String faq2(Model model){
-        model.addAttribute("headers", "faq2/headers");
+    public String faq2(Model model) {
+
         model.addAttribute("center", "faq2/center");
-        model.addAttribute("footer", "faq2/footer");
+
         return "index";
     }
 
     @RequestMapping("/faq3")
-    public String faq3(Model model){
-        model.addAttribute("headers", "faq3/headers");
+    public String faq3(Model model) {
+
         model.addAttribute("center", "faq3/center");
-        model.addAttribute("footer", "faq3/footer");
+
         return "index";
     }
 
@@ -147,14 +146,14 @@ public class MainController {
             wishlist.setAccommodationId(id);
 
             // 숙소 ID와 유저 ID로 찜 여부 확인
-            Wishlist resultWishlist  = wishlistService.wishlistSelect(wishlist);
+            Wishlist resultWishlist = wishlistService.wishlistSelect(wishlist);
 
             model.addAttribute("resultWishlist", resultWishlist);
         } else {
             model.addAttribute("resultWishlist", null); // 비로그인 상태일 경우
         }
 
-        List<Payments> chInChOut =  paymentService.selectCheckInCheckOut(id);
+        List<Payments> chInChOut = paymentService.selectCheckInCheckOut(id);
         model.addAttribute("chInChOut", chInChOut);
 
         List<Reviews> review = reviewService.selectReviewsAll(id);
@@ -218,6 +217,7 @@ public class MainController {
         model.addAttribute("serverUrl", webSocketUrl);
         return "chat";
     }
+
     @PostMapping("/analyze-heatmap")
     @ResponseBody
     public String analyzeHeatmap(@RequestBody List<PopularLocation> stats) {

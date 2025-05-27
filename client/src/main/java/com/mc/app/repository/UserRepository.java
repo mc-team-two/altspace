@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserRepository extends MCRepository<User, String> {
     User selectByEmail(String email);
+    void softDelete(String id);
 }

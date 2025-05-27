@@ -45,4 +45,9 @@ public class UserService implements MCService<User, String> {
         return userRepository.selectByEmail(email);
     }
 
+
+    public void softDel(String id) {
+        userRepository.softDelete(id);
+    }
+
 }

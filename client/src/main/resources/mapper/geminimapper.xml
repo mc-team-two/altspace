@@ -8,6 +8,7 @@
     <!--    히트맵을 만들기 위한 DB 조회 쿼리 -->
     <select id="selectPopularLocations" resultType="com.mc.app.dto.PopularLocation">
         SELECT
+            a.name,
             a.location,
             SUM(a.views) AS total_views,
             COUNT(DISTINCT p.payment_id) AS booking_count,
@@ -15,7 +16,7 @@
         FROM accommodations AS a
                  LEFT JOIN payments p ON a.accommodation_id = p.accommodation_id AND p.pay_status = '완료'
                  LEFT JOIN reviews r ON a.accommodation_id = r.accommodation_id
-        GROUP BY a.location
+        GROUP BY a.name, a.location
     </select>
 
     <!-- ✅ 사용자 개인화 추천 데이터 -->
