@@ -196,7 +196,7 @@
     container.empty();
 
     if (dataList && dataList.length > 0) {
-      const rankLabels = ['🥇 1위', '🥈 2위', '🥉 3위', '🏅 4위', '🎖️ 5위'];
+      const rankLabels = ['1위 🥇', '2위 🥈', '3위 🥉', '4위    ', '5위    '];
       const colors = ['#b8860b', '#6c757d', '#8b4513', '#5a2d82', '#0d6efd']; // 진한 금색, 은색, 동색, 보라, 파랑
 
       dataList.forEach((item, index) => {
@@ -206,7 +206,7 @@
         container.append(
                 '<li class="list-group-item d-flex justify-content-between align-items-center" ' +
                 'style="color:' + color + '; font-weight: 400; font-size: 1rem;">' +
-                '<span><i class="bi bi-star-fill me-2" style="color:' + color + ';"></i>' + rank + ' - ' + item.name + '</span>' +
+                '<span>' + rank + ' - ' + item.name + '</span>' +
                 '</li>'
         );
       });
