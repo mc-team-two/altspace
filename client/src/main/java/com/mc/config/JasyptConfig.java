@@ -4,6 +4,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,15 +12,19 @@ import org.springframework.context.annotation.Configuration;
 @EnableEncryptableProperties
 public class JasyptConfig {
 
-    private static final String KEY = "space";
-    private static final String ALGORITHM =  "PBEWithMD5AndDES";
+
+    @Value("${jasypt.encryptor.password}")
+    private String key;
+
+    @Value("${jasypt.encryptor.algorithm}")
+    private String algorithm;
 
     @Bean("jasyptStringEncryptor")
     public StringEncryptor stringEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-        config.setPassword(KEY); // 암호화 키
-        config.setAlgorithm(ALGORITHM); // 알고리즘
+        config.setPassword(key); // 암호화 키
+        config.setAlgorithm(algorithm); // 알고리즘
         config.setKeyObtentionIterations("1000"); // 반복할 해싱 회수
         config.setPoolSize("1"); // 인스턴스 pool
         config.setProviderName("SunJCE"); // 프로바이더

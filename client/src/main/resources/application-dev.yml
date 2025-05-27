@@ -58,8 +58,6 @@ app:
     naverApiSecretKey: ENC(P7kspdfWVZVOh9kr3DG+ogt3pyebrCLy)
     weatherApiKey: ENC(SSunAfg3V0q/sLi1vc8uOYLMRDt3kfqteXoiUlZ7m0LhtKHhx1vieNgmeLGfPDcZ)
     geminiKey: ENC(S2wV6R49GAcOPcwBhZlQodbdEX3doNitFfS1r28FAidZVFuhDpGQNmgkZFUo/rnZ)
-    algo: PBEWithMD5AndDES
-    skey: mykey
   dir:
     imgdir: file:///C:/IntelliJ/IntelliJ IDEA 2024.3.4.1/project/altspace/imgs/  # 화면 출력 용
     uploadimgdir: C:/IntelliJ/IntelliJ IDEA 2024.3.4.1/project/altspace/imgs/    # 파일 Write 용
@@ -70,20 +68,20 @@ app:
 # 6. iamport
 imp:
   api:
-    key: 0627011552872547
-    secretkey: GDyeTp4vo1P5FKiy67lENk5IK52saDFpLW5vPyu2VioRkqVVvxYXpj8atqMsKc8nwywKJLM8g69cPe24
+    key: ENC(ryjUAD/jpsmz64195spfBPeb9K46NHrvpcXdCR4jwX0=)
+    secretkey: ENC(2+jRbu4v71X6oVxcPlQIIapKVNPV9z2noV0lrrCi2Xv2s9+HYgT2K3UNgWdyq67XzvsH/ewRucAzKfINWvLMDYiC3iFVABzvVnQ3531yLrXSSiB307LDv7JiUzp+Mail)
 
 # 7. NCP(OCR 은 혹시나 몰라서 일단 넣어놨어요.)
 ncp:
   ocr:
-    url: https://tjoxzsvb05.apigw.ntruss.com/custom/v1/41403/f27adacaf33ea3d4f1e97a5ef5c73683d6f2e788d40d9c582d24f9c1676df942/infer
-    key: a1R1U21XY05xT1p4d2FOZEtOZXpGTFJoR2NrQllrYk4=
+    url: ENC(jGflQswiw5J+0d0jYeC0+usqJ410h5kywm+T104JWArSnnz7gh/yVZiJ87eQkgDeF6Qv22oUhHJaVpxu+f0QvClsxGNJSGMduoGa5nXuM9hQLxLCnJ0k0tnWFgwYx5DubMOZvuJsvG6LQfwMs5xRBnhqqsPOH8w4J1TnUjyYS4fzwq8HwVXgDg==)
+    key: ENC(ck19pyCQyOkU8qRuKCPrv+2r6m3b7/l1r4171OAuux0mnqQA0BsLCDdGzTv/5iC060k1FvKk2xA=)
   chatbot:
-    url: https://2sw2npiyi7.apigw.ntruss.com/custom/v1/17417/f27adacaf33ea3d4f1e97a5ef5c73683d6f2e788d40d9c582d24f9c1676df942
-    key: cm9qYVV4U1RGSVBIY21aVVJrUUFjb2NCWktoaHFWV3g=
+    url: ENC(CSA2EHUtQNrUhIYKwfvkaJz+mBDNBw6Zrw2xjAXz6lAQye8BRP3FEXksrUk+w/d4BvlaURrtKPUHnQ9mblLgyNAVQ+rXtM4od+A8FG9dElLyZviDk0UKQKarZmRSprJVcGPm2DHS+OV0cJKkseQoC3th3gNPQBS5Xwu6Xmvyodg=)
+    key: ENC(3gHb4j0kgeZrhn/bvrpGefQqZgNhgpQL94Pd4rH61kJ18qP6bpWYeWu7HyAZduYukes8tANgojY=)
   papago:
-    id: 7poc0cqw3p
-    key: HrLIOMOGp2173lnuNHV73vpFzlb1Y8RGqXt3DpLv
+    id: ENC(un4U0QCtRNbvsc/y+3E7CVxtdVSFJHxx)
+    key: ENC(Aq19Q5y42NHRa6hDp7SuvA9dXSRAjqyotN1TQEuNY7NFiajTFXf8SNfCe6rpLqp9mOzkm4lknkE=)
 
 # 8. jasypt
 jasypt:
