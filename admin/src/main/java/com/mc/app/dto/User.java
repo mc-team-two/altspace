@@ -41,4 +41,5 @@ public class User {
 
     private LocalDateTime createDay;
     private LocalDateTime updateDay;
+    private LocalDateTime deletedDay;
 }

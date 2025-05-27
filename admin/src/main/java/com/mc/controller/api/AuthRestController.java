@@ -98,6 +98,13 @@ public class AuthRestController {
         }
 
         // 유저가 있으면 ->
+        // 탈퇴한 회원인지 확인
+        if (dbUser.getDeletedDay() != null) {
+            return ResponseEntity
+                    .status(AuthMessage.DELETED_USER_ERROR.getStatus())
+                    .body(AuthMessage.DELETED_USER_ERROR.getMessage() + "탈퇴일자: \n" + dbUser.getDeletedDay());
+        }
+
         // #2. 일반 회원인지 확인 (비밀번호 필드가 있음)
         if (dbUser.getPassword() != null && bCryptPasswordEncoder.matches(password, dbUser.getPassword())) {
             // 복호화된 데이터로 세팅
@@ -187,7 +194,8 @@ public class AuthRestController {
         // 탈퇴 시도
         try {
             // DB 접근
-            userService.del(id);
+            userService.softDel(id);
+            // userService.del(id);
 
             // 로그아웃 처리
             httpSession.removeAttribute("user");
