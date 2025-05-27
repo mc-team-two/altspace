@@ -60,13 +60,12 @@ public class MainController {
         model.addAttribute("pageInfo", pageInfo);
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
 
-
-        log.info("🔥 인기 지역 통계: {}", stats);  // 로그로 확인
+        //log.info("🔥 인기 지역 통계: {}", stats);  // 로그로 확인
 
         ObjectMapper mapper = new ObjectMapper();
         String statsJson = mapper.writeValueAsString(stats);
 
-        log.info("📦 JSON 변환 결과: {}", statsJson);  // JSON 결과도 출력
+        //log.info("📦 JSON 변환 결과: {}", statsJson);  // JSON 결과도 출력
 
         model.addAttribute("statsJson", statsJson);
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
