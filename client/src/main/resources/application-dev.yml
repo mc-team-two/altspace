@@ -59,8 +59,8 @@ app:
     weatherApiKey: ENC(SSunAfg3V0q/sLi1vc8uOYLMRDt3kfqteXoiUlZ7m0LhtKHhx1vieNgmeLGfPDcZ)
     geminiKey: ENC(S2wV6R49GAcOPcwBhZlQodbdEX3doNitFfS1r28FAidZVFuhDpGQNmgkZFUo/rnZ)
   dir:
-    imgdir: file:///C:/IntelliJ/IntelliJ IDEA 2024.3.4.1/project/altspace/imgs/  # 화면 출력 용
-    uploadimgdir: C:/IntelliJ/IntelliJ IDEA 2024.3.4.1/project/altspace/imgs/    # 파일 Write 용
+    imgdir: file:../imgs/     # 화면 출력 용
+    uploadimgdir: ../imgs/    # 파일 Write 용
   url:
     serverUrl : http://127.0.0.1:8080
     webSocketUrl : http://127.0.0.1:9090
