@@ -161,9 +161,9 @@
                                         code="home"/></a></li>
                                 <li class="main_nav_item"><a href="<c:url value="/about"/> "><spring:message
                                         code="about"/></a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/contacts"/> "><spring:message
+                                <li class="main_nav_item"><a href="<c:url value="/faq1"/> "><spring:message
                                         code="contacts"/></a></li>
-                                <li class="main_nav_item"><a href="<c:url value="/details"/> "><spring:message
+                                <li class="main_nav_item"><a href="<c:url value="/mypage/aireport"/> "><spring:message
                                         code="details"/></a></li>
                             </ul>
                         </div>

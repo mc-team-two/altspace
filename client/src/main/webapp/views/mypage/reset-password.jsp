@@ -62,8 +62,8 @@
         <ul>
             <li class="menu_item"><a href="<c:url value='/'/>">홈</a></li>
             <li class="menu_item"><a href="<c:url value='/about'/>">Altspace란</a></li>
-            <li class="menu_item"><a href="<c:url value='/contacts'/>">고객센터</a></li>
-            <li class="menu_item"><a href="<c:url value='/details'/>">예약 내역</a></li>
+            <li class="menu_item"><a href="<c:url value='/faq1'/>">고객센터</a></li>
+            <li class="menu_item"><a href="<c:url value='/mypage/aireport'/>">마이페이지</a></li>
         </ul>
     </div>
 </div>
@@ -116,10 +116,10 @@
                     <div class="sidebar_title">MENU</div>
                     <div class="sidebar_list">
                         <ul>
+                            <li><a href="<c:url value='/mypage/aireport'/>">AI 분석</a></li>
                             <li><a href="<c:url value='/details'/>">나의 예약</a></li>
                             <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
                             <li><a href="<c:url value='/wishlist'/>">찜 목록</a></li>
-                            <li><a href="<c:url value='/mypage/aireport'/>">AI 분석</a></li>
                             <li class="has-submenu">
                                 <a href="javascript:void(0)">나의 정보 <i class="fa fa-chevron-down ms-1"></i></a>
                                 <ul class="submenu">
