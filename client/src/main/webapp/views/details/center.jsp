@@ -108,7 +108,7 @@
                                         <div class="card-header bg-primary text-white">
                                             <h5 class="mb-0">${py.name}</h5>
                                         </div>
-                                        <img src="${pageContext.request.contextPath}/images/${py.image1Name}"
+                                        <img src="/imgs/${py.image1Name}"
                                              class="card-img-top" alt="숙소 이미지"
                                              style="height: 200px; object-fit: cover;">
                                         <div class="card-body">

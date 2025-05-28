@@ -91,7 +91,7 @@
                                 <div class="col-lg-4">
                                     <div class="offers_image_container">
                                         <div class="offers_image_background"
-                                             style="background-image:url('${pageContext.request.contextPath}/images/${w.image1Name}')">
+                                             style="background-image:url('/imgs/${w.image1Name}')">
                                         </div>
                                         <div class="offer_name">
                                             <a href="<c:url value='/detail?id=${w.accommodationId}'/>">${w.name}</a>
