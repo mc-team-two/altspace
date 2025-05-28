@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ishot
-  Date: 25. 4. 7.
-  Time: 오후 2:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
@@ -29,7 +22,6 @@
           href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
     <link rel="stylesheet"
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
-</head>
     <style>
         .footer_col{
             margin-top: 50px;
@@ -43,8 +35,19 @@
             display: flex;
             font-size: clamp(0.3rem, 0.6vw, 0.5rem);
         }
-</style>
 
+        .lang-option {
+            cursor: pointer;
+            text-decoration: none;
+            padding: 2px 4px;
+            color: #555;
+            font-size: 10px;
+        }
+        .lang-option:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
 <body>
 
 <div class="super_container">
@@ -56,92 +59,63 @@
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        <c:choose>
-                            <c:when test="${sessionScope.user.name == null}">
-                                <div class="user_box ml-auto">
-                                    <div class="weather"></div>
+                        <div class="user_box ml-auto">
+                            <div class="weather"></div>
+
+                            <c:choose>
+                                <c:when test="${sessionScope.user.name == null}">
                                     <div class="user_box_login user_box_link">
-                                        <a href="<c:url value="/login"/> "><spring:message code="login"/></a>
+                                        <a href="<c:url value='/login'/>"><spring:message code="login"/></a>
                                     </div>
                                     <div class="user_box_login user_box_link">
-                                        <a href="<c:url value="/login/register"/> "><spring:message
-                                                code="register"/></a>
+                                        <a href="<c:url value='/login/register'/>"><spring:message code="register"/></a>
                                     </div>
-                                    <div class="user_box_login theme-switch">
-                                        <label class="theme-toggle" title="다크 모드 전환">
-                                            <input type="checkbox" id="theme-toggle-guest" class="theme-toggle">
-                                            <span class="slider">
-                                        <i class="fa fa-moon moon-icon" aria-hidden="true"></i>
-                                        <i class="fa fa-sun sun-icon" aria-hidden="true"></i>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value='/mypage?name=${sessionScope.user.name}'/>">${sessionScope.user.name}</a>
+                                    </div>
+                                    <div class="user_box_login user_box_link">
+                                        <a href="<c:url value='/login/logout'/>"><spring:message code="logout"/></a>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+
+                            <!-- 공통 다크 모드 토글 -->
+                            <div class="user_box_login theme-switch">
+                                <label class="theme-toggle" title="다크 모드 전환">
+                                    <input type="checkbox"
+                                           id="${sessionScope.user.name == null ? 'theme-toggle-guest' : 'theme-toggle-user'}"
+                                           class="theme-toggle">
+                                    <span class="slider">
+                                        <i class="fa fa-moon${sessionScope.user.name == null ? '' : '-o'} moon-icon" aria-hidden="true"></i>
+                                        <i class="fa fa-sun${sessionScope.user.name == null ? '' : '-o'} sun-icon" aria-hidden="true"></i>
                                     </span>
-                                        </label>
-                                    </div>
-                                    <div class="user_box_login dropdown">
-                                        <form id="languageForm" action="/" method="get">
-                                            <c:forEach var="param" items="${param}">
-                                                <c:if test="${param.key ne 'lang'}">
-                                                    <input type="hidden" name="${param.key}" value="${param.value}"/>
-                                                </c:if>
-                                            </c:forEach>
-                                            <select name="lang"
-                                                    onchange="document.getElementById('languageForm').submit()">
-                                                <option value="ko" ${param.lang == 'ko' || (empty param.lang && sessionScope.currentLocale == 'ko') ? 'selected' : ''}>
-                                                    <spring:message code="dropdownko"/>
-                                                </option>
-                                                <option value="en" ${param.lang == 'en' || (empty param.lang && sessionScope.currentLocale == 'en') ? 'selected' : ''}>
-                                                    <spring:message code="dropdownen"/>
-                                                </option>
-                                                <option value="ja" ${param.lang == 'ja' || (empty param.lang && sessionScope.currentLocale == 'ja') ? 'selected' : ''}>
-                                                    <spring:message code="dropdownjp"/>
-                                                </option>
-                                            </select>
-                                        </form>
-                                    </div>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="user_box ml-auto">
-                                   <div class="weather"></div>
-                                    <div class="user_box_login user_box_link">
-                                        <a href="<c:url value="/mypage?name=${sessionScope.user.name}"/> ">${sessionScope.user.name}</a>
-                                    </div>
-                                    <div class="user_box_login user_box_link">
-                                        <a href="<c:url value="/login/logout"/>"><spring:message code="logout"/></a>
-                                    </div>
-                                    <div class="user_box_login theme-switch">
-                                        <label class="theme-toggle" title="다크 모드 전환">
-                                            <input type="checkbox" id="theme-toggle-user" class="theme-toggle">
-                                            <span class="slider">
-                                        <i class="fa fa-moon-o moon-icon" aria-hidden="true"></i>
-                                        <i class="fa fa-sun-o sun-icon" aria-hidden="true"></i>
-                                    </span>
-                                        </label>
-                                    </div>
-                                    <div class="user_box_login dropdown">
-                                        <form id="languageForm" action="/" method="get">
-                                            <c:forEach var="param" items="${param}">
-                                                <c:if test="${param.key ne 'lang'}">
-                                                    <input type="hidden" name="${param.key}"
-                                                           value="${param.value}"/>
-                                                </c:if>
-                                            </c:forEach>
-                                            <select name="lang"
-                                                    onchange="document.getElementById('languageForm').submit()">
-                                                <option value="ko" ${param.lang == 'ko' || (empty param.lang && sessionScope.currentLocale == 'ko') ? 'selected' : ''}>
-                                                    <spring:message code="dropdownko"/>
-                                                </option>
-                                                <option value="en" ${param.lang == 'en' || (empty param.lang && sessionScope.currentLocale == 'en') ? 'selected' : ''}>
-                                                    <spring:message code="dropdownen"/>
-                                                </option>
-                                                <option value="ja" ${param.lang == 'ja' || (empty param.lang && sessionScope.currentLocale == 'ja') ? 'selected' : ''}>
-                                                    <spring:message code="dropdownjp"/>
-                                                </option>
-                                            </select>
-                                        </form>
-                                    </div>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
+                                </label>
+                            </div>
+
+                            <!-- 공통 언어 선택 -->
+                            <div class="user_box_login lang-switch">
+                                <form id="languageForm" method="get" style="display: flex; gap: 8px; align-items: center;">
+                                    <c:forEach var="param" items="${param}">
+                                        <c:if test="${param.key ne 'lang'}">
+                                            <input type="hidden" name="${param.key}" value="${param.value}"/>
+                                        </c:if>
+                                    </c:forEach>
+
+                                    <input type="hidden" name="lang" id="langInput" value="${param.lang}"/>
+
+                                    <span class="lang-option <c:if test='${param.lang == "ko" || (empty param.lang && sessionScope.currentLocale == "ko")}'>active</c:if>"
+                                          onclick="changeLang('ko')">KR</span>
+                                    |
+                                    <span class="lang-option <c:if test='${param.lang == "en" || (empty param.lang && sessionScope.currentLocale == "en")}'>active</c:if>"
+                                          onclick="changeLang('en')">EN</span>
+                                    |
+                                    <span class="lang-option <c:if test='${param.lang == "ja" || (empty param.lang && sessionScope.currentLocale == "ja")}'>active</c:if>"
+                                          onclick="changeLang('ja')">JA</span>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -264,6 +238,14 @@
         </div>
     </div>
 </div>
+
+<%--언어 선택 변경 스크립트--%>
+<script>
+    function changeLang(lang) {
+        document.getElementById('langInput').value = lang;
+        document.getElementById('languageForm').submit();
+    }
+</script>
 
 <!-- jQuery (필수: Bootstrap은 jQuery에 의존함) -->
 <script src="<c:url value='js/jquery-3.2.1.min.js'/>"></script>
