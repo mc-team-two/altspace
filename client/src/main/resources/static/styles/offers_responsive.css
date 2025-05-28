@@ -34,7 +34,7 @@
 	.col-1680-4
 	{
 		flex: 0 0 33.333333%;
-    	max-width: 33.333333%;
+		max-width: 33.333333%;
 	}
 	.offers
 	{
@@ -115,12 +115,12 @@
 		width: 100%;
 		height: 100%;
 		-webkit-animation: fadeEffect 1s;
-	    animation: fadeEffect 1s;
-	    padding-left: 0px;
-	    padding-right: 0px;
-	    margin-top: 0px;
-	    padding-top: 57px;
-	    padding-bottom: 72px;
+		animation: fadeEffect 1s;
+		padding-left: 0px;
+		padding-right: 0px;
+		margin-top: 0px;
+		padding-top: 57px;
+		padding-bottom: 72px;
 	}
 	.search_item
 	{
@@ -176,7 +176,7 @@
 
 @media only screen and (max-width: 1680px)
 {
-	
+
 }
 
 /************
@@ -185,7 +185,7 @@
 
 @media only screen and (max-width: 1440px)
 {
-	
+
 }
 
 /************
@@ -194,7 +194,7 @@
 
 @media only screen and (max-width: 1380px)
 {
-	
+
 }
 
 /************
@@ -203,7 +203,7 @@
 
 @media only screen and (max-width: 1280px)
 {
-	
+
 }
 
 /************
@@ -232,7 +232,7 @@
 
 @media only screen and (max-width: 1100px)
 {
-	
+
 }
 
 /************
@@ -241,7 +241,7 @@
 
 @media only screen and (max-width: 1024px)
 {
-	
+
 }
 
 /************
@@ -317,7 +317,7 @@
 	.col-1680-4
 	{
 		flex: 0 0 100%;
-    	max-width: 100%;
+		max-width: 100%;
 	}
 	.offers_image_container
 	{
@@ -370,7 +370,7 @@
 
 @media only screen and (max-width: 959px)
 {
-	
+
 }
 
 /************
@@ -379,37 +379,31 @@
 
 @media only screen and (max-width: 880px)
 {
-	
+
 }
 
 /************
 9. 768px
 ************/
+@media only screen and (max-width: 768px) {
 
-@media only screen and (max-width: 768px)
-{
+	/* 여행 추천 카드 반응형 */
+	#travel-insight-widgets .col-md-3 {
+		flex: 0 0 100%;
+		max-width: 100%;
+		margin-bottom: 1rem;
+	}
 
-	/************
-여행 추천 카드 반응형 - 768px 이하
-************/
-	@media only screen and (max-width: 768px) {
-		#travel-insight-widgets .col-md-3 {
-			flex: 0 0 100%;
-			max-width: 100%;
-			margin-bottom: 1rem;
-		}
+	#travel-insight-widgets .card {
+		padding: 1rem;
+	}
 
-		#travel-insight-widgets .card {
-			padding: 1rem;
-		}
+	#travel-insight-widgets .card .display-6 {
+		font-size: 1.8rem !important;
+	}
 
-		#travel-insight-widgets .card .display-6 {
-			font-size: 1.8rem !important;
-		}
-
-		#travel-insight-widgets .card-title {
-			font-size: 1rem !important;
-		}
+	#travel-insight-widgets .card-title {
+		font-size: 1rem !important;
 	}
 }
 
@@ -429,7 +423,7 @@
 	}
 	.home_title
 	{
-    	font-size: 48px;
+		font-size: 48px;
 	}
 }
 
@@ -569,9 +563,9 @@
 	.offer_reviews_rating
 	{
 		width: 56px;
-	    height: 47px;
-	    font-size: 24px;
-	    line-height: 47px;
+		height: 47px;
+		font-size: 24px;
+		line-height: 47px;
 	}
 	.offer_reviews_title
 	{
@@ -597,7 +591,7 @@
 
 @media only screen and (max-width: 539px)
 {
-	
+
 }
 
 /************
@@ -606,7 +600,7 @@
 
 @media only screen and (max-width: 480px)
 {
-	
+
 }
 
 /************

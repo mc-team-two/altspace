@@ -52,6 +52,39 @@
             transform: translateY(0);
         }
     }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* 아이콘과 텍스트 간격 */
+        font-size: 16px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .sidebar-link:hover {
+        color: #007bff;
+        transform: translateX(4px);
+    }
+
+    .sidebar-link i {
+        font-size: 16px;
+        width: 20px; /* 아이콘 영역 고정 */
+        text-align: center;
+    }
+
+    /* 나의 정보 라인도 동일하게 맞추기 */
+    .has-submenu > .sidebar-link {
+        justify-content: space-between;
+        padding-right: 8px; /* 드롭다운 아이콘 여유 공간 */
+    }
+
+    /* 드롭다운 아이콘 위치 조정 */
+    .has-submenu .fa-chevron-down {
+        margin-left: auto;
+        font-size: 12px;
+    }
 </style>
 <!-- 메뉴 -->
 <div class="menu trans_500">
@@ -123,15 +156,15 @@
                                 <div class="user-info-item d-flex mb-2">
                                     <span class="user-info-label flex-shrink-0 me-2 fw-bold">정보 수정일:</span>
                                     <span class="user-info-value">
-                    <c:choose>
-                        <c:when test="${user.updateDay == null}">
-                            <span class="text-muted">수정 기록 없음</span>
-                        </c:when>
-                        <c:otherwise>
-                            ${user.updateDay}
-                        </c:otherwise>
-                    </c:choose>
-                </span>
+                                    <c:choose>
+                                        <c:when test="${user.updateDay == null}">
+                                            <span class="text-muted">수정 기록 없음</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${user.updateDay}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </span>
                                 </div>
                             </div>
                         </c:if>
@@ -177,25 +210,53 @@
             </div>
 
             <!-- 오른쪽 사이드바 -->
-            <div class="col-lg-4 sidebar_list4css">
-                <div class="sidebar_archives" style="margin-left: 100px;">
-                    <div class="sidebar_title">MENU</div>
-                    <div class="sidebar_list">
-                        <ul>
-                            <li><a href="<c:url value='/mypage/aireport'/>">AI 분석</a></li>
-                            <li><a href="<c:url value='/details'/>">나의 예약</a></li>
-                            <li><a href="<c:url value='/review'/>">나의 리뷰</a></li>
-                            <li><a href="<c:url value='/wishlist'/>">찜 목록</a></li>
-                            <li class="has-submenu">
-                                <a href="javascript:void(0)">나의 정보 <i class="fa fa-chevron-down ms-1"></i></a>
-                                <ul class="submenu">
-                                    <li><a href="<c:url value='/mypage'/>">내 정보</a>
-                                    <li><a href="<c:url value='/mypage/modify-info'/>">내 정보 수정</a></li>
-                                    <li><a href="<c:url value='/mypage/reset-password'/>">비밀번호 재설정</a></li>
-                                    <li><a href="<c:url value='/mypage/delete-account'/>">회원 탈퇴</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+            <div class="col-lg-4">
+                <div class="position-sticky sidebar_list4css" style="top: 100px; z-index: 10;">
+                    <div class="sidebar_archives" style="margin-left: 100px;">
+                        <div class="sidebar_title" style="font-size: 20px; font-weight: bold; margin-bottom: 20px;">MENU</div>
+                        <div class="sidebar_list">
+                            <ul style="list-style: none; padding-left: 0;">
+                                <li style="margin-bottom: 12px;">
+                                    <a href="<c:url value='/details'/>" class="sidebar-link">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span>나의 예약</span>
+                                    </a>
+                                </li>
+                                <li style="margin-bottom: 12px;">
+                                    <a href="<c:url value='/review'/>" class="sidebar-link">
+                                        <i class="fas fa-star"></i>
+                                        <span>나의 리뷰</span>
+                                    </a>
+                                </li>
+                                <li style="margin-bottom: 12px;">
+                                    <a href="<c:url value='/wishlist'/>" class="sidebar-link">
+                                        <i class="fas fa-heart"></i>
+                                        <span>찜 목록</span>
+                                    </a>
+                                </li>
+                                <li style="margin-bottom: 12px;">
+                                    <a href="<c:url value='/mypage/aireport'/>" class="sidebar-link">
+                                        <i class="fas fa-robot"></i>
+                                        <span>AI 분석</span>
+                                    </a>
+                                </li>
+                                <li class="has-submenu" style="margin-bottom: 12px;">
+                                    <a href="javascript:void(0)" class="sidebar-link" style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="display: flex; align-items: center; gap: 10px;">
+                                            <i class="fas fa-user"></i>
+                                            나의 정보
+                                        </span>
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="submenu" style="padding-left: 20px; margin-top: 10px;">
+                                        <li><a href="<c:url value='/mypage'/>">📄 내 정보</a></li>
+                                        <li><a href="<c:url value='/mypage/modify-info'/>">✏️ 내 정보 수정</a></li>
+                                        <li><a href="<c:url value='/mypage/reset-password'/>">🔒 비밀번호 재설정</a></li>
+                                        <li><a href="<c:url value='/mypage/delete-account'/>">⛔ 회원 탈퇴</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
