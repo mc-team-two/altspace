@@ -176,6 +176,35 @@ public class ReviewRestController {
         }
     }
 
+    @PostMapping("/mod-reply")
+    public ResponseEntity<?> modReply(@RequestBody ReviewReplies reply, HttpSession httpSession) {
+        // 권한 제어
+        String hostId = reply.getUserId();
+        User curUser = (User) httpSession.getAttribute("user");
+        if (curUser == null) {
+            return ResponseEntity
+                    .status(ResponseMessage.UNAUTHORIZED.getStatus())
+                    .body(ResponseMessage.UNAUTHORIZED.getMessage());
+        }
+        if (!curUser.getUserId().equals(hostId)) {
+            return ResponseEntity
+                    .status(ResponseMessage.FORBIDDEN.getStatus())
+                    .body(ResponseMessage.FORBIDDEN.getMessage());
+        }
+
+        // DB 제어
+        try {
+            reviewRepliesService.mod(reply);
+            return ResponseEntity
+                    .status(ResponseMessage.SUCCESS.getStatus())
+                    .body(ResponseMessage.SUCCESS.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(ResponseMessage.ERROR.getStatus())
+                    .body(ResponseMessage.ERROR.getMessage());
+        }
+    }
+    
     ///  리뷰 번역
     @PostMapping("/translate")
     public ResponseEntity<String> translate(@RequestBody Map<String, String> body) {
