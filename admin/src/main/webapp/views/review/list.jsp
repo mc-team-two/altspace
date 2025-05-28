@@ -10,6 +10,9 @@
     .header-text {
         font-size: 20px;
         font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .review-card[style*="display:none"] {
         display: none;
@@ -33,25 +36,25 @@
     <div class="row my-3 mx-0 bg-light rounded p-3 text-center justify-content-around">
         <div class="col p-0 border-0 rounded-2 pt-2">
             <p class="header-text">누적 리뷰수</p>
-            <p id="totalReviews">
+            <p id="totalReviews" class="display-3">
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
         <div class="col border-0 rounded-2 pt-2">
             <p class="header-text">호스팅 누적 평점</p>
-            <p id="averageGrade">
+            <p id="averageGrade" class="display-3">
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
         <div class="col border-0 rounded-2 pt-2">
             <p class="header-text">오늘 등록된 리뷰</p>
-            <p id="todayReviews">
+            <p id="todayReviews" class="display-3">
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
         <div class="col border-0 rounded-2 pt-2">
             <p class="header-text">답글을 쓸 수 있는 리뷰</p>
-            <p id="noReplyReviews">
+            <p id="noReplyReviews" class="display-3">
                 <span class="spinner-border text-primary"></span>
             </p>
         </div>
