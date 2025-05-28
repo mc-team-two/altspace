@@ -978,6 +978,7 @@ section
 .search_panel.active
 {
 	display: flex!important;
+	box-sizing: border-box!important;
 }
 /* Fade in tabs */
 @-webkit-keyframes fadeEffect {

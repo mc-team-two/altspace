@@ -136,24 +136,12 @@ public class MypageController {
     @GetMapping("/aireport")
     public String aireport(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        String userId = user.getUserId();
+        if (user == null) {
+            return "redirect:/login"; // 예: 로그인 페이지로 이동
+        }
 
-        // 1️⃣ 사용자 취향 데이터 조회
-        UserPreference userPref = geminiService.getUserPreferenceData(userId);
-
-        // 2️⃣ AI에게 추천 요청
-        List<PersonalizedRecommendation> recommendations = geminiService.getPersonalizedRecommendations(userPref);
-
-        // 2️⃣ AI에게 내 유형 분석 요청
-        UserConsumptionAnalysis analysis = geminiService.getUserConsumptionAnalysis(userPref);
-
-        log.info("### 추천 결과 크기: {}", recommendations.size());
-        recommendations.forEach(r -> log.info("추천: {}", r));
-
-
-        // 3️⃣ JSP로 전달
-        model.addAttribute("aiRecommendations", recommendations);
-        model.addAttribute("consumptionAnalysis", analysis);
+        model.addAttribute("user", user); // ✅ JSP에서 바로 ${user.xxx}로 쓸 수 있도록 처리
+        log.info("⭐️ userId: {}", user.getUserId());
         model.addAttribute("center", dir + "aireport");
 
         return "index";

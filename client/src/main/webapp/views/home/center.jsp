@@ -277,6 +277,14 @@
     </div>
     <div class="container my-5">
         <div id="travel-insight-container" class="mb-5 d-none">
+            <!-- ⭐ 스피너 영역 ⭐ -->
+            <div id="travelInsightSpinner" class="text-center py-5">
+                <div class="spinner-border text-info" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <!-- AI 추천 결과 -->
             <div id="travel-insight-item"></div>
             <ul id="travel-tips" class="list-group my-3"></ul>
             <div class="row mt-4" id="travel-insight-widgets"></div>
@@ -294,6 +302,11 @@
             <div class="col-lg-6 col-md-12 mb-4">
                 <div class="card shadow-sm h-100">
                     <div class="card-body p-0">
+                        <div id="heatmapSpinner" class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
                         <div id="regions_div" style="width: 100%; height: 500px;"></div>
                     </div>
                 </div>
@@ -306,6 +319,14 @@
                         <h5 class="card-title font-weight-bold">📌 Gemini가 분석한 Top 5!</h5>
                         <h6 class="card-subtitle mb-3 text-muted">가장 인기있는 장소들을 둘러보세요!</h6>
 
+
+                        <!-- ✅ 스피너 추가 -->
+                        <div id="carouselSpinner" class="text-center py-5">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
                         <div id="top5Carousel" class="carousel slide d-none" data-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active" id="carousel1"></div>
@@ -314,6 +335,7 @@
                                 <div class="carousel-item" id="carousel4"></div>
                                 <div class="carousel-item" id="carousel5"></div>
                             </div>
+
                             <a class="carousel-control-prev" href="#top5Carousel" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
@@ -554,13 +576,6 @@
     </div>
 </div>
 
-    <!-- JSON 데이터를 담고 있는 스크립트 블록 -->
-    <script id="statsJson" type="application/json">
-    <c:out value="${statsJson}" escapeXml="false"/>
-
-
-
-    </script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="<c:url value="/js/geminiScript.js"/>"></script>
     <script>

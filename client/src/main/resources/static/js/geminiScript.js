@@ -1,21 +1,31 @@
-// ✅ 개선된 히트맵 매핑 및 시각화 코드
+// ✅ Google Charts 로드
+google.charts.load('current', { packages: ['geochart'] });
 
-// ✅ stats 데이터 정의
-const statsElement = document.getElementById("statsJson");
-let stats = [];
+loadCarouselData();
 
-if (statsElement && statsElement.textContent.trim()) {
-    try {
-        stats = JSON.parse(statsElement.textContent);
-        console.log("📊 원본 히트맵 데이터:", stats);
-    } catch (e) {
-        console.error("📛 JSON 파싱 오류:", e);
-    }
-} else {
-    console.warn("⚠ statsJson 요소가 없거나 내용이 비었습니다.");
+/**
+ * ✅ 캐러셀 데이터를 로드하는 함수
+ */
+function loadCarouselData() {
+    document.getElementById('carouselSpinner').classList.remove('d-none');
+    document.getElementById('top5Carousel').classList.add('d-none');
+
+    fetch('/api/gemini/get-popular-stats')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            document.getElementById('carouselSpinner').classList.add('d-none');
+            document.getElementById('top5Carousel').classList.remove('d-none');
+        })
+        .catch(error => {
+            console.error(error);
+            document.getElementById('carouselSpinner').classList.add('d-none');
+        });
 }
 
-// ✅ 개선된 지역 매핑 테이블 (우선순위 기반)
+/**
+ * ✅ 지역별 매핑 키워드 및 영어 이름
+ */
 const provinceKeywords = {
     '서울특별시': ['서울특별시', '서울시', '서울'],
     '부산광역시': ['부산광역시', '부산시', '부산'],
@@ -37,192 +47,74 @@ const provinceKeywords = {
 };
 
 const provinceToEnglish = {
-    '서울특별시': 'Seoul',
-    '부산광역시': 'Busan',
-    '대구광역시': 'Daegu',
-    '인천광역시': 'Incheon',
-    '광주광역시': 'Gwangju',
-    '대전광역시': 'Daejeon',
-    '울산광역시': 'Ulsan',
-    '세종특별자치시': 'Sejong',
-    '경기도': 'Gyeonggi',
-    '강원도': 'Gangwon',
-    '충청북도': 'Chungbuk',
-    '충청남도': 'Chungnam',
-    '전라북도': 'Jeonbuk',
-    '전라남도': 'Jeonnam',
-    '경상북도': 'Gyeongbuk',
-    '경상남도': 'Gyeongnam',
-    '제주특별자치도': 'Jeju'
+    '서울특별시': 'Seoul', '부산광역시': 'Busan', '대구광역시': 'Daegu', '인천광역시': 'Incheon',
+    '광주광역시': 'Gwangju', '대전광역시': 'Daejeon', '울산광역시': 'Ulsan', '세종특별자치시': 'Sejong',
+    '경기도': 'Gyeonggi', '강원도': 'Gangwon', '충청북도': 'Chungbuk', '충청남도': 'Chungnam',
+    '전라북도': 'Jeonbuk', '전라남도': 'Jeonnam', '경상북도': 'Gyeongbuk', '경상남도': 'Gyeongnam', '제주특별자치도': 'Jeju'
 };
 
-// ✅ 개선된 지역 매핑 함수 (우선순위 기반)
 function getProvince(location) {
     if (!location) return null;
-
-    const normalizedLocation = location.trim().toLowerCase();
-
-    // 각 도별로 키워드 매칭 (긴 키워드부터 우선 매칭)
+    const normalized = location.trim().toLowerCase();
     for (const [province, keywords] of Object.entries(provinceKeywords)) {
-        // 키워드를 길이 순으로 정렬 (긴 것부터)
-        const sortedKeywords = keywords.sort((a, b) => b.length - a.length);
-
-        for (const keyword of sortedKeywords) {
-            if (normalizedLocation.includes(keyword.toLowerCase())) {
+        const sorted = keywords.sort((a, b) => b.length - a.length);
+        for (const keyword of sorted) {
+            if (normalized.includes(keyword.toLowerCase())) {
                 return province;
             }
         }
     }
-
     return null;
 }
 
-// ✅ 데이터 집계 및 디버깅
-const allProvinces = Object.keys(provinceToEnglish);
-const aggregatedViews = {};
-const unmappedLocations = [];
-const mappingDetails = [];
+function processStatsData(stats) {
+    const aggregatedViews = {};
+    const allProvinces = Object.keys(provinceToEnglish);
+    allProvinces.forEach(p => aggregatedViews[p] = 0);
 
-// 초기화
-allProvinces.forEach(p => aggregatedViews[p] = 0);
+    stats.forEach(item => {
+        const province = getProvince(item.location);
+        const views = Number(item.totalViews) || 0;
+        if (province) aggregatedViews[province] += views;
+    });
 
-// 데이터 집계
-stats.forEach(item => {
-    const province = getProvince(item.location);
-    const views = Number(item.totalViews) || 0;
-
-    if (province) {
-        aggregatedViews[province] += views;
-        mappingDetails.push({
-            original: item.location,
-            mapped: province,
-            views: views
-        });
-    } else {
-        unmappedLocations.push({
-            location: item.location,
-            views: views
-        });
-    }
-});
-
-// ✅ 디버깅 정보 출력
-console.log("🗺️ 지역별 집계 결과:", aggregatedViews);
-console.log("✅ 매핑 성공:", mappingDetails);
-if (unmappedLocations.length > 0) {
-    console.warn("❓ 매핑 실패한 지역들:", unmappedLocations);
-}
-
-// ✅ 데이터 분포 분석 및 색상 구간 최적화
-const viewValues = Object.values(aggregatedViews).filter(v => v > 0);
-const maxViews = Math.max(...viewValues);
-const minViews = Math.min(...viewValues.filter(v => v > 0));
-const avgViews = viewValues.reduce((a, b) => a + b, 0) / viewValues.length;
-
-console.log("📈 데이터 분포:", { min: minViews, max: maxViews, avg: avgViews });
-
-// ✅ 개선된 Google GeoChart
-google.charts.load('current', {packages: ['geochart']});
-google.charts.setOnLoadCallback(() => {
     const dataArray = [['Province', '조회수']];
-
-    // 데이터가 있는 지역만 추가
     for (const prov of allProvinces) {
         const views = aggregatedViews[prov];
-        if (views > 0) {  // 조회수가 0보다 큰 경우만 표시
+        if (views > 0) {
             dataArray.push([provinceToEnglish[prov], views]);
         }
     }
 
-    console.log("🎨 GeoChart 데이터:", dataArray);
-
-    const data = google.visualization.arrayToDataTable(dataArray);
-
-    // 동적 색상 구간 설정
-    const colorStops = [];
-    if (maxViews > 0) {
-        colorStops.push('#e3f2fd');  // 연한 파랑
-        if (maxViews > minViews) {
-            colorStops.push('#2196f3');  // 파랑
-            colorStops.push('#1976d2');  // 진한 파랑
-            colorStops.push('#0d47a1');  // 매우 진한 파랑
-        }
-    }
+    const maxViews = Math.max(...Object.values(aggregatedViews));
+    const minViews = Math.min(...Object.values(aggregatedViews).filter(v => v > 0));
 
     const options = {
         region: 'KR',
         resolution: 'provinces',
         displayMode: 'regions',
         colorAxis: {
-            colors: colorStops,
+            colors: ['#e3f2fd', '#2196f3', '#1976d2', '#0d47a1'],
             minValue: minViews > 0 ? minViews : 0,
             maxValue: maxViews
         },
         backgroundColor: '#ffffff',
-        datalessRegionColor: '#f5f5f5',
-        defaultColor: '#f5f5f5',
-        tooltip: {
-            textStyle: {
-                fontSize: 12,
-                fontName: 'Arial'
-            }
-        }
+        datalessRegionColor: '#f5f5f5'
     };
 
+    const data = google.visualization.arrayToDataTable(dataArray);
     const chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
     chart.draw(data, options);
-
-    // 차트 렌더링 후 통계 표시
-    displayStats();
-});
-
-// ✅ 통계 정보 표시 함수
-function displayStats() {
-    const statsContainer = document.getElementById('mapping-stats');
-    if (!statsContainer) return;
-
-    const totalMapped = mappingDetails.length;
-    const totalUnmapped = unmappedLocations.length;
-    const mappingRate = ((totalMapped / (totalMapped + totalUnmapped)) * 100).toFixed(1);
-
-    const topProvinces = Object.entries(aggregatedViews)
-        .filter(([_, views]) => views > 0)
-        .sort(([_, a], [__, b]) => b - a)
-        .slice(0, 5);
-
-    let statsHtml = `
-        <div class="alert alert-info">
-            <h6>📊 매핑 통계</h6>
-            <p><strong>매핑 성공률:</strong> ${mappingRate}% (${totalMapped}/${totalMapped + totalUnmapped})</p>
-            <p><strong>상위 5개 지역:</strong></p>
-            <ul>
-    `;
-
-    topProvinces.forEach(([province, views]) => {
-        statsHtml += `<li>${province}: ${views.toLocaleString()}회</li>`;
-    });
-
-    statsHtml += `</ul></div>`;
-
-    if (unmappedLocations.length > 0) {
-        statsHtml += `
-            <div class="alert alert-warning">
-                <h6>❓ 매핑되지 않은 지역 (${unmappedLocations.length}개)</h6>
-                <small>`;
-        unmappedLocations.slice(0, 10).forEach(item => {
-            statsHtml += `${item.location} (${item.views}회), `;
-        });
-        if (unmappedLocations.length > 10) {
-            statsHtml += `외 ${unmappedLocations.length - 10}개...`;
-        }
-        statsHtml += `</small></div>`;
-    }
-
-    statsContainer.innerHTML = statsHtml;
 }
 
-// ✅ 기존 Gemini 분석 코드는 그대로 유지
-async function sendStatsToGemini() {
+async function sendStatsToGemini(stats) {
+    const carouselSpinner = document.getElementById("carouselSpinner");
+    const carousel = document.getElementById("top5Carousel");
+
+    // ⭐ 스피너를 보이게!
+    carouselSpinner.classList.remove("d-none");
+    carousel.classList.add("d-none");
+
     try {
         const res = await fetch('/analyze-heatmap', {
             method: 'POST',
@@ -234,39 +126,51 @@ async function sendStatsToGemini() {
         if (!Array.isArray(parsed)) throw new Error('분석 결과 형식 오류');
 
         document.querySelectorAll('#top5Carousel .carousel-item').forEach(item => item.classList.remove('active'));
-
         for (let i = 0; i < 5; i++) {
             const item = parsed[i];
             const el = document.getElementById(`carousel${i + 1}`);
             if (!el) continue;
             if (i === 0) el.classList.add('active');
-            if (!item) {
-                el.innerHTML = `<div class="d-flex justify-content-center align-items-center" style="height: 300px;">
-                    <span class="text-muted">데이터 없음</span></div>`;
-                continue;
-            }
-            el.innerHTML = `<div class="d-flex justify-content-center">
-                <div class="card" style="width: 20rem;"><div class="card-body">
-                <h6 class="card-title">🏷️ ${item.호텔명 || ''}</h6>
-                <p class="mb-1"><strong>조회수:</strong> ${item.조회수 || 0}</p>
-                <p class="mb-1"><strong>예약수:</strong> ${item.예약수 || 0}</p>
-                <p class="mb-1"><strong>평점:</strong> ${item.평점 != null ? item.평점.toFixed(1) : 'N/A'}</p>
-                <p class="card-text mt-2 text-muted">${item.인사이트 || ''}</p></div></div></div>`;
+            el.innerHTML = item ? `
+        <div class="d-flex justify-content-center">
+          <div class="card" style="width: 20rem;"><div class="card-body">
+          <h6 class="card-title">🏷️ ${item.호텔명 || ''}</h6>
+          <p class="mb-1"><strong>조회수:</strong> ${item.조회수 || 0}</p>
+          <p class="mb-1"><strong>예약수:</strong> ${item.예약수 || 0}</p>
+          <p class="mb-1"><strong>평점:</strong> ${item.평점 != null ? item.평점.toFixed(1) : 'N/A'}</p>
+          <p class="card-text mt-2 text-muted">${item.인사이트 || ''}</p></div></div></div>` :
+                `<div class="d-flex justify-content-center align-items-center" style="height: 300px;">
+          <span class="text-muted">데이터 없음</span></div>`;
         }
 
-        document.getElementById("top5Carousel").classList.remove("d-none");
+        carouselSpinner.classList.add("d-none");
+        carousel.classList.remove("d-none");
         if (typeof $ !== 'undefined' && $('#top5Carousel').length > 0) {
             $('#top5Carousel').carousel('cycle');
         }
     } catch (error) {
         console.error("Gemini 분석 오류:", error);
-        document.getElementById('gemini-insight').innerHTML = `<div class="alert alert-danger">
-            Gemini 분석 중 오류 발생<br>${error.message}</div>`;
+        carouselSpinner.innerHTML = `<div class="alert alert-danger">분석 오류 발생<br>${error.message}</div>`;
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (stats.length > 0) {
-        sendStatsToGemini();
+document.addEventListener("DOMContentLoaded", async () => {
+    const heatmapSpinner = document.getElementById("heatmapSpinner");
+    const regionsDiv = document.getElementById("regions_div");
+
+    try {
+        const response = await fetch("/api/gemini/get-popular-stats");
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        console.log("🔥 인기 지역 통계:", data);
+
+        processStatsData(data);
+        heatmapSpinner.style.display = "none";
+        regionsDiv.style.display = "block";
+
+        sendStatsToGemini(data);
+    } catch (err) {
+        console.error("🚨 인기 지역 통계 조회 실패!", err);
+        heatmapSpinner.innerHTML = `<div class="alert alert-danger">데이터를 불러올 수 없습니다.</div>`;
     }
 });
