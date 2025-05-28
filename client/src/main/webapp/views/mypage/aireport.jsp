@@ -14,7 +14,7 @@
 </head>
 
 <style>
-
+    /* 기존 스타일 유지 */
     .submenu {
         display: none;
         margin-top: 6px; /* 상단 여백 추가 */
@@ -62,7 +62,7 @@
 
     .card.h-100:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
 
     .card-title {
@@ -90,7 +90,7 @@
 
     .card.h-100:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
 
     /* darkmode.css */
@@ -154,7 +154,6 @@
         </ul>
     </div>
 </div>
-<!-- 홈 영역 -->
 <div class="home">
     <div class="home_background parallax-window" data-parallax="scroll"
          data-image-src="images/offer_background.jpg"></div>
@@ -165,27 +164,27 @@
 <div class="blog">
     <div class="container">
         <div class="row">
-            <!-- 왼쪽 본문 -->
             <div class="col-lg-8">
-                <!-- 🔎 사용자 소비유형 분석 카드 -->
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h4 class="card-title mb-3">🧩 나의 여행 소비 유형</h4>
-                        <c:choose>
-                            <c:when test="${not empty consumptionAnalysis}">
-                                <p><strong>소비 유형:</strong> ${consumptionAnalysis.consumptionType}</p>
-                                <p>${consumptionAnalysis.consumptionTypeDescription}</p>
-                                <p><strong>추론 사유:</strong> ${consumptionAnalysis.favoriteAccommodationType}</p>
-                                <button type="button" class="btn btn-link p-0" data-toggle="modal" data-target="#consumptionTypeModal">전체 유형 보기</button>
-                            </c:when>
-                            <c:otherwise>
-                                <p class="text-muted">AI 분석 데이터가 준비되지 않았습니다.</p>
-                            </c:otherwise>
-                        </c:choose>
+                        <%-- 기존 JSTL 조건부 렌더링 제거 --%>
+                        <div id="consumptionAnalysisContent">
+                            <div id="analysisSpinner" class="text-center py-3">
+                                <div class="spinner-border text-success" role="status">
+                                    <span class="sr-only">Loading analysis...</span>
+                                </div>
+                                <p class="mt-2 text-muted">AI가 소비 패턴을 분석하는 중...</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-link p-0" data-toggle="modal"
+                                data-target="#consumptionTypeModal">전체 유형 보기
+                        </button>
                     </div>
                 </div>
 
-                <div class="modal fade" id="consumptionTypeModal" tabindex="-1" role="dialog" aria-labelledby="consumptionTypeModalLabel" aria-hidden="true">
+                <div class="modal fade" id="consumptionTypeModal" tabindex="-1" role="dialog"
+                     aria-labelledby="consumptionTypeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -195,48 +194,42 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <!-- 여기서 아까 말한 1~10 유형과 설명을 정리 -->
                                 <ul class="list-unstyled">
                                     <li><strong>1️⃣ 짧고 자주 가는 여행자</strong> – 짧은 일정으로 여행을 자주 떠나며, 교통 편리성과 빠른 예약을 중시</li>
-                                    <li><strong>2️⃣ 호캉스 중심 여행자</strong> – 숙소 내 휴식과 고급스러운 경험을 중시. 뷰, 수영장, 룸서비스 등 부대시설 선호</li>
+                                    <li><strong>2️⃣ 호캉스 중심 여행자</strong> – 숙소 내 휴식과 고급스러운 경험을 중시. 뷰, 수영장, 룸서비스 등 부대시설 선호
+                                    </li>
                                     <li><strong>3️⃣ 자연 속 힐링파</strong> – 자연 속에서의 조용한 휴식을 선호. 숲속 리조트, 한적한 펜션 선호</li>
                                     <li><strong>4️⃣ 맛집 탐험가</strong> – 여행지의 먹거리와 맛집을 탐험. 맛집과 가까운 위치의 숙소 선호</li>
                                     <li><strong>5️⃣ 가족 중심 여행자</strong> – 가족 단위 여행이 많고, 키즈존·패밀리룸 등 편의시설을 중시</li>
-                                    <li><strong>6️⃣ 액티비티 애호가</strong> – 숙소 근처에서 즐길 수 있는 레저/액티비티를 중요시. 서핑, 스키, MTB 등 계절별 스포츠</li>
-                                    <li><strong>7️⃣ 전통/문화 탐방객</strong> – 전통문화, 유적지, 로컬 체험 위주의 여행을 선호. 한옥스테이·문화유산 근처 숙소 선호</li>
-                                    <li><strong>8️⃣ 럭셔리 & 프리미엄</strong> – 고급스러운 인테리어와 서비스 중시. 풀빌라, 럭셔리 호텔, 스위트룸 등 선호</li>
+                                    <li><strong>6️⃣ 액티비티 애호가</strong> – 숙소 근처에서 즐길 수 있는 레저/액티비티를 중요시. 서핑, 스키, MTB 등 계절별
+                                        스포츠
+                                    </li>
+                                    <li><strong>7️⃣ 전통/문화 탐방객</strong> – 전통문화, 유적지, 로컬 체험 위주의 여행을 선호. 한옥스테이·문화유산 근처 숙소
+                                        선호
+                                    </li>
+                                    <li><strong>8️⃣ 럭셔리 & 프리미엄</strong> – 고급스러운 인테리어와 서비스 중시. 풀빌라, 럭셔리 호텔, 스위트룸 등 선호
+                                    </li>
                                     <li><strong>9️⃣ 장기 투숙형</strong> – 출장·여행으로 장기간 머무는 타입. 주방·세탁시설 완비된 레지던스 숙소 선호</li>
-                                    <li><strong>🔟 커플/로맨틱 여행자</strong> – 프라이빗한 공간과 로맨틱한 분위기를 중요시. 야경, 루프탑, 감각적인 인테리어 선호</li>
+                                    <li><strong>🔟 커플/로맨틱 여행자</strong> – 프라이빗한 공간과 로맨틱한 분위기를 중요시. 야경, 루프탑, 감각적인 인테리어 선호
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 🏠 AI가 추천하는 숙소 카드 -->
-                <div class="card shadow-sm">
+                <div class="card shadow-sm mt-4"> <%-- 마진 탑 추가 --%>
                     <div class="card-body">
                         <h4 class="card-title mb-3">🏠 AI 추천 숙소</h4>
-                        <c:choose>
-                            <c:when test="${not empty aiRecommendations}">
-                                <div class="row">
-                                    <c:forEach var="rec" items="${aiRecommendations}">
-                                        <div class="col-md-6 col-lg-4 mb-3">
-                                            <div class="card h-100 border-0 shadow-sm">
-                                                <div class="card-body">
-                                                    <h5 class="card-title mb-2">${rec.name}</h5>
-                                                    <p class="mb-1 text-muted">위치: ${rec.location}</p>
-                                                    <p class="small">${rec.recommendationReason}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
+                        <%-- 기존 JSTL 조건부 렌더링 제거 --%>
+                        <div id="aiRecommendationsContainer" class="row">
+                            <div id="recommendationSpinner" class="col-12 text-center py-3">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading recommendations...</span>
                                 </div>
-                            </c:when>
-                            <c:otherwise>
-                                <p class="text-muted">AI 추천 데이터가 준비되지 않았습니다.</p>
-                            </c:otherwise>
-                        </c:choose>
+                                <p class="mt-2 text-muted">AI 추천 데이터를 불러오는 중...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -295,8 +288,6 @@
     </div>
 </div>
 
-<!-- 챗봇 영역 -->
-
 <div id="chatbot" class="chatbot">
     <div id="chat-icon" class="chat-icon">
         <i class="fas fa-comments" aria-hidden="true"></i>
@@ -331,8 +322,6 @@
         </div>
     </div>
 </div>
-
-
 <script src="<c:url value='/js/jquery-3.2.1.min.js'/>"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<c:url value='styles/bootstrap4/popper.js'/>"></script>
@@ -340,7 +329,12 @@
 <script src="<c:url value='plugins/Isotope/isotope.pkgd.min.js'/>"></script>
 <script src="<c:url value='plugins/easing/easing.js'/>"></script>
 <script src="<c:url value='plugins/parallax-js-master/parallax.min.js'/>"></script>
-
+<script src="<c:url value="js/aireport.js"/>"></script>
+<script>
+    // ✅ JSP가 userId를 EL로 넘겨줌 (null-safe)
+    const userId = "<c:out value='${user.userId}' default=''/>".trim();
+    const encodedUserId = encodeURIComponent(userId);
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const submenuToggles = document.querySelectorAll(".has-submenu > a");
@@ -351,4 +345,3 @@
         });
     });
 </script>
-

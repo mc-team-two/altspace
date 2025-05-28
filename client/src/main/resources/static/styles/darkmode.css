@@ -475,3 +475,13 @@ input:checked + .slider .sun-icon {
 [data-theme="dark"] .carousel-control-prev-icon{
     color: var(--text-color);
 }
+
+.spinner-border {
+    color: #333 !important; /* 더 진한 색상으로 */
+}
+.spinner-border {
+    border-color: #333 transparent #333 transparent; /* 어두운 경계선으로 */
+}
+[data-theme="dark"] .spinner-border {
+    color: #eee !important;
+}

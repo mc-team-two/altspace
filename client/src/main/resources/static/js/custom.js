@@ -369,7 +369,7 @@ $(document).ready(function () {
             extras.push('pool');
         }
 
-        const url = `/search-accommodations-geo?latitude=${latitude}&longitude=${longitude}&radius=${radius}&extras=${extras.join('&extras=')}&withRating=${withRating}`;
+        const url = `/api/search/geo?latitude=${latitude}&longitude=${longitude}&radius=${radius}&extras=${extras.join('&extras=')}&withRating=${withRating}`;
 
         $.ajax({
             url: url,
@@ -529,299 +529,129 @@ $(document).ready(function () {
     }
 
     // 10. search
+    $(document).ready(function () {
+        $("#searchAccommodationBtn").on("click", function () {
+            console.log("✅ 버튼 클릭됨!"); // 👈 반드시 콘솔에서 확인
 
-    /*
-    // 검색 버튼 클릭 이벤트 리스너
-     */
-    $("#searchAccommodationBtn").on("click", function () {
-        const location = $("#searchInput").val();
-        const checkIn = $("#checkInInput").val();
-        const checkOut = $("#checkOutInput").val();
-        const personnel = $("#adults_1").val();
-        const extras = [];
+            const location = $("#searchInput").val();
+            const checkIn = $("#checkInInput").val();
+            const checkOut = $("#checkOutInput").val();
+            const personnel = parseInt($("#adults_1").val().replace(/[^0-9]/g, '')) || 1;
+            const extras = [];
+            if ($('#search_extras_1').prop('checked')) extras.push('breakfast');
+            if ($('#search_extras_2').prop('checked')) extras.push('pet');
+            if ($('#search_extras_3').prop('checked')) extras.push('barbecue');
+            if ($('#search_extras_4').prop('checked')) extras.push('pool');
 
-        if ($('#search_extras_1').prop('checked')) {
-            extras.push('breakfast');
-        }
-        if ($('#search_extras_2').prop('checked')) {
-            extras.push('pet');
-        }
-        if ($('#search_extras_3').prop('checked')) {
-            extras.push('barbecue');
-        }
-        if ($('#search_extras_4').prop('checked')) {
-            extras.push('pool');
-        }
+            // 유효성 검사
+            if (!location || !checkIn || !checkOut) {
+                alert("모든 값을 입력해 주세요!");
+                return;
+            }
 
-        // 유효성 검사
-        if (!location) {
-            alert("지역 정보를 채워넣어 주세요.");
-            return; // 검색 로직 중단
-        }
+            // 스피너 표시
+            $("#offersSpinner").removeClass("d-none");
+            $(".offers_grid").addClass("d-none");
 
-        if (!checkIn) {
-            alert("체크인 날짜를 채워넣어 주세요.");
-            return; // 검색 로직 중단
-        }
+            $("#travel-insight-container").removeClass("d-none").css("display", "block");
+            $("#travelInsightSpinner").removeClass("d-none");
+            $("#travel-insight-item, #travel-tips, #travel-insight-widgets").empty();
 
-        if (!checkOut) {
-            alert("체크아웃 날짜를 채워넣어 주세요.");
-            return; // 검색 로직 중단
-        }
-
-        // 모든 필수 정보가 입력되었으면 검색 로직 실행
-        searchAccommodationsByLocation(location, checkIn, checkOut, extras);
-    });
-
-    function searchAccommodationsByLocation(location, checkIn, checkOut, personnel, extras) {
-        // 검색결과를 db에서 받아오기 위한 요청
-        $.ajax({
-            url: "/search-accommodations",
-            type: "GET",
-            data: {
-                location: location,
+            // 숙소 검색
+            $.get("/api/search/search", {
+                location,
                 checkInDate: checkIn,
                 checkOutDate: checkOut,
-                personnel: personnel,
-                withRating: true,
-                extras: extras
-            },
-            dataType: "json",
-            success: function (accommodations) {
-                displaySearchResults(accommodations);
-            },
-            error: function (error) {
-                alert("숙소 검색에 실패했습니다.");
-                console.error(error);
-            }
-        });
+                personnel,
+                extras,
+                withRating: true
+            })
+                .done(function (data) {
+                    console.log("✅ 숙소 결과:", data);
+                    // 너가 원래 숙소 그리는 함수가 있으면 여기서 호출해줘! (예: displaySearchResults(data))
+                    $("#offersSpinner").addClass("d-none");
+                    $(".offers_grid").removeClass("d-none");
+                })
+                .fail(function (err) {
+                    alert("숙소 검색 실패");
+                    console.error(err);
+                    $("#offersSpinner").addClass("d-none");
+                });
 
-        // 검색 버튼을 누름과 동시에 요청을 보내, 제미나이로부터 데이터를 받아오기 위한 요청
-        $.ajax({
-            url: "/search-accomsuggestions",
-            type: "POST",
-            contentType: "application/json", // JSON 형식 명시
-            data: JSON.stringify({
+            // AI 추천
+            $.ajax({
+                url: "/api/gemini/search-accomsuggestions",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    location,
+                    checkIn,
+                    checkOut,
+                    personnel,
+                    extras
+                }),
+                success: function (data) {
+                    console.log("✅ Gemini 응답:", data);
 
-                //목적지, 체크인 날짜, 체크아웃 날짜, 인원, 기타 조건들.
-                location: location,
-                checkIn: checkIn,
-                checkOut: checkOut,
-                personnel: parseInt(personnel) || 1, // empty 안들어가게 최소 1명 고정.
-                extras: extras
-            }),
-            success: function (accomsuggestions) {
-                console.log("✅ Gemini 응답 확인:", accomsuggestions);
-                displaySearchSuggestions(accomsuggestions);
-            },
-            error: function (error) {
-                alert("AI 답변을 가져오는 데에 실패했습니다.");
-                console.error(error);
-            }
-        });
-    }
+                    // ✅ displaySearchSuggestions를 반드시 호출!
+                    displaySearchSuggestions(data);
 
-    function displaySearchResults(accommodationsWithRating) {
-        const offersGrid = $(".offers_grid");
-        offersGrid.empty();
-        $(".blog_navigation").hide(); // 대체 가능
-
-        if (accommodationsWithRating && accommodationsWithRating.length > 0) {
-            $.each(accommodationsWithRating, function (index, item) {
-                const accommodation = item.accommodation;
-                const rating = item.roundedRating;
-                const ratingClass = `rating_${rating}`;
-                let imageUrl = '';
-                if (accommodation.image1Name) {
-                    imageUrl = `/images/${accommodation.image1Name}`;
-                } else {
-                    imageUrl = `/images/default.jpg`;
+                    // spinner 숨기기
+                    $("#travelInsightSpinner").addClass("d-none");
+                },
+                error: function (err) {
+                    alert("AI 추천 실패");
+                    console.error(err);
+                    $("#travelInsightSpinner").addClass("d-none");
                 }
+            });
+        });
 
-                const barbecueIcon = accommodation.barbecue ? `<li class="offers_icons_item" data-popper-content="바베큐 시설 안내"><i class="fa fa-fire-alt text-warning" aria-hidden="true"></i></li>` : '';
-                const breakfastIcon = accommodation.breakfast ? `<li class="offers_icons_item" data-popper-content="맛있는 조식 제공"><i class="fa fa-coffee text-danger" aria-hidden="true"></i></li>` : '';
-                const petIcon = accommodation.pet ? `<li class="offers_icons_item" data-popper-content="반려동물 동반 가능"><i class="fa fa-paw text-info" aria-hidden="true"></i></li>` : '';
-                const poolIcon = accommodation.pool ? `<li class="offers_icons_item" data-popper-content="시원한 수영장 이용"><i class="fas fa-swimmer text-primary" aria-hidden="true"></i></li>` : '';
+        // ✅ AI 추천 결과 렌더링 함수
+        function displaySearchSuggestions(data) {
+            const container = $("#travel-insight-container");
+            const insightItem = $("#travel-insight-item");
+            const tipsList = $("#travel-tips");
+            const widgets = $("#travel-insight-widgets");
 
-                const listItem = `
-             <div class="offers_item ${ratingClass}">
-                <div class="row">
-                   <div class="col-lg-1 temp_col"></div>
-                   <div class="col-lg-3 col-1680-4">
-                      <div class="offers_image_container">
-                         <div class="offers_image_background" style="background-image:url('${imageUrl}')"></div>
-                             <div class="offer_name"><a href="/detail?id=${accommodation.accommodationId}">${accommodation.name}</a></div>
-                      </div>
-                   </div>
-                           <div class="col-lg-8">
-                               <div class="offers_content">
-                                   <div class="offers_price">$${accommodation.priceNight}<span>per night</span></div>
-                                   <div class="rating_r rating_r_${rating} offers_rating" data-rating="${rating}">
-                                       <i></i><i></i><i></i><i></i><i></i>
-                                   </div>
-                                   <p class="offers_text">${accommodation.description}</p>
-                                   <div class="offers_icons">
-                                       <ul class="offers_icons_list">
-                                           ${barbecueIcon}
-                                           ${breakfastIcon}
-                                           ${petIcon}
-                                           ${poolIcon}
-                                       </ul>
-                                   </div>
-                                   <div class="button book_button"><a href="/detail?id=${accommodation.accommodationId}">상세보기<span></span><span></span><span></span></a></div>
-                                   <div class="offer_reviews">
-                                       <div class="offer_reviews_content">
-                                           <div class="offer_reviews_title">
-                                               ${getRatingText(rating)}
-                                           </div>
-                                           <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
-                                       </div>
-                                       <div class="offer_reviews_rating text-center">
-                                           ${rating}
-                                       </div>
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               `;
-                offersGrid.append(listItem);
+            // 결과 출력
+            insightItem.html(`
+            <div class="alert alert-info">
+                <strong>🌤️ 날씨:</strong> ${data.weather}<br>
+                <strong>💡 팁:</strong> ${data.tips}
+            </div>`);
+
+            tipsList.empty();
+            if (data.tips) tipsList.append(`<li class="list-group-item">${data.tips}</li>`);
+
+            widgets.empty();
+            const cards = [
+                {icon: "🌡️", title: "최고 기온", content: (data.maxTemp ?? "정보 없음") + "°C"},
+                {icon: "❄️", title: "최저 기온", content: (data.minTemp ?? "정보 없음") + "°C"},
+                {icon: "🎪", title: "지역 축제", content: data.festival || "정보 없음"},
+                {icon: "🍽️", title: "맛집 정보", content: data.food || "정보 없음"}
+            ];
+            cards.forEach(card => {
+                widgets.append(`
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow-sm p-3 h-100 text-center align-items-center">
+                        <div class="card-title"><strong>${card.icon} ${card.title}</strong></div>
+                        <div class="card-body p-0">
+                            <div class="text-muted small">${card.content}</div>
+                        </div>
+                    </div>
+                </div>`);
             });
 
-            // 검색 결과가 그려진 후에 팝업 기능 활성화
-            initIconPopper();
-
-        } else {
-            offersGrid.html("<p>검색 결과가 없습니다.</p>");
-        }
-    }
-
-    function getRatingText(rating) {
-        if (rating >= 4) return "최고예요!";
-        if (rating === 3) return "좋아요!";
-        if (rating === 2) return "괜찮아요!";
-        if (rating === 1) return "그저 그래요!";
-        return "평가가 없어요";
-    }
-
-
-// summary에서 날씨/축제/치안/팁 파싱 및 기온 추출
-    function extractInsightSections(summaryText) {
-        const sections = {
-            weather: "",
-            festival: "",
-            safety: "",
-            tips: "",
-            maxTemp: null,
-            minTemp: null
-        };
-
-        const lines = summaryText.split(/[.!?]\s*/); // 문장 단위 분리
-
-        lines.forEach(line => {
-            const lower = line.toLowerCase();
-            let matched = false;
-
-            // 날씨 관련 키워드 (기온, 날씨, 일교차, 겉옷 등 포함)
-            if (/(기온|날씨|일교차|겉옷|더위|추위)/.test(lower)) {
-                sections.weather += line.trim() + ". ";
-                matched = true;
+            // 워터마크 (중복 방지)
+            if (container.find(".travel-insight-powered").length === 0) {
+                container.append(`
+                <div class="travel-insight-powered mt-3">
+                    <small class="text-muted">
+                        Powered by <img src="images/gemini-brand-color.png" alt="Gemini Logo" height="20" style="vertical-align: middle;">
+                    </small>
+                </div>`);
             }
-
-            // 축제
-            if (/(축제|행사|비엔날레)/.test(lower)) {
-                sections.festival += line.trim() + ". ";
-                matched = true;
-            }
-
-            // 맛집
-            if (/(맛집|음식|요리|식사|먹거리)/.test(lower)) {
-                sections.safety += line.trim() + ". ";  // 기존 safety 재활용
-                matched = true;
-            }
-
-            // 일반 팁 (다른 섹션에 해당되지 않은 경우에만)
-            if (!matched) {
-                sections.tips += line.trim() + ". ";
-            }
-        });
-
-        // 기온 숫자 추출
-        const maxMatch = sections.weather.match(/(?:최고|낮 최고)?[^\d]{0,10}(\d{1,2})도/);
-        const minMatch = sections.weather.match(/(?:최저|밤 최저)?[^\d]{0,10}(\d{1,2})도/);
-
-        if (maxMatch) {
-            sections.maxTemp = parseInt(maxMatch[1]);
-            console.log("[🌡️ 최고 기온 추출]", sections.maxTemp);
-        } else {
-            console.warn("⚠️ 최고 기온 추출 실패:", sections.weather);
         }
-
-        if (minMatch) {
-            sections.minTemp = parseInt(minMatch[1]);
-            console.log("[🌡️ 최저 기온 추출]", sections.minTemp);
-        } else {
-            console.warn("⚠️ 최저 기온 추출 실패:", sections.weather);
-        }
-
-        return sections;
-    }
-
-    function displaySearchSuggestions(data) {
-        const container = $("#travel-insight-container");
-        container.removeClass("d-none").css("display", "block");
-
-        // 각 요소 접근 (summary 없음에 대응)
-        const insightItem = $("#travel-insight-item");
-        const tipsList = $("#travel-tips");
-        const widgets = $("#travel-insight-widgets");
-
-        // 💬 요약 출력 (weather + tips 등 간단히 구성)
-        insightItem.html(`
-        <div class="alert alert-info">
-            <strong>🌤️ 날씨:</strong> ${data.weather}<br>
-            <strong>💡 팁:</strong> ${data.tips}
-        </div>
-    `);
-
-        // 🔄 팁 리스트
-        tipsList.empty();
-        if (data.tips) {
-            tipsList.append(`<li class="list-group-item">${data.tips}</li>`);
-        }
-
-        // 💡 카드 출력
-        widgets.empty();
-        const cards = [
-            { icon: "🌡️", title: "최고 기온", content: (data.maxTemp ?? "정보 없음") + "°C" },
-            { icon: "❄️", title: "최저 기온", content: (data.minTemp ?? "정보 없음") + "°C" },
-            { icon: "🎪", title: "지역 축제", content: data.festival || "정보 없음" },
-            { icon: "🍽️", title: "맛집 정보", content: data.food || "정보 없음" }
-        ];
-
-        for (const card of cards) {
-            widgets.append(`
-            <div class="col-md-3 mb-4">
-                <div class="card shadow-sm p-3 h-100 text-center align-items-center">
-                    <div class="card-title"><strong>${card.icon} ${card.title}</strong></div>
-                    <div class="card-body p-0">
-                        <div class="text-muted small">${card.content}</div>
-                    </div>
-                </div>
-            </div>
-        `);
-        }
-
-        // ✅ 워터마크 중복 방지
-        if (container.find(".travel-insight-powered").length === 0) {
-            container.append(`
-            <div class="travel-insight-powered mt-3">
-                <small class="text-muted">
-                    Powered by <img src="images/gemini-brand-color.png" alt="Gemini Logo" height="20" style="vertical-align: middle;">
-                </small>
-            </div>
-        `);
-        }
-    }
-
+    })
 });
