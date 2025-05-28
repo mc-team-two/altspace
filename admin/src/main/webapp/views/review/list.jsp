@@ -14,6 +14,13 @@
     .review-card[style*="display:none"] {
         display: none;
     }
+    .edit-reply-form { /* Initially hidden */
+        display: none;
+    }
+    textarea {
+        resize: none;
+        height: 90px;
+    }
 </style>
 
 <div class="container-fluid">
@@ -77,6 +84,7 @@
                     </div>
                 </div>
             </c:if>
+
             <%-- Review items container --%>
             <div id="reviewItemsContainer">
                 <c:forEach var="rm" items="${reviewMap}" varStatus="status">
@@ -120,12 +128,10 @@
                                 <small>[${rm.review.name}]</small>
                                 <p class="review-comment-text">${rm.review.comment}</p>
 
-                                    <%--이미지 추가--%>
                                 <c:if test="${not empty rm.images}">
                                     <div class="d-flex overflow-scroll">
                                         <c:forEach var="reviewImg" items="${rm.images}">
                                             <img class="pe-2" style="height: 120px; width: auto;" src="<c:url value="/imgs/no-image-available.jpeg"/>" alt="리뷰이미지">
-                                            <%--<img src="<c:url value='/imgs/${reviewImg}'/>" alt="리뷰이미지" class="img-fluid mb-2" />--%>
                                         </c:forEach>
                                     </div>
                                 </c:if>
@@ -146,7 +152,7 @@
                                     <c:otherwise>
                                         <div class="reply-list">
                                             <c:forEach var="reply" items="${rm.reply}">
-                                                <div class="reply-item mb-3">
+                                                <div class="reply-item mb-3" data-reply-id="${reply.replyId}">
                                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                                         <div class="left">
                                                             <img src="<c:url value="/imgs/avatar.png"/>" alt class="w-px-30 h-auto rounded-circle" />
@@ -154,11 +160,26 @@
                                                             <small class="ms-1 text-muted"><fmt:formatDate value="${reply.createDay}" pattern="yyyy-MM-dd HH:mm:ss"/></small>
                                                         </div>
                                                         <div class="text-muted small right">
-                                                            <a href="javascript:void(0);" data-review-id="${reply.replyId}" class="modifyReplyBtn">수정</a>
-                                                            <a href="javascript:void(0);" data-review-id="${reply.replyId}" class="deleteReplyBtn ms-3">삭제</a>
+                                                            <a href="javascript:void(0);" data-reply-id="${reply.replyId}" class="modifyReplyBtn">수정</a>
+                                                            <a href="javascript:void(0);" data-reply-id="${reply.replyId}" class="deleteReplyBtn ms-3">삭제</a>
                                                         </div>
                                                     </div>
-                                                    <p>${reply.comment}</p>
+                                                    <p class="reply-comment-text">${reply.comment}</p>
+
+                                                    <%-- 답글 수정 폼 (초기에는 숨김) --%>
+                                                    <div class="edit-reply-form">
+                                                        <div class="w-100">
+                                                            <textarea class="editComment form-control me-2" rows="2" required>${reply.comment}</textarea>
+                                                        </div>
+                                                        <div class="my-3 d-flex justify-content-evenly">
+                                                            <button class="updateReplyBtn btn btn-primary text-nowrap w-100" data-reply-id="${reply.replyId}">
+                                                                <small>저장</small>
+                                                            </button>
+                                                            <button class="cancelEditReplyBtn btn btn-secondary ms-1 text-nowrap w-100">
+                                                                <small>취소</small>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </c:forEach>
                                         </div>
@@ -167,12 +188,12 @@
                             </div>
 
                             <!-- 답글 작성 폼 -->
-                            <div class="d-flex mt-3">
+                            <div class="add-reply-form mt-3" data-review-id="${rm.review.reviewId}">
                                 <input type="hidden" class="reviewId" value="${rm.review.reviewId}">
                                 <input type="hidden" class="userId" value="${sessionScope.user.userId}">
-                                <textarea class="comment form-control me-2" rows="2" required></textarea>
-                                <button class="addReplyBtn btn btn-primary" data-review-id="${rm.review.reviewId}">
-                                    <i class="bi bi-send"></i>
+                                <textarea class="comment form-control me-2 w-100" rows="2" required></textarea>
+                                <button class="addReplyBtn btn btn-primary px-5 mt-2 text-nowrap w-100" data-review-id="${rm.review.reviewId}">
+                                    <small>답글 등록</small>
                                 </button>
                             </div>
 
@@ -180,6 +201,7 @@
                     </div>
                 </c:forEach>
             </div>
+
             <%-- 더보기 버튼 --%>
             <c:if test="${not empty reviewMap && reviewMap.size() > 3}">
                 <button id="loadMoreReviewsBtn" class="btn btn-outline-primary w-50 mx-auto my-4 d-block">더보기</button>
@@ -203,24 +225,17 @@
                     alert("로그인이 필요한 기능입니다.");
                     return;
                 }
-
                 if (!comment) {
                     alert("답글은 공백일 수 없습니다.");
                     return;
                 }
-
-                let replyData = {
-                    reviewId: reviewId,
-                    userId: userId,
-                    comment: comment
-                };
-
+                let replyData = { reviewId: reviewId, userId: userId, comment: comment };
                 reviewPage.addReply(replyData);
             });
 
             // 답글 삭제
             $(document).on("click", ".deleteReplyBtn", function (e) {
-                const replyId = $(this).data("review-id");
+                const replyId = $(this).data("reply-id");
                 if (confirm("정말로 삭제하시겠습니까?")) {
                     reviewPage.delReply(replyId);
                 }
@@ -243,7 +258,6 @@
                     $commentParagraph.text(originalText);
                     return;
                 }
-
                 if ($commentParagraph.length) {
                     reviewPage.translate(originalText, selectedLang, $commentParagraph);
                 } else {
@@ -255,6 +269,54 @@
             $('#loadMoreReviewsBtn').on('click', function() {
                 reviewPage.loadMoreReviews();
             });
+
+            // 답글 수정 버튼 클릭
+            $(document).on('click', '.modifyReplyBtn', function () {
+                const $replyItem = $(this).closest('.reply-item');
+                const $reviewCardBody = $(this).closest('.card-body');
+
+                // 다른 열려있는 수정 폼이 있다면 닫기
+                $('.edit-reply-form').not($replyItem.find('.edit-reply-form')).hide();
+                $('.reply-comment-text').not($replyItem.find('.reply-comment-text')).show();
+
+
+                // 현재 답글 내용 숨기기 & 수정 폼 보이기
+                $replyItem.find('.reply-comment-text').hide();
+                $replyItem.find('.edit-reply-form').show();
+                // 해당 리뷰 카드의 메인 답글 작성 폼 숨기기
+                $reviewCardBody.find('.add-reply-form').addClass('d-none');
+            });
+
+            // 답글 수정 취소 버튼 클릭
+            $(document).on('click', '.cancelEditReplyBtn', function () {
+                const $replyItem = $(this).closest('.reply-item');
+                const $reviewCardBody = $(this).closest('.card-body');
+
+                // 수정 폼 숨기기 & 원래 답글 내용 보이기
+                $replyItem.find('.edit-reply-form').hide();
+                $replyItem.find('.reply-comment-text').show();
+                // 해당 리뷰 카드의 메인 답글 작성 폼 보이기
+                $reviewCardBody.find('.add-reply-form').removeClass('d-none');
+            });
+
+            // 답글 수정 (업데이트) 버튼 클릭
+            $(document).on('click', '.updateReplyBtn', function () {
+                const $replyItem = $(this).closest('.reply-item');
+                const replyId = $(this).data('reply-id');
+                const comment = $replyItem.find('.editComment').val().trim();
+
+                if (!comment) {
+                    alert("답글은 공백일 수 없습니다.");
+                    return;
+                }
+
+                let updateData = {
+                    userId: "${sessionScope.user.userId}",
+                    replyId: replyId,
+                    comment: comment
+                };
+                reviewPage.updateReply(updateData, $replyItem);
+            });
         },
 
         addReply: function (replyData) {
@@ -264,7 +326,6 @@
                 contentType: "application/json",
                 data: JSON.stringify(replyData),
                 success: function (response) {
-                    //alert(response);
                     location.reload();
                 },
                 error: function (xhr) {
@@ -278,11 +339,35 @@
                 url: "/api/review/del-reply?replyId=" + replyId,
                 type: "POST",
                 success: function (response) {
-                    alert(response);
+                    //alert(response);
                     location.reload();
                 },
                 error: function (xhr) {
-                    alert('error: ' + xhr.responseText);
+                    console.error('error: ' + xhr.responseText);
+                }
+            });
+        },
+
+        updateReply: function (updateData, $replyItem) {
+            $.ajax({
+                url: "<c:url value='/api/review/mod-reply'/>",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(updateData),
+                success: function (response) {
+                    const $reviewCardBody = $replyItem.closest('.card-body');
+                    // UI 동적 업데이트
+                    $replyItem.find('.reply-comment-text').text(updateData.comment).show();
+                    $replyItem.find('.edit-reply-form').hide();
+                    $reviewCardBody.find('.add-reply-form').removeClass('d-none');
+                },
+                error: function (xhr) {
+                    alert('답글 수정 중 오류가 발생했습니다: ' + xhr.responseText);
+                    // 오류 발생 시 UI를 원래 상태로 되돌릴 수 있습니다.
+                    const $reviewCardBody = $replyItem.closest('.card-body');
+                    $replyItem.find('.edit-reply-form').hide();
+                    $replyItem.find('.reply-comment-text').show();
+                    $reviewCardBody.find('.add-reply-form').removeClass('d-none');
                 }
             });
         },
@@ -309,12 +394,11 @@
         displayTimestamp: function() {
             const now = new Date();
             const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const month = String(now.getMonth() + 1).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
-
             const formattedTimestamp = year + "년 " + month + "월 " + day + "일 " + hours + ":" + minutes + ":" + seconds;
             $("#dataTimestamp").text("데이터 기준일: " + formattedTimestamp);
         },
@@ -324,7 +408,6 @@
                 $commentElement.text(originalText);
                 return;
             }
-
             $.ajax({
                 type: 'POST',
                 url: '<c:url value="/api/review/translate"/>',
@@ -349,9 +432,7 @@
         loadMoreReviews: function() {
             const $hiddenReviews = $('.review-card:hidden');
             const reviewsToShow = 3;
-
             $hiddenReviews.slice(0, reviewsToShow).slideDown();
-
             if ($hiddenReviews.length <= reviewsToShow) {
                 $('#loadMoreReviewsBtn').hide();
             }
