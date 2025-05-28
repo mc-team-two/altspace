@@ -415,7 +415,7 @@
                                         <div class="offers_image_container" style="cursor:pointer;"
                                              onclick="updateViewsAndGo(${a.accommodationId})">
                                             <div class="offers_image_background"
-                                                 style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
+                                                 style="background-image:url('/imgs/${a.image1Name}')"></div>
                                             <div class="offer_name"><a
                                                     href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a>
                                             </div>
