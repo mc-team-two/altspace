@@ -437,7 +437,7 @@
                                         <div class="offers_image_container" style="cursor:pointer;"
                                              onclick="updateViewsAndGo(${a.accommodationId})">
                                             <div class="offers_image_background"
-                                                 style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
+                                                 style="background-image:url('/imgs/${a.image1Name}')"></div>
                                             <div class="offer_name"><a
                                                     href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a>
                                             </div>
@@ -445,8 +445,10 @@
                                     </div>
                                     <div class="col-lg-8">
                                         <div class="offers_content">
-                                            <div class="offers_price">₩${a.priceNight}<span><spring:message
-                                                    code="pernight"/></span></div>
+                                            <div class="offers_price">
+                                                ₩<fmt:formatNumber value="${a.priceNight}" type="number"/>
+                                                <span><spring:message code="pernight"/></span>
+                                            </div>
                                             <div class="rating_r rating_r_${currentRating} offers_rating"
                                                  data-rating="${currentRating}">
                                                 <i></i><i></i><i></i><i></i><i></i>
