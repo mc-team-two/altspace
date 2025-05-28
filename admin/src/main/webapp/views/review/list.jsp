@@ -11,6 +11,9 @@
         font-size: 20px;
         font-weight: bold;
     }
+    .review-card[style*="display:none"] {
+        display: none;
+    }
 </style>
 
 <div class="container-fluid">
@@ -48,7 +51,6 @@
     </div>
 
     <div class="row">
-        <%--host가 소유한 acc 목록 (사이드바)--%>
         <div class="col-sm-3 mb-3">
             <ul class="list-group bg-light" id="accList">
                 <a href="<c:url value='/review/list'/>" class="list-group-item ${param.accId == null ? 'active' : ''}" data-id="all">
@@ -66,7 +68,7 @@
         </div>
 
         <%--작성한 리뷰 목록 (컨텐츠)--%>
-        <div class="col-sm-9">
+        <div class="col-sm-9 mx-auto">
             <c:if test="${empty reviewMap}">
                 <div class="card mb-3">
                     <div class="card-body" style="text-align: center">
@@ -75,105 +77,112 @@
                     </div>
                 </div>
             </c:if>
-            <c:forEach var="rm" items="${reviewMap}">
-                <div class="card mb-3">
-                    <div class="card-body">
+            <%-- Review items container --%>
+            <div id="reviewItemsContainer">
+                <c:forEach var="rm" items="${reviewMap}" varStatus="status">
+                    <div class="card mb-3 review-card" ${status.index >= 3 ? 'style="display:none;"' : ''}>
+                        <div class="card-body">
 
-                        <!-- 리뷰 정보 출력 -->
-                        <div class="mb-2">
-                            <p class="text-warning">
-                                <c:forEach var="i" begin="1" end="5">
-                                    <c:choose>
-                                        <c:when test="${i <= rm.review.grade}">
-                                            <i class="bi bi-star-fill"></i>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <i class="bi bi-star"></i>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </p>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <div class="float-start">
-                                    <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
-                                    <span style="font-size:18px; font-weight:bold">${rm.review.guestId}</span>
+                            <!-- 리뷰 정보 출력 -->
+                            <div class="mb-2">
+                                <p class="text-warning">
+                                    <c:forEach var="i" begin="1" end="5">
+                                        <c:choose>
+                                            <c:when test="${i <= rm.review.grade}">
+                                                <i class="bi bi-star-fill"></i>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <i class="bi bi-star"></i>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                </p>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <div class="float-start">
+                                        <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
+                                        <span style="font-size:18px; font-weight:bold">${rm.review.guestId}</span>
+                                    </div>
+                                    <div class="float-end">
+                                        <button class="btn border-gray p-1">
+                                            <i class="bi bi-globe2"></i><span class="ms-1">번역</span>
+                                            <select class="form-select form-select-sm"
+                                                    data-review-id="${rm.review.reviewId}"
+                                                    data-original="${rm.review.comment}">
+                                                <option value="" selected disabled hidden>언어</option>
+                                                <option value="ko">한국어</option>
+                                                <option value="en">영어</option>
+                                                <option value="zh-CN">중국어</option>
+                                                <option value="ja">일본어</option>
+                                            </select>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="float-end">
-                                    <button class="btn border-gray p-1">
-                                        <i class="bi bi-globe2"></i><span class="ms-1">번역</span>
-                                        <select class="form-select form-select-sm"
-                                                data-review-id="${rm.review.reviewId}"
-                                                data-original="${rm.review.comment}">
-                                            <option value="" selected disabled hidden>언어</option>
-                                            <option value="ko">한국어</option>
-                                            <option value="en">영어</option>
-                                            <option value="zh-CN">중국어</option>
-                                            <option value="ja">일본어</option>
-                                        </select>
-                                    </button>
-                                </div>
-                            </div>
-                            <small>[${rm.review.name}]</small>
-                            <p class="review-comment-text">${rm.review.comment}</p>
+                                <small>[${rm.review.name}]</small>
+                                <p class="review-comment-text">${rm.review.comment}</p>
 
-                            <%--이미지 추가--%>
-                            <c:if test="${not empty rm.images}">
-                                <div class="d-flex overflow-scroll">
-                                <c:forEach var="reviewImg" items="${rm.images}">
-                                    <img class="pe-2" style="height: 120px; width: auto;" src="<c:url value="/imgs/no-image-available.jpeg"/>" alt="리뷰이미지">
-                                <%--<img src="<c:url value='/imgs/${reviewImg}'/>" alt="리뷰이미지" class="img-fluid mb-2" />--%>
-                                </c:forEach>
-                                </div>
-                            </c:if>
-
-                            <small class="text-muted">
-                                작성일:<fmt:formatDate value="${rm.review.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/><br>
-                                수정일:<fmt:formatDate value="${rm.review.updateDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
-                            </small>
-                        </div>
-
-                        <!-- 답글 리스트 출력 -->
-                        <hr>
-                        <div class="mt-3">
-                            <c:choose>
-                                <c:when test="${empty rm.reply}">
-                                    <p class="text-muted">호스트 님의 답글을 남겨주세요. 😍</p>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="reply-list">
-                                        <c:forEach var="reply" items="${rm.reply}">
-                                            <div class="reply-item mb-3 p-3 rounded shadow-sm">
-                                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                                    <div class="left">
-                                                        <img src="<c:url value="/imgs/avatar.png"/>" alt class="w-px-30 h-auto rounded-circle" />
-                                                        <strong>${sessionScope.user.name}</strong>
-                                                    </div>
-                                                    <div class="text-muted small right">
-                                                        <fmt:formatDate value="${reply.createDay}" pattern="yyyy-MM-dd HH:mm:ss"/>
-                                                    </div>
-                                                </div>
-                                                <p>${reply.comment}</p>
-                                                <a href="javascript:void(0);" data-review-id="${reply.replyId}" class="deleteReplyBtn">삭제</a>
-                                            </div>
+                                    <%--이미지 추가--%>
+                                <c:if test="${not empty rm.images}">
+                                    <div class="d-flex overflow-scroll">
+                                        <c:forEach var="reviewImg" items="${rm.images}">
+                                            <img class="pe-2" style="height: 120px; width: auto;" src="<c:url value="/imgs/no-image-available.jpeg"/>" alt="리뷰이미지">
+                                            <%--<img src="<c:url value='/imgs/${reviewImg}'/>" alt="리뷰이미지" class="img-fluid mb-2" />--%>
                                         </c:forEach>
                                     </div>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
+                                </c:if>
 
-                        <!-- 답글 작성 폼 -->
-                        <div class="d-flex mt-3">
-                            <input type="hidden" class="reviewId" value="${rm.review.reviewId}">
-                            <input type="hidden" class="userId" value="${sessionScope.user.userId}">
-                            <textarea class="comment form-control me-2" rows="2" required></textarea>
-                            <button class="addReplyBtn btn btn-primary" data-review-id="${rm.review.reviewId}">
-                                <i class="bi bi-send"></i>
-                            </button>
-                        </div>
+                                <small class="text-muted">
+                                    작성일:<fmt:formatDate value="${rm.review.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/><br>
+                                    수정일:<fmt:formatDate value="${rm.review.updateDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
+                                </small>
+                            </div>
 
+                            <!-- 답글 리스트 출력 -->
+                            <hr>
+                            <div class="mt-3">
+                                <c:choose>
+                                    <c:when test="${empty rm.reply}">
+                                        <p class="text-muted">호스트 님의 답글을 남겨주세요. 😍</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="reply-list">
+                                            <c:forEach var="reply" items="${rm.reply}">
+                                                <div class="reply-item mb-3 p-3 rounded shadow-sm">
+                                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                                        <div class="left">
+                                                            <img src="<c:url value="/imgs/avatar.png"/>" alt class="w-px-30 h-auto rounded-circle" />
+                                                            <strong>${sessionScope.user.name}</strong>
+                                                        </div>
+                                                        <div class="text-muted small right">
+                                                            <fmt:formatDate value="${reply.createDay}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                                        </div>
+                                                    </div>
+                                                    <p>${reply.comment}</p>
+                                                    <a href="javascript:void(0);" data-review-id="${reply.replyId}" class="deleteReplyBtn">삭제</a>
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+
+                            <!-- 답글 작성 폼 -->
+                            <div class="d-flex mt-3">
+                                <input type="hidden" class="reviewId" value="${rm.review.reviewId}">
+                                <input type="hidden" class="userId" value="${sessionScope.user.userId}">
+                                <textarea class="comment form-control me-2" rows="2" required></textarea>
+                                <button class="addReplyBtn btn btn-primary" data-review-id="${rm.review.reviewId}">
+                                    <i class="bi bi-send"></i>
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+            </div>
+            <%-- 더보기 버튼 --%>
+            <c:if test="${not empty reviewMap && reviewMap.size() > 3}">
+                <button id="loadMoreReviewsBtn" class="btn btn-outline-primary w-50 mx-auto my-4 d-block">더보기</button>
+            </c:if>
         </div>
     </div>
 </div>
@@ -227,7 +236,6 @@
                 const $select = $(this);
                 const selectedLang = $select.val();
                 const originalText = $select.data('original');
-                // Find the specific comment paragraph related to this select
                 const $commentParagraph = $select.closest('.card-body').find('.review-comment-text');
 
                 if (!selectedLang) {
@@ -240,6 +248,11 @@
                 } else {
                     console.error("Could not find comment paragraph to update.");
                 }
+            });
+
+            // "Load More" reviews button handler
+            $('#loadMoreReviewsBtn').on('click', function() {
+                reviewPage.loadMoreReviews();
             });
         },
 
@@ -303,7 +316,6 @@
 
             const formattedTimestamp = year + "년 " + month + "월 " + day + "일 " + hours + ":" + minutes + ":" + seconds;
             $("#dataTimestamp").text("데이터 기준일: " + formattedTimestamp);
-
         },
 
         translate: function(originalText, targetLang, $commentElement){
@@ -331,6 +343,17 @@
                     $commentElement.text(originalText);
                 }
             });
+        },
+
+        loadMoreReviews: function() {
+            const $hiddenReviews = $('.review-card:hidden');
+            const reviewsToShow = 3;
+
+            $hiddenReviews.slice(0, reviewsToShow).slideDown();
+
+            if ($hiddenReviews.length <= reviewsToShow) {
+                $('#loadMoreReviewsBtn').hide();
+            }
         }
     };
 
@@ -339,5 +362,3 @@
         reviewPage.loadDashBoardData();
     });
 </script>
-
-
