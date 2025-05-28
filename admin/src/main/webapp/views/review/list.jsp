@@ -146,18 +146,19 @@
                                     <c:otherwise>
                                         <div class="reply-list">
                                             <c:forEach var="reply" items="${rm.reply}">
-                                                <div class="reply-item mb-3 p-3 rounded shadow-sm">
+                                                <div class="reply-item mb-3">
                                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                                         <div class="left">
                                                             <img src="<c:url value="/imgs/avatar.png"/>" alt class="w-px-30 h-auto rounded-circle" />
                                                             <strong>${sessionScope.user.name}</strong>
+                                                            <small class="ms-1 text-muted"><fmt:formatDate value="${reply.createDay}" pattern="yyyy-MM-dd HH:mm:ss"/></small>
                                                         </div>
                                                         <div class="text-muted small right">
-                                                            <fmt:formatDate value="${reply.createDay}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                                            <a href="javascript:void(0);" data-review-id="${reply.replyId}" class="modifyReplyBtn">수정</a>
+                                                            <a href="javascript:void(0);" data-review-id="${reply.replyId}" class="deleteReplyBtn ms-3">삭제</a>
                                                         </div>
                                                     </div>
                                                     <p>${reply.comment}</p>
-                                                    <a href="javascript:void(0);" data-review-id="${reply.replyId}" class="deleteReplyBtn">삭제</a>
                                                 </div>
                                             </c:forEach>
                                         </div>
@@ -263,7 +264,7 @@
                 contentType: "application/json",
                 data: JSON.stringify(replyData),
                 success: function (response) {
-                    alert(response);
+                    //alert(response);
                     location.reload();
                 },
                 error: function (xhr) {
