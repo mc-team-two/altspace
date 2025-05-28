@@ -24,8 +24,8 @@
         <ul>
             <li class="menu_item"><a href="<c:url value="/"/> "><spring:message code="home"/></a></li>
             <li class="menu_item"><a href="<c:url value="/about"/> "><spring:message code="about"/> </a></li>
-            <li class="menu_item"><a href="<c:url value="/contacts"/> "><spring:message code="contacts"/></a></li>
-            <li class="menu_item"><a href="<c:url value="/details"/> "><spring:message code="details"/></a></li>
+            <li class="menu_item"><a href="<c:url value="/faq1"/> "><spring:message code="contacts"/></a></li>
+            <li class="menu_item"><a href="<c:url value="/mypage/aireport"/> "><spring:message code="details"/></a></li>
         </ul>
     </div>
 </div>
@@ -415,7 +415,7 @@
                                         <div class="offers_image_container" style="cursor:pointer;"
                                              onclick="updateViewsAndGo(${a.accommodationId})">
                                             <div class="offers_image_background"
-                                                 style="background-image:url('${pageContext.request.contextPath}/images/${a.image1Name}')"></div>
+                                                 style="background-image:url('/imgs/${a.image1Name}')"></div>
                                             <div class="offer_name"><a
                                                     href="<c:url value="/detail?id=${a.accommodationId}"/>">${a.name}</a>
                                             </div>
@@ -535,7 +535,7 @@
                     </div>
                     <div id="gemini-chatbot" class="chatbot chatbot-gemini">
                         <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                            <i class="fab fa-android" aria-hidden="true"></i>
+                            <i class="fab fa-google" aria-hidden="true"></i>
                         </div>
                         <div id="gemini-chat-window" class="chat-window gemini-window">
                             <div class="chat-header gemini-header">

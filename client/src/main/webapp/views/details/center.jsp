@@ -59,9 +59,6 @@
         }
     }
 
-
-
-
     .sidebar-link {
         display: flex;
         align-items: center;
@@ -107,8 +104,8 @@
         <ul>
             <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
             <li class="menu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-            <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-            <li class="menu_item"><a href="<c:url value="/details"/> ">마이페이지</a></li>
+            <li class="menu_item"><a href="<c:url value="/faq1"/> ">고객센터</a></li>
+            <li class="menu_item"><a href="<c:url value="/mypage/aireport"/> ">마이페이지</a></li>
         </ul>
     </div>
 </div>
@@ -145,7 +142,7 @@
                                         <div class="card-header bg-primary text-white">
                                             <h5 class="mb-0">${py.name}</h5>
                                         </div>
-                                        <img src="${pageContext.request.contextPath}/images/${py.image1Name}"
+                                        <img src="/imgs/${py.image1Name}"
                                              class="card-img-top" alt="숙소 이미지"
                                              style="height: 200px; object-fit: cover;">
                                         <div class="card-body">
@@ -245,7 +242,7 @@
         </div>
         <div id="gemini-chatbot" class="chatbot chatbot-gemini">
             <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-                <i class="fab fa-android" aria-hidden="true"></i>
+                <i class="fab fa-google" aria-hidden="true"></i>
             </div>
             <div id="gemini-chat-window" class="chat-window gemini-window">
                 <div class="chat-header gemini-header">
@@ -262,7 +259,6 @@
     </div>
 </div>
 
-
 <script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
 <script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
 <script src="<c:url value="styles/bootstrap4/bootstrap.min.js"/>"></script>
@@ -270,6 +266,8 @@
 <script src="<c:url value="plugins/easing/easing.js"/>"></script>
 <script src="<c:url value="plugins/parallax-js-master/parallax.min.js"/>"></script>
 <script src="<c:url value="js/offers_custom.js"/>"></script>
+<script defer src="<c:url value='js/chatbot.js'/>"></script>
+<script src="<c:url value='js/GeminiChatbot.js'/>"></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

@@ -676,8 +676,8 @@
         <ul>
             <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
             <li class="menu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-            <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-            <li class="menu_item"><a href="<c:url value="/details"/> ">마이페이지</a></li>
+            <li class="menu_item"><a href="<c:url value="/faq1"/> ">고객센터</a></li>
+            <li class="menu_item"><a href="<c:url value="/mypage/aireport"/> ">마이페이지</a></li>
         </ul>
     </div>
 </div>
@@ -697,7 +697,7 @@
         <!-- 대표 이미지 -->
         <div class="col-md-7 pr-md-1 mb-2">
             <div class="image-hover" style="height: 400px;">
-                <img src="${pageContext.request.contextPath}/images/${accomm.image1Name}" alt="대표 이미지"
+                <img src="/imgs/${accomm.image1Name}" alt="대표 이미지"
                      style="width: 100%; height: 100%; object-fit: cover;">
             </div>
         </div>
@@ -707,25 +707,25 @@
             <div class="row no-gutters">
                 <div class="col-6 pl-md-1 pr-1 mb-2">
                     <div class="image-hover" style="height: 195px;">
-                        <img src="${pageContext.request.contextPath}/images/${accomm.image2Name}" alt="서브 이미지1"
+                        <img src="/imgs/${accomm.image2Name}" alt="서브 이미지1"
                              style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-6 pl-1 mb-2">
                     <div class="image-hover" style="height: 195px;">
-                        <img src="${pageContext.request.contextPath}/images/${accomm.image3Name}" alt="서브 이미지2"
+                        <img src="/imgs/${accomm.image3Name}" alt="서브 이미지2"
                              style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-6 pl-md-1 pr-1">
                     <div class="image-hover" style="height: 195px;">
-                        <img src="${pageContext.request.contextPath}/images/${accomm.image4Name}" alt="서브 이미지3"
+                        <img src="/imgs/${accomm.image4Name}" alt="서브 이미지3"
                              style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-6 pl-1 position-relative">
                     <div class="image-hover" style="height: 195px;">
-                        <img src="${pageContext.request.contextPath}/images/${accomm.image5Name}" alt="서브 이미지4"
+                        <img src="/imgs/${accomm.image5Name}" alt="서브 이미지4"
                              style="width: 100%; height: 100%; object-fit: cover;">
                         <!-- 모두 보기 버튼 -->
                         <div class="overlay-btn" data-toggle="modal" data-target="#photoModal">
@@ -1098,7 +1098,7 @@
 </div>
 <div id="gemini-chatbot" class="chatbot chatbot-gemini">
     <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-        <i class="fab fa-android" aria-hidden="true"></i>
+        <i class="fab fa-google" aria-hidden="true"></i>
     </div>
     <div id="gemini-chat-window" class="chat-window gemini-window">
         <div class="chat-header gemini-header">
@@ -1125,11 +1125,11 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img src="${pageContext.request.contextPath}/images/${accomm.image1Name}" class="img-fluid mb-3" alt="전체 대표 이미지">
-                <img src="${pageContext.request.contextPath}/images/${accomm.image2Name}" class="img-fluid mb-3" alt="전체 서브 이미지1">
-                <img src="${pageContext.request.contextPath}/images/${accomm.image3Name}" class="img-fluid mb-3" alt="전체 서브 이미지2">
-                <img src="${pageContext.request.contextPath}/images/${accomm.image4Name}" class="img-fluid mb-3" alt="전체 서브 이미지3">
-                <img src="${pageContext.request.contextPath}/images/${accomm.image5Name}" class="img-fluid mb-3" alt="전체 서브 이미지4">
+                <img src="/imgs/${accomm.image1Name}" class="img-fluid mb-3" alt="전체 대표 이미지">
+                <img src="/imgs/${accomm.image2Name}" class="img-fluid mb-3" alt="전체 서브 이미지1">
+                <img src="/imgs/${accomm.image3Name}" class="img-fluid mb-3" alt="전체 서브 이미지2">
+                <img src="/imgs/${accomm.image4Name}" class="img-fluid mb-3" alt="전체 서브 이미지3">
+                <img src="/imgs/${accomm.image5Name}" class="img-fluid mb-3" alt="전체 서브 이미지4">
             </div>
         </div>
     </div>

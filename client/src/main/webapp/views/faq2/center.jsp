@@ -39,8 +39,8 @@
     <ul>
       <li class="menu_item"><a href="<c:url value="/"/> ">홈</a></li>
       <li class="menu_item"><a href="<c:url value="/about"/> ">Altspace란</a></li>
-      <li class="menu_item"><a href="<c:url value="/contacts"/> ">고객센터</a></li>
-      <li class="menu_item"><a href="<c:url value="/details"/> ">예약 내역</a></li>
+      <li class="menu_item"><a href="<c:url value="/faq1"/> ">고객센터</a></li>
+      <li class="menu_item"><a href="<c:url value="/mypage/aireport"/> ">마이페이지</a></li>
     </ul>
   </div>
 </div>
@@ -136,6 +136,22 @@
         </div>
       </div>
 
+      <div id="gemini-chatbot" class="chatbot chatbot-gemini">
+        <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+          <i class="fab fa-google" aria-hidden="true"></i>
+        </div>
+        <div id="gemini-chat-window" class="chat-window gemini-window">
+          <div class="chat-header gemini-header">
+            <span>Gemini 챗봇</span>
+            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
+          </div>
+          <div class="chat-messages" id="gemini-chat-messages"></div>
+          <div class="chat-input">
+            <input type="text" id="gemini-chat-input" placeholder="Gemini에게 물어보세요">
+            <button id="gemini-chat-send-btn">보내기</button>
+          </div>
+        </div>
+      </div>
       <!-- 사이드바 -->
 
       <div class="col-lg-4 sidebar_col">
@@ -145,10 +161,10 @@
             <div class="sidebar_title">MENU</div>
             <div class="sidebar_list">
               <ul>
-                <li><a href="<c:url value="/contacts"/> ">고객센터 문의</a></li>
                 <li><a href="<c:url value="/faq1"/> ">홈 FAQ</a></li>
                 <li><a href="<c:url value="/faq2"/> ">예약 FAQ</a></li>
                 <li><a href="<c:url value="/faq3"/> ">기타 FAQ</a></li>
+                <li><a href="<c:url value="/contacts"/> ">고객센터 문의</a></li>
               </ul>
             </div>
           </div>
@@ -168,4 +184,3 @@
 <script src="js/darkmode.js"></script>
 <script src="<c:url value="/webjars/sockjs-client/sockjs.min.js"/> "></script>
 <script src="<c:url value="/webjars/stomp-websocket/stomp.min.js"/> "></script>
-<script src="<c:url value="js/chatbot.js"/>"></script>

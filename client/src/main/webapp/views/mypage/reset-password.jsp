@@ -53,7 +53,6 @@
         }
     }
 
-
     .sidebar-link {
         display: flex;
         align-items: center;
@@ -96,8 +95,8 @@
         <ul>
             <li class="menu_item"><a href="<c:url value='/'/>">홈</a></li>
             <li class="menu_item"><a href="<c:url value='/about'/>">Altspace란</a></li>
-            <li class="menu_item"><a href="<c:url value='/contacts'/>">고객센터</a></li>
-            <li class="menu_item"><a href="<c:url value='/details'/>">예약 내역</a></li>
+            <li class="menu_item"><a href="<c:url value='/faq1'/>">고객센터</a></li>
+            <li class="menu_item"><a href="<c:url value='/mypage/aireport'/>">마이페이지</a></li>
         </ul>
     </div>
 </div>
@@ -198,58 +197,107 @@
         </div>
     </div>
 </div>
-    <!-- 챗봇 영역 -->
+<!-- 챗봇 영역 -->
 
-    <div id="chatbot" class="chatbot">
-        <div id="chat-icon" class="chat-icon">
-            <i class="fas fa-comments" aria-hidden="true"></i>
+<div id="chatbot" class="chatbot">
+    <div id="chat-icon" class="chat-icon">
+        <i class="fas fa-comments" aria-hidden="true"></i>
+    </div>
+    <div id="chat-window" class="chat-window">
+        <div class="chat-header">
+            <span><spring:message code="chat-header"/></span>
+            <button id="chat-close-btn" class="chat-close-btn">&times;</button>
         </div>
-        <div id="chat-window" class="chat-window">
-            <div class="chat-header">
-                <span><spring:message code="chat-header"/></span>
-                <button id="chat-close-btn" class="chat-close-btn">&times;</button>
-            </div>
-            <div class="chat-messages" id="chat-messages">
+        <div class="chat-messages" id="chat-messages">
 
-            </div>
-            <div class="chat-input">
-                <input type="text" id="chat-input" placeholder="<spring:message code="chat-input"/>">
-                <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
-            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="<spring:message code="chat-input"/>">
+            <button id="chat-send-btn"><spring:message code="chat-send-btn"/></button>
         </div>
     </div>
-    <div id="gemini-chatbot" class="chatbot chatbot-gemini">
-        <div id="gemini-chat-icon" class="chat-icon gemini-icon">
-            <i class="fab fa-android" aria-hidden="true"></i>
+</div>
+<div id="gemini-chatbot" class="chatbot chatbot-gemini">
+    <div id="gemini-chat-icon" class="chat-icon gemini-icon">
+        <i class="fab fa-google" aria-hidden="true"></i>
+    </div>
+    <div id="gemini-chat-window" class="chat-window gemini-window">
+        <div class="chat-header gemini-header">
+            <span><spring:message code="gemini-header"/></span>
+            <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
         </div>
-        <div id="gemini-chat-window" class="chat-window gemini-window">
-            <div class="chat-header gemini-header">
-                <span><spring:message code="gemini-header"/></span>
-                <button id="gemini-chat-close-btn" class="chat-close-btn">&times;</button>
-            </div>
-            <div class="chat-messages" id="gemini-chat-messages"></div>
-            <div class="chat-input">
-                <input type="text" id="gemini-chat-input" placeholder="<spring:message code="gemini-chat-input"/>">
-                <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
-            </div>
+        <div class="chat-messages" id="gemini-chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="gemini-chat-input" placeholder="<spring:message code="gemini-chat-input"/>">
+            <button id="gemini-chat-send-btn"><spring:message code="gemini-chat-send-btn"/></button>
         </div>
     </div>
+</div>
 
-    <script src="<c:url value='js/jquery-3.2.1.min.js'/>"></script>
-    <script src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'/>"></script>
-    <script src="<c:url value='styles/bootstrap4/popper.js'/>"></script>
-    <script src="<c:url value='styles/bootstrap4/bootstrap.min.js'/>"></script>
-    <script src="<c:url value='plugins/Isotope/isotope.pkgd.min.js'/>"></script>
-    <script src="<c:url value='plugins/easing/easing.js'/>"></script>
-    <script src="<c:url value='plugins/parallax-js-master/parallax.min.js'/>"></script>
+<script src="<c:url value='js/jquery-3.2.1.min.js'/>"></script>
+<script src="<c:url value='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js'/>"></script>
+<script src="<c:url value='styles/bootstrap4/popper.js'/>"></script>
+<script src="<c:url value='styles/bootstrap4/bootstrap.min.js'/>"></script>
+<script src="<c:url value='plugins/Isotope/isotope.pkgd.min.js'/>"></script>
+<script src="<c:url value='plugins/easing/easing.js'/>"></script>
+<script src="<c:url value='plugins/parallax-js-master/parallax.min.js'/>"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const submenuToggles = document.querySelectorAll(".has-submenu > a");
-            submenuToggles.forEach(function (toggle) {
-                toggle.addEventListener("click", function () {
-                    this.parentElement.classList.toggle("active");
-                });
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 하위 메뉴 토글
+        const submenuToggles = document.querySelectorAll(".has-submenu > a");
+        submenuToggles.forEach(function (toggle) {
+            toggle.addEventListener("click", function (e) {
+                e.preventDefault()
+                this.parentElement.classList.toggle("active");
             });
         });
-    </script>
+    })
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // 🔴 비밀번호 재설정 비동기 처리
+        const resetForm = document.getElementById("resetPasswordForm");
+        if (resetForm) {
+            resetForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const oldPwd = document.getElementById("currentPassword").value.trim();
+                const newPwd = document.getElementById("newPassword").value.trim();
+
+                if (!oldPwd || !newPwd) {
+                    alert("현재 비밀번호와 새 비밀번호를 모두 입력하세요!");
+                    return;
+                }
+
+                // ✅ 새 비밀번호 형식 검사 (영문, 숫자, 특수문자 포함 8~20자)
+                const pwdRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
+                if (!pwdRegex.test(newPwd)) {
+                    alert("비밀번호는 8~20자의 영문자, 숫자, 특수문자를 포함해야 합니다.");
+                    return;
+                }
+
+                // 🔗 비밀번호 변경 요청
+                fetch("<c:url value='/api/auth/change-pwd-impl'/>", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        oldPwd: oldPwd,
+                        newPwd: newPwd
+                    })
+                })
+                    .then(response => response.text())
+                    .then(msg => {
+                        alert(msg);
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        alert("비밀번호 변경 중 오류가 발생했습니다. 다시 시도해 주세요.");
+                    });
+            });
+        }
+    });
+</script>
