@@ -110,19 +110,17 @@
                                         <i class="fas fa-user-circle fa-2x me-2 text-secondary"></i>
                                         <span style="font-size:18px; font-weight:bold">${rm.review.guestId}</span>
                                     </div>
-                                    <div class="float-end">
-                                        <button class="btn border-gray p-1">
-                                            <i class="bi bi-globe2"></i><span class="ms-1">번역</span>
-                                            <select class="form-select form-select-sm"
-                                                    data-review-id="${rm.review.reviewId}"
-                                                    data-original="${rm.review.comment}">
-                                                <option value="" selected disabled hidden>언어</option>
-                                                <option value="ko">한국어</option>
-                                                <option value="en">영어</option>
-                                                <option value="zh-CN">중국어</option>
-                                                <option value="ja">일본어</option>
-                                            </select>
-                                        </button>
+                                    <div class="float-end d-flex">
+                                        <i class="bi bi-translate me-2"></i>
+                                        <select class="form-select form-select-sm border-0"
+                                                data-review-id="${rm.review.reviewId}"
+                                                data-original="${rm.review.comment}">
+                                            <option value="" selected disabled hidden>언어</option>
+                                            <option value="ko">한국어</option>
+                                            <option value="en">영어</option>
+                                            <option value="zh-CN">중국어</option>
+                                            <option value="ja">일본어</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <small>[${rm.review.name}]</small>
@@ -137,8 +135,14 @@
                                 </c:if>
 
                                 <small class="text-muted">
-                                    작성일:<fmt:formatDate value="${rm.review.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/><br>
-                                    수정일:<fmt:formatDate value="${rm.review.updateDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
+                                    <c:choose>
+                                        <c:when test="${not empty rm.review.updateDay}">
+                                            <fmt:formatDate value="${rm.review.updateDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/> (수정됨)
+                                        </c:when>
+                                        <c:otherwise>
+                                            <fmt:formatDate value="${rm.review.createDay}" pattern="yyyy년 MM월 dd일 HH:mm:ss"/>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </small>
                             </div>
 
@@ -418,7 +422,8 @@
                         $commentElement.text(translatedText);
                     } else {
                         $commentElement.text(originalText);
-                        alert('번역 결과를 받지 못했습니다. 원본 텍스트로 표시됩니다.');
+                        // 출발어 도착어가 같아서 받는 오류가 99% => 에러 무시
+                        // alert('번역 결과를 받지 못했습니다. 원본 텍스트로 표시됩니다.');
                     }
                 },
                 error: function (xhr) {
