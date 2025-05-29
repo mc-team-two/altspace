@@ -134,7 +134,7 @@
     <%--register form--%>
     <form id="registrationForm" class="text-left">
       <%--role (using default value)--%>
-      <input type="hidden" name="role" class="form-control" value="호스트" required>
+      <input type="hidden" name="role" class="form-control" value="게스트" required>
 
       <%--email--%>
       <div class="form-group">
