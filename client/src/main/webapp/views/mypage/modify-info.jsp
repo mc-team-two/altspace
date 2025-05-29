@@ -248,17 +248,6 @@
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // 하위 메뉴 토글
-        const submenuToggles = document.querySelectorAll(".has-submenu > a");
-        submenuToggles.forEach(function (toggle) {
-            toggle.addEventListener("click", function () {
-                this.parentElement.classList.toggle("active");
-            });
-        });
-    })
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
         // 🔴 회원 정보 수정 비동기 요청
         const updateBtn = document.getElementById("updateBtn");
         updateBtn.addEventListener("click", function () {

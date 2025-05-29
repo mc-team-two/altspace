@@ -432,7 +432,7 @@ $(document).ready(function () {
                <div class="col-lg-1 temp_col"></div>
                <div class="col-lg-3 col-1680-4">
                   <div class="offers_image_container">
-                     <div class="offers_image_background" style="background-image:url('${imageUrl}')"></div>
+                    <div class="offers_image_background" style="background-image:url('/imgs/${accommodation.image1Name}')"></div>
                          <div class="offer_name"><a href="/detail?id=${accommodation.accommodationId}">${accommodation.name}</a></div>
                   </div>
                </div>
@@ -568,6 +568,7 @@ $(document).ready(function () {
             })
                 .done(function (data) {
                     console.log("✅ 숙소 결과:", data);
+                    displaySearchResults(data)
                     // 너가 원래 숙소 그리는 함수가 있으면 여기서 호출해줘! (예: displaySearchResults(data))
                     $("#offersSpinner").addClass("d-none");
                     $(".offers_grid").removeClass("d-none");
@@ -592,8 +593,6 @@ $(document).ready(function () {
                 }),
                 success: function (data) {
                     console.log("✅ Gemini 응답:", data);
-
-                    // ✅ displaySearchSuggestions를 반드시 호출!
                     displaySearchSuggestions(data);
 
                     // spinner 숨기기
@@ -606,6 +605,83 @@ $(document).ready(function () {
                 }
             });
         });
+
+
+
+        function displaySearchResults(accommodationsWithRating) {
+            const offersGrid = $(".offers_grid");
+            offersGrid.empty();
+            $(".blog_navigation").hide(); // 대체 가능
+
+            if (accommodationsWithRating && accommodationsWithRating.length > 0) {
+                $.each(accommodationsWithRating, function (index, item) {
+                    const accommodation = item.accommodation;
+                    const rating = item.roundedRating;
+                    const ratingClass = `rating_${rating}`;
+                    let imageUrl = '';
+                    if (accommodation.image1Name) {
+                        imageUrl = `/images/${accommodation.image1Name}`;
+                    } else {
+                        imageUrl = `/images/default.jpg`;
+                    }
+
+                    const barbecueIcon = accommodation.barbecue ? `<li class="offers_icons_item" data-popper-content="바베큐 시설 안내"><i class="fa fa-fire-alt text-warning" aria-hidden="true"></i></li>` : '';
+                    const breakfastIcon = accommodation.breakfast ? `<li class="offers_icons_item" data-popper-content="맛있는 조식 제공"><i class="fa fa-coffee text-danger" aria-hidden="true"></i></li>` : '';
+                    const petIcon = accommodation.pet ? `<li class="offers_icons_item" data-popper-content="반려동물 동반 가능"><i class="fa fa-paw text-info" aria-hidden="true"></i></li>` : '';
+                    const poolIcon = accommodation.pool ? `<li class="offers_icons_item" data-popper-content="시원한 수영장 이용"><i class="fas fa-swimmer text-primary" aria-hidden="true"></i></li>` : '';
+
+                    const listItem = `
+             <div class="offers_item ${ratingClass}">
+                <div class="row">
+                   <div class="col-lg-1 temp_col"></div>
+                   <div class="col-lg-3 col-1680-4">
+                      <div class="offers_image_container">
+                        <div class="offers_image_background" style="background-image:url('/imgs/${accommodation.image1Name}')"></div>
+                             <div class="offer_name"><a href="/detail?id=${accommodation.accommodationId}">${accommodation.name}</a></div>
+                      </div>
+                   </div>
+                           <div class="col-lg-8">
+                               <div class="offers_content">
+                                   <div class="offers_price">$${accommodation.priceNight}<span>per night</span></div>
+                                   <div class="rating_r rating_r_${rating} offers_rating" data-rating="${rating}">
+                                       <i></i><i></i><i></i><i></i><i></i>
+                                   </div>
+                                   <p class="offers_text">${accommodation.description}</p>
+                                   <div class="offers_icons">
+                                       <ul class="offers_icons_list">
+                                           ${barbecueIcon}
+                                           ${breakfastIcon}
+                                           ${petIcon}
+                                           ${poolIcon}
+                                       </ul>
+                                   </div>
+                                   <div class="button book_button"><a href="/detail?id=${accommodation.accommodationId}">상세보기<span></span><span></span><span></span></a></div>
+                                   <div class="offer_reviews">
+                                       <div class="offer_reviews_content">
+                                           <div class="offer_reviews_title">
+                                               ${getRatingText(rating)}
+                                           </div>
+                                           <div class="offer_reviews_subtitle"> 리뷰 평점: </div>
+                                       </div>
+                                       <div class="offer_reviews_rating text-center">
+                                           ${rating}
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               `;
+                    offersGrid.append(listItem);
+                });
+
+                // 검색 결과가 그려진 후에 팝업 기능 활성화
+                initIconPopper();
+
+            } else {
+                offersGrid.html("<p>검색 결과가 없습니다.</p>");
+            }
+        }
 
         // ✅ AI 추천 결과 렌더링 함수
         function displaySearchSuggestions(data) {
