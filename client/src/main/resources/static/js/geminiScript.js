@@ -1,7 +1,39 @@
 // ✅ Google Charts 로드
-google.charts.load('current', { packages: ['geochart'] });
+google.charts.load('current', {packages: ['geochart']});
 
-loadCarouselData();
+/**
+ * 데이터를 로컬스토리지에 저장 (유효기간 포함)
+ */
+function saveToLocalStorageWithExpiry(key, data, ttlMillis) {
+    const now = Date.now();
+    const item = {
+        data,
+        expiry: now + ttlMillis
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+}
+
+/**
+ * 로컬스토리지에서 데이터 읽기 (유효기간 검사)
+ */
+function loadFromLocalStorageWithExpiry(key) {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) return null;
+
+    try {
+        const item = JSON.parse(itemStr);
+        const now = Date.now();
+        if (now > item.expiry) {
+            console.log("⏰ 로컬스토리지 캐시 만료됨!");
+            localStorage.removeItem(key); // 만료되었으면 삭제
+            return null;
+        }
+        return item.data;
+    } catch (e) {
+        console.error("로컬스토리지 파싱 오류:", e);
+        return null;
+    }
+}
 
 /**
  * ✅ 캐러셀 데이터를 로드하는 함수
@@ -23,9 +55,7 @@ function loadCarouselData() {
         });
 }
 
-/**
- * ✅ 지역별 매핑 키워드 및 영어 이름
- */
+// ✅ 지역별 매핑 키워드 및 영어 이름
 const provinceKeywords = {
     '서울특별시': ['서울특별시', '서울시', '서울'],
     '부산광역시': ['부산광역시', '부산시', '부산'],
@@ -111,7 +141,6 @@ async function sendStatsToGemini(stats) {
     const carouselSpinner = document.getElementById("carouselSpinner");
     const carousel = document.getElementById("top5Carousel");
 
-    // ⭐ 스피너를 보이게!
     carouselSpinner.classList.remove("d-none");
     carousel.classList.add("d-none");
 
@@ -158,19 +187,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     const heatmapSpinner = document.getElementById("heatmapSpinner");
     const regionsDiv = document.getElementById("regions_div");
 
-    try {
-        const response = await fetch("/api/gemini/get-popular-stats");
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const data = await response.json();
-        console.log("🔥 인기 지역 통계:", data);
+    const localKey = "popularStatsData";
+    const ttl = 60 * 60 * 1000; // 1시간
 
-        processStatsData(data);
+    let stats = loadFromLocalStorageWithExpiry(localKey);
+
+    if (stats && Array.isArray(stats)) {
+        console.log("✅ 로컬스토리지에서 불러온 유효한 데이터:", stats);
+        processStatsData(stats);
+        sendStatsToGemini(stats);
         heatmapSpinner.style.display = "none";
         regionsDiv.style.display = "block";
+    } else {
+        try {
+            const response = await fetch("/api/gemini/get-popular-stats");
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            stats = await response.json();
+            console.log("🔥 API로 불러온 데이터:", stats);
 
-        sendStatsToGemini(data);
-    } catch (err) {
-        console.error("🚨 인기 지역 통계 조회 실패!", err);
-        heatmapSpinner.innerHTML = `<div class="alert alert-danger">데이터를 불러올 수 없습니다.</div>`;
+            saveToLocalStorageWithExpiry(localKey, stats, ttl);
+
+            processStatsData(stats);
+            sendStatsToGemini(stats);
+            heatmapSpinner.style.display = "none";
+            regionsDiv.style.display = "block";
+        } catch (err) {
+            console.error("🚨 인기 지역 통계 조회 실패!", err);
+            heatmapSpinner.innerHTML = `<div class="alert alert-danger">데이터를 불러올 수 없습니다.</div>`;
+        }
     }
 });
