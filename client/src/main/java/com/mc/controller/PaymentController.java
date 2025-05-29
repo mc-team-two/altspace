@@ -63,18 +63,6 @@ public class PaymentController {
         BigDecimal paidAmount = payment.getAmount();
         String payMethod = payment.getPayMethod();
 
-        // 결제 수단 한글 매핑
-        String displayMethod = switch (payMethod) {
-            case "card"     -> "신용카드";  // 페이북
-            case "trans"    -> "계좌이체";
-            case "vbank"    -> "가상계좌";
-            case "phone"    -> "휴대폰결제";
-            case "kakaopay" -> "카카오페이"; // point
-            case "tosspay"  -> "토스페이";
-            case "payco"    -> "페이코";
-            default         -> "기타";
-        };
-
         // 여기에 DB에 저장할 로직 추가
         // 아임포트에서 결제가 완료된 경우 paid 상태
         // 실패 / 취소, failed / cancelled
