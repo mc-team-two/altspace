@@ -138,6 +138,56 @@
     </div>
 </div>
 
+<script>
+    const contactPage = {
+        init: function () {
+            // Attach event listener to the submit button
+            $("#form_submit_button").click(() => {
+                contactPage.sendEmail(); // Call the sendEmail method
+            });
+        },
+        sendEmail: function () {
+            const username = $("#contact_form_name").val().trim();
+            const emailOrPhone = $("#contact_form_email").val().trim(); // This field is for '전화번호 또는 이메일'
+            const subject = $("#contact_form_subject").val().trim();
+            const content = $("#contact_form_message").val().trim();
+
+            if (!username || !emailOrPhone || !subject || !content) {
+                alert("모든 필수 항목을 입력해주세요.");
+                return;
+            }
+
+            const formData = {
+                username: username,
+                email: emailOrPhone,
+                subject: subject,
+                content: content
+            };
+
+            $.ajax({
+                url: "<c:url value='/api/contact/send-email'/>",
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    alert(response);
+                    $("#contact_form")[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    let errorMessage = "문의 전송에 실패했습니다. 잠시 후 다시 시도해주세요.";
+                    if (xhr.responseText) {
+                        errorMessage = xhr.responseText;
+                    }
+                    alert(errorMessage);
+                    console.error("Error sending email:", status, error, xhr.responseText);
+                }
+            });
+        }
+    };
+
+    $(function () {
+        contactPage.init();
+    });
+</script>
 
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="styles/bootstrap4/popper.js"></script>
