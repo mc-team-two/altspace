@@ -12,6 +12,10 @@ spring:
     view:
       prefix: /views/
       suffix: .jsp
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
     pathmatch:
       matching-strategy: ant_path_matcher # Spring Boot 2.6 이상에서는 ant_path_matcher 또는 경로 패턴 매칭 전략을 명시적으로 설정해야 합니다.
   datasource:
