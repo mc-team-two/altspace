@@ -306,9 +306,6 @@
                 // 로그인 되어 있으면 결제 요청 함수 실행
                 this.reqPay();
             });
-            $('#cancel_btn').click(() => {
-                this.cancel();
-            });
             $('#review_btn').click(() => {
                 this.review();
             });
@@ -360,37 +357,6 @@
                     });
                 } else {
                     alert("결제 실패: " + rsp.error_msg);
-                }
-            });
-        },
-        cancel: function () {
-            if (!confirm("정말로 결제를 취소하시겠습니까?")) {
-                return; // 사용자가 취소를 원하지 않으면 함수 종료
-            }
-
-            let impUid = "${payInfo.impUid}"; // 저장된 imp_uid 가져오기
-
-            if (!impUid) {
-                alert("결제 내역이 없습니다.");
-                return;
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "/payment/cancel/" + impUid,
-                data: $('#data_del').serialize(),
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                success: function (res) {
-                    alert(res.message);
-                    location.href = '/details';
-                },
-                error: function (err) {
-                    try {              // err는 실패한 응답이라 자동 파싱 x
-                        const errorMsg = JSON.parse(err.responseText).message;
-                        alert("취소 실패: " + errorMsg);
-                    } catch (e) {
-                        alert("취소 실패: 알 수 없는 오류");
-                    }
                 }
             });
         },
@@ -859,110 +825,63 @@
         <!-- 예약 박스 -->
         <div class="col-md-4 sticky-reservation">
             <div class="card shadow-sm p-4 rounded-4">
-                <c:choose>
-                    <c:when test="${pyStatus == '완료'}">
-                        <h3 class="fw-bold text-center mb-4">예약 내역</h3>
+                <div class="price-per-night mb-3">
+                    <span class="price-amount">₩<fmt:formatNumber value="${accomm.priceNight}" type="number"/></span> / 박
+                </div>
 
-                        <form id="data_del">
-                            <input type="hidden" name="guestId" value="${sessionScope.user.userId}">
-                            <input type="hidden" name="accommodationId" value="${accomm.accommodationId}">
-                            <input type="hidden" name="impUid" value="${payInfo.impUid}">
-                            <input type="hidden" name="paymentId" value="${payInfo.paymentId}">
+                <form id="data_add">
+                    <input type="hidden" name="guestId" value="${sessionScope.user.userId}"/>
+                    <input type="hidden" name="accommodationId" value="${accomm.accommodationId}"/>
+                    <input type="hidden" id="imp_hidden" name="impUid"/>
+                    <input type="hidden" name="checkIn" id="checkIn"/>
+                    <input type="hidden" name="checkOut" id="checkOut"/>
+                    <input type="hidden" name="payAmount" id="payAmount"/> <%-- 서버에 값을 보내기 위함 --%>
+                    <input type="hidden" name="payStatus" value="완료"/>
 
-                            <ul class="list-unstyled mb-0">
-                                <li class="mb-2">
-                                    <i class="bi bi-calendar-check me-2 text-success"></i>
-                                    <strong>체크인:</strong>
-                                    <fmt:formatDate value="${checkInDate}" pattern="yyyy-MM-dd"/>
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-calendar-x me-2 text-danger"></i>
-                                    <strong>체크아웃:</strong>
-                                    <fmt:formatDate value="${checkOutDate}" pattern="yyyy-MM-dd"/>
-                                </li>
-                                <li>
-                                    <i class="bi bi-wallet2 me-2 text-warning"></i>
-                                    <strong>결제 금액:</strong>
-                                    <fmt:formatNumber value="${payInfo.payAmount}" type="number"/> 원
-                                </li>
-                            </ul>
-                        </form>
+                    <div class="form-group mb-3">
+                        <input type="text" name="dates" class="form-control text-center datepicker-input"
+                               id="dates" readonly placeholder="체크인 - 체크아웃">
+                    </div>
 
-                        <p class="text-danger small mt-3 mb-0">
-                            <i class="bi bi-exclamation-triangle-fill me-1"></i>
-                            체크인 날짜로부터 <strong>2일 전</strong>에는 예약 취소가 불가합니다.
-                        </p>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <button id="review_btn" class="btn btn-primary rounded-pill w-50 fw-bold mr-2">
-                                리뷰 작성
-                            </button>
-                            <button id="cancel_btn" class="btn btn-danger rounded-pill w-50 fw-bold">
-                                예약 취소
-                            </button>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="price-per-night mb-3">
-                            <span class="price-amount">₩<fmt:formatNumber value="${accomm.priceNight}"
-                                                                          type="number"/></span> / 박
-                        </div>
-
-                        <form id="data_add">
-                            <input type="hidden" name="guestId" value="${sessionScope.user.userId}"/>
-                            <input type="hidden" name="accommodationId" value="${accomm.accommodationId}"/>
-                            <input type="hidden" id="imp_hidden" name="impUid"/>
-                            <input type="hidden" name="checkIn" id="checkIn"/>
-                            <input type="hidden" name="checkOut" id="checkOut"/>
-                            <input type="hidden" name="payAmount" id="payAmount"/> <%-- 서버에 값을 보내기 위함 --%>
-                            <input type="hidden" name="payStatus" value="완료"/>
-
-                            <div class="form-group mb-3">
-                                <input type="text" name="dates" class="form-control text-center datepicker-input"
-                                       id="dates" readonly placeholder="체크인 - 체크아웃">
-                            </div>
-
-                            <div class="price-box">
-                                <div class="d-flex justify-content-between mb-2">
+                    <div class="price-box">
+                        <div class="d-flex justify-content-between mb-2">
                                     <span><fmt:formatNumber value="${accomm.priceNight}" type="number"/> × <span
                                             id="nightsCount">0</span>박</span>
-                                    <span id="totalPrices">₩0</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>알트스페이스 서비스 수수료</span>
-                                    <span id="serviceFee">₩0</span>
-                                </div>
-                                <hr>
-                                <div class="d-flex justify-content-between fw-bold fs-5">
-                                    <span>총 결제 금액</span>
-                                    <span id="totalAmount">₩0</span>
-                                </div>
-                            </div>
-                        </form>
-
-                        <div class="d-flex mt-3 mb-3" style="gap: 0.4rem;">
-                            <!-- 찜 버튼 -->
-                            <c:if test="${not empty resultWishlist}">
-                                <c:set var="wishlistId" value="${resultWishlist.wishlistId}"/>
-                            </c:if>
-                            <button
-                                class="btn rounded-pill w-30 wishlist-btn
-                                    ${not empty resultWishlist ? 'btn-danger' : 'btn-outline-danger'}"
-                                style="flex: 3;"
-                                data-wishlist-id="${not empty resultWishlist ? resultWishlist.wishlistId : ''}">
-                                <i class="bi ${not empty resultWishlist ? 'bi-heart-fill' : 'bi-heart'}"></i>
-                                ${not empty resultWishlist ? '찜' : '찜'}
-                            </button>
-
-                            <!-- 예약하기 버튼 -->
-                            <button id="sales_add_btn" type="button"
-                                    class="btn btn-primary btn-reserve rounded-pill w-70"
-                                    style="flex: 7;">
-                                예약하기
-                            </button>
+                            <span id="totalPrices">₩0</span>
                         </div>
-                    </c:otherwise>
-                </c:choose>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>알트스페이스 서비스 수수료</span>
+                            <span id="serviceFee">₩0</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between fw-bold fs-5">
+                            <span>총 결제 금액</span>
+                            <span id="totalAmount">₩0</span>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="d-flex mt-3 mb-3" style="gap: 0.4rem;">
+                    <!-- 찜 버튼 -->
+                    <c:if test="${not empty resultWishlist}">
+                        <c:set var="wishlistId" value="${resultWishlist.wishlistId}"/>
+                    </c:if>
+                    <button
+                            class="btn rounded-pill w-30 wishlist-btn
+                                    ${not empty resultWishlist ? 'btn-danger' : 'btn-outline-danger'}"
+                            style="flex: 3;"
+                            data-wishlist-id="${not empty resultWishlist ? resultWishlist.wishlistId : ''}">
+                        <i class="bi ${not empty resultWishlist ? 'bi-heart-fill' : 'bi-heart'}"></i>
+                        ${not empty resultWishlist ? '찜' : '찜'}
+                    </button>
+
+                    <!-- 예약하기 버튼 -->
+                    <button id="sales_add_btn" type="button"
+                            class="btn btn-primary btn-reserve rounded-pill w-70"
+                            style="flex: 7;">
+                        예약하기
+                    </button>
+                </div>
             </div>
         </div>
     </div>

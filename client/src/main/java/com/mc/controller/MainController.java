@@ -173,21 +173,6 @@ public class MainController {
         }
         model.addAttribute("averageRating", averageRating);
 
-        // pyStatus가 '완료'이고 paymentId 있다면 결제 상세 조회
-        if ("완료".equals(pyStatus) && paymentId != null) {
-            Payments payInfo = paymentService.selectPayment(paymentId);  // paymentId 조회하는 메서드
-
-            // LocalDate → java.sql.Date 로 변환
-            Date checkInDate = Date.valueOf(payInfo.getCheckIn());
-            Date checkOutDate = Date.valueOf(payInfo.getCheckOut());
-
-            model.addAttribute("pyStatus", pyStatus);
-            model.addAttribute("payInfo", payInfo);
-            model.addAttribute("checkInDate", checkInDate);
-            model.addAttribute("checkOutDate", checkOutDate);
-
-        }
-
         model.addAttribute("kakaoJSApiKey", kakaoJSApiKey);
         model.addAttribute("headers", "payments/headers");
         model.addAttribute("center", "payments/center");

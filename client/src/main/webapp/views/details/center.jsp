@@ -12,6 +12,7 @@
           href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
     <link rel="stylesheet"
           href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
+    <script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
     <script type="text/javascript"
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoJSApiKey}&libraries=services"></script>
 <style>
@@ -91,9 +92,82 @@
         margin-left: auto;
         font-size: 12px;
     }
-
 </style>
 </head>
+<script>
+    const change = {
+        init: function () {
+            // 모달 버튼 클릭 이벤트 위임
+            $(document).on('click', '.payment-modal-btn', (e) => {
+                this.paymentModal(e);
+            });
+        },
+
+        paymentModal: function (e) {
+            const $btn = $(e.currentTarget);
+            const id = $btn.data('id');
+            const status = $btn.data('status');
+            const paymentId = $btn.data('payment-id');
+
+            $('#paymentModalBody').html('<div class="text-center text-muted py-5">불러오는 중...</div>');
+
+            $.ajax({
+                url: '/details/payment/modal',
+                method: 'GET',
+                data: { id, pyStatus: status, paymentId },
+                success: function (data) {
+                    $('#paymentModalBody').html(data);
+
+                    $('#review_btn').off().on('click', function () {
+                        const accommId = $('#data_del input[name="accommodationId"]').val();
+                        $('#data_del').attr({
+                            method: 'post',
+                            action: '/reviewAdd?id=' + accommId
+                        }).submit();
+                    });
+
+                    $('#cancel_btn').off().on('click', function () {
+                        const impUid = $('#data_del input[name="impUid"]').val();
+                        if (!impUid) {
+                            alert("결제 내역이 없습니다.");
+                            return;
+                        }
+
+                        if (!confirm("정말로 결제를 취소하시겠습니까?")) return;
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/payment/cancel/" + impUid,
+                            data: $('#data_del').serialize(),
+                            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                            success: function (res) {
+                                alert(res.message);
+                                location.href = '/details';
+                            },
+                            error: function (err) {
+                                try {
+                                    const errorMsg = JSON.parse(err.responseText).message;
+                                    alert("취소 실패: " + errorMsg);
+                                } catch (e) {
+                                    alert("취소 실패: 알 수 없는 오류");
+                                }
+                            }
+                        });
+                    });
+
+                    $('#paymentModal').modal('show');
+                },
+                error: function () {
+                    $('#paymentModalBody').html('<div class="text-danger text-center py-5">불러오기 실패</div>');
+                }
+            });
+        }
+    };
+
+    $(document).ready(function () {
+        change.init();
+    });
+</script>
 
 <div class="menu trans_500">
     <div class="menu_content d-flex flex-column align-items-center justify-content-center text-center">
@@ -157,8 +231,12 @@
                                             <div class="d-flex flex-column gap-1">
                                                 <a class="btn btn-outline-secondary btn-sm"
                                                    href="<c:url value='/detail?id=${py.accommodationId}'/>">숙소 정보</a>
-                                                <a class="btn btn-outline-primary btn-sm"
-                                                   href="<c:url value='/detail?id=${py.accommodationId}&pyStatus=${py.payStatus}&paymentId=${py.paymentId}'/>">결제 정보</a>
+                                                <button class="btn btn-outline-primary btn-sm payment-modal-btn"
+                                                        data-id="${py.accommodationId}"
+                                                        data-status="${py.payStatus}"
+                                                        data-payment-id="${py.paymentId}">
+                                                    결제 정보
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -258,8 +336,31 @@
         </div>
     </div>
 </div>
+<!-- 결제 정보 모달 -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 600px;">
+        <div class="modal-content rounded-lg shadow">
+            <!-- 헤더 -->
+            <div class="modal-header bg-primary text-white rounded-top">
+                <h5 class="modal-title font-weight-bold mb-0">
+                    <i class="fa fa-credit-card mr-2"></i> 예약 상세 정보
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="font-size: 1.4rem;">&times;</span>
+                </button>
+            </div>
 
-<script src="<c:url value="js/jquery-3.2.1.min.js"/>"></script>
+            <!-- 본문 -->
+            <div class="modal-body py-4 px-4" id="paymentModalBody">
+                <div class="text-center text-muted py-5">
+                    <div class="fa fa-spinner fa-spin fa-2x mb-3 text-primary"></div>
+                    <p class="mb-0">불러오는 중...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<c:url value="styles/bootstrap4/popper.js"/>"></script>
 <script src="<c:url value="styles/bootstrap4/bootstrap.min.js"/>"></script>
 <script src="<c:url value="plugins/Isotope/isotope.pkgd.min.js"/>"></script>
