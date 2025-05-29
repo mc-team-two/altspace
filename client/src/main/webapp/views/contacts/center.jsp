@@ -11,14 +11,6 @@
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/contact_responsive.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/darkmode.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
-
-    <style>
-        /* 문의 컨테이너 간격 */
-        .contact_form_container {
-            margin-bottom: 100px;
-        }
-    </style>
-
     <link rel="stylesheet"
           href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
     <link rel="stylesheet"
@@ -49,7 +41,6 @@
 </div>
 
 <!-- 홈 -->
-
 <div class="home">
     <div class="home_background parallax-window" data-parallax="scroll"
          data-image-src="images/contact_background.jpg"></div>
@@ -59,7 +50,6 @@
 </div>
 
 <!-- 문의하기 -->
-
 <div class="contact_form_section">
     <div class="container">
         <div class="container">
@@ -90,9 +80,17 @@
                         <div class="sidebar_archives" style="margin-left: 100px;">
                             <div class="sidebar_title">MENU</div>
                             <div class="sidebar_list">
-                                <ul>
-                                    <li><a href="<c:url value="/contacts"/> ">고객센터 문의</a></li>
-                                    <li><a href="<c:url value="/faq1"/> ">FAQ</a></li>
+                                <ul style="list-style: none; padding-left: 0;">
+                                    <li class="mb-3">
+                                        <a href="<c:url value='/contacts'/>" class="d-flex align-items-center text-dark">
+                                            <i class="fas fa-headset mr-2 text-danger"></i> 고객센터 문의
+                                        </a>
+                                    </li>
+                                    <li class="mb-3">
+                                        <a href="<c:url value='/faq1'/>" class="d-flex align-items-center text-dark">
+                                            <i class="fas fa-question-circle mr-2 text-primary"></i> FAQ
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -104,8 +102,6 @@
 </div>
 
 <!-- FAQ -->
-
-
 <div id="chatbot" class="chatbot">
     <div id="chat-icon" class="chat-icon">
         <i class="fa fa-comment" aria-hidden="true"></i>
