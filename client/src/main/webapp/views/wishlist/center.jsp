@@ -118,77 +118,89 @@
         <div class="row">
             <!-- 센터 영역 (찜 목록) -->
             <div class="col-lg-8 items_4css">
-                <div class="offers_grid" style="margin-top: 0 !important;">
-                    <c:forEach var="w" items="${wishlists}">
-                        <div class="offers_item">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="offers_image_container">
-                                        <div class="offers_image_background"
-                                             style="background-image:url('/imgs/${w.image1Name}')">
-                                        </div>
-                                        <div class="offer_name">
-                                            <a href="<c:url value='/detail?id=${w.accommodationId}'/>">${w.name}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="offers_content">
-                                        <div class="offers_price">
-                                            ₩<fmt:formatNumber value="${w.priceNight}" type="number"/>
-                                            <span> / 1박</span>
-                                        </div>
-                                        <p class="offers_text">${w.description}</p><!-- 아이콘 영역 -->
-                                        <div class="offers_icons">
-                                            <ul class="offers_icons_list d-flex flex-row p-0" style="list-style: none; gap: 1px;">
-                                                <c:if test="${w.barbecue}">
-                                                    <li class="offers_icons_item" data-popper-content="바베큐 시설 안내">
-                                                        <i class="fa fa-fire  text-warning" aria-hidden="true"></i>
-                                                    </li>
-                                                </c:if>
-                                                <c:if test="${w.breakfast}">
-                                                    <li class="offers_icons_item" data-popper-content="맛있는 조식 제공">
-                                                        <i class="fa fa-coffee text-danger" aria-hidden="true"></i>
-                                                    </li>
-                                                </c:if>
-                                                <c:if test="${w.pet}">
-                                                    <li class="offers_icons_item" data-popper-content="반려동물 동반">
-                                                        <i class="fa fa-paw text-info" aria-hidden="true"></i>
-                                                    </li>
-                                                </c:if>
-                                                <c:if test="${w.pool}">
-                                                    <li class="offers_icons_item" data-popper-content="시원한 수영장">
-                                                        <i class="fa fa-swimmer text-primary" aria-hidden="true"></i>
-                                                    </li>
-                                                </c:if>
-                                            </ul>
-                                        </div>
-                                        <div class="button book_button">
-                                            <a href="<c:url value="/detail?id=${w.accommodationId}"/>">상세보기<span></span><span></span><span></span></a>
-                                        </div>
-                                        <!-- 리뷰 평점 영역 -->
-                                        <div class="offer_reviews d-flex align-items-center mt-2" style="gap: 10px;">
-                                            <div class="offer_reviews_content"> <!-- 더 붙이기 위해 mr-2 적용 -->
-                                                <div class="offer_reviews_title">
-                                                    <c:choose>
-                                                        <c:when test="${w.averageRating >= 4}">최고예요!</c:when>
-                                                        <c:when test="${w.averageRating >= 3}">좋아요!</c:when>
-                                                        <c:when test="${w.averageRating >= 2}">괜찮아요!</c:when>
-                                                        <c:when test="${w.averageRating >= 1}">그저 그래요!</c:when>
-                                                        <c:otherwise>평가가 없어요</c:otherwise>
-                                                    </c:choose>
+                <c:choose>
+                    <c:when test="${empty wishlists}">
+                        <div class="card mb-4 p-4 shadow-sm text-center item_none">
+                            <img src="images/avatar.png" alt="찜한 숙소가 없어요!" class="img-fluid mb-3"
+                                 style="max-width: 120px;">
+                            <h5 class="mb-1 font-weight-bold text-dark">아직 찜한 숙소가 없어요!</h5>
+                            <p class="text-muted mb-0">마음에 드는 숙소를 찜하고 편하게 다시 확인해보세요.</p>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="offers_grid" style="margin-top: 0 !important;">
+                            <c:forEach var="w" items="${wishlists}">
+                                <div class="offers_item">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="offers_image_container">
+                                                <div class="offers_image_background"
+                                                     style="background-image:url('/imgs/${w.image1Name}')">
+                                                </div>
+                                                <div class="offer_name">
+                                                    <a href="<c:url value='/detail?id=${w.accommodationId}'/>">${w.name}</a>
                                                 </div>
                                             </div>
-                                            <div class="offer_reviews_rating text-center">
-                                                    ${w.averageRating}
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="offers_content">
+                                                <div class="offers_price">
+                                                    ₩<fmt:formatNumber value="${w.priceNight}" type="number"/>
+                                                    <span> / 1박</span>
+                                                </div>
+                                                <p class="offers_text mt-4">${w.description}</p>
+                                                <div class="offers_icons">
+                                                    <ul class="offers_icons_list d-flex flex-row p-0" style="list-style: none; gap: 1px;">
+                                                        <c:if test="${w.barbecue}">
+                                                            <li class="offers_icons_item" data-popper-content="바베큐 시설 안내">
+                                                                <i class="fa fa-fire  text-warning" aria-hidden="true"></i>
+                                                            </li>
+                                                        </c:if>
+                                                        <c:if test="${w.breakfast}">
+                                                            <li class="offers_icons_item" data-popper-content="맛있는 조식 제공">
+                                                                <i class="fa fa-coffee text-danger" aria-hidden="true"></i>
+                                                            </li>
+                                                        </c:if>
+                                                        <c:if test="${w.pet}">
+                                                            <li class="offers_icons_item" data-popper-content="반려동물 동반">
+                                                                <i class="fa fa-paw text-info" aria-hidden="true"></i>
+                                                            </li>
+                                                        </c:if>
+                                                        <c:if test="${w.pool}">
+                                                            <li class="offers_icons_item" data-popper-content="시원한 수영장">
+                                                                <i class="fa fa-swimmer text-primary" aria-hidden="true"></i>
+                                                            </li>
+                                                        </c:if>
+                                                    </ul>
+                                                </div>
+                                                <div class="button book_button">
+                                                    <a href="<c:url value="/detail?id=${w.accommodationId}"/>">상세보기<span></span><span></span><span></span></a>
+                                                </div>
+                                                <!-- 리뷰 평점 영역 -->
+                                                <div class="offer_reviews d-flex align-items-center mb-2" style="gap: 10px;">
+                                                    <div class="offer_reviews_content"> <!-- 더 붙이기 위해 mr-2 적용 -->
+                                                        <div class="offer_reviews_title">
+                                                            <c:choose>
+                                                                <c:when test="${w.averageRating >= 4}">최고예요!</c:when>
+                                                                <c:when test="${w.averageRating >= 3}">좋아요!</c:when>
+                                                                <c:when test="${w.averageRating >= 2}">괜찮아요!</c:when>
+                                                                <c:when test="${w.averageRating >= 1}">그저 그래요!</c:when>
+                                                                <c:otherwise>평가가 없어요</c:otherwise>
+                                                            </c:choose>
+                                                        </div>
+                                                    </div>
+                                                    <div class="offer_reviews_rating text-center">
+                                                            ${w.averageRating}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </c:forEach>
                         </div>
-                    </c:forEach>
-                </div>
+                    </c:otherwise>
+                </c:choose>
                 <div id="chatbot" class="chatbot">
                     <div id="chat-icon" class="chat-icon">
                         <i class="fas fa-comments" aria-hidden="true"></i>
