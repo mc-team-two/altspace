@@ -7,6 +7,11 @@
   <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
   <link rel="stylesheet" type="text/css" href="styles/darkmode.css">
   <link rel="stylesheet" type="text/css" href="<c:url value="styles/chatbot.css"/>">
+  <link rel="stylesheet" type="text/css" href="<c:url value="plugins/font-awesome-4.7.0/css/font-awesome.min.css"/>">
+  <link rel="stylesheet"
+        href="<c:url value="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>">
+  <link rel="stylesheet"
+        href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>">
 
   <style>
     /* 이미지 반응형 및 가운데 정렬 스타일 */
@@ -46,7 +51,6 @@
 </div>
 
 <!-- 배너 -->
-
 <div class="home">
   <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/offer_background.jpg"></div>
   <div class="home_content">
@@ -55,18 +59,15 @@
 </div>
 
 <!-- 예약 -->
-
 <div class="faq">
   <div class="container">
     <div class="row">
 
       <!-- 예약 FAQ -->
-
       <div class="col-lg-8">
         <div class="faq_contents_area">
 
           <!-- 질문 1 -->
-
           <div class="faq_book">
             <div class="faq_book_image">
               <img src="images/faq_book_1.JPG">
@@ -78,7 +79,6 @@
           </div>
 
           <!-- 질문 2 -->
-
           <div class="faq_book">
             <div class="faq_book_image">
               <img src="images/faq_book_2.JPG">
@@ -90,7 +90,6 @@
           </div>
 
           <!-- 질문 3 -->
-
           <div class="faq_book">
             <div class="faq_book_image">
               <img src="images/faq_book_3.JPG">
@@ -102,7 +101,6 @@
           </div>
 
           <!-- 질문 4 -->
-
           <div class="faq_book">
             <div class="faq_book_image">
               <img src="images/faq_book_4.JPG">
@@ -116,7 +114,6 @@
       </div>
 
       <!-- 챗봇 -->
-
       <div id="chatbot" class="chatbot">
         <div id="chat-icon" class="chat-icon">
           <i class="fa fa-comment" aria-hidden="true"></i>
@@ -152,19 +149,34 @@
           </div>
         </div>
       </div>
-      <!-- 사이드바 -->
 
+      <!-- 사이드바 -->
       <div class="col-lg-4 sidebar_col">
         <div class="position-sticky" style="top: 100px; z-index: 10;">
-          <!-- 사이드바 메뉴 -->
           <div class="sidebar_archives" style="margin-left: 100px;">
             <div class="sidebar_title">MENU</div>
             <div class="sidebar_list">
-              <ul>
-                <li><a href="<c:url value="/faq1"/> ">홈 FAQ</a></li>
-                <li><a href="<c:url value="/faq2"/> ">예약 FAQ</a></li>
-                <li><a href="<c:url value="/faq3"/> ">기타 FAQ</a></li>
-                <li><a href="<c:url value="/contacts"/> ">고객센터 문의</a></li>
+              <ul style="list-style: none; padding-left: 0;">
+                <li class="mb-3">
+                  <a href="<c:url value='/faq1'/>" class="d-flex align-items-center text-dark">
+                    <i class="fas fa-home mr-2 text-primary"></i> 홈 FAQ
+                  </a>
+                </li>
+                <li class="mb-3">
+                  <a href="<c:url value='/faq2'/>" class="d-flex align-items-center text-dark">
+                    <i class="fas fa-calendar-check mr-2 text-success"></i> 예약 FAQ
+                  </a>
+                </li>
+                <li class="mb-3">
+                  <a href="<c:url value='/faq3'/>" class="d-flex align-items-center text-dark">
+                    <i class="fas fa-question-circle mr-2 text-info"></i> 기타 FAQ
+                  </a>
+                </li>
+                <li class="mb-3">
+                  <a href="<c:url value='/contacts'/>" class="d-flex align-items-center text-dark">
+                    <i class="fas fa-headset mr-2 text-danger"></i> 고객센터 문의
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
