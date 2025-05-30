@@ -7,7 +7,10 @@
 2025.03.26. ~ 2025.05.16.
 
 ## 1.2 프로젝트 참여 인원
-5명
+|<a href="https://github.com/kungfugay">이예진|<a href="https://github.com/linea89kr">이황수|<a href="https://github.com/kimbugeon">김부건|<a href="https://github.com/imyukyung">임유경|<a href="https://github.com/jwpark-99">박정우|
+|:---:|:---:|:---:|:---:|:---:|
+|<img src="https://avatars.githubusercontent.com/u/121864128?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/34230941?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/55525567?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/202033529?s=130&v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/192863504?v=4" width="100">|
+|Dev and<br>PM|Dev and<br>PL|Dev and<br>DBA|Dev and<br>Web publisher|Dev and<br>Desinger|
 
 ## 1.3 프로젝트 주제
 비정형적 공간을 대상으로 한 웹 기반 공간 대여 플랫폼
