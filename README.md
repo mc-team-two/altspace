@@ -4,13 +4,13 @@
 
 # 1. 개요
 ## 1.1 프로젝트 기간
-2025.03.26. ~ 2025.05.16.
+2025.03.26. ~ 2025.05.26.
 
 ## 1.2 프로젝트 참여 인원
 |<a href="https://github.com/kungfugay">이예진|<a href="https://github.com/linea89kr">이황수|<a href="https://github.com/kimbugeon">김부건|<a href="https://github.com/imyukyung">임유경|<a href="https://github.com/jwpark-99">박정우|
 |:---:|:---:|:---:|:---:|:---:|
 |<img src="https://avatars.githubusercontent.com/u/121864128?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/34230941?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/55525567?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/202033529?s=130&v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/192863504?v=4" width="100">|
-|Dev and<br>PM|Dev and<br>PL|Dev and<br>DBA|Dev and<br>Web publisher|Dev and<br>Desinger|
+|Dev (PM)|Dev (PL)|Dev|Dev|Dev|
 
 ## 1.3 프로젝트 주제
 비정형적 공간을 대상으로 한 웹 기반 공간 대여 플랫폼
@@ -61,17 +61,18 @@
 <br><br>
 
 # 3. 구현
+
 ## 3.1 개발 환경 및 수행 도구
 
 | 분류       | 기술 스택 |
 | ---------- | ---------- |
-| **개발 언어** | ![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=oracle&logoColor=white) ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) |
-| **프레임워크 & 라이브러리** | ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white) ![MyBatis](https://img.shields.io/badge/MyBatis-BB1A1A?style=for-the-badge&logo=MyBatis&logoColor=white) ![JSP](https://img.shields.io/badge/JSP-007396?style=for-the-badge&logo=java&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white) |
-| **IDE**      | ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ-000000?style=for-the-badge&logo=intellijidea&logoColor=white) |
-| **협업 도구** | ![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white) ![Zoom](https://img.shields.io/badge/Zoom-2D8CFF?style=for-the-badge&logo=zoom&logoColor=white) ![Google Drive](https://img.shields.io/badge/Google%20Drive-4285F4?style=for-the-badge&logo=googledrive&logoColor=white) |
-| **DB**      | ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white) |
-| **API**     | ![Gemini AI](https://img.shields.io/badge/Gemini%20AI-FF6F61?style=for-the-badge) |
-| **서버 배포** | ![NCP](https://img.shields.io/badge/Naver%20Cloud-03C75A?style=for-the-badge&logo=naver&logoColor=white) |
+| **개발 언어** | ![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=oracle&logoColor=white) ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) |
+| **프레임워크 & 라이브러리** | ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=springboot&logoColor=white) ![MyBatis](https://img.shields.io/badge/MyBatis-BB1A1A?style=flat&logo=MyBatis&logoColor=white) ![JSP](https://img.shields.io/badge/JSP-007396?style=flat&logo=java&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white) |
+| **IDE** | ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ-000000?style=flat&logo=intellijidea&logoColor=white) |
+| **협업 도구** | ![Discord](https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white) ![Zoom](https://img.shields.io/badge/Zoom-2D8CFF?style=flat&logo=zoom&logoColor=white) ![Google Drive](https://img.shields.io/badge/Google%20Drive-4285F4?style=flat&logo=googledrive&logoColor=white) |
+| **DB** | ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white) |
+| **API** | ![Gemini AI](https://img.shields.io/badge/Gemini%20AI-FF6F61?style=flat) |
+| **서버 배포** | ![NCP](https://img.shields.io/badge/Naver%20Cloud-03C75A?style=flat&logo=naver&logoColor=white) |
 
 
 ## 3.2 팀원별 역할 분장
