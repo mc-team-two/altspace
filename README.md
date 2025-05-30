@@ -1,5 +1,5 @@
 # Alt Space 🕹🏠
-![readme](https://github.com/user-attachments/assets/7f5ecd20-02e3-46d3-a9ab-08acb17b5104)
+![readme_0530](https://github.com/user-attachments/assets/c8a69501-7861-4aa0-9c67-9ad75c8a6f4a)
 
 
 # 1. 개요
