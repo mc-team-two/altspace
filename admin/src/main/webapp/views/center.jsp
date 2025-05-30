@@ -97,7 +97,7 @@
     <div class="col-12 col-sm-6 col-lg-4 col-xl">
       <div class="card shadow-sm h-100">
         <div class="card-body d-flex flex-column p-4">
-          <h6 class="card-title mb-2">📂 누적 예약</h6>
+          <h6 class="card-title mb-2">📂 다가오는 예약</h6>
           <div class="flex-grow-1 d-flex align-items-center justify-content-center">
             <a href="<c:url value='/space/booking'/>" class="text-decoration-none">
               <h2 class="fw-bold mb-0 text-secondary" id="totalReservationCount" style="cursor: pointer;">
