@@ -43,14 +43,17 @@
 <br><br>
 
 # 2. 설계
-## 2.1 화면 흐름도
+## 2.1 시스템 구성도
+![diagram](https://github.com/user-attachments/assets/bae440a7-839a-41a1-bc1e-6e1f01caa394)
+
+## 2.2 화면 흐름도
 <div align="center">
   <img width="60%" src="https://github.com/user-attachments/assets/a40bf190-1302-4796-988d-642b1e3c59dd"/>
   <img width="90%" src="https://github.com/user-attachments/assets/ac02cc95-2208-4af3-9329-1ba09bcb4e8e"/>
 </div>
 <br><br>
 
-## 2.2 서비스 흐름도
+## 2.3 서비스 흐름도
 <div align="center">
   <img width="60%" src="https://github.com/user-attachments/assets/9c2b7f28-db66-49d5-9fb0-e1dd4e6ed7b2"/>
 </div>
