@@ -205,7 +205,7 @@
                 <tbody>
                 <c:forEach var="it" items="${payments}">
                     <tr>
-                        <td><a href="<c:url value='/space/detail?id=${it.accommodationId}'/>">${it.name}</a></td>
+                        <td><a href="<c:url value='/space/mod?id=${it.accommodationId}'/>">${it.name}</a></td>
                         <td>${it.checkIn}</td>
                         <td>${it.checkOut}</td>
                         <td data-order="${it.payAmount}">
