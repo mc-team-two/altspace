@@ -127,6 +127,7 @@
         p.accommodation_id
         ORDER BY
         totalSales DESC
+        LIMIT 5
     </select>
 
 </mapper>
