@@ -79,23 +79,101 @@
 
 
 ## 3.2 팀원별 역할 분장
-~~ 주요 업무( 구현한 페이지 및 기능, api 등) ~~
 
-<br><br>
 
 ## 3.3 프로젝트 핵심 기능
 ### 게스트(client) 페이지
 ~여기에 스크린샷~
 
-### 호스트(admin) 페이지
-~여기에 스크린샷~
-<br><br>
 
-## 3.4 프로젝트 일반 기능
-### 게스트(clinet) 페이지
-~여기에 스크린샷~
-### 호스트(admin) 페이지
-~여기에 스크린샷~
+### 호스트(admin) 페이지 스크린샷
+<details>
+  <summary>메인 대쉬보드</summary>
+
+  ![3-2-대쉬보드(스크롤)](https://github.com/user-attachments/assets/2aa6f6ae-81bd-4cd4-bc47-d9d9edb47dc1)
+
+</details>
+<details>
+  <summary>스페이스 관리 > 내 스페이스 (리스트)</summary>
+
+ 여기에 리스트 스크롤===============
+
+</details>
+<details>
+  <summary>스페이스 관리 > 내 스페이스 (상세보기 모달)</summary>
+
+ ![4-1-스페이스조회](https://github.com/user-attachments/assets/f3c22860-d540-4cab-8f27-b75cffffaa0b)
+
+</details>
+<details>
+  <summary>스페이스 관리 > 내 스페이스 > 스페이스 등록(수정) </summary>
+
+![5-스페이스등록(스크롤)](https://github.com/user-attachments/assets/97a551e5-0904-414c-9cb8-fe4549e2fc8b)
+
+</details>
+<details>
+  <summary>스페이스 관리 > 내 스페이스 > 예약 캘린더 </summary>
+
+![6-예약캘린더](https://github.com/user-attachments/assets/c3fe2a47-f725-464f-9069-0aa4e482cc84)
+
+</details>
+<details>
+  <summary>결제 내역 > 결제 내역 조회</summary>
+
+![3-결제내역](https://github.com/user-attachments/assets/ee4e0d7d-1700-45fd-b88f-c7c733e8a0d2)
+
+</details>
+<details>
+  <summary>호스트 센터 > 운영 가이드</summary>
+  
+![7-운영가이드](https://github.com/user-attachments/assets/0be6eba3-b544-4037-b4c6-a6b405a6e7df)
+
+</details>
+<details>
+  <summary>호스트 센터 > 고객 메시지</summary>
+
+
+</details>
+<details>
+  <summary>리뷰 관리 > 작성된 리뷰 조회</summary>
+
+![8-리뷰조회(스크롤)](https://github.com/user-attachments/assets/3a6535f9-c20f-4de8-bcd4-046e2f4312b0)
+
+</details>
+<details>
+  <summary>마이페이지 > 회원정보 변경</summary>
+
+![9-1-마이페이지](https://github.com/user-attachments/assets/ccc7c5ad-42a2-4efd-9017-f9aa8ae96514)
+
+</details>
+<details>
+  <summary>마이페이지 > 비밀번호 변경 </summary>
+
+  ![9-2-비밀번호재설정](https://github.com/user-attachments/assets/15262dc3-afa1-4486-b4c7-fdaa67093f2c)
+
+</details>
+
+
+### 공통 페이지 스크린샷
+<details>
+  <summary>회원가입</summary>
+
+  ![1_회원가입](https://github.com/user-attachments/assets/98b9ef1a-b53d-4b56-aae7-c77f8020250e)
+
+</details>
+<details>
+  <summary>로그인</summary>
+
+![2-2-로그인](https://github.com/user-attachments/assets/a9ca7d61-9857-408f-a564-0d73c4a98fd6)
+
+</details>
+<details>
+  <summary>계정찾기</summary>
+
+![2-1-계정찾기](https://github.com/user-attachments/assets/b9572680-cf98-4d4b-91a6-abdb52a34168)
+
+</details>
+
 <br><br>
 
 # 4. 트러블슈팅
