@@ -92,7 +92,7 @@
           <!-- 질문 3 -->
           <div class="faq_book">
             <div class="faq_book_image">
-              <img src="images/faq_book_3.JPG">
+              <img src="images/faq_book_3.png">
             </div>
             <div class="faq_book_title"><h3>결제 내역을 확인하고 싶어요.</h3></div>
             <div class="faq_book_text">
@@ -103,7 +103,7 @@
           <!-- 질문 4 -->
           <div class="faq_book">
             <div class="faq_book_image">
-              <img src="images/faq_book_4.JPG">
+              <img src="images/faq_book_4.png">
             </div>
             <div class="faq_book_title"><h3>예약을 취소하거나 변경하고 싶어요.</h3></div>
             <div class="faq_book_text">
