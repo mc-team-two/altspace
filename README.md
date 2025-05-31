@@ -96,7 +96,8 @@
 <details>
   <summary>스페이스 관리 > 내 스페이스 (리스트)</summary>
 
- 여기에 리스트 스크롤===============
+![내스페이스스크롤](https://github.com/user-attachments/assets/82a546b1-bd34-4cac-9bf7-7afb65ef9a3d)
+
 
 </details>
 <details>
@@ -108,7 +109,8 @@
 <details>
   <summary>스페이스 관리 > 내 스페이스 > 스페이스 등록(수정) </summary>
 
-![5-스페이스등록(스크롤)](https://github.com/user-attachments/assets/97a551e5-0904-414c-9cb8-fe4549e2fc8b)
+![수정등록 스크롤](https://github.com/user-attachments/assets/9a604f20-c9b4-40c7-95c8-990d4475786b)
+
 
 </details>
 <details>
@@ -132,6 +134,7 @@
 <details>
   <summary>호스트 센터 > 고객 메시지</summary>
 
+![고객메시지창](https://github.com/user-attachments/assets/58988c13-86c0-4300-8734-8d218d37c751)
 
 </details>
 <details>
