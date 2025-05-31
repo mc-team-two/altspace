@@ -73,7 +73,7 @@
                     <!-- 질문 1 -->
                     <div class="faq_etc">
                         <div class="faq_etc_image">
-                            <img src="images/faq_etc_1.JPG">
+                            <img src="images/faq_etc_1.png">
                         </div>
                         <div class="faq_etc_title"><h3>리뷰 작성을 하고 싶어요.</h3></div>
                         <div class="faq_etc_text">
