@@ -24,7 +24,7 @@ public class GeminiController {
         log.info("Gemini 메시지 수신: {}", msg);
 
         try {
-            String reply = geminiUtil.askGemini(msg.getContent(), "간결하고 명확하게 답변해 주세요.");
+            String reply = geminiUtil.askGemini(msg.getContent(), "간결하고 명확하게 답변해 주세요. 마크다운 형식을 사용하지 말고 일반 텍스트로 응답해 주세요.");
             msg.setContent(reply);
             template.convertAndSend("/sub/gemini", msg);
         } catch (Exception e) {
