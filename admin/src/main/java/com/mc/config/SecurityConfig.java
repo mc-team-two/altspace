@@ -40,12 +40,14 @@ public class SecurityConfig  {
         //http.cors(Customizer.withDefaults());
 
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin(CorsConfiguration.ALL);
-        configuration.addAllowedMethod(CorsConfiguration.ALL);
-        configuration.addAllowedHeader(CorsConfiguration.ALL);
+        configuration.addAllowedOrigin("http://127.0.0.1:8080");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         http.cors(cors -> cors.configurationSource(source));
 
 
