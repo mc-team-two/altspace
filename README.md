@@ -5,13 +5,16 @@
 
 ### 🎞 시연 영상
 
+<br>
 
-### 알트 스페이스 팀
+### ❤ 알트 스페이스 팀
 |<a href="https://github.com/kungfugay">이예진(PM)|<a href="https://github.com/linea89kr">이황수(PL)|<a href="https://github.com/kimbugeon">김부건|<a href="https://github.com/imyukyung">임유경|<a href="https://github.com/jwpark-99">박정우|
 |:---:|:---:|:---:|:---:|:---:|
 |<img src="https://avatars.githubusercontent.com/u/121864128?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/34230941?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/55525567?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/202033529?s=130&v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/192863504?v=4" width="100">|
 
-### 기술 스택  
+<br>
+
+### 🛠 기술 스택  
 | 분류       | 기술 스택 |
 | ---------- | ---------- |
 | **개발 언어** | ![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=oracle&logoColor=white) ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) |
@@ -22,28 +25,18 @@
 | **API** | ![Gemini AI](https://img.shields.io/badge/Gemini%20AI-FF6F61?style=flat) |
 | **서버 배포** | ![NCP](https://img.shields.io/badge/Naver%20Cloud-03C75A?style=flat&logo=naver&logoColor=white) |
 
-
-
 </div>
 
 # 1. 개요
 ## 1.1 프로젝트 개발 기간
 2025.03.26. ~ 2025.05.26.
 
-## 1.2 프로젝트 업무 분장
-
-|담당자|업무|
-|:----:|----|
-|<a href="https://github.com/kungfugay">이예진|[**게스트 & 호스트**] <br>- 회원가입/로그인/비밀번호 재설정 <br>- 웹소켓 1:1 채팅 기능 <br> [**호스트**] <br> - 공간 CRUD 페이지 구현 <br> - 리뷰 CRUD 페이지 구현 <br> - 결제 내역 조회 페이지 구현 <br> - 예약 캘린더 (고도화) 구현 <br>- 호스트 비즈니스 로직에 필요한 모든 Rest API |
-
-
-
-## 1.3 프로젝트 주제
+## 1.2 프로젝트 주제
 ```
 비정형적 공간을 대상으로 한 웹 기반 공간 대여 플랫폼
 ```
 
-## 1.4 기획의도 및 차별점
+## 1.3 기획의도 및 차별점
 본 프로젝트는 기존의 공간 대여 플랫폼과 유사한 기능을 기반으로 하되, **호스트와 클라이언트(사용자)를 명확히 분리한 이중 구조의 시스템**을 통해 **사용성과 데이터 기반 경험을 극대화**하는 것을 목표로 기획되었습니다.  
 
 ### 💡 **기획 의도**  
@@ -60,7 +53,13 @@
    - 이를 통해 사용자 스스로도 자신의 여행 스타일을 인지할 수 있으며, 추천 숙소, 테마 여행 등에 자연스럽게 연결되도록 유도합니다.
 
 **3. 사용자 경험 중심의 구조 설계**  
-   - 단순 숙소 검색 / 예약이 아닌, 데이터 기반의 취향 분석과 호스트 운영 통계 제공이라는 양방향 가치 제공을 통해 기존 플랫폼과 차별화된 심화 경험을 제공합니다.  
+   - 단순 숙소 검색 / 예약이 아닌, 데이터 기반의 취향 분석과 호스트 운영 통계 제공이라는 양방향 가치 제공을 통해 기존 플랫폼과 차별화된 심화 경험을 제공합니다.
+
+## 1.4 프로젝트 업무 분장
+
+|담당자|업무|
+|:----:|----|
+|<a href="https://github.com/kungfugay">이예진|[**게스트 & 호스트**] <br>- 회원가입/로그인/비밀번호 재설정 <br>- 웹소켓 1:1 채팅 기능 <br> [**호스트**] <br> - 공간 CRUD 페이지 구현 <br> - 리뷰 CRUD 페이지 구현 <br> - 결제 내역 조회 페이지 구현 <br> - 예약 캘린더 (고도화) 구현 <br>- 호스트 비즈니스 로직에 필요한 모든 Rest API |
 
 ## 1.5 프로젝트 관리 템플릿
 - [깃허브 프로젝트](https://github.com/orgs/mc-team-two/projects/9)
