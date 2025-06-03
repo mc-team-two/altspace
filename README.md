@@ -1,10 +1,17 @@
 # Alt Space 🕹🏠
 ![readme_0530](https://github.com/user-attachments/assets/c8a69501-7861-4aa0-9c67-9ad75c8a6f4a)
 
-### 🎞 시연 영상 : [링크]()
-
 <div align="center">
-  
+
+### 🎞 시연 영상
+
+
+### 알트 스페이스 팀
+|<a href="https://github.com/kungfugay">이예진(PM)|<a href="https://github.com/linea89kr">이황수(PL)|<a href="https://github.com/kimbugeon">김부건|<a href="https://github.com/imyukyung">임유경|<a href="https://github.com/jwpark-99">박정우|
+|:---:|:---:|:---:|:---:|:---:|
+|<img src="https://avatars.githubusercontent.com/u/121864128?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/34230941?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/55525567?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/202033529?s=130&v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/192863504?v=4" width="100">|
+
+### 기술 스택  
 | 분류       | 기술 스택 |
 | ---------- | ---------- |
 | **개발 언어** | ![Java](https://img.shields.io/badge/Java-007396?style=flat&logo=oracle&logoColor=white) ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white) ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) |
@@ -15,19 +22,21 @@
 | **API** | ![Gemini AI](https://img.shields.io/badge/Gemini%20AI-FF6F61?style=flat) |
 | **서버 배포** | ![NCP](https://img.shields.io/badge/Naver%20Cloud-03C75A?style=flat&logo=naver&logoColor=white) |
 
+
+
 </div>
 
 # 1. 개요
 ## 1.1 프로젝트 개발 기간
 2025.03.26. ~ 2025.05.26.
 
-## 1.2 프로젝트 참여 인원
-|<a href="https://github.com/kungfugay">이예진(PM)|<a href="https://github.com/linea89kr">이황수(PL)|<a href="https://github.com/kimbugeon">김부건|<a href="https://github.com/imyukyung">임유경|<a href="https://github.com/jwpark-99">박정우|
-|:---:|:---:|:---:|:---:|:---:|
-|<img src="https://avatars.githubusercontent.com/u/121864128?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/34230941?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/55525567?v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/202033529?s=130&v=4" width="100">|<img src="https://avatars.githubusercontent.com/u/192863504?v=4" width="100">|
-|[담당 파트]|...|...|...|...|
+## 1.2 프로젝트 업무 분장
 
-~여기에 각자 업무 추가해주세요~
+|담당자|업무|
+|:----:|----|
+|<a href="https://github.com/kungfugay">이예진|[**게스트 & 호스트**] <br>- 회원가입/로그인/비밀번호 재설정 <br>- 웹소켓 1:1 채팅 기능 <br> [**호스트**] <br> - 공간 CRUD 페이지 구현 <br> - 리뷰 CRUD 페이지 구현 <br> - 결제 내역 조회 페이지 구현 <br> - 예약 캘린더 (고도화) 구현 <br>- 호스트 비즈니스 로직에 필요한 모든 Rest API |
+
+
 
 ## 1.3 프로젝트 주제
 ```
