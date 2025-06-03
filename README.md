@@ -159,7 +159,7 @@
 <details>
   <summary>홈 > AI 챗봇 (gemini)</summary>
 
-  ![Image](https://github.com/user-attachments/assets/6620b334-ee97-4a5f-91cc-aa5ff6e721f5)
+  ![Image](https://github.com/user-attachments/assets/35c838d1-ca69-42dc-bb21-1cbed083cc36)
 
 </details>
 
@@ -192,6 +192,20 @@
 </details>
 
 <details>
+  <summary>홈 > 숙박 상세보기</summary>
+
+  ![Image](https://github.com/user-attachments/assets/9e8d1151-12a7-402a-88b4-afc33ca55dc8)
+
+</details>
+
+<details>
+  <summary>홈 > 숙박 상세보기 > 결제</summary>
+
+  ![Image](https://github.com/user-attachments/assets/3d7a034d-5fe6-47a8-9670-d60f06be2398)
+
+</details>
+
+<details>
   <summary>마이페이지 > 로그인</summary>
 
   ![Image](https://github.com/user-attachments/assets/2da40651-c473-47ce-be87-4576e3f1bb9c)
@@ -208,14 +222,21 @@
 <details>
   <summary>마이페이지 > 예약, 결제 내역</summary>
 
-  ![Image](https://github.com/user-attachments/assets/211ae8ae-94b6-457a-835e-af98fc6eb968)
+  ![Image](https://github.com/user-attachments/assets/de9505b6-47a5-422a-8baa-0c222abe9d38)
 
 </details>
 
 <details>
   <summary>마이페이지 > 리뷰 내역</summary>
 
-  ![Image](https://github.com/user-attachments/assets/4337c626-970f-4a2b-bc1f-26a597d4526a)
+  ![Image](https://github.com/user-attachments/assets/e12a7e5c-5440-4ca2-9acc-a802789312ec)
+
+</details>
+
+<details>
+  <summary>마이페이지 > 찜 목록</summary>
+
+  ![Image](https://github.com/user-attachments/assets/2f87a650-1323-496c-bcde-df970c42dd94)
 
 </details>
 
