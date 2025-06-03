@@ -4,8 +4,8 @@
 <div align="center">
 
 ### 🎞 시연 영상
-
-<br>
+[🎥 알트스페이스 사용하기](https://www.youtube.com/watch?v=ppMT82kZGns)
+<br><br>
 
 ### ❤ 알트 스페이스 팀
 |<a href="https://github.com/kungfugay">이예진(PM)|<a href="https://github.com/linea89kr">이황수(PL)|<a href="https://github.com/kimbugeon">김부건|<a href="https://github.com/imyukyung">임유경|<a href="https://github.com/jwpark-99">박정우|
