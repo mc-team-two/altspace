@@ -168,6 +168,62 @@
 
 </details>
 
+<details>
+  <summary>페이지 정보 (알트스페이스란?)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/96a561d4-eb44-4538-a384-5840cca68b32)
+
+</details>
+
+<details>
+  <summary>고객센터 > 문의</summary>
+
+  ![Image](https://github.com/user-attachments/assets/283302e0-027e-4139-a698-4a17a3d498ab)
+
+</details>
+
+<details>
+  <summary>고객센터 > FAQ (홈)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/c248819d-0015-4ea7-a046-2b0c83048c8e)
+
+</details>
+
+<details>
+  <summary>마이페이지 > 로그인</summary>
+
+  ![Image](https://github.com/user-attachments/assets/2da40651-c473-47ce-be87-4576e3f1bb9c)
+
+</details>
+
+<details>
+  <summary>마이페이지 > AI 사용자 분석</summary>
+
+  ![Image](https://github.com/user-attachments/assets/f425862a-29e5-4836-b2ec-c8a741772e91)
+
+</details>
+
+<details>
+  <summary>마이페이지 > 예약, 결제 내역</summary>
+
+  ![Image](https://github.com/user-attachments/assets/211ae8ae-94b6-457a-835e-af98fc6eb968)
+
+</details>
+
+<details>
+  <summary>마이페이지 > 리뷰 내역</summary>
+
+  ![Image](https://github.com/user-attachments/assets/4337c626-970f-4a2b-bc1f-26a597d4526a)
+
+</details>
+
+<details>
+  <summary>마이페이지 > 나의 정보 (수정)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/d281de16-d850-4954-a1ae-e30f7e194b98)
+
+</details>
+
 
 ### 	🏠🧑 호스트 페이지
 <details>
