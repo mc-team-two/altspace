@@ -60,6 +60,7 @@
 |담당자|업무|
 |:----:|----|
 |<a href="https://github.com/kungfugay">이예진|[**게스트 & 호스트**] <br>- 회원가입/로그인/비밀번호 재설정 <br>- 웹소켓 1:1 채팅 기능 <br> [**호스트**] <br> - 공간 CRUD 페이지 구현 <br> - 리뷰 CRUD 페이지 구현 <br> - 결제 내역 조회 페이지 구현 <br> - 예약 캘린더 (고도화) 구현 <br>- 호스트 비즈니스 로직에 필요한 모든 Rest API |
+|<a href="https://github.com/kimbugeon">김부건|[**공용**] <br> - NCP 서버 전개 및 배포 <br> - DB 구축 및 ERD 설계 <br> [**게스트**] <br> - 아임포트(iamport) API 활용 결제 · 취소 · 환불 기능 구현 & CRUD 설계 <br> - 카카오 맵 API 활용 숙박시설 위치 기능 구현 <br> - Gemini API 활용 사용자 리뷰 요약 기능 구현 <br> - NCP Papago API 활용 사용자 리뷰 다국어 번역 기능 구현 <br> - Client 페이지 Img Util 활용 이미지 업로드, 수정, 삭제 구현 & CRUD 설계 <br> - 찜 목록(위시리스트) 기능 구현 & CRUD 설계 <br> - 사용자 리뷰 기능 구현 & CRUD 설계 <br> - 숙박시설 상세보기 페이지 / 마이페이지(나의 예약 / 나의 리뷰 / 찜 목록) 페이지 / 리뷰 업로드 페이지 구현 |
 
 ## 1.5 프로젝트 관리 템플릿
 - [깃허브 프로젝트](https://github.com/orgs/mc-team-two/projects/9)
