@@ -104,7 +104,68 @@
 
 ## 3.2 실행 결과 스크린샷
 ### 	🧳🙋‍♂️ 게스트 페이지
-~여기에 스크린샷~
+<details>
+  <summary>홈 > 반응형 동작 (확대)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/c3d5fc58-4997-4663-bc47-a41bf2e9c027)
+
+</details>
+
+<details>
+  <summary>홈 > 반응형 동작 (축소)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/7a92e5cb-e368-4ddf-8f03-306dc4e41437)
+
+</details>
+
+<details>
+  <summary>홈 > 번역 (영어)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/907e0d75-68f4-4c12-92e0-ac6f7f02d61c)
+
+</details>
+
+<details>
+  <summary>홈 > 번역 (일본어)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/95fbda4a-f57a-4f8e-8c6a-f8979bdba6fe)
+
+</details>
+
+<details>
+  <summary>홈 > 번역 (일본어)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/95fbda4a-f57a-4f8e-8c6a-f8979bdba6fe)
+
+</details>
+
+<details>
+  <summary>홈 > 검색</summary>
+
+  ![Image](https://github.com/user-attachments/assets/85767241-a492-40cb-8be3-8eae7d95cc66)
+
+</details>
+
+<details>
+  <summary>홈 > 인기 숙소(gemini)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/1b1c40e4-6de8-487d-877d-cbc5952ce398)
+
+</details>
+
+<details>
+  <summary>홈 > AI 챗봇 (gemini)</summary>
+
+  ![Image](https://github.com/user-attachments/assets/6620b334-ee97-4a5f-91cc-aa5ff6e721f5)
+
+</details>
+
+<details>
+  <summary>홈 > 푸터</summary>
+
+  ![Image](https://github.com/user-attachments/assets/77e08d05-a1b6-4598-859b-527b96d26803)
+
+</details>
 
 
 ### 	🏠🧑 호스트 페이지
