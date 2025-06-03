@@ -91,6 +91,9 @@
 ## 3.1 실제 구현된 시스템 구성도
 ![diagram](https://github.com/user-attachments/assets/bae440a7-839a-41a1-bc1e-6e1f01caa394)
 
+![Web_App_Reference_Architecture2](https://github.com/user-attachments/assets/004dd548-0943-4ef1-9a41-81541ea069b5)
+
+
 ## 3.2 실행 결과 스크린샷
 ### 	🧳🙋‍♂️ 게스트 페이지
 ~여기에 스크린샷~
